@@ -1,0 +1,30 @@
+/* No animations - PDF export only */
+
+/* Disable all animations */
+* {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Static gradients */
+.gradient-animated,
+.gradient-text-animated {
+  background-position: 50% 50% !important;
+}
+
+/* Hide animated elements */
+.animated-blob,
+.particle,
+.wave {
+  display: none !important;
+}
+
+/* Static glow effect */
+.glow {
+  box-shadow: 0 0 30px rgba(97, 175, 239, 0.4);
+}
+
+/* Static blob shapes */
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}

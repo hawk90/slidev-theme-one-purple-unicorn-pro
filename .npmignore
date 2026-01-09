@@ -1,0 +1,22 @@
+# Development files
+node_modules/
+*.log
+.DS_Store
+
+# Source files (only if compiling)
+src/
+
+# Example files
+example.md
+example/
+
+# Build files
+*.tgz
+
+# Editor files
+.vscode/
+.idea/
+
+# Git files
+.git/
+.gitignore

@@ -1,0 +1,312 @@
+/* One Purple Unicorn Pro Code Theme - One Dark Pro for All Code */
+
+/* === BASE CODE BLOCK STYLES === */
+.slidev-code,
+pre,
+.shiki,
+code[class*="language-"],
+pre[class*="language-"],
+.slidev-layout pre,
+.slidev-layout .shiki {
+  background: #f8f9fa !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-size: initial !important;
+  background-repeat: no-repeat !important;
+  color: #1e293b !important;
+  border: none !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  padding: 2rem 1.5rem 1.5rem !important;
+  position: relative !important;
+  overflow-x: auto !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* === MAC TERMINAL BUTTONS === */
+/* More specific selectors for Slidev generated HTML */
+.shiki[class*="language-bash"]::before,
+.shiki[class*="language-shell"]::before,
+.shiki[class*="language-terminal"]::before,
+.shiki[class*="language-console"]::before,
+pre[class*="language-bash"]::before,
+pre[class*="language-shell"]::before,
+pre[class*="language-terminal"]::before,
+pre[class*="language-console"]::before,
+.slidev-code[class*="language-bash"]::before,
+.slidev-code[class*="language-shell"]::before,
+.slidev-code[class*="language-terminal"]::before,
+.slidev-code[class*="language-console"]::before,
+/* Also target by data attributes */
+pre[data-language="bash"]::before,
+pre[data-language="shell"]::before,
+pre[data-language="terminal"]::before,
+pre[data-language="console"]::before,
+.shiki[data-language="bash"]::before,
+.shiki[data-language="shell"]::before,
+.shiki[data-language="terminal"]::before,
+.shiki[data-language="console"]::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  background: #ff5f57;
+  border-radius: 50%;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #28ca42;
+  z-index: 1000;
+}
+
+/* === MAC TERMINAL BUTTONS - ALL TYPES (CIRCULAR) === */
+*[class*="bash"]::before,
+*[class*="shell"]::before,
+*[class*="terminal"]::before,
+*[class*="console"]::before,
+*[lang*="bash"]::before,
+*[lang*="shell"]::before,
+*[lang*="terminal"]::before,
+*[lang*="console"]::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: calc(-1.5rem + 12px);  /* Outside padding + comfortable Mac terminal spacing */
+  width: 12px;
+  height: 12px;
+  background: #ff5f57;
+  border-radius: 50%;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #28ca42;
+  z-index: 1000;
+}
+
+/* === PURE CSS SYNTAX HIGHLIGHTING === */
+/* Shiki 없이 순수 CSS로 구문 강조 구현 */
+
+/* 기본 코드 블록 스타일 */
+pre,
+code,
+.slidev-code {
+  color: #abb2bf !important;
+  background: #282c34 !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+}
+
+/* CSS 기반 구문 강조 - 정규식 패턴 매칭 */
+
+/* 키워드: if, for, while, return, function, const, let, var, class */
+pre:has-text("\\bif\\b"),
+pre:has-text("\\bfor\\b"),
+pre:has-text("\\bwhile\\b"),
+pre:has-text("\\breturn\\b"),
+pre:has-text("\\bfunction\\b"),
+pre:has-text("\\bconst\\b"),
+pre:has-text("\\blet\\b"),
+pre:has-text("\\bvar\\b"),
+pre:has-text("\\bclass\\b"),
+pre:has-text("\\b__global__\\b"),
+pre:has-text("\\b__device__\\b"),
+pre:has-text("\\b__host__\\b"),
+pre:has-text("\\bvoid\\b"),
+pre:has-text("\\bint\\b"),
+pre:has-text("\\bfloat\\b"),
+pre:has-text("\\bdouble\\b") {
+  /* 키워드가 있는 줄을 찾아서 처리 */
+}
+
+/* 실제 간단한 구문 강조 구현 */
+/* 문자열 패턴 - CSS로 직접 구현 */
+pre::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  /* JavaScript로 실시간 구문 강조 적용 */
+}
+
+/* === ONE DARK PRO SYNTAX HIGHLIGHTING === */
+/* Base code color */
+pre, code, .shiki {
+  color: #1e293b !important;
+}
+
+/* Let Shiki handle syntax highlighting colors */
+.shiki {
+  background: #282c34 !important;
+}
+
+/* Direct style attribute overrides for Shiki generated content */
+.shiki span[style*="#569CD6"] { color: #569cd6 !important; } /* Keywords */
+.shiki span[style*="#CE9178"] { color: #ce9178 !important; } /* Strings */
+.shiki span[style*="#6A9955"] { color: #6a9955 !important; font-style: italic !important; } /* Comments */
+.shiki span[style*="#DCDCAA"] { color: #dcdcaa !important; } /* Functions */
+.shiki span[style*="#9CDCFE"] { color: #9cdcfe !important; } /* Variables */
+.shiki span[style*="#B5CEA8"] { color: #b5cea8 !important; } /* Numbers */
+.shiki span[style*="#4EC9B0"] { color: #4ec9b0 !important; } /* Types */
+.shiki span[style*="#C586C0"] { color: #c586c0 !important; } /* Purple keywords */
+
+/* Force dark background on all code elements - Remove all patterns */
+pre,
+.shiki,
+.slidev-code,
+code[class*="language-"],
+pre[class*="language-"] {
+  background: #f8f9fa !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-origin: initial !important;
+  background-clip: initial !important;
+  background-size: initial !important;
+  background-repeat: no-repeat !important;
+  background-position: initial !important;
+  color: #1e293b !important;
+}
+
+/* Remove any pseudo-element backgrounds */
+pre::before,
+pre::after,
+.shiki::before,
+.shiki::after {
+  background: none !important;
+  background-image: none !important;
+}
+
+/* === ENHANCED SYNTAX HIGHLIGHTING === */
+/* One Dark Pro colors with better coverage */
+
+/* Comments - Green italic */
+.shiki .token.comment,
+.shiki .token.prolog,
+.shiki .token.doctype,
+.shiki .token.cdata,
+.shiki span[style*="color:#6A9955"],
+.shiki span[style*="color:#608B4E"] {
+  color: #008000 !important;
+  font-style: italic !important;
+}
+
+/* Keywords - Blue */
+.shiki .token.atrule,
+.shiki .token.attr-value,
+.shiki .token.keyword,
+.shiki span[style*="color:#569CD6"],
+.shiki span[style*="color:#C586C0"] {
+  color: #0066cc !important;
+  font-weight: 500 !important;
+}
+
+/* Strings - Orange */
+.shiki .token.selector,
+.shiki .token.attr-name,
+.shiki .token.string,
+.shiki .token.char,
+.shiki .token.builtin,
+.shiki .token.inserted,
+.shiki span[style*="color:#CE9178"],
+.shiki span[style*="color:#D69D85"] {
+  color: #d83a00 !important;
+}
+
+/* Numbers - Light Green */
+.shiki .token.property,
+.shiki .token.tag,
+.shiki .token.boolean,
+.shiki .token.number,
+.shiki .token.constant,
+.shiki .token.symbol,
+.shiki .token.deleted,
+.shiki span[style*="color:#B5CEA8"] {
+  color: #b5cea8 !important;
+}
+
+/* Functions - Yellow */
+.shiki .token.function,
+.shiki .token.class-name,
+.shiki span[style*="color:#DCDCAA"],
+.shiki span[style*="color:#4EC9B0"] {
+  color: #dcdcaa !important;
+}
+
+/* Variables & Identifiers - Light Blue */
+.shiki .token.regex,
+.shiki .token.important,
+.shiki .token.variable,
+.shiki span[style*="color:#9CDCFE"],
+.shiki span[style*="color:#4FC1FF"] {
+  color: #9cdcfe !important;
+}
+
+/* Types - Cyan */
+.shiki span[style*="color:#4EC9B0"] {
+  color: #4ec9b0 !important;
+}
+
+/* Operators & Punctuation */
+.shiki .token.punctuation,
+.shiki .token.operator,
+.shiki .token.entity,
+.shiki .token.url {
+  color: #1e293b !important;
+}
+
+/* Special tokens for C++/CUDA */
+.shiki span:contains("__global__"),
+.shiki span:contains("__device__"),
+.shiki span:contains("__host__") {
+  color: #c586c0 !important;
+  font-weight: bold !important;
+}
+
+/* Ensure proper font rendering */
+.shiki code,
+pre code {
+  color: inherit !important;
+  background: transparent !important;
+  font-family: inherit !important;
+}
+
+/* === INLINE CODE === */
+:not(pre) > code {
+  background: linear-gradient(135deg, #f3f0ff 0%, #fdf4ff 100%) !important;
+  color: #8b5cf6 !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  border-radius: 0.375rem !important;
+  padding: 0.125rem 0.375rem !important;
+  font-weight: 500 !important;
+  font-size: 0.9em !important;
+}
+
+/* === SCROLLBAR === */
+.shiki::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.shiki::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.shiki::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+.shiki::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* === HOVER EFFECTS === */
+.slidev-code:hover,
+.shiki:hover {
+  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.15) !important;
+  transition: box-shadow 0.3s ease;
+}

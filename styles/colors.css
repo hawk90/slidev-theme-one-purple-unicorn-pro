@@ -1,0 +1,117 @@
+/* Dark Unicorn Theme - One Dark Pro Color System */
+
+:root {
+  /* One Dark Pro Base Colors */
+  --one-dark-bg: #2e323b;
+  --one-dark-fg: #282c34;
+  --one-dark-green: #98c379;
+  --one-dark-yellow: #e5c07b;
+  --one-dark-red: #e06c75;
+  --one-dark-blue: #61afef;
+  --one-dark-cyan: #56b6c2;
+  --one-dark-purple: #c678dd;
+  --one-dark-gray: #5c6370;
+  --one-dark-buffer: #939aa3;
+  --one-dark-selection: #3e4452;
+
+  /* Extended Palette - Blue Variations */
+  --blue-50: #e6f3ff;
+  --blue-100: #cce7ff;
+  --blue-200: #99ceff;
+  --blue-300: #66b5ff;
+  --blue-400: #61afef;  /* Main blue */
+  --blue-500: #4d9fdf;
+  --blue-600: #3a8fcf;
+  --blue-700: #2d7ab3;
+  --blue-800: #1f5580;
+  --blue-900: #12304d;
+
+  /* Extended Palette - Purple Variations */
+  --purple-50: #f9ecff;
+  --purple-100: #f2d9ff;
+  --purple-200: #e5b3ff;
+  --purple-300: #d98eff;
+  --purple-400: #c678dd;  /* Main purple */
+  --purple-500: #b665cb;
+  --purple-600: #a652b8;
+  --purple-700: #8e449c;
+  --purple-800: #6b3377;
+  --purple-900: #482252;
+
+  /* Background Colors */
+  --bg-primary: #282c34;      /* Main background */
+  --bg-secondary: #2e323b;    /* Elevated sections */
+  --bg-tertiary: #3e4452;     /* Selection/hover */
+  --bg-code: #21252b;         /* Code blocks */
+  --bg-overlay: rgba(40, 44, 52, 0.95);
+
+  /* Text Colors */
+  --text-primary: #abb2bf;    /* Main text */
+  --text-bright: #e6e6e6;     /* Bright text */
+  --text-secondary: #939aa3;  /* Secondary text */
+  --text-muted: #5c6370;      /* Muted/comments */
+  --text-disabled: #4b5263;   /* Disabled state */
+
+  /* Semantic Colors */
+  --success: var(--one-dark-green);
+  --warning: var(--one-dark-yellow);
+  --error: var(--one-dark-red);
+  --info: var(--one-dark-blue);
+
+  /* Gradients - Unicorn style with One Dark colors */
+  --gradient-primary: linear-gradient(135deg, var(--one-dark-purple), var(--one-dark-blue));
+  --gradient-secondary: linear-gradient(135deg, var(--one-dark-purple), var(--one-dark-cyan));
+  --gradient-accent: linear-gradient(135deg, var(--one-dark-cyan), var(--one-dark-green));
+  --gradient-warm: linear-gradient(135deg, var(--one-dark-yellow), var(--one-dark-red));
+  --gradient-subtle: linear-gradient(135deg, #3e4452, #2e323b);
+
+  /* Syntax Highlighting */
+  --syntax-keyword: var(--one-dark-purple);
+  --syntax-string: var(--one-dark-green);
+  --syntax-function: var(--one-dark-blue);
+  --syntax-comment: var(--one-dark-gray);
+  --syntax-number: var(--one-dark-yellow);
+  --syntax-operator: var(--one-dark-cyan);
+  --syntax-class: var(--one-dark-yellow);
+  --syntax-variable: var(--one-dark-red);
+  --syntax-constant: var(--one-dark-yellow);
+  --syntax-tag: var(--one-dark-red);
+  --syntax-attribute: var(--one-dark-yellow);
+
+  /* Interactive States */
+  --hover-bg: var(--bg-tertiary);
+  --hover-opacity: 0.85;
+  --focus-ring: 0 0 0 2px rgba(97, 175, 239, 0.5);
+  --active-bg: #484e5b;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(97, 175, 239, 0.3);
+
+  /* Borders */
+  --border-default: rgba(171, 178, 191, 0.15);
+  --border-subtle: rgba(171, 178, 191, 0.08);
+  --border-focus: var(--one-dark-blue);
+  --border-error: var(--one-dark-red);
+  --border-success: var(--one-dark-green);
+
+  /* Special Effects */
+  --glow-blue: 0 0 30px rgba(97, 175, 239, 0.5);
+  --glow-purple: 0 0 30px rgba(198, 120, 221, 0.5);
+  --glow-gradient: 0 0 40px rgba(97, 175, 239, 0.3), 0 0 60px rgba(198, 120, 221, 0.2);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+}

@@ -1,0 +1,171 @@
+/* Layout-specific styles for One Dark Unicorn Pro */
+
+/* ============================================
+   Tables
+   ============================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+table th {
+  background: var(--one-dark-bg-light);
+  color: var(--one-dark-fg-bright);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+table tr:hover {
+  background: #f9fafb;
+}
+
+/* Dark theme tables */
+.slidev-layout.cover table th,
+.slidev-layout.intro table th,
+.slidev-layout.end table th,
+.slidev-layout.section table th {
+  background: var(--one-dark-bg-light);
+  color: var(--one-dark-blue);
+}
+
+.slidev-layout.cover table td,
+.slidev-layout.intro table td,
+.slidev-layout.end table td,
+.slidev-layout.section table td {
+  border-bottom: 1px solid rgba(171, 178, 191, 0.2);
+  color: var(--one-dark-fg);
+}
+
+.slidev-layout.cover table tr:hover,
+.slidev-layout.intro table tr:hover,
+.slidev-layout.end table tr:hover,
+.slidev-layout.section table tr:hover {
+  background: rgba(171, 178, 191, 0.05);
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+ul, ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+ul li, ol li {
+  margin: 0.5rem 0;
+}
+
+ul li::marker {
+  color: var(--one-dark-blue);
+}
+
+ol li::marker {
+  color: var(--one-dark-magenta);
+}
+
+/* Dark theme lists */
+.slidev-layout.cover ul li::marker,
+.slidev-layout.intro ul li::marker,
+.slidev-layout.end ul li::marker,
+.slidev-layout.section ul li::marker {
+  color: var(--one-dark-cyan);
+}
+
+.slidev-layout.cover ol li::marker,
+.slidev-layout.intro ol li::marker,
+.slidev-layout.end ol li::marker,
+.slidev-layout.section ol li::marker {
+  color: var(--one-dark-yellow);
+}
+
+/* ============================================
+   Blockquotes
+   ============================================ */
+blockquote {
+  border-left: 4px solid var(--one-dark-blue);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.slidev-layout.cover blockquote,
+.slidev-layout.intro blockquote,
+.slidev-layout.end blockquote,
+.slidev-layout.section blockquote {
+  border-left-color: var(--one-dark-magenta);
+  color: var(--one-dark-fg);
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a {
+  color: var(--one-dark-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--one-dark-magenta);
+  text-decoration: underline;
+}
+
+.slidev-layout.cover a,
+.slidev-layout.intro a,
+.slidev-layout.end a,
+.slidev-layout.section a {
+  color: var(--one-dark-cyan);
+}
+
+.slidev-layout.cover a:hover,
+.slidev-layout.intro a:hover,
+.slidev-layout.end a:hover,
+.slidev-layout.section a:hover {
+  color: var(--one-dark-yellow);
+}
+
+/* ============================================
+   Emphasis
+   ============================================ */
+strong {
+  font-weight: 600;
+  color: var(--one-dark-red);
+}
+
+em {
+  font-style: italic;
+  color: var(--one-dark-green);
+}
+
+.slidev-layout.cover strong,
+.slidev-layout.intro strong,
+.slidev-layout.end strong,
+.slidev-layout.section strong {
+  color: var(--one-dark-yellow);
+}
+
+.slidev-layout.cover em,
+.slidev-layout.intro em,
+.slidev-layout.end em,
+.slidev-layout.section em {
+  color: var(--one-dark-cyan);
+}
+
+/* ============================================
+   Separator
+   ============================================ */
+hr {
+  border: none;
+  height: 2px;
+  background: var(--gradient-primary);
+  margin: 2rem 0;
+  border-radius: 1px;
+}

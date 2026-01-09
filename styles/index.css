@@ -1,0 +1,406 @@
+/* ========== CSS Variables ========== */
+:root {
+  --primary-purple: #8b5cf6;
+  --primary-indigo: #6366f1;
+  --primary-purple-dark: #7c3aed;
+  --primary-indigo-dark: #4f46e5;
+  --primary-violet: #a78bfa;
+  --primary-pink: #ec4899;
+  --dark-bg: #1a1b26;
+  --dark-bg-light: #24283b;
+  --dark-fg: #a9b1d6;
+  --dark-fg-bright: #c0caf5;
+  --accent-pink: #f472b6;
+  --accent-blue: #60a5fa;
+  --accent-green: #34d399;
+  --accent-yellow: #fbbf24;
+  --accent-red: #f87171;
+  --accent-cyan: #22d3ee;
+  --gradient-primary: linear-gradient(135deg, #8b5cf6, #ec4899);
+  --gradient-secondary: linear-gradient(135deg, #6366f1, #a78bfa);
+  --gradient-accent: linear-gradient(135deg, #a78bfa, #60a5fa);
+  --gradient-unicorn: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
+  --gradient-hover: linear-gradient(135deg, #a78bfa, #f472b6, #60a5fa);
+  --gradient-text: linear-gradient(90deg, #8b5cf6, #ec4899, #6366f1);
+}
+
+/* ========== Base Layout Styles ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) {
+  background: #fff;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 1.3;
+  padding: 70px 30px 20px 30px; /* Top padding to account for H1 */
+  text-align: left !important;
+}
+
+/* ========== Typography - H1 Special Positioning ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  right: 30px;
+  margin: 0;
+  padding: 0;
+  font-size: 1.6em;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  z-index: 200;
+  height: 45px; /* Fixed height to prevent overlap */
+}
+
+/* ========== Content After H1 ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 + * {
+  margin-top: 0 !important; /* Remove top margin for first element after h1 */
+}
+
+/* ========== Typography - Other Headings ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #8b5cf6;
+  margin: 0.5rem 0 0.3rem;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h3 {
+  font-size: 1.15em;
+  font-weight: 500;
+  color: #6366f1;
+  margin: 0.4rem 0 0.25rem;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h4 {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #a78bfa;
+  margin: 1rem 0 0.5rem;
+}
+
+/* ========== Typography - Body Text ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) p {
+  color: #4b5563;
+  line-height: 1.25;
+  margin: 0.3rem 0;
+  text-align: left;
+  font-size: 0.95em;
+}
+
+/* ========== Lists ========== */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ul,
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ol {
+  margin: 0.3rem 0;
+  padding-left: 1.5rem;
+  text-align: left;
+  list-style-type: disc !important;
+}
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ol {
+  list-style-type: decimal !important;
+}
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) li {
+  color: #4b5563;
+  line-height: 1.2;
+  margin: 0.15rem 0;
+  text-align: left;
+  font-size: 0.95em;
+  list-style: inherit !important;
+  display: list-item !important;
+}
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) li::marker {
+  color: #8b5cf6 !important;
+}
+
+/* ========== Code Blocks ========== */
+.slidev-layout pre {
+  background: #1a1b26;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.5rem;
+  color: #a9b1d6;
+  font-size: 16px;
+  line-height: 1.25;
+  overflow-x: auto;
+  padding: 0.5rem;
+  margin: 0.4rem 0;
+}
+
+.slidev-layout code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.slidev-layout :not(pre) > code {
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 0.25rem;
+  color: #8b5cf6;
+  font-size: 0.875em;
+  padding: 0.125rem 0.25rem;
+}
+
+/* ========== Blockquotes ========== */
+.slidev-layout blockquote {
+  background: rgba(139, 92, 246, 0.05);
+  border-left: 4px solid #8b5cf6;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  color: #374151;
+  font-style: italic;
+}
+
+/* ========== Cover/Intro/End/Section Layouts ========== */
+.slidev-layout.cover,
+.slidev-layout.intro,
+.slidev-layout.end,
+.slidev-layout.section {
+  background: linear-gradient(135deg, #1a1b26, #1e1e2e);
+  color: #a9b1d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.slidev-layout.cover h1,
+.slidev-layout.intro h1,
+.slidev-layout.end h1,
+.slidev-layout.section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin: 0 0 2rem;
+  position: static !important;
+  top: auto !important;
+  text-align: center !important;
+}
+
+/* Remove gradient from emoji characters in titles */
+.slidev-layout.intro h1,
+.slidev-layout.cover h1,
+.slidev-layout.end h1,
+.slidev-layout.section h1 {
+  /* Keep emoji characters as normal color while applying gradient to text */
+  background: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Emoji within spans - preserve original emoji colors while maintaining text gradient */
+.slidev-layout.cover h1 span:has(emoji),
+.slidev-layout.intro h1 span:has(emoji),
+.slidev-layout.end h1 span:has(emoji),
+.slidev-layout.section h1 span:has(emoji) {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  color: #a9b1d6 !important;
+}
+
+/* Alternative approach - target emojis directly by Unicode range */
+.slidev-layout.cover h1 *,
+.slidev-layout.intro h1 *,
+.slidev-layout.end h1 *,
+.slidev-layout.section h1 * {
+  background: inherit;
+  -webkit-background-clip: inherit;
+  background-clip: inherit;
+  -webkit-text-fill-color: inherit;
+}
+
+/* Reset emoji characters to original colors using font feature */
+.slidev-layout.cover h1 span,
+.slidev-layout.intro h1 span,
+.slidev-layout.end h1 span,
+.slidev-layout.section h1 span {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  color: inherit !important;
+}
+
+.slidev-layout.cover h2,
+.slidev-layout.intro h2,
+.slidev-layout.end h2,
+.slidev-layout.section h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  background: linear-gradient(135deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin: 1rem 0;
+  text-align: center !important;
+}
+
+.slidev-layout.cover p,
+.slidev-layout.intro p,
+.slidev-layout.end p,
+.slidev-layout.section p {
+  color: #a9b1d6;
+  font-size: 1.125rem;
+}
+
+/* ========== Two/Three Column Layouts ========== */
+.slidev-layout.two-cols,
+.slidev-layout.three-cols {
+  display: block !important;
+  padding: 60px 50px 40px !important;
+  text-align: left !important;
+  background: #fff;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+/* ========== Two-cols grid layout fix ========== */
+.slidev-layout.two-cols .slidev-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem !important;
+  height: calc(100vh - 100px) !important;
+  padding: 0 !important;
+}
+
+.slidev-layout.two-cols .col-left,
+.slidev-layout.two-cols .col-right {
+  padding: 0 1rem;
+  overflow-y: auto;
+}
+
+/* Apply theme styles to two-cols content */
+.slidev-layout.two-cols h1:first-child {
+  position: absolute !important;
+  top: 20px !important;
+  left: 50px !important;
+  right: 50px !important;
+  grid-column: 1 / -1 !important;
+  font-size: 1.8em !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin: 0 0 1rem 0 !important;
+  z-index: 200 !important;
+}
+
+.slidev-layout.two-cols h2 {
+  font-size: 1.3em !important;
+  font-weight: 600 !important;
+  color: #8b5cf6 !important;
+  margin: 1rem 0 0.75rem !important;
+}
+
+.slidev-layout.two-cols h3 {
+  font-size: 1.1em !important;
+  font-weight: 500 !important;
+  color: #6366f1 !important;
+  margin: 0.75rem 0 0.5rem !important;
+}
+
+.slidev-layout.two-cols p {
+  color: #4b5563 !important;
+  line-height: 1.6 !important;
+  margin: 0.75rem 0 !important;
+}
+
+.slidev-layout.two-cols ul,
+.slidev-layout.two-cols ol {
+  margin: 0.75rem 0 !important;
+  padding-left: 1.5rem !important;
+}
+
+.slidev-layout.two-cols li {
+  color: #4b5563 !important;
+  line-height: 1.6 !important;
+  margin: 0.25rem 0 !important;
+}
+
+/* ========== Tables ========== */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+th {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+  font-weight: 600;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+td {
+  background: #fff;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  color: #1f2937;
+  padding: 0.75rem;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========== Utility Classes ========== */
+.gradient-text {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #6366f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.accent-text {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+/* ========== Global Overrides ========== */
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout h5,
+.slidev-layout h6 {
+  line-height: 1.3;
+}
+
+.slidev-layout p {
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.slidev-layout ul,
+.slidev-layout ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.slidev-layout li {
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}

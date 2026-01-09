@@ -1,0 +1,293 @@
+/* Dark Unicorn Theme - Gradient System */
+
+:root {
+  /* Unicorn Gradient Palettes with One Dark Pro Colors */
+
+  /* Primary Gradients - Blue to Purple */
+  --gradient-unicorn-1: linear-gradient(135deg, #61afef 0%, #c678dd 100%);
+  --gradient-unicorn-2: linear-gradient(135deg, #56b6c2 0%, #c678dd 50%, #e06c75 100%);
+  --gradient-unicorn-3: linear-gradient(90deg, #61afef 0%, #98c379 50%, #e5c07b 100%);
+
+  /* Vibrant Gradients */
+  --gradient-vibrant-1: linear-gradient(135deg, #61afef 0%, #c678dd 50%, #e06c75 100%);
+  --gradient-vibrant-2: linear-gradient(135deg, #98c379 0%, #61afef 50%, #c678dd 100%);
+  --gradient-vibrant-3: linear-gradient(135deg, #e5c07b 0%, #e06c75 50%, #c678dd 100%);
+
+  /* Soft Gradients */
+  --gradient-soft-1: linear-gradient(135deg, rgba(97, 175, 239, 0.5) 0%, rgba(198, 120, 221, 0.5) 100%);
+  --gradient-soft-2: linear-gradient(135deg, rgba(86, 182, 194, 0.5) 0%, rgba(152, 195, 121, 0.5) 100%);
+  --gradient-soft-3: linear-gradient(135deg, rgba(229, 192, 123, 0.5) 0%, rgba(224, 108, 117, 0.5) 100%);
+
+  /* Mesh Gradients (Multiple Colors) */
+  --gradient-mesh-1: radial-gradient(at 40% 20%, #61afef 0px, transparent 50%),
+                     radial-gradient(at 80% 0%, #c678dd 0px, transparent 50%),
+                     radial-gradient(at 10% 50%, #98c379 0px, transparent 50%),
+                     radial-gradient(at 80% 80%, #e06c75 0px, transparent 50%),
+                     radial-gradient(at 30% 90%, #56b6c2 0px, transparent 50%);
+
+  --gradient-mesh-2: radial-gradient(at 0% 0%, rgba(198, 120, 221, 0.3) 0px, transparent 50%),
+                     radial-gradient(at 50% 50%, rgba(97, 175, 239, 0.3) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(152, 195, 121, 0.3) 0px, transparent 50%);
+
+  /* Animated Gradient Backgrounds */
+  /* Static gradients for PDF - no animation needed */
+  --gradient-static-1: linear-gradient(135deg, #61afef, #c678dd, #e06c75);
+  --gradient-static-2: linear-gradient(135deg, #98c379, #56b6c2, #e5c07b);
+
+  /* Glass Morphism Gradients */
+  --gradient-glass-1: linear-gradient(135deg, rgba(97, 175, 239, 0.1) 0%, rgba(198, 120, 221, 0.1) 100%);
+  --gradient-glass-2: linear-gradient(135deg, rgba(152, 195, 121, 0.1) 0%, rgba(86, 182, 194, 0.1) 100%);
+  --gradient-glass-3: linear-gradient(135deg, rgba(224, 108, 117, 0.1) 0%, rgba(229, 192, 123, 0.1) 100%);
+
+  /* Text Gradients */
+  --gradient-text-1: linear-gradient(90deg, #61afef 0%, #c678dd 50%, #e06c75 100%);
+  --gradient-text-2: linear-gradient(90deg, #98c379 0%, #56b6c2 50%, #61afef 100%);
+  --gradient-text-3: linear-gradient(90deg, #e5c07b 0%, #e06c75 50%, #c678dd 100%);
+
+  /* Border Gradients */
+  --gradient-border-1: linear-gradient(90deg, #61afef, #c678dd);
+  --gradient-border-2: linear-gradient(90deg, #98c379, #56b6c2);
+  --gradient-border-3: linear-gradient(90deg, #e06c75, #e5c07b);
+}
+
+/* ============================================
+   Gradient Background Classes
+   ============================================ */
+
+/* Main gradient background */
+.gradient-bg {
+  position: relative;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-mesh-1);
+  opacity: 0.4;
+  /* No animation for PDF */
+}
+
+/* Static gradient background */
+.gradient-animated {
+  background: var(--gradient-static-1);
+  /* No animation for PDF */
+}
+
+/* Subtle gradient overlay */
+.gradient-overlay {
+  position: relative;
+}
+
+.gradient-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-soft-1);
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* ============================================
+   Gradient Text Classes
+   ============================================ */
+
+.gradient-text {
+  background: var(--gradient-text-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.gradient-text-animated {
+  background: var(--gradient-static-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* No animation for PDF */
+}
+
+/* ============================================
+   Gradient Cards
+   ============================================ */
+
+.gradient-card {
+  background: var(--bg-secondary);
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.gradient-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-unicorn-1);
+}
+
+.gradient-card-hover {
+  background: var(--bg-secondary);
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  padding: 2rem;
+  border: 2px solid var(--gradient-unicorn-1);
+}
+
+/* ============================================
+   Gradient Borders
+   ============================================ */
+
+.gradient-border {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--gradient-unicorn-1);
+  border-radius: 1rem;
+  z-index: -1;
+}
+
+/* Static gradient border for PDF */
+.gradient-border-animated {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.gradient-border-animated::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--gradient-static-1);
+  border-radius: 1rem;
+  z-index: -1;
+  /* No animation for PDF */
+}
+
+/* ============================================
+   Gradient Buttons
+   ============================================ */
+
+.btn-gradient {
+  background: var(--gradient-unicorn-1);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  /* No hover effects for PDF */
+}
+
+/* ============================================
+   Glass Morphism with Gradients
+   ============================================ */
+
+.glass-gradient {
+  background: var(--gradient-glass-1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* ============================================
+   Gradient Shapes
+   ============================================ */
+
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.6;
+  /* No animation for PDF */
+}
+
+.gradient-blob-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-unicorn-1);
+  top: -200px;
+  right: -200px;
+}
+
+.gradient-blob-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-vibrant-2);
+  bottom: -150px;
+  left: -150px;
+}
+
+.gradient-blob-3 {
+  width: 350px;
+  height: 350px;
+  background: var(--gradient-vibrant-3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ============================================
+   No Animations - PDF Export Only
+   ============================================ */
+
+/* ============================================
+   Gradient Utilities
+   ============================================ */
+
+.gradient-unicorn-bg { background: var(--gradient-unicorn-1); }
+.gradient-vibrant-bg { background: var(--gradient-vibrant-1); }
+.gradient-soft-bg { background: var(--gradient-soft-1); }
+
+.gradient-text-1 {
+  background: var(--gradient-text-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-2 {
+  background: var(--gradient-text-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-3 {
+  background: var(--gradient-text-3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
