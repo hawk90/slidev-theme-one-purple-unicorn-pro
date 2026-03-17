@@ -92,32 +92,14 @@
 /* ============================================
    Code Blocks - Dark Theme (One Dark Pro)
    ============================================ */
-.slidev-layout:not(.dark-theme) pre {
-  background: #282c34 !important;
-  border: 1px solid #3e4452;
-  color: #abb2bf !important;
-}
-
-.slidev-layout:not(.dark-theme) pre code {
-  color: #abb2bf !important;
-}
+/* Code blocks stay dark on light slides - handled by code-theme.css */
+/* Shiki handles syntax highlighting colors - don't override span styles */
 
 .slidev-layout:not(.dark-theme) :not(pre) > code {
   background: var(--light-bg-tertiary);
   color: var(--one-dark-blue);
   border: 1px solid var(--light-border);
 }
-
-/* Shiki code highlighting - let shiki handle colors */
-.slidev-layout:not(.dark-theme) .shiki {
-  background: #282c34 !important;
-}
-
-.slidev-layout:not(.dark-theme) .shiki code {
-  color: #abb2bf !important;
-}
-
-/* Don't override shiki span colors - let syntax highlighting work */
 
 /* ============================================
    Links for Light Theme

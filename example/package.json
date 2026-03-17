@@ -1,0 +1,18 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "slidev slides.md --port 3031",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@slidev/cli": "^52.14.1",
+    "@slidev/theme-default": "^0.25.0",
+    "@slidev/types": "^52.14.1"
+  }
+}

@@ -122,10 +122,10 @@
 
 /* ========== Code Blocks ========== */
 .slidev-layout pre {
-  background: #1a1b26;
+  background: #282c34;
+  color: #c0caf5;
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 0.5rem;
-  color: #a9b1d6;
   font-size: 16px;
   line-height: 1.25;
   overflow-x: auto;
