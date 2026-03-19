@@ -18,8 +18,7 @@
   "main": "./index.ts",
   "files": [
     "index.ts",
-    "components/**/*",
-    "layouts/**/*",
+"layouts/**/*",
     "styles/**/*",
     "setup/**/*",
     "uno.config.ts",

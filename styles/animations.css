@@ -1,22 +1,18 @@
-/* No animations - PDF export only */
-
-/* Disable all animations */
-* {
-  animation: none !important;
-  transition: none !important;
-}
+/* Animations - minimal for PDF compatibility */
 
 /* Static gradients */
 .gradient-animated,
 .gradient-text-animated {
-  background-position: 50% 50% !important;
+  background-position: 50% 50%;
 }
 
-/* Hide animated elements */
-.animated-blob,
-.particle,
-.wave {
-  display: none !important;
+/* Hide animated elements in print */
+@media print {
+  .animated-blob,
+  .particle,
+  .wave {
+    display: none;
+  }
 }
 
 /* Static glow effect */

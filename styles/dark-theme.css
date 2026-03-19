@@ -1,75 +1,54 @@
 /* Dark Theme for One Purple Unicorn Pro */
-
-:root {
-  /* Dark Theme Colors */
-  --bg-primary: #282c34;      /* Dark background */
-  --bg-secondary: #2e323b;    /* Elevated sections */
-  --bg-tertiary: #3e4452;     /* Selection/hover */
-  --bg-code: #21252b;         /* Code blocks */
-  --bg-overlay: rgba(40, 44, 52, 0.95);
-
-  /* Dark Theme Text */
-  --text-primary: #abb2bf;    /* Main text - light gray */
-  --text-bright: #e6e6e6;     /* Bright text - almost white */
-  --text-secondary: #939aa3;  /* Secondary text - medium gray */
-  --text-muted: #5c6370;      /* Muted/comments - dark gray */
-  --text-disabled: #4b5263;   /* Disabled state */
-
-  /* Purple-Blue Color Scheme */
-  --purple-primary: #c678dd;   /* Main purple */
-  --purple-secondary: #b665cb;
-  --blue-primary: #61afef;     /* Main blue */
-  --blue-secondary: #4d9fdf;
-
-  /* Accent Colors */
-  --accent-success: #98c379;   /* Green */
-  --accent-warning: #e5c07b;   /* Yellow */
-  --accent-error: #e06c75;     /* Red */
-  --accent-info: var(--blue-primary);
-
-  /* Gradients - Purple to Blue */
-  --gradient-primary: linear-gradient(135deg, var(--purple-primary), var(--blue-primary));
-  --gradient-secondary: linear-gradient(135deg, var(--purple-secondary), var(--blue-secondary));
-  --gradient-subtle: linear-gradient(135deg, #3e4452, #2e323b);
-
-  /* Borders */
-  --border-default: rgba(171, 178, 191, 0.15);
-  --border-subtle: rgba(171, 178, 191, 0.08);
-  --border-focus: var(--blue-primary);
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-
-  /* Focus ring */
-  --focus-ring: 0 0 0 2px var(--blue-primary);
-}
+/* Applied when Slidev toggles html.dark class */
 
 /* Dark theme specific adjustments */
-body {
+html.dark .slidev-layout {
   background: var(--bg-primary);
   color: var(--text-primary);
 }
 
+html.dark .slidev-layout h2 {
+  color: var(--primary-400);
+}
+
+html.dark .slidev-layout h3 {
+  color: var(--secondary-400);
+}
+
+html.dark .slidev-layout h4 {
+  color: var(--primary-300);
+}
+
+html.dark .slidev-layout p {
+  color: var(--text-secondary);
+}
+
+html.dark .slidev-layout li {
+  color: var(--text-secondary);
+}
+
+html.dark .slidev-layout table {
+  background: var(--bg-secondary);
+}
+
+html.dark .slidev-layout thead {
+  background: var(--gradient-subtle);
+}
+
+html.dark .slidev-layout th {
+  color: var(--text-primary);
+}
+
+html.dark .slidev-layout td {
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-default);
+}
+
+html.dark .slidev-layout tbody tr:hover {
+  background: var(--bg-tertiary);
+}
+
 /* Code syntax highlighting for dark theme */
-.shiki.dark {
+html.dark .shiki {
   background: var(--bg-code) !important;
-}
-
-.shiki.dark .token.keyword {
-  color: var(--purple-primary);
-}
-
-.shiki.dark .token.string {
-  color: var(--accent-success);
-}
-
-.shiki.dark .token.function {
-  color: var(--blue-primary);
-}
-
-.shiki.dark .token.comment {
-  color: var(--text-muted);
 }

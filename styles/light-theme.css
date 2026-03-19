@@ -19,83 +19,79 @@
 }
 
 /* ============================================
-   Light Layout Base - ALL slides default to white
+   Light Layout Base - content slides default to white
    ============================================ */
-.slidev-layout {
-  background: var(--light-bg) !important;
-  color: var(--light-text-primary) !important;
+html:not(.dark) .slidev-layout {
+  background: var(--light-bg);
+  color: var(--light-text-primary);
 }
 
-/* Override for ALL layout types to be light by default */
-.slidev-layout.default,
-.slidev-layout.two-cols,
-.slidev-layout.three-cols,
-.slidev-layout.image-right,
-.slidev-layout.image-left,
-.slidev-layout.fact,
-.slidev-layout.statement,
-.slidev-layout.quote,
-.slidev-layout.full,
-.slidev-layout.iframe {
-  background: var(--light-bg) !important;
-  color: var(--light-text-primary) !important;
+/* Override for content layout types to be light */
+html:not(.dark) .slidev-layout.default,
+html:not(.dark) .slidev-layout.two-cols,
+html:not(.dark) .slidev-layout.three-cols,
+html:not(.dark) .slidev-layout.image-right,
+html:not(.dark) .slidev-layout.image-left,
+html:not(.dark) .slidev-layout.fact,
+html:not(.dark) .slidev-layout.statement,
+html:not(.dark) .slidev-layout.quote,
+html:not(.dark) .slidev-layout.full,
+html:not(.dark) .slidev-layout.iframe {
+  background: var(--light-bg);
+  color: var(--light-text-primary);
 }
 
-/* ONLY these specific layouts get dark theme */
-.slidev-layout.cover.dark-theme,
-.slidev-layout.intro.dark-theme,
-.slidev-layout.section.dark-theme,
-.slidev-layout.end.dark-theme,
-.slidev-layout.center.dark-theme {
-  background: var(--one-dark-bg) !important;
-  color: var(--one-dark-fg-bright) !important;
+/* Special layouts keep dark background */
+html:not(.dark) .slidev-layout.cover,
+html:not(.dark) .slidev-layout.intro,
+html:not(.dark) .slidev-layout.section,
+html:not(.dark) .slidev-layout.end {
+  background: var(--dark-bg);
+  color: var(--one-dark-fg-bright);
 }
 
 /* Also apply to slide container in preview/overview */
-.slidev-overview .slidev-layout:not(.dark-theme),
-.slidev-presenter .slidev-layout:not(.dark-theme) {
-  background: var(--light-bg) !important;
-  color: var(--light-text-primary) !important;
+html:not(.dark) .slidev-overview .slidev-layout:not(.cover):not(.intro):not(.section):not(.end),
+html:not(.dark) .slidev-presenter .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) {
+  background: var(--light-bg);
+  color: var(--light-text-primary);
 }
 
 /* ============================================
    Typography for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) h1 {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) h1 {
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) h2 {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) h2 {
   color: var(--one-dark-blue);
 }
 
-.slidev-layout:not(.dark-theme) h3 {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) h3 {
   color: var(--one-dark-magenta);
 }
 
-.slidev-layout:not(.dark-theme) h4 {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) h4 {
   color: var(--light-text-secondary);
 }
 
-.slidev-layout:not(.dark-theme) p {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) p {
   color: var(--light-text-secondary);
 }
 
-.slidev-layout:not(.dark-theme) strong {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) strong {
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) em {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) em {
   color: var(--one-dark-yellow-dark);
 }
 
 /* ============================================
    Code Blocks - Dark Theme (One Dark Pro)
    ============================================ */
-/* Code blocks stay dark on light slides - handled by code-theme.css */
-/* Shiki handles syntax highlighting colors - don't override span styles */
-
-.slidev-layout:not(.dark-theme) :not(pre) > code {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) :not(pre) > code {
   background: var(--light-bg-tertiary);
   color: var(--one-dark-blue);
   border: 1px solid var(--light-border);
@@ -104,55 +100,55 @@
 /* ============================================
    Links for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) a {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) a {
   color: var(--one-dark-blue);
 }
 
-.slidev-layout:not(.dark-theme) a:hover {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) a:hover {
   color: var(--one-dark-cyan);
 }
 
 /* ============================================
    Lists for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) li {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) li {
   color: var(--light-text-secondary);
 }
 
-.slidev-layout:not(.dark-theme) li::marker {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) li::marker {
   color: var(--one-dark-blue);
 }
 
 /* ============================================
    Tables for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) table {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) table {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-.slidev-layout:not(.dark-theme) thead {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) thead {
   background: var(--light-bg-tertiary);
 }
 
-.slidev-layout:not(.dark-theme) th {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) th {
   color: var(--light-text-primary);
   border-bottom: 2px solid var(--light-border);
 }
 
-.slidev-layout:not(.dark-theme) td {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) td {
   color: var(--light-text-secondary);
   border-bottom: 1px solid var(--light-border-light);
 }
 
-.slidev-layout:not(.dark-theme) tbody tr:hover {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) tbody tr:hover {
   background: var(--light-bg-tertiary);
 }
 
 /* ============================================
    Blockquotes for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) blockquote {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) blockquote {
   border-left: 3px solid var(--one-dark-blue);
   background: var(--light-bg-secondary);
   color: var(--light-text-muted);
@@ -161,44 +157,44 @@
 /* ============================================
    Cards and Containers for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) .card {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .card {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-.slidev-layout:not(.dark-theme) .gradient-card {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .gradient-card {
   background: var(--light-bg-secondary);
 }
 
-.slidev-layout:not(.dark-theme) .glass-gradient {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .glass-gradient {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid var(--light-border);
 }
 
-.slidev-layout:not(.dark-theme) .gradient-border {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .gradient-border {
   background: var(--light-bg);
 }
 
 /* ============================================
    Alerts for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) .alert-info {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .alert-info {
   background: rgba(97, 175, 239, 0.08);
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) .alert-success {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .alert-success {
   background: rgba(152, 195, 121, 0.08);
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) .alert-warning {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .alert-warning {
   background: rgba(229, 192, 123, 0.08);
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) .alert-error {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .alert-error {
   background: rgba(224, 108, 117, 0.08);
   color: var(--light-text-primary);
 }
@@ -206,43 +202,39 @@
 /* ============================================
    Buttons for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) .btn-gradient {
-  /* Gradient buttons stay the same */
-}
-
-.slidev-layout:not(.dark-theme) button:not(.btn-gradient):not(.btn-gradient-subtle) {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) button:not(.btn-gradient):not(.btn-gradient-subtle) {
   background: var(--light-bg-tertiary);
   color: var(--light-text-primary);
   border: 1px solid var(--light-border);
 }
 
-.slidev-layout:not(.dark-theme) button:not(.btn-gradient):not(.btn-gradient-subtle):hover {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) button:not(.btn-gradient):not(.btn-gradient-subtle):hover {
   background: var(--light-bg-secondary);
 }
 
 /* ============================================
    Utility overrides for Light Theme
    ============================================ */
-.slidev-layout:not(.dark-theme) .text-muted {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .text-muted {
   color: var(--light-text-muted);
 }
 
-.slidev-layout:not(.dark-theme) .text-primary {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .text-primary {
   color: var(--light-text-primary);
 }
 
-.slidev-layout:not(.dark-theme) .text-secondary {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .text-secondary {
   color: var(--light-text-secondary);
 }
 
-.slidev-layout:not(.dark-theme) .bg-primary {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .bg-primary {
   background: var(--light-bg);
 }
 
-.slidev-layout:not(.dark-theme) .bg-secondary {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .bg-secondary {
   background: var(--light-bg-secondary);
 }
 
-.slidev-layout:not(.dark-theme) .bg-tertiary {
+html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end) .bg-tertiary {
   background: var(--light-bg-tertiary);
 }

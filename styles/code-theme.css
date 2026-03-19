@@ -2,6 +2,7 @@
 /* Background forced dark. Syntax colors provided by custom Shiki theme (setup/shiki.ts). */
 
 /* Dark background + fallback text color for all code blocks */
+/* !important needed to override Slidev's built-in Shiki background */
 pre,
 .shiki,
 .slidev-code {
@@ -9,15 +10,15 @@ pre,
   color: #c0caf5;
 }
 
-/* Inline code - purple gradient (not inside pre) */
-:not(pre) > code {
-  background: linear-gradient(135deg, #f3f0ff 0%, #fdf4ff 100%) !important;
-  color: #8b5cf6 !important;
-  border: 1px solid rgba(139, 92, 246, 0.2) !important;
-  border-radius: 0.375rem !important;
-  padding: 0.125rem 0.375rem !important;
-  font-weight: 500 !important;
-  font-size: 0.9em !important;
+/* Inline code - purple tint */
+.slidev-layout :not(pre) > code {
+  background: linear-gradient(135deg, #f3f0ff 0%, #fdf4ff 100%);
+  color: #8b5cf6;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  font-weight: 500;
+  font-size: 0.9em;
 }
 
 /* Scrollbar - dark to match code block */

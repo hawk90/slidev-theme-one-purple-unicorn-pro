@@ -113,7 +113,7 @@
 }
 
 /* Dark mode secondary */
-.dark-theme .btn-macos-secondary {
+html.dark .btn-macos-secondary {
   background: linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 100%);
   border: 1px solid #545456;
   color: #FFFFFF;
@@ -164,7 +164,7 @@
   color: var(--light-text-primary);
 }
 
-.dark-theme .btn-macos-toolbar:hover {
+html.dark .btn-macos-toolbar:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
@@ -339,16 +339,16 @@
 /* ============================================
    Dark Theme Adjustments
    ============================================ */
-.dark-theme .btn-macos {
+html.dark .btn-macos {
   background: var(--macos-dark-button-bg);
   border-color: var(--macos-dark-button-border);
   color: rgba(255, 255, 255, 0.85);
 }
 
-.dark-theme .btn-macos:hover {
+html.dark .btn-macos:hover {
   background: var(--macos-dark-button-bg-hover);
 }
 
-.dark-theme .btn-macos:active {
+html.dark .btn-macos:active {
   background: rgba(255, 255, 255, 0.2);
 }

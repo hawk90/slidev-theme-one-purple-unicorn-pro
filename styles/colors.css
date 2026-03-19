@@ -3,16 +3,38 @@
 :root {
   /* One Dark Pro Base Colors */
   --one-dark-bg: #2e323b;
+  --one-dark-bg-light: #3e4452;
   --one-dark-fg: #282c34;
+  --one-dark-fg-bright: #e6e6e6;
   --one-dark-green: #98c379;
   --one-dark-yellow: #e5c07b;
+  --one-dark-yellow-dark: #d19a66;
   --one-dark-red: #e06c75;
   --one-dark-blue: #61afef;
   --one-dark-cyan: #56b6c2;
   --one-dark-purple: #c678dd;
+  --one-dark-magenta: #c678dd;
   --one-dark-gray: #5c6370;
   --one-dark-buffer: #939aa3;
   --one-dark-selection: #3e4452;
+
+  /* Primary color scale (purple) */
+  --primary-100: #f2d9ff;
+  --primary-300: #d98eff;
+  --primary-400: #c678dd;
+  --primary-500: #b665cb;
+  --primary-700: #8e449c;
+  --primary-800: #6b3377;
+  --primary-900: #482252;
+
+  /* Secondary color scale (blue) */
+  --secondary-400: #61afef;
+
+  /* Dark background alias */
+  --dark-bg: #1a1b26;
+  --dark-bg-light: #24283b;
+  --dark-fg: #a9b1d6;
+  --dark-fg-bright: #c0caf5;
 
   /* Extended Palette - Blue Variations */
   --blue-50: #e6f3ff;
@@ -64,6 +86,7 @@
   --gradient-accent: linear-gradient(135deg, var(--one-dark-cyan), var(--one-dark-green));
   --gradient-warm: linear-gradient(135deg, var(--one-dark-yellow), var(--one-dark-red));
   --gradient-subtle: linear-gradient(135deg, #3e4452, #2e323b);
+  --gradient-vibrant: linear-gradient(135deg, #61afef, #c678dd, #e06c75);
 
   /* Syntax Highlighting */
   --syntax-keyword: var(--one-dark-purple);

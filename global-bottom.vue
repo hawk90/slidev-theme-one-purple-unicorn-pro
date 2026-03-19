@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isHidden" class="slide-indicator">
-    {{ $nav.currentPage }} / {{ $nav.total }}
+    {{ currentPage }} / {{ total }}
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 
-const { currentLayout } = useNav()
+const { currentPage, total, currentLayout } = useNav()
 
 const hiddenLayouts = ['cover', 'section', 'intro', 'end']
 

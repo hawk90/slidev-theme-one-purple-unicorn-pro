@@ -1,7 +1,4 @@
 /* Dark Unicorn Theme - Main Styles */
-@import './colors.css';
-@import './gradients.css';
-@import './animations.css';
 
 /* ============================================
    Base Layout
@@ -95,9 +92,9 @@ p {
 }
 
 strong, b {
-  color: #ffcc66 !important;  /* Bright yellow-orange for maximum contrast */
-  font-weight: 800 !important;  /* Extra bold */
-  text-shadow: 0 0 2px rgba(255, 204, 102, 0.3);  /* Glow effect */
+  color: #ffcc66;
+  font-weight: 800;
+  text-shadow: 0 0 2px rgba(255, 204, 102, 0.3);
 }
 
 em {
@@ -204,13 +201,13 @@ ul, ol {
 }
 
 ul {
-  list-style-type: disc !important;
-  list-style-position: outside !important;
+  list-style-type: disc;
+  list-style-position: outside;
 }
 
 ol {
-  list-style-type: decimal !important;
-  list-style-position: outside !important;
+  list-style-type: decimal;
+  list-style-position: outside;
 }
 
 li {
@@ -218,13 +215,12 @@ li {
   color: var(--text-secondary);
   line-height: 1.25;  /* Very tight for list items */
   font-size: 0.9rem;  /* Smaller font */
-  list-style: inherit !important;
-  display: list-item !important;
+  list-style: inherit;
+  display: list-item;
 }
 
 li::marker {
-  color: var(--primary-500) !important;
-  content: normal !important;
+  color: var(--primary-500);
 }
 
 /* ============================================
@@ -449,10 +445,10 @@ blockquote p:last-child {
 /* Slidev's two-cols layout uses specific structure */
 .slidev-layout.two-cols .two-cols-container,
 .slidev-layout .two-columns {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 4rem !important;  /* Increased gap between columns */
-  align-items: start !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
   height: 100%;
   padding: 0 2rem;  /* Add horizontal padding to the container */
 }
@@ -479,14 +475,14 @@ blockquote p:last-child {
 /* Ensure content doesn't overlap */
 .slidev-layout.two-cols > *,
 .two-columns > * {
-  position: relative !important;
-  width: 100% !important;
+  position: relative;
+  width: 100%;
 }
 
 /* Fix any absolute positioning issues */
 .slidev-layout.two-cols {
-  position: relative !important;
-  overflow: hidden !important;
+  position: relative;
+  overflow: hidden;
 }
 
 /* ============================================
