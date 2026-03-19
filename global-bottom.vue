@@ -1,8 +1,19 @@
 <template>
-  <div class="slide-indicator">
+  <div v-if="!isHidden" class="slide-indicator">
     {{ $nav.currentPage }} / {{ $nav.total }}
   </div>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useNav } from '@slidev/client'
+
+const { currentLayout } = useNav()
+
+const hiddenLayouts = ['cover', 'section', 'intro', 'end']
+
+const isHidden = computed(() => hiddenLayouts.includes(currentLayout.value))
+</script>
 
 <style scoped>
 .slide-indicator {
