@@ -30,6 +30,9 @@ Thumbs.db
 coverage/
 *.lcov
 
+# Example
+example/package-lock.json
+
 # Misc
 *.log
 .cache/
