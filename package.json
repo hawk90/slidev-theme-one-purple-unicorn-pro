@@ -23,6 +23,8 @@
     "styles/**/*",
     "setup/**/*",
     "uno.config.ts",
+    "global-top.vue",
+    "global-bottom.vue",
     "styles.css",
     "README.md"
   ],
