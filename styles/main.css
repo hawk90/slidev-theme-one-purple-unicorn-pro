@@ -50,12 +50,17 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25rem;  /* Slidev-appropriate size */
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-400);
-  margin: 0 0 0.3rem;  /* Minimal bottom margin */
+  margin: 1.2rem 0 0.5rem;  /* top: section separation, bottom: room for ::after */
   position: relative;
-  padding: 0.5rem 0 0.25rem;  /* Less padding */
+  padding: 0.3rem 0 0.4rem;  /* bottom padding for ::after decoration */
+}
+
+/* First h2 right after h1 needs no top margin */
+h1 + h2 {
+  margin-top: 0;
 }
 
 h2::after {
@@ -70,25 +75,29 @@ h2::after {
 }
 
 h3 {
-  font-size: 1.1rem;  /* Just slightly larger than body */
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--secondary-400);
-  margin: 0 0 0.25rem;  /* Minimal margin */
-  padding: 0.4rem 0 0;  /* Less top padding */
+  margin: 0.8rem 0 0.3rem;  /* top: subsection separation */
+}
+
+/* First h3 right after h2 needs less top margin */
+h2 + h3 {
+  margin-top: 0.3rem;
 }
 
 h4 {
-  font-size: 1rem;  /* Same as body text but bold */
+  font-size: 1rem;
   font-weight: 600;
   color: var(--primary-300);
-  margin: 0.2rem 0;  /* Minimal margins */
+  margin: 0.5rem 0 0.2rem;
 }
 
 p {
-  line-height: 1.3;  /* Much tighter for general text */
-  margin-bottom: 0.4rem;  /* Minimal spacing */
+  line-height: 1.4;
+  margin: 0.5rem 0;
   color: var(--text-secondary);
-  font-size: 0.9rem;  /* Smaller font for more content */
+  font-size: 0.9rem;
 }
 
 strong, b {
@@ -116,12 +125,29 @@ pre {
   background: var(--bg-code);
   border: 1px solid var(--border-default);
   border-radius: 0.75rem;
-  padding: 0.6rem 0.75rem;  /* Less vertical padding */
-  margin: 0.4rem 0;  /* Minimal margin */
+  padding: 0.6rem 0.75rem;
+  margin: 0.5rem 0;
   overflow-x: auto;
   box-shadow: var(--shadow-lg);
   position: relative;
-  line-height: 1.3;  /* Tighter line spacing in code blocks */
+  line-height: 1.3;
+}
+
+/* Adjacent code blocks need more separation */
+.slidev-layout pre + pre {
+  margin-top: 0.8rem;
+}
+
+/* Code block after heading needs breathing room */
+.slidev-layout h2 + pre,
+.slidev-layout h3 + pre {
+  margin-top: 0.4rem;
+}
+
+/* Heading after code block: new section feel */
+.slidev-layout pre + h2,
+.slidev-layout pre + h3 {
+  margin-top: 1.2rem;
 }
 
 /* Gradient border top */
@@ -196,7 +222,7 @@ a:hover::after {
    Lists
    ============================================ */
 ul, ol {
-  margin: 0.5rem 0;  /* Much less vertical space for lists */
+  margin: 0.5rem 0;
   padding-left: 1.5rem;
 }
 
@@ -211,10 +237,10 @@ ol {
 }
 
 li {
-  margin: 0.2rem 0;  /* Minimal vertical spacing */
+  margin: 0.3rem 0;
   color: var(--text-secondary);
-  line-height: 1.25;  /* Very tight for list items */
-  font-size: 0.9rem;  /* Smaller font */
+  line-height: 1.4;
+  font-size: 0.9rem;
   list-style: inherit;
   display: list-item;
 }

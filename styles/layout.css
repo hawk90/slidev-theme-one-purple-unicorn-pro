@@ -1,32 +1,11 @@
 /* Layout-specific styles for One Dark Unicorn Pro */
+/* General typography is in main.css. This file only handles layout-specific overrides. */
 
 /* ============================================
-   Tables
+   Tables (layout-specific overrides)
    ============================================ */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-}
 
-table th {
-  background: var(--one-dark-bg-light);
-  color: var(--one-dark-fg-bright);
-  padding: 0.75rem;
-  text-align: left;
-  font-weight: 600;
-}
-
-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-table tr:hover {
-  background: #f9fafb;
-}
-
-/* Dark theme tables */
+/* Dark theme tables for special layouts */
 .slidev-layout.cover table th,
 .slidev-layout.intro table th,
 .slidev-layout.end table th,
@@ -51,26 +30,10 @@ table tr:hover {
 }
 
 /* ============================================
-   Lists
+   Lists (layout-specific overrides)
    ============================================ */
-ul, ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
 
-ul li, ol li {
-  margin: 0.5rem 0;
-}
-
-ul li::marker {
-  color: var(--one-dark-blue);
-}
-
-ol li::marker {
-  color: var(--one-dark-magenta);
-}
-
-/* Dark theme lists */
+/* Dark theme lists for special layouts */
 .slidev-layout.cover ul li::marker,
 .slidev-layout.intro ul li::marker,
 .slidev-layout.end ul li::marker,
@@ -86,16 +49,8 @@ ol li::marker {
 }
 
 /* ============================================
-   Blockquotes
+   Blockquotes (layout-specific overrides)
    ============================================ */
-blockquote {
-  border-left: 4px solid var(--one-dark-blue);
-  padding-left: 1rem;
-  margin: 1rem 0;
-  font-style: italic;
-  color: #6b7280;
-}
-
 .slidev-layout.cover blockquote,
 .slidev-layout.intro blockquote,
 .slidev-layout.end blockquote,
@@ -105,19 +60,8 @@ blockquote {
 }
 
 /* ============================================
-   Links
+   Links (layout-specific overrides)
    ============================================ */
-a {
-  color: var(--one-dark-blue);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: var(--one-dark-magenta);
-  text-decoration: underline;
-}
-
 .slidev-layout.cover a,
 .slidev-layout.intro a,
 .slidev-layout.end a,
@@ -133,18 +77,8 @@ a:hover {
 }
 
 /* ============================================
-   Emphasis
+   Emphasis (layout-specific overrides)
    ============================================ */
-strong {
-  font-weight: 600;
-  color: var(--one-dark-red);
-}
-
-em {
-  font-style: italic;
-  color: var(--one-dark-green);
-}
-
 .slidev-layout.cover strong,
 .slidev-layout.intro strong,
 .slidev-layout.end strong,
@@ -166,6 +100,6 @@ hr {
   border: none;
   height: 2px;
   background: var(--gradient-primary);
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   border-radius: 1px;
 }

@@ -56,16 +56,21 @@
   font-size: 1.3em;
   font-weight: 600;
   color: #8b5cf6;
-  margin: 0.5rem 0 0.3rem;
+  margin: 1.2rem 0 0.5rem;
   text-align: left;
   line-height: 1.2;
+}
+
+/* First h2 after h1 needs no top margin */
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 + h2 {
+  margin-top: 0;
 }
 
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h3 {
   font-size: 1.15em;
   font-weight: 500;
   color: #6366f1;
-  margin: 0.4rem 0 0.25rem;
+  margin: 0.8rem 0 0.3rem;
   text-align: left;
   line-height: 1.2;
 }
@@ -74,14 +79,14 @@
   font-size: 1.1em;
   font-weight: 500;
   color: #a78bfa;
-  margin: 1rem 0 0.5rem;
+  margin: 0.5rem 0 0.2rem;
 }
 
 /* ========== Typography - Body Text ========== */
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section) p {
   color: #4b5563;
-  line-height: 1.25;
-  margin: 0.3rem 0;
+  line-height: 1.4;
+  margin: 0.5rem 0;
   text-align: left;
   font-size: 0.95em;
 }
@@ -89,7 +94,7 @@
 /* ========== Lists ========== */
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ul,
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ol {
-  margin: 0.3rem 0;
+  margin: 0.5rem 0;
   padding-left: 1.5rem;
   text-align: left;
 }
@@ -104,8 +109,8 @@
 
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section) li {
   color: #4b5563;
-  line-height: 1.2;
-  margin: 0.15rem 0;
+  line-height: 1.4;
+  margin: 0.3rem 0;
   text-align: left;
   font-size: 0.95em;
   display: list-item;
@@ -125,7 +130,6 @@
   line-height: 1.25;
   overflow-x: auto;
   padding: 0.5rem;
-  margin: 0.4rem 0;
 }
 
 .slidev-layout code {
@@ -262,32 +266,32 @@
   font-size: 1.3em;
   font-weight: 600;
   color: #8b5cf6;
-  margin: 1rem 0 0.75rem;
+  margin: 0.8rem 0 0.4rem;
 }
 
 .slidev-layout.two-cols h3 {
   font-size: 1.1em;
   font-weight: 500;
   color: #6366f1;
-  margin: 0.75rem 0 0.5rem;
+  margin: 0.5rem 0 0.3rem;
 }
 
 .slidev-layout.two-cols p {
   color: #4b5563;
-  line-height: 1.6;
-  margin: 0.75rem 0;
+  line-height: 1.4;
+  margin: 0.5rem 0;
 }
 
 .slidev-layout.two-cols ul,
 .slidev-layout.two-cols ol {
-  margin: 0.75rem 0;
+  margin: 0.5rem 0;
   padding-left: 1.5rem;
 }
 
 .slidev-layout.two-cols li {
   color: #4b5563;
-  line-height: 1.6;
-  margin: 0.25rem 0;
+  line-height: 1.4;
+  margin: 0.3rem 0;
 }
 
 /* ========== Tables ========== */
@@ -342,22 +346,4 @@ tr:last-child td {
 .slidev-layout h5,
 .slidev-layout h6 {
   line-height: 1.3;
-}
-
-.slidev-layout p {
-  color: #4b5563;
-  line-height: 1.6;
-  margin: 1rem 0;
-}
-
-.slidev-layout ul,
-.slidev-layout ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.slidev-layout li {
-  color: #4b5563;
-  line-height: 1.6;
-  margin: 0.5rem 0;
 }
