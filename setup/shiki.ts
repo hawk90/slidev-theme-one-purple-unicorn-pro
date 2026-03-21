@@ -1,4 +1,5 @@
 import { defineShikiSetup } from '@slidev/types'
+import { cudaTransformer } from './cuda-transformer'
 
 const purpleUnicornTheme = {
   name: 'one-purple-unicorn',
@@ -11,7 +12,7 @@ const purpleUnicornTheme = {
       scope: ['comment', 'punctuation.definition.comment'],
       settings: { foreground: '#7982b4', fontStyle: 'italic' },
     },
-    // --- Keywords ---
+    // --- Keywords (control flow, storage modifiers) ---
     {
       scope: [
         'keyword',
@@ -23,9 +24,31 @@ const purpleUnicornTheme = {
         'keyword.operator.typeof',
         'keyword.operator.void',
         'keyword.operator.instanceof',
-        'storage',
-        'storage.type',
         'storage.modifier',
+      ],
+      settings: { foreground: '#c678dd' },
+    },
+    // --- Types: storage.type → yellow (int, float, void, etc.) ---
+    {
+      scope: [
+        'storage.type',
+      ],
+      settings: { foreground: '#e5c07b' },
+    },
+    // --- Declaration keywords (class, struct, enum, union) → purple ---
+    {
+      scope: [
+        'storage.type.class.declare',
+        'storage.type.class.declare.cpp',
+        'storage.type.struct.declare',
+        'storage.type.struct.declare.cpp',
+        'storage.type.enum.declare',
+        'storage.type.enum.declare.cpp',
+        'storage.type.union.declare',
+        'storage.type.union.declare.cpp',
+        'storage.type.namespace.definition.cpp',
+        'storage.type.namespace.directive.cpp',
+        'storage.type.template.cpp',
       ],
       settings: { foreground: '#c678dd' },
     },
@@ -221,14 +244,9 @@ const purpleUnicornTheme = {
       ],
       settings: { foreground: '#d19a66' },
     },
-    // --- C++ built-in types (int, float, void, size_t, etc.) ---
+    // --- POSIX/support types (size_t, etc.) ---
     {
       scope: [
-        'storage.type.built-in',
-        'storage.type.built-in.cpp',
-        'storage.type.built-in.primitive.cpp',
-        'storage.type.integral.cpp',
-        'storage.type.primitive',
         'support.type.posix-reserved',
         'support.type.posix-reserved.cpp',
         'keyword.other.type',
@@ -389,7 +407,7 @@ const purpleUnicornTheme = {
         'punctuation.accessor',
         'punctuation.separator',
       ],
-      settings: { foreground: '#56b6c2' },
+      settings: { foreground: '#c8ccd4' },
     },
     // --- Brackets, braces, parens ---
     {
@@ -557,6 +575,93 @@ const purpleUnicornTheme = {
       ],
       settings: { foreground: '#98c379' },
     },
+    // =============================================
+    // CUDA-specific scopes (distinct from C++ colors)
+    // =============================================
+    // --- CUDA execution qualifiers (__global__, __device__, etc.) ---
+    {
+      scope: [
+        'storage.modifier.cuda',
+        'storage.modifier.cuda.launch-bounds',
+      ],
+      settings: { foreground: '#ff6188', fontStyle: 'bold' },
+    },
+    // --- CUDA kernel launch <<<>>> ---
+    {
+      scope: [
+        'punctuation.section.kernel-launch.begin.cuda',
+        'punctuation.section.kernel-launch.end.cuda',
+      ],
+      settings: { foreground: '#ff6188', fontStyle: 'bold' },
+    },
+    // --- CUDA built-in variables (threadIdx, blockIdx, etc.) ---
+    {
+      scope: ['variable.language.cuda'],
+      settings: { foreground: '#ff6188' },
+    },
+    // --- CUDA built-in variable members (.x, .y, .z) ---
+    {
+      scope: ['variable.other.member.cuda'],
+      settings: { foreground: '#fc9867' },
+    },
+    // --- CUDA accessor (dot before .x .y .z) ---
+    {
+      scope: ['punctuation.accessor.cuda'],
+      settings: { foreground: '#abb2bf' },
+    },
+    // --- Array index brackets [] ---
+    {
+      scope: [
+        'punctuation.definition.index.begin.cuda',
+        'punctuation.definition.index.end.cuda',
+      ],
+      settings: { foreground: '#e5c07b' },
+    },
+    // --- Variable used as array index ---
+    {
+      scope: ['variable.other.index.cuda'],
+      settings: { foreground: '#e5c07b', fontStyle: 'italic' },
+    },
+    // --- Operator inside index expression ---
+    {
+      scope: ['keyword.operator.index.cuda'],
+      settings: { foreground: '#56b6c2' },
+    },
+    // --- Number inside index ---
+    {
+      scope: ['constant.numeric.index.cuda'],
+      settings: { foreground: '#d19a66' },
+    },
+    // --- CUDA API functions ---
+    {
+      scope: [
+        'support.function.cuda.memory',
+        'support.function.cuda.device',
+        'support.function.cuda.stream',
+        'support.function.cuda.event',
+        'support.function.cuda.error',
+        'support.function.cuda.occupancy',
+        'support.function.cuda.graph',
+        'support.function.cuda.texture',
+        'support.function.cuda.misc',
+      ],
+      settings: { foreground: '#78dce8' },
+    },
+    // --- CUDA math intrinsics ---
+    {
+      scope: ['support.function.cuda.math'],
+      settings: { foreground: '#78dce8', fontStyle: 'italic' },
+    },
+    // --- CUDA types (dim3, cudaError_t, etc.) ---
+    {
+      scope: ['storage.type.cuda'],
+      settings: { foreground: '#a9dc76' },
+    },
+    // --- CUDA enum constants ---
+    {
+      scope: ['constant.language.cuda'],
+      settings: { foreground: '#fc9867' },
+    },
   ],
 }
 
@@ -565,4 +670,7 @@ export default defineShikiSetup(() => ({
     light: purpleUnicornTheme,
     dark: purpleUnicornTheme,
   },
+  transformers: [
+    cudaTransformer(),
+  ],
 }))

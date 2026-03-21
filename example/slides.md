@@ -138,6 +138,14 @@ __global__ void vectorAdd(float *a, float *b, float *c, int n) {
         c[idx] = a[idx] + b[idx];
     }
 }
+
+int main() {
+    float *d_a;
+    cudaMalloc(&d_a, sizeof(float) * 1024);
+    vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
+    cudaDeviceSynchronize();
+    cudaFree(d_a);
+}
 ```
 
 ---
