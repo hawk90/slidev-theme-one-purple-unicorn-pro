@@ -1,5 +1,6 @@
 // CUDA Syntax Transformer for Shiki
-// Only runs on cpp code blocks, adds CUDA-specific highlighting on top of C++ base
+// Adds CUDA-specific highlighting on top of C++ base colors
+// CUDA patterns are unique enough to apply to all code blocks safely
 
 import type { ShikiTransformer } from 'shiki'
 
@@ -10,7 +11,6 @@ interface TokenDef {
   italic?: boolean
 }
 
-// CUDA-only tokens (does NOT include C++ base - that's handled by shiki theme)
 const cudaTokens: TokenDef[] = [
   // --- CUDA execution qualifiers ---
   {
@@ -18,57 +18,16 @@ const cudaTokens: TokenDef[] = [
     color: '#ff6188',
     bold: true,
   },
-  // --- Kernel launch syntax <<<>>> ---
-  // Note: shiki splits <<< into << + <, so match partial sequences too
-  {
-    pattern: />{3}|<{2,3}/g,
-    color: '#ff6188',
-    bold: true,
-  },
-  // Kernel function name is handled in pre() hook (cross-span matching)
-
-  // --- ALL_CAPS constants (tree-sitter: @constant) ---
-  {
-    pattern: /\b([A-Z][A-Z0-9_]{2,})\b/g,
-    color: '#d19a66',
-    bold: true,
-  },
-  // --- Preprocessor directives (#define, #include, etc.) ---
-  {
-    pattern: /#\s*(include|define|ifdef|ifndef|endif|if|elif|else|pragma|undef|error|warning)\b/g,
-    color: '#c678dd',
-  },
-  // --- Macro function-like names after #define (tree-sitter: @function.special) ---
-  {
-    pattern: /(?<=#define\s+)([A-Z_][A-Z0-9_]*)/g,
-    color: '#61afef',
-    bold: true,
-  },
-  // --- Arrow operator -> (tree-sitter: @operator) ---
-  {
-    pattern: /->/g,
-    color: '#c678dd',
-  },
-  // --- Scope resolution :: ---
-  {
-    pattern: /::/g,
-    color: '#c678dd',
-  },
   // --- CUDA built-in variables ---
   {
     pattern: /\b(threadIdx|blockIdx|blockDim|gridDim|warpSize)\b/g,
     color: '#ff6188',
   },
-  // --- Member access .x .y .z .w ---
+  // --- CUDA built-in member access (threadIdx.x, blockDim.y, etc.) ---
+  // Only match .x/.y/.z/.w when preceded by a CUDA built-in variable name
   {
-    pattern: /\.([xyzw])\b/g,
-    color: '#fc9867',
-  },
-  // --- Array index content (inside []) ---
-  {
-    pattern: /(?<=\[)[^\]]+(?=\])/g,
-    color: '#e5c07b',
-    italic: true,
+    pattern: /\b(threadIdx|blockIdx|blockDim|gridDim)\.(x|y|z|w)\b/g,
+    color: '#ff6188',
   },
   // --- Synchronization & warp intrinsics ---
   {
@@ -147,9 +106,8 @@ function processSpan(span: any) {
     }
 
     const text = child.value
-
-    // Find all matches
     const matches: { start: number; end: number; token: TokenDef }[] = []
+
     for (const token of cudaTokens) {
       token.pattern.lastIndex = 0
       let m
@@ -160,7 +118,7 @@ function processSpan(span: any) {
 
     matches.sort((a, b) => a.start - b.start)
 
-    // Remove overlapping (keep first)
+    // Remove overlapping (keep first match)
     const filtered: typeof matches = []
     let lastEnd = 0
     for (const m of matches) {
@@ -199,14 +157,14 @@ function processSpan(span: any) {
   span.children = newChildren
 }
 
-// Extract text from a HAST node recursively
+// Extract text from a HAST node
 function getNodeText(node: any): string {
   if (node.type === 'text') return node.value || ''
   if (node.children) return node.children.map(getNodeText).join('')
   return ''
 }
 
-// Find all spans in a line (flattened)
+// Collect all span elements in a node tree
 function collectSpans(node: any, result: any[] = []): any[] {
   if (node.type === 'element' && node.tagName === 'span') {
     result.push(node)
@@ -219,26 +177,31 @@ function collectSpans(node: any, result: any[] = []): any[] {
   return result
 }
 
-// Mark kernel function names: find spans whose text ends with an identifier
-// followed by a span containing <<
-function markKernelFunctions(codeNode: any) {
-  const lines = codeNode.children?.filter((c: any) => c.type === 'element' && c.tagName === 'span') || []
+// Cross-span: mark kernel function names and <<< >>> launch syntax
+function markKernelLaunch(codeNode: any) {
+  const lines = codeNode.children?.filter((c: any) => c.type === 'element') || []
 
   for (const line of lines) {
     const spans = collectSpans(line)
 
-    for (let i = 0; i < spans.length - 1; i++) {
-      const thisText = getNodeText(spans[i])
-      const nextText = getNodeText(spans[i + 1])
+    for (let i = 0; i < spans.length; i++) {
+      const text = getNodeText(spans[i])
 
-      // If next span starts with << (kernel launch), current span has the function name
-      if (nextText.match(/^<{2,3}/)) {
-        const funcMatch = thisText.match(/\b([a-zA-Z_]\w*)\s*$/)
-        if (funcMatch) {
-          // Apply kernel function style to this span
-          const existingStyle = spans[i].properties?.style || ''
-          spans[i].properties = spans[i].properties || {}
-          spans[i].properties.style = existingStyle.replace(/color:[^;]+;?/, '') + 'color:#a9dc76;font-weight:bold;'
+      // Mark <<< and >>> spans (shiki splits <<< into << + <)
+      if (text.match(/^<{2,3}$/) || text.match(/^>{2,3}$/)) {
+        spans[i].properties = spans[i].properties || {}
+        spans[i].properties.style = 'color:#ff6188;font-weight:bold;'
+      }
+
+      // Mark kernel function name (span before <<<)
+      if (i < spans.length - 1) {
+        const nextText = getNodeText(spans[i + 1])
+        if (nextText.match(/^<{2,3}/)) {
+          const funcMatch = text.match(/\b([a-zA-Z_]\w*)\s*$/)
+          if (funcMatch) {
+            spans[i].properties = spans[i].properties || {}
+            spans[i].properties.style = 'color:#a9dc76;font-weight:bold;'
+          }
         }
       }
     }
@@ -246,27 +209,16 @@ function markKernelFunctions(codeNode: any) {
 }
 
 export function cudaTransformer(): ShikiTransformer {
-  let isCpp = false
-
   return {
     name: 'cuda-highlighter',
     pre(node) {
-      // Check if this code block is C++ (cpp, c, cuda)
       const code = node.children?.find((c: any) => c.tagName === 'code')
-      const classes = (code?.properties?.class || []) as string[]
-      isCpp = classes.some((c: string) =>
-        c.includes('language-cpp') || c.includes('language-c') || c.includes('language-cuda')
-      )
-
-      // Mark kernel function names (cross-span matching)
-      if (isCpp && code) {
-        markKernelFunctions(code)
+      if (code) {
+        markKernelLaunch(code)
       }
     },
     span(node) {
-      if (isCpp) {
-        processSpan(node)
-      }
+      processSpan(node)
     },
   }
 }
