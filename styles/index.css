@@ -18,7 +18,7 @@
 }
 
 /* ========== Base Layout Styles ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) {
   background: #fff;
   box-sizing: border-box;
   font-size: 18px;
@@ -28,7 +28,7 @@
 }
 
 /* ========== Typography - H1 Special Positioning ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h1 {
   position: absolute;
   top: 15px;
   left: 30px;
@@ -47,12 +47,12 @@
 }
 
 /* ========== Content After H1 ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 + * {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h1 + * {
   margin-top: 0;
 }
 
 /* ========== Typography - Other Headings ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h2 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h2 {
   font-size: 1.3em;
   font-weight: 600;
   color: #8b5cf6;
@@ -62,11 +62,11 @@
 }
 
 /* First h2 after h1 needs no top margin */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h1 + h2 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h1 + h2 {
   margin-top: 0;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h3 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h3 {
   font-size: 1.15em;
   font-weight: 500;
   color: #6366f1;
@@ -75,7 +75,7 @@
   line-height: 1.2;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) h4 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h4 {
   font-size: 1.1em;
   font-weight: 500;
   color: #a78bfa;
@@ -83,7 +83,7 @@
 }
 
 /* ========== Typography - Body Text ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) p {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) p {
   color: #4b5563;
   line-height: 1.4;
   margin: 0.5rem 0;
@@ -92,22 +92,22 @@
 }
 
 /* ========== Lists ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ul,
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ol {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) ul,
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
   text-align: left;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ul {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) ul {
   list-style-type: disc;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) ol {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) ol {
   list-style-type: decimal;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) li {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) li {
   color: #4b5563;
   line-height: 1.4;
   margin: 0.3rem 0;
@@ -116,7 +116,7 @@
   display: list-item;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section) li::marker {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) li::marker {
   color: #8b5cf6;
 }
 
@@ -219,8 +219,7 @@
   font-size: 1.125rem;
 }
 
-/* ========== Two/Three Column Layouts ========== */
-.slidev-layout.two-cols,
+/* ========== Three Column Layout ========== */
 .slidev-layout.three-cols {
   display: block;
   padding: 60px 50px 40px;
@@ -228,70 +227,6 @@
   background: #fff;
   font-size: 20px;
   line-height: 1.6;
-}
-
-/* ========== Two-cols grid layout fix ========== */
-.slidev-layout.two-cols .slidev-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  height: calc(100vh - 100px);
-  padding: 0;
-}
-
-.slidev-layout.two-cols .col-left,
-.slidev-layout.two-cols .col-right {
-  padding: 0 1rem;
-  overflow-y: auto;
-}
-
-/* Apply theme styles to two-cols content */
-.slidev-layout.two-cols h1:first-child {
-  position: absolute;
-  top: 20px;
-  left: 50px;
-  right: 50px;
-  grid-column: 1 / -1;
-  font-size: 1.8em;
-  font-weight: 700;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0 0 1rem 0;
-  z-index: 200;
-}
-
-.slidev-layout.two-cols h2 {
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #8b5cf6;
-  margin: 0.8rem 0 0.4rem;
-}
-
-.slidev-layout.two-cols h3 {
-  font-size: 1.1em;
-  font-weight: 500;
-  color: #6366f1;
-  margin: 0.5rem 0 0.3rem;
-}
-
-.slidev-layout.two-cols p {
-  color: #4b5563;
-  line-height: 1.4;
-  margin: 0.5rem 0;
-}
-
-.slidev-layout.two-cols ul,
-.slidev-layout.two-cols ol {
-  margin: 0.5rem 0;
-  padding-left: 1.5rem;
-}
-
-.slidev-layout.two-cols li {
-  color: #4b5563;
-  line-height: 1.4;
-  margin: 0.3rem 0;
 }
 
 /* ========== Tables ========== */

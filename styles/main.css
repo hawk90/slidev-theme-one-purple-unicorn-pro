@@ -7,8 +7,6 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  min-height: 100vh;
-  padding: 1rem 1.5rem;  /* Further reduced for more content space */
   position: relative;
 }
 
@@ -53,9 +51,7 @@ h2 {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-400);
-  margin: 1.2rem 0 0.5rem;  /* top: section separation, bottom: room for ::after */
-  position: relative;
-  padding: 0.3rem 0 0.4rem;  /* bottom padding for ::after decoration */
+  margin: 1.2rem 0 0.5rem;
 }
 
 /* First h2 right after h1 needs no top margin */
@@ -63,16 +59,6 @@ h1 + h2 {
   margin-top: 0;
 }
 
-h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 3rem;
-  height: 3px;
-  background: var(--gradient-vibrant);
-  border-radius: 2px;
-}
 
 h3 {
   font-size: 1.1rem;
@@ -150,17 +136,6 @@ pre {
   margin-top: 1.2rem;
 }
 
-/* Gradient border top */
-pre::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-vibrant);
-  border-radius: 0.75rem 0.75rem 0 0;
-}
 
 code {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
@@ -468,48 +443,7 @@ blockquote p:last-child {
   gap: 2rem;
 }
 
-/* Slidev's two-cols layout uses specific structure */
-.slidev-layout.two-cols .two-cols-container,
-.slidev-layout .two-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  height: 100%;
-  padding: 0 2rem;  /* Add horizontal padding to the container */
-}
-
-/* First column (content before ::right::) */
-.slidev-layout.two-cols .col-left,
-.two-columns > :first-child:not(.col-right) {
-  grid-column: 1;
-  padding-right: 2rem;  /* Increased from 1.5rem */
-  overflow: auto;
-  max-width: 100%;
-}
-
-/* Second column (content after ::right::) */
-.slidev-layout.two-cols .col-right,
-.two-columns > .col-right {
-  grid-column: 2;
-  padding-left: 2rem;  /* Increased from 1.5rem */
-  border-left: 2px solid rgba(139, 92, 246, 0.15);
-  overflow: auto;
-  max-width: 100%;
-}
-
-/* Ensure content doesn't overlap */
-.slidev-layout.two-cols > *,
-.two-columns > * {
-  position: relative;
-  width: 100%;
-}
-
-/* Fix any absolute positioning issues */
-.slidev-layout.two-cols {
-  position: relative;
-  overflow: hidden;
-}
+/* Two Column Layout is handled by layouts/two-cols.vue (scoped styles) */
 
 /* ============================================
    No Animations - PDF Export Only

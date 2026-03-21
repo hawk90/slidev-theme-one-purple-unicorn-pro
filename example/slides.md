@@ -131,7 +131,7 @@ layout: section
 
 # CUDA Code
 
-```cuda
+```cpp
 __global__ void vectorAdd(float *a, float *b, float *c, int n) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < n) {
