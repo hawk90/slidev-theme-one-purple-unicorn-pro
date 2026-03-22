@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 interface Row {
   n: string
   target: string
@@ -44,7 +44,9 @@ const DEFAULT_ROWS: Row[] = [
   { n: 'N ≤ 1,000,000', target: 'O(N)', algo: 'Greedy / Linear Scan', complexity: 'O(N)' },
   { n: 'N ≤ 10^18', target: 'O(log N)', algo: 'Binary Search / Math', complexity: 'O(log N)' },
 ]
+</script>
 
+<script setup lang="ts">
 defineProps({
   title: { type: String, default: '' },
   rows: {
