@@ -709,55 +709,20 @@ v-click, Transitions, Gradient Borders, Shimmer, Glow, and more
 
 # Animated Gradient Border
 
-A gradient beam rotates along the border path.
+A gradient beam rotates along the border path. 8 presets + custom CSS variables.
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
-  <div class="anim-border" style="text-align: center; padding: 1rem;">
-
-  **Purple** (default)
-
-  </div>
-  <div class="anim-border anim-border-ocean" style="text-align: center; padding: 1rem;">
-
-  **Ocean**
-
-  </div>
-  <div class="anim-border anim-border-sunset" style="text-align: center; padding: 1rem;">
-
-  **Sunset**
-
-  </div>
-  <div class="anim-border anim-border-neon" style="text-align: center; padding: 1rem;">
-
-  **Neon**
-
-  </div>
-  <div class="anim-border anim-border-fire" style="text-align: center; padding: 1rem;">
-
-  **Fire**
-
-  </div>
-  <div class="anim-border anim-border-ice" style="text-align: center; padding: 1rem;">
-
-  **Ice**
-
-  </div>
-  <div class="anim-border anim-border-mint" style="text-align: center; padding: 1rem;">
-
-  **Mint**
-
-  </div>
-  <div class="anim-border anim-border-gold" style="text-align: center; padding: 1rem;">
-
-  **Gold**
-
-  </div>
-  <div class="anim-border anim-border-ccw" style="text-align: center; padding: 1rem;">
-
-  **CCW** ↺
-
-  </div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem;">
+  <div class="anim-border" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Purple</div>
+  <div class="anim-border anim-border-ocean" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Ocean</div>
+  <div class="anim-border anim-border-sunset" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Sunset</div>
+  <div class="anim-border anim-border-neon" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Neon</div>
+  <div class="anim-border anim-border-fire" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Fire</div>
+  <div class="anim-border anim-border-ice" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Ice</div>
+  <div class="anim-border anim-border-mint" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Mint</div>
+  <div class="anim-border anim-border-gold" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Gold</div>
 </div>
+
+Direction: `anim-border-ccw` / Speed: `anim-border-slow` (8s) / `anim-border-fast` (2s)
 
 ---
 
@@ -1418,46 +1383,47 @@ Timeline, Countdown, QR Code, Keyboard
 
 # Timeline Component
 
-<Timeline
-  :active="2"
-  :items="[
-    { year: '1956', title: 'Dijkstra\'s Algorithm', desc: 'Shortest path in weighted graphs' },
-    { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
-    { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
-    { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
-    { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
-  ]"
-/>
+<script setup>
+const timelineItems = [
+  { year: '1956', title: 'Dijkstra Algorithm', desc: 'Shortest path in weighted graphs' },
+  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
+  { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
+  { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
+  { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
+]
+</script>
+
+<Timeline :active="2" :items="timelineItems" />
 
 ---
 
-# Countdown & QR Code
+# Countdown Timer
 
-<div style="display: flex; gap: 3rem; align-items: flex-start;">
-  <div>
+<Countdown :minutes="5" label="remaining" size="lg" />
 
-  ### Countdown Timer
+Sizes: `sm`, `default`, `lg`, `xl`. Auto-starts by default.
 
-  <Countdown :minutes="5" label="remaining" size="lg" />
+```html
+<Countdown :minutes="5" label="remaining" size="lg" />
+```
 
-  <p style="margin-top: 1rem;">
+---
 
-  Sizes: `sm`, `default`, `lg`, `xl`
+# QR Code
 
-  </p>
+<div style="display: flex; gap: 3rem; align-items: center;">
 
-  ```html
-  <Countdown :minutes="5" label="remaining" />
-  ```
+<QRCode url="https://sli.dev" caption="Slidev Documentation" size="lg" />
 
-  </div>
-  <div style="text-align: center;">
+<div>
 
-  ### QR Code
+Generate QR codes from any URL. Sizes: `sm`, `default`, `lg`, `xl`.
 
-  <QRCode url="https://sli.dev" caption="Slidev Documentation" size="lg" />
+```html
+<QRCode url="https://sli.dev" caption="Slidev Docs" size="lg" />
+```
 
-  </div>
+</div>
 </div>
 
 ---
