@@ -1,9 +1,20 @@
 /* ========== Content Slide Layout ========== */
 /* Styles specific to "default" content slides.
-   All special layouts are excluded so they control their own typography. */
+   All special layouts are excluded so they control their own typography.
+   IMPORTANT: When adding a new layout, add its class to CONTENT_EXCLUDE. */
 
-/* Exclude list: all layouts that handle their own styling */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) {
+/* Full exclude list — every layout that handles its own styling.
+   Used as a single source of truth for all selectors below. */
+/* :not(.cover):not(.intro):not(.end):not(.section)
+   :not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout)
+   :not(.comparison-layout)
+   :not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split)
+   :not(.quote):not(.statement):not(.fact)
+   :not(.center)
+   :not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout)
+   :not(.image-left):not(.image-right) */
+
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) {
   box-sizing: border-box;
   font-size: 18px;
   line-height: 1.3;
@@ -12,7 +23,7 @@
 }
 
 /* ========== H1 Absolute Positioning (Content Slides Only) ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h1 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h1 {
   position: absolute;
   top: 15px;
   left: 30px;
@@ -32,33 +43,33 @@
   overflow: visible;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) h1 + * {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h1 + * {
   margin-top: 0;
 }
 
 /* ========== Content Heading Sizes ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) h2 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h2 {
   font-size: 1.3em;
   color: var(--content-h2);
   margin: 1.2rem 0 0.5rem;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) h1 + h2 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h1 + h2 {
   margin-top: 0;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) h3 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h3 {
   font-size: 1.15em;
   color: var(--content-h3);
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) h4 {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) h4 {
   font-size: 1.1em;
   color: var(--content-h4);
 }
 
 /* ========== Content List Marker Color ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center) li::marker {
+.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-cols-layout):not(.two-cols-header-layout):not(.three-cols-layout):not(.comparison-layout):not(.full):not(.full-center):not(.full-dark):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.iframe-left-layout):not(.iframe-right-layout):not(.image-left):not(.image-right) li::marker {
   color: var(--content-marker);
 }
 
