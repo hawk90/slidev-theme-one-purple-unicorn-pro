@@ -30,11 +30,11 @@
   /* Secondary color scale (blue) */
   --secondary-400: #61afef;
 
-  /* Dark background alias */
-  --dark-bg: #1a1b26;
-  --dark-bg-light: #24283b;
-  --dark-fg: #a9b1d6;
-  --dark-fg-bright: #c0caf5;
+  /* Dark background alias — deeper tones with subtle blue undertone */
+  --dark-bg: #13141c;
+  --dark-bg-light: #1c1e2a;
+  --dark-fg: #b4bcd0;
+  --dark-fg-bright: #d4daf0;
 
   /* Extended Palette - Blue Variations */
   --blue-50: #e6f3ff;
@@ -60,18 +60,18 @@
   --purple-800: #6b3377;
   --purple-900: #482252;
 
-  /* Background Colors */
-  --bg-primary: #282c34;      /* Main background */
-  --bg-secondary: #2e323b;    /* Elevated sections */
-  --bg-tertiary: #3e4452;     /* Selection/hover */
-  --bg-code: #21252b;         /* Code blocks */
-  --bg-overlay: rgba(40, 44, 52, 0.95);
+  /* Background Colors — layered elevation system */
+  --bg-primary: #181920;      /* Base canvas */
+  --bg-secondary: #1e2028;    /* Elevated: cards, tables, panels */
+  --bg-tertiary: #272a35;     /* Higher: hover, selection */
+  --bg-code: #1a1c24;         /* Code blocks — slightly distinct */
+  --bg-overlay: rgba(24, 25, 32, 0.95);
 
-  /* Text Colors */
-  --text-primary: #abb2bf;    /* Main text */
-  --text-bright: #e6e6e6;     /* Bright text */
-  --text-secondary: #939aa3;  /* Secondary text */
-  --text-muted: #5c6370;      /* Muted/comments */
+  /* Text Colors — higher contrast for dark bg */
+  --text-primary: #c8cdd8;    /* Main text — brighter */
+  --text-bright: #eaedf2;     /* Bright/headings */
+  --text-secondary: #9ba2b0;  /* Secondary text */
+  --text-muted: #616878;      /* Muted/comments */
   --text-disabled: #4b5263;   /* Disabled state */
 
   /* Semantic Colors */
@@ -85,7 +85,7 @@
   --gradient-secondary: linear-gradient(135deg, var(--one-dark-purple), var(--one-dark-cyan));
   --gradient-accent: linear-gradient(135deg, var(--one-dark-cyan), var(--one-dark-green));
   --gradient-warm: linear-gradient(135deg, var(--one-dark-yellow), var(--one-dark-red));
-  --gradient-subtle: linear-gradient(135deg, #3e4452, #2e323b);
+  --gradient-subtle: linear-gradient(135deg, #272a35, #1e2028);
   --gradient-vibrant: linear-gradient(135deg, #61afef, #c678dd, #e06c75);
 
   /* Syntax Highlighting */
@@ -114,9 +114,9 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
   --shadow-glow: 0 0 20px rgba(97, 175, 239, 0.3);
 
-  /* Borders */
-  --border-default: rgba(171, 178, 191, 0.15);
-  --border-subtle: rgba(171, 178, 191, 0.08);
+  /* Borders — slightly more visible */
+  --border-default: rgba(171, 178, 191, 0.18);
+  --border-subtle: rgba(171, 178, 191, 0.10);
   --border-focus: var(--one-dark-blue);
   --border-error: var(--one-dark-red);
   --border-success: var(--one-dark-green);
@@ -137,7 +137,7 @@
   --content-inline-code-color: var(--primary-400);
 
   /* Cover/Section Layout Colors */
-  --cover-bg: linear-gradient(135deg, var(--dark-bg), #1e1e2e);
+  --cover-bg: linear-gradient(135deg, var(--dark-bg), #161825, #1a1530);
   --cover-text: var(--dark-fg);
   --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
   --cover-h2-gradient: linear-gradient(135deg, #a78bfa, #60a5fa);
