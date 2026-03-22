@@ -86,7 +86,7 @@ table {
 }
 
 thead {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.03));
 }
 
 th {
@@ -102,12 +102,12 @@ th {
 
 td {
   padding: 0.4rem 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.03));
   color: var(--text-secondary, #abb2bf);
 }
 
 tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.02));
 }
 
 .ct-highlight {

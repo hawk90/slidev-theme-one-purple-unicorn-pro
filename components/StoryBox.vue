@@ -86,7 +86,7 @@ const iconMap: Record<string, string> = {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-size: 0.65rem;
   color: var(--text-muted, #5c6370);
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.06));
   padding: 0.1rem 0.4rem;
   border-radius: 0.25rem;
   margin-left: auto;

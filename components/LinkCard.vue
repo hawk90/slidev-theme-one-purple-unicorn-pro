@@ -1,5 +1,5 @@
 <template>
-  <a :href="href" target="_blank" rel="noopener" class="link-card" :class="{ 'link-card-compact': compact }">
+  <a :href="href" target="_blank" rel="noopener noreferrer" class="link-card" :class="{ 'link-card-compact': compact }">
     <div class="link-icon">{{ icon }}</div>
     <div class="link-body">
       <div class="link-title">{{ title }}</div>

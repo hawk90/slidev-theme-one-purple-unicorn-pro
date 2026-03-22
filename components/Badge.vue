@@ -54,7 +54,7 @@ defineProps({
 }
 
 .badge-gray {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.08));
   color: var(--text-muted, #5c6370);
 }
 </style>
