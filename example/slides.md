@@ -1277,9 +1277,7 @@ This uses `.gradient-border` class with a gradient outline effect via pseudo-ele
 layout: section
 ---
 
-# PPT-Style Layouts
-
-quote, statement, fact, full, iframe
+# PPT-Style Layouts & Full Variants
 
 ---
 layout: quote
@@ -1313,8 +1311,100 @@ layout: full
 
 <div style="background: linear-gradient(135deg, #1a1b2e 0%, #2d1b4e 50%, #1a2744 100%); height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;">
   <h1 style="font-size: 3rem; color: white;">Full Layout</h1>
-  <p style="color: rgba(255,255,255,0.6);">Zero padding — full bleed content</p>
+  <p style="color: rgba(255,255,255,0.6);">Zero padding — full bleed, DIY everything</p>
 </div>
+
+---
+layout: full-center
+---
+
+# Full Center
+
+Centered content on a full-bleed slide. No absolute h1 positioning.
+
+Good for single-statement slides without the `statement` layout's emphasis styling.
+
+---
+layout: full-dark
+---
+
+# Hero Slide
+
+A full-dark layout for impactful moments.
+
+Perfect for dramatic reveals, key takeaways, or section openers that need more weight than `section` layout.
+
+---
+layout: full-text
+---
+
+# Full Text Layout
+
+This layout gives you the entire slide area for text content — no absolute h1 positioning, no restrictive padding. Just clean, readable typography.
+
+Useful when you have a lot of content that needs to breathe, or when the default content layout's top-fixed h1 doesn't work for your slide structure.
+
+- Lists work naturally
+- **Bold** and *italic* are inherited from the theme
+- Code blocks: `inline code` works too
+
+---
+layout: full-image
+image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200
+---
+
+# Full Image Background
+
+## Text on top of a full-bleed photo
+
+The overlay darkens the image for readability.
+
+---
+layout: full-image
+image: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
+overlay: "linear-gradient(135deg, rgba(26,27,46,0.9) 0%, rgba(45,27,78,0.7) 100%)"
+---
+
+# Gradient Overlay
+
+## Custom overlay via frontmatter
+
+```yaml
+overlay: "linear-gradient(135deg, rgba(26,27,46,0.9), rgba(45,27,78,0.7))"
+```
+
+---
+layout: full-split
+image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200
+panelWidth: 45%
+panelSide: left
+---
+
+# Split Panel (Left)
+
+Content in a semi-transparent panel over the background image.
+
+- `panelWidth`: 45% (default)
+- `panelSide`: left / right
+- `panelColor`: any CSS color
+
+---
+layout: full-split
+image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200
+panelWidth: 40%
+panelSide: right
+panelColor: "rgba(255, 255, 255, 0.92)"
+---
+
+<h1 style="color: #1a1b2e;">White Panel (Right)</h1>
+
+<p style="color: #333;">White panel on the right side. Set <code style="color: #c678dd;">panelColor</code> to any value including white.</p>
+
+<ul style="color: #555;">
+<li>Corporate style</li>
+<li>High contrast text</li>
+<li>Works with any background</li>
+</ul>
 
 ---
 layout: section
@@ -1396,7 +1486,9 @@ layout: center
 | Type | Name | Key Feature |
 |------|------|-------------|
 | Layout | `cover`, `intro`, `section`, `end` | Special slides |
-| Layout | `default`, `center`, `full` | Basic content |
+| Layout | `default`, `center` | Basic content |
+| Layout | `full`, `full-center`, `full-dark`, `full-text` | Full bleed variants |
+| Layout | `full-image`, `full-split` | Background image + overlay/panel |
 | Layout | `two-cols`, `two-cols-header`, `three-cols` | Multi-column |
 | Layout | `image-left`, `image-right` | Image + content |
 | Layout | `comparison` | Before/After with labels |
