@@ -4,7 +4,7 @@
    Base Layout
    ============================================ */
 .slidev-layout {
-  background: var(--bg-primary);
+  background: var(--dark-bg, #1a1b26);
   color: var(--text-primary);
   font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   position: relative;
@@ -231,7 +231,7 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 2rem 0;
+  margin: 1rem 0;
   border-radius: 0.75rem;
   overflow: hidden;
   box-shadow: var(--shadow-xl);
@@ -244,23 +244,38 @@ thead {
 
 th {
   color: var(--text-primary);
-  padding: 1rem;
+  padding: 0.6rem 0.75rem;
   text-align: left;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 td {
-  padding: 1rem;
+  padding: 0.5rem 0.75rem;
   border-top: 1px solid var(--border-default);
   color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 tbody tr:hover {
   background: var(--bg-tertiary);
 }
+
+/* Table size variants — wrap table in a div with these classes */
+.table-compact table,
+table.table-compact { margin: 0.5rem 0; }
+.table-compact th { padding: 0.35rem 0.5rem; font-size: 0.7rem; }
+.table-compact td { padding: 0.3rem 0.5rem; font-size: 0.75rem; }
+
+.table-dense table,
+table.table-dense { margin: 0.25rem 0; }
+.table-dense th { padding: 0.2rem 0.4rem; font-size: 0.65rem; }
+.table-dense td { padding: 0.15rem 0.4rem; font-size: 0.7rem; }
+
+.table-auto table,
+table.table-auto { width: auto; }
 
 /* ============================================
    Blockquotes
