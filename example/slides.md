@@ -109,6 +109,31 @@ You can control column widths via frontmatter props. This left column takes 2/3 
 Sidebar-style content here.
 
 ---
+layout: two-cols
+divider: true
+---
+
+# Two Columns with Divider
+
+::left::
+
+## Before
+
+Original implementation with nested loops.
+
+- Time: $O(n^2)$
+- Space: $O(1)$
+
+::right::
+
+## After
+
+Optimized with hash map.
+
+- Time: $O(n)$
+- Space: $O(n)$
+
+---
 layout: two-cols-header
 ---
 
