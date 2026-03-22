@@ -1274,6 +1274,120 @@ This uses `.gradient-border` class with a gradient outline effect via pseudo-ele
 <p class="text-xl">Extra large (1.5rem)</p>
 
 ---
+layout: section
+---
+
+# PPT-Style Layouts
+
+quote, statement, fact, full, iframe
+
+---
+layout: quote
+---
+
+The best way to predict the future is to invent it.
+
+**— Alan Kay, 1971**
+
+---
+layout: statement
+---
+
+# Performance matters more than features.
+
+A fast, simple system will always beat a slow, complex one in the long run.
+
+---
+layout: fact
+---
+
+## DID YOU KNOW?
+
+# 10x
+
+The performance gap between $O(n)$ and $O(n^2)$ at $n = 10{,}000$
+
+---
+layout: full
+---
+
+<div style="background: linear-gradient(135deg, #1a1b2e 0%, #2d1b4e 50%, #1a2744 100%); height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;">
+  <h1 style="font-size: 3rem; color: white;">Full Layout</h1>
+  <p style="color: rgba(255,255,255,0.6);">Zero padding — full bleed content</p>
+</div>
+
+---
+layout: section
+---
+
+# More Components
+
+Timeline, Countdown, QR Code, Keyboard
+
+---
+
+# Timeline Component
+
+<Timeline
+  :active="2"
+  :items="[
+    { year: '1956', title: 'Dijkstra\'s Algorithm', desc: 'Shortest path in weighted graphs' },
+    { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
+    { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
+    { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
+    { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
+  ]"
+/>
+
+---
+
+# Countdown & QR Code
+
+<div style="display: flex; gap: 3rem; align-items: flex-start;">
+  <div>
+
+  ### Countdown Timer
+
+  <Countdown :minutes="5" label="remaining" size="lg" />
+
+  <p style="margin-top: 1rem;">
+
+  Sizes: `sm`, `default`, `lg`, `xl`
+
+  </p>
+
+  ```html
+  <Countdown :minutes="5" label="remaining" />
+  ```
+
+  </div>
+  <div style="text-align: center;">
+
+  ### QR Code
+
+  <QRCode url="https://sli.dev" caption="Slidev Documentation" size="lg" />
+
+  </div>
+</div>
+
+---
+
+# Keyboard Shortcuts & Badges
+
+### Keyboard Keys
+
+Press <Kbd>Space</Kbd> or <Kbd>→</Kbd> to advance. Use <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>F</Kbd> for fullscreen.
+
+### Badges in Context
+
+| Algorithm | Time | Space | Difficulty |
+|---|---|---|---|
+| Binary Search | $O(\log n)$ | $O(1)$ | <Badge variant="green">Easy</Badge> |
+| Merge Sort | $O(n \log n)$ | $O(n)$ | <Badge variant="yellow">Medium</Badge> |
+| Red-Black Tree | $O(\log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
+| FFT | $O(n \log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
+
+---
 layout: center
 ---
 
@@ -1282,10 +1396,12 @@ layout: center
 | Type | Name | Key Feature |
 |------|------|-------------|
 | Layout | `cover`, `intro`, `section`, `end` | Special slides |
-| Layout | `default`, `center` | Basic content |
+| Layout | `default`, `center`, `full` | Basic content |
 | Layout | `two-cols`, `two-cols-header`, `three-cols` | Multi-column |
 | Layout | `image-left`, `image-right` | Image + content |
 | Layout | `comparison` | Before/After with labels |
+| Layout | `quote`, `statement`, `fact` | PPT-style emphasis |
+| Layout | `iframe`, `iframe-left`, `iframe-right` | Embedded web content |
 | Component | `<PatternCard>` | Signal / Template / Alternatives |
 | Component | `<StoryBox>` | History, Tips, Insights sidebar |
 | Component | `<ComplexityTable>` | N-limit algorithm reference |
@@ -1294,6 +1410,11 @@ layout: center
 | Component | `<Footnote>` | Bottom footnotes with links |
 | Component | `<Badge>` | Inline colored badges (7 colors) |
 | Component | `<LinkCard>` | Clickable reference cards |
+| Component | `<Timeline>` | Vertical timeline with active state |
+| Component | `<Countdown>` | Live countdown timer (4 sizes) |
+| Component | `<QRCode>` | Auto-generated QR codes |
+| Component | `<Kbd>` | Keyboard shortcut keys |
+| Component | `<PresenterNote>` | Presenter-only notes |
 | Global | Progress Bar | Auto page tracking (3 modes) |
 | Animation | `anim-border` | Rotating gradient border (3 colors) |
 | Animation | `anim-shimmer` | Light sweep effect |
