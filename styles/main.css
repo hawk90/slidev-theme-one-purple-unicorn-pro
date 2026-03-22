@@ -387,12 +387,7 @@ blockquote p:last-child {
 /* ============================================
    Utility Classes
    ============================================ */
-.text-gradient {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* .text-gradient removed — use .gradient-text from gradients.css */
 
 .text-center { text-align: center; }
 .text-left { text-align: left; }
@@ -445,6 +440,3 @@ blockquote p:last-child {
 
 /* Two Column Layout is handled by layouts/two-cols.vue (scoped styles) */
 
-/* ============================================
-   No Animations - PDF Export Only
-   ============================================ */

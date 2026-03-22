@@ -6,7 +6,14 @@
 
 <style scoped>
 .full {
-  @apply w-full h-full;
-  padding: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+  margin: 0;
+  overflow: hidden;
+}
+
+.full :deep(> *) {
+  max-width: none;
 }
 </style>

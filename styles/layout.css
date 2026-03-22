@@ -79,12 +79,7 @@
 /* ============================================
    Emphasis (layout-specific overrides)
    ============================================ */
-.slidev-layout.cover strong,
-.slidev-layout.intro strong,
-.slidev-layout.end strong,
-.slidev-layout.section strong {
-  color: var(--one-dark-yellow);
-}
+/* strong color: same as main.css default (--one-dark-yellow), no override needed */
 
 .slidev-layout.cover em,
 .slidev-layout.intro em,
