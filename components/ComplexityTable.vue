@@ -13,7 +13,7 @@
       <tbody>
         <tr
           v-for="(row, i) in rows"
-          :key="i"
+          :key="`row-${row.n}-${i}`"
           :class="{ 'ct-highlight': row.highlight }"
         >
           <td class="ct-n">{{ row.n }}</td>
@@ -35,19 +35,21 @@ interface Row {
   highlight?: boolean
 }
 
+const DEFAULT_ROWS: Row[] = [
+  { n: 'N ≤ 10', target: 'O(N!)', algo: 'Brute Force / Permutation', complexity: 'O(N!)' },
+  { n: 'N ≤ 20', target: 'O(2^N)', algo: 'Bitmask DP / Backtracking', complexity: 'O(2^N · N)' },
+  { n: 'N ≤ 500', target: 'O(N³)', algo: 'Floyd-Warshall / DP', complexity: 'O(N³)' },
+  { n: 'N ≤ 5,000', target: 'O(N²)', algo: 'DP / Brute Force', complexity: 'O(N²)' },
+  { n: 'N ≤ 100,000', target: 'O(N log N)', algo: 'Sort / Segment Tree', complexity: 'O(N log N)' },
+  { n: 'N ≤ 1,000,000', target: 'O(N)', algo: 'Greedy / Linear Scan', complexity: 'O(N)' },
+  { n: 'N ≤ 10^18', target: 'O(log N)', algo: 'Binary Search / Math', complexity: 'O(log N)' },
+]
+
 defineProps({
   title: { type: String, default: '' },
   rows: {
     type: Array as () => Row[],
-    default: () => [
-      { n: 'N ≤ 10', target: 'O(N!)', algo: 'Brute Force / Permutation', complexity: 'O(N!)' },
-      { n: 'N ≤ 20', target: 'O(2^N)', algo: 'Bitmask DP / Backtracking', complexity: 'O(2^N · N)' },
-      { n: 'N ≤ 500', target: 'O(N³)', algo: 'Floyd-Warshall / DP', complexity: 'O(N³)' },
-      { n: 'N ≤ 5,000', target: 'O(N²)', algo: 'DP / Brute Force', complexity: 'O(N²)' },
-      { n: 'N ≤ 100,000', target: 'O(N log N)', algo: 'Sort / Segment Tree', complexity: 'O(N log N)' },
-      { n: 'N ≤ 1,000,000', target: 'O(N)', algo: 'Greedy / Linear Scan', complexity: 'O(N)' },
-      { n: 'N ≤ 10^18', target: 'O(log N)', algo: 'Binary Search / Math', complexity: 'O(log N)' },
-    ],
+    default: () => DEFAULT_ROWS,
   },
   showComplexity: { type: Boolean, default: true },
 })

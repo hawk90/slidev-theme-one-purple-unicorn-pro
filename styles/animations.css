@@ -195,7 +195,10 @@
     transparent 100%
   );
   background-size: var(--shimmer-size, 200% 100%);
-  animation: var(--shimmer-anim, shimmer-lr) 3s ease-in-out infinite;
+  animation-name: shimmer-lr;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
   pointer-events: none;
 }
 
@@ -206,40 +209,31 @@
 }
 
 /* Right → left */
-.anim-shimmer-right { --shimmer-anim: shimmer-rl; }
+.anim-shimmer-right::after { animation-name: shimmer-rl; }
 @keyframes shimmer-rl {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
 /* Top → bottom */
-.anim-shimmer-down {
-  --shimmer-angle: 180deg;
-  --shimmer-size: 100% 200%;
-  --shimmer-anim: shimmer-down;
-}
+.anim-shimmer-down { --shimmer-angle: 180deg; --shimmer-size: 100% 200%; }
+.anim-shimmer-down::after { animation-name: shimmer-down; }
 @keyframes shimmer-down {
   0%   { background-position: 0 200%; }
   100% { background-position: 0 -200%; }
 }
 
 /* Bottom → top */
-.anim-shimmer-up {
-  --shimmer-angle: 0deg;
-  --shimmer-size: 100% 200%;
-  --shimmer-anim: shimmer-up;
-}
+.anim-shimmer-up { --shimmer-angle: 0deg; --shimmer-size: 100% 200%; }
+.anim-shimmer-up::after { animation-name: shimmer-up; }
 @keyframes shimmer-up {
   0%   { background-position: 0 -200%; }
   100% { background-position: 0 200%; }
 }
 
 /* Diagonal ↘ */
-.anim-shimmer-diag {
-  --shimmer-angle: 135deg;
-  --shimmer-size: 300% 300%;
-  --shimmer-anim: shimmer-diag;
-}
+.anim-shimmer-diag { --shimmer-angle: 135deg; --shimmer-size: 300% 300%; }
+.anim-shimmer-diag::after { animation-name: shimmer-diag; }
 @keyframes shimmer-diag {
   0%   { background-position: 200% -200%; }
   100% { background-position: -200% 200%; }
@@ -270,27 +264,36 @@
 
    Speed: anim-glow-slow (4s) / default (2s) / anim-glow-fast (1s)
    ============================================ */
+/* Uses a pseudo-element for the glow so the animation only
+   changes opacity (GPU-composited) instead of box-shadow (repaint). */
 .anim-glow {
   --glow-color: 198, 120, 221;
   --glow-intensity: 0.5;
+  position: relative;
+}
+
+.anim-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    0 0 20px rgba(var(--glow-color), var(--glow-intensity)),
+    0 0 44px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+  opacity: 0.4;
   animation: glow-pulse 2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes glow-pulse {
-  from {
-    box-shadow:
-      0 0 8px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4));
-  }
-  to {
-    box-shadow:
-      0 0 20px rgba(var(--glow-color), var(--glow-intensity)),
-      0 0 44px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
-  }
+  from { opacity: 0.4; }
+  to   { opacity: 1; }
 }
 
 /* Speed */
-.anim-glow-slow { animation-duration: 4s; }
-.anim-glow-fast { animation-duration: 1s; }
+.anim-glow-slow::after { animation-duration: 4s; }
+.anim-glow-fast::after { animation-duration: 1s; }
 
 /* Color presets */
 .anim-glow-purple { --glow-color: 198, 120, 221; }

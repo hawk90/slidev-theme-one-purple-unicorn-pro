@@ -26,7 +26,8 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 
-const { currentLayout, currentSlideRoute, go } = useNav()
+const nav = useNav()
+const { currentLayout, currentSlideRoute, go } = nav
 
 const hiddenLayouts = ['cover', 'intro', 'end']
 
@@ -47,27 +48,26 @@ const position = computed(() =>
   (frontmatter.value.stagePosition as string) || 'top'
 )
 
-// If stageMap is provided, use it directly.
-// Otherwise, auto-detect: find slides that share the same stages array
-// and pick the first one with the matching currentStage.
+// Pre-compute stages key for comparison (avoids JSON.stringify per click)
+const stagesKey = computed(() => stages.value.join('|||'))
+
 function goToStage(index: number) {
-  // Explicit map takes priority
+  // Explicit stageMap takes priority
   const map = frontmatter.value.stageMap as number[] | undefined
   if (map && map[index] !== undefined) {
     go(map[index])
     return
   }
 
-  // Auto-detect: scan all slide routes for matching stages + currentStage
-  const nav = useNav()
+  // Auto-detect: scan slide routes for matching stages + currentStage
   const slides = (nav as any).slides?.value || (nav as any).navState?.slides
   if (!slides) return
 
-  const currentStages = JSON.stringify(stages.value)
+  const key = stagesKey.value
   for (const slide of slides) {
     const fm = slide?.meta?.slide?.frontmatter
     if (!fm?.stages) continue
-    if (JSON.stringify(fm.stages) === currentStages && fm.currentStage === index) {
+    if (fm.stages.join('|||') === key && fm.currentStage === index) {
       go(slide.no ?? slide.idx + 1)
       return
     }

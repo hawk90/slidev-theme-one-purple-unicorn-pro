@@ -3,11 +3,13 @@
 /* ============================================
    Viewport Overflow Guard
    ============================================ */
-/* Prevent anything from leaking outside the slide viewport */
+/* Prevent content from leaking outside the slide viewport.
+   Uses overflow:clip instead of hidden so box-shadows/glows
+   are not clipped (clip only clips content, not visual effects). */
 #slide-content,
 .slidev-page,
 .slide-content {
-  overflow: hidden;
+  overflow: clip;
 }
 
 /* ============================================
