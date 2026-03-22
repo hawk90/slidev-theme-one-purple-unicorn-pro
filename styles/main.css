@@ -66,9 +66,8 @@ p {
 }
 
 strong, b {
-  color: #ffcc66;
+  color: var(--one-dark-yellow);
   font-weight: 800;
-  text-shadow: 0 0 2px rgba(255, 204, 102, 0.3);
 }
 
 em {

@@ -1,22 +1,3 @@
-/* ========== CSS Variables ========== */
-:root {
-  --primary-purple: #8b5cf6;
-  --primary-indigo: #6366f1;
-  --primary-purple-dark: #7c3aed;
-  --primary-indigo-dark: #4f46e5;
-  --primary-violet: #a78bfa;
-  --primary-pink: #ec4899;
-  --accent-pink: #f472b6;
-  --accent-blue: #60a5fa;
-  --accent-green: #34d399;
-  --accent-yellow: #fbbf24;
-  --accent-red: #f87171;
-  --accent-cyan: #22d3ee;
-  --gradient-unicorn: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
-  --gradient-hover: linear-gradient(135deg, #a78bfa, #f472b6, #60a5fa);
-  --gradient-text: linear-gradient(90deg, #8b5cf6, #ec4899, #6366f1);
-}
-
 /* ========== Base Layout Styles ========== */
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) {
   box-sizing: border-box;
@@ -36,7 +17,7 @@
   padding: 0;
   font-size: 1.6em;
   font-weight: 700;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  background: var(--cover-h1-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -54,7 +35,7 @@
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h2 {
   font-size: 1.3em;
   font-weight: 600;
-  color: #8b5cf6;
+  color: var(--content-h2);
   margin: 1.2rem 0 0.5rem;
   text-align: left;
   line-height: 1.2;
@@ -68,7 +49,7 @@
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h3 {
   font-size: 1.15em;
   font-weight: 500;
-  color: #6366f1;
+  color: var(--content-h3);
   margin: 0.8rem 0 0.3rem;
   text-align: left;
   line-height: 1.2;
@@ -77,7 +58,7 @@
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) h4 {
   font-size: 1.1em;
   font-weight: 500;
-  color: #a78bfa;
+  color: var(--content-h4);
   margin: 0.5rem 0 0.2rem;
 }
 
@@ -114,15 +95,15 @@
 }
 
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.two-columns) li::marker {
-  color: #8b5cf6;
+  color: var(--content-marker);
 }
 
 /* ========== Code Blocks ========== */
 .slidev-layout pre {
-  background: #282c34;
-  color: #c0caf5;
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 0.5rem;
+  background: var(--bg-code);
+  color: var(--dark-fg-bright);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   font-size: 16px;
   line-height: 1.25;
   overflow-x: auto;
@@ -134,9 +115,9 @@
 }
 
 .slidev-layout :not(pre) > code {
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--content-inline-code-bg);
   border-radius: 0.25rem;
-  color: #8b5cf6;
+  color: var(--content-inline-code-color);
   font-size: 0.875em;
   padding: 0.125rem 0.25rem;
 }
@@ -144,7 +125,7 @@
 /* ========== Blockquotes ========== */
 .slidev-layout blockquote {
   background: rgba(139, 92, 246, 0.05);
-  border-left: 4px solid #8b5cf6;
+  border-left: 4px solid var(--primary-400);
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
   text-align: left;
@@ -156,8 +137,8 @@
 .slidev-layout.intro,
 .slidev-layout.end,
 .slidev-layout.section {
-  background: linear-gradient(135deg, #1a1b26, #1e1e2e);
-  color: #a9b1d6;
+  background: var(--cover-bg);
+  color: var(--cover-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +152,7 @@
 .slidev-layout.section h1 {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
+  background: var(--cover-h1-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -198,7 +179,7 @@
 .slidev-layout.section h2 {
   font-size: 1.5rem;
   font-weight: 400;
-  background: linear-gradient(135deg, #a78bfa, #60a5fa);
+  background: var(--cover-h2-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -211,7 +192,7 @@
 .slidev-layout.intro p,
 .slidev-layout.end p,
 .slidev-layout.section p {
-  color: #a9b1d6;
+  color: var(--cover-text);
   font-size: 1.125rem;
 }
 
@@ -220,7 +201,6 @@
   display: block;
   padding: 60px 50px 40px;
   text-align: left;
-  background: #fff;
   font-size: 20px;
   line-height: 1.6;
 }
@@ -229,7 +209,7 @@
 
 /* ========== Utility Classes ========== */
 .gradient-text {
-  background: linear-gradient(90deg, #8b5cf6, #ec4899, #6366f1);
+  background: var(--cover-h1-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -237,7 +217,7 @@
 }
 
 .accent-text {
-  color: #8b5cf6;
+  color: var(--primary-400);
   font-weight: 600;
 }
 

@@ -121,6 +121,27 @@
   --border-error: var(--one-dark-red);
   --border-success: var(--one-dark-green);
 
+  /* Light Mode Colors */
+  --light-bg: #ffffff;
+  --light-bg-secondary: #f8f9fa;
+  --light-text-primary: #1f2937;
+  --light-text-secondary: #4b5563;
+  --light-text-muted: #6b7280;
+
+  /* Content Layout Colors (used by index.css) */
+  --content-h2: var(--primary-400);
+  --content-h3: var(--secondary-400);
+  --content-h4: var(--primary-300);
+  --content-marker: var(--primary-400);
+  --content-inline-code-bg: rgba(139, 92, 246, 0.1);
+  --content-inline-code-color: var(--primary-400);
+
+  /* Cover/Section Layout Colors */
+  --cover-bg: linear-gradient(135deg, var(--dark-bg), #1e1e2e);
+  --cover-text: var(--dark-fg);
+  --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
+  --cover-h2-gradient: linear-gradient(135deg, #a78bfa, #60a5fa);
+
   /* Special Effects */
   --glow-blue: 0 0 30px rgba(97, 175, 239, 0.5);
   --glow-purple: 0 0 30px rgba(198, 120, 221, 0.5);
