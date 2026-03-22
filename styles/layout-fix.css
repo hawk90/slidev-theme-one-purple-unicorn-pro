@@ -1,6 +1,16 @@
 /* Slidev Layout Fixes - Prevent Content Overflow */
 
 /* ============================================
+   Viewport Overflow Guard
+   ============================================ */
+/* Prevent anything from leaking outside the slide viewport */
+#slide-content,
+.slidev-page,
+.slide-content {
+  overflow: hidden;
+}
+
+/* ============================================
    Core Slidev Container Fix
    ============================================ */
 /* Slidev slide content container */

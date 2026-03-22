@@ -1,21 +1,67 @@
 <template>
+  <!-- Progress Bar: always or content-only based on frontmatter -->
+  <div v-if="showBar" class="progress-bar">
+    <div class="progress-fill" :style="{ width: progress + '%' }" />
+  </div>
+
+  <!-- Page Indicator -->
   <div v-if="!isHidden" class="slide-indicator">
     {{ currentPage }} / {{ total }}
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 
-const { currentPage, total, currentLayout } = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute } = useNav()
 
 const hiddenLayouts = ['cover', 'section', 'intro', 'end']
 
 const isHidden = computed(() => hiddenLayouts.includes(currentLayout.value))
+
+// progressBar frontmatter option:
+//   "always" (default) → all slides
+//   "content"          → only where page number is shown (hides on cover/section/intro/end)
+//   false              → completely off
+const progressMode = computed(() => {
+  const val = currentSlideRoute.value?.meta?.slide?.frontmatter?.progressBar
+  if (val === false || val === 'false') return 'off'
+  if (val === 'content') return 'content'
+  return 'always'
+})
+
+const showBar = computed(() => {
+  if (progressMode.value === 'off') return false
+  if (progressMode.value === 'content') return !isHidden.value
+  return true // always
+})
+
+const progress = computed(() =>
+  total.value > 1 ? ((currentPage.value - 1) / (total.value - 1)) * 100 : 0
+)
 </script>
 
 <style scoped>
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-primary, linear-gradient(90deg, #61afef, #c678dd));
+  border-radius: 0 2px 2px 0;
+  transition: width 300ms ease;
+  box-shadow: 0 0 8px rgba(198, 120, 221, 0.4);
+}
+
 .slide-indicator {
   position: fixed;
   right: 2rem;

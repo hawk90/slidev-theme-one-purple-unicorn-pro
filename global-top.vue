@@ -1,6 +1,7 @@
 <template>
-  <!-- Global top layer -->
+  <StageProgress />
 </template>
 
-<script setup>
+<script setup lang="ts">
+import StageProgress from './components/StageProgress.vue'
 </script>
