@@ -1280,26 +1280,6 @@ layout: full
 </div>
 
 ---
-layout: full-center
----
-
-# Full Center
-
-Centered content on a full-bleed slide. No absolute h1 positioning.
-
-Good for single-statement slides without the `statement` layout's emphasis styling.
-
----
-layout: full-dark
----
-
-# Hero Slide
-
-A full-dark layout for impactful moments.
-
-Perfect for dramatic reveals, key takeaways, or section openers that need more weight than `section` layout.
-
----
 layout: full-text
 ---
 
@@ -1453,7 +1433,7 @@ layout: center
 |------|------|-------------|
 | Layout | `cover`, `intro`, `section`, `end` | Special slides |
 | Layout | `default`, `center` | Basic content |
-| Layout | `full`, `full-center`, `full-dark`, `full-text` | Full bleed variants |
+| Layout | `full`, `full-text` | Full bleed variants |
 | Layout | `full-image`, `full-split` | Background image + overlay/panel |
 | Layout | `two-cols`, `two-cols-header`, `three-cols` | Multi-column |
 | Layout | `image-left`, `image-right` | Image + content |
