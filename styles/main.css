@@ -10,27 +10,6 @@
   position: relative;
 }
 
-/* Gradient background overlay */
-.slidev-layout::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(
-    circle at top right,
-    rgba(99, 102, 241, 0.15),
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
-.slidev-layout > * {
-  position: relative;
-  z-index: 1;
-}
 
 /* ============================================
    Typography
