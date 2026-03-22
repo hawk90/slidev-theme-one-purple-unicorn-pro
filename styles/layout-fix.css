@@ -52,59 +52,8 @@
   flex-wrap: wrap;
 }
 
-/* Two Column Layout is handled by layouts/two-cols.vue (scoped styles) */
-
-/* ============================================
-   Three Column Layout Fix
-   ============================================ */
-.slidev-layout.three-cols {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
-  padding: 4rem;
-}
-
-.slidev-layout.three-cols .top-section {
-  margin-bottom: 2rem;
-}
-
-.slidev-layout.three-cols .columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  overflow-y: auto;
-  max-height: calc(100% - 12rem);
-}
-
-/* ============================================
-   Image Layout Fix
-   ============================================ */
-.slidev-layout.image-right,
-.slidev-layout.image-left {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  height: 100%;
-  padding: 4rem;
-}
-
-.slidev-layout img {
-  max-width: 100%;
-  max-height: calc(100% - 8rem);
-  object-fit: contain;
-}
-
-/* ============================================
-   Center Layout Fix
-   ============================================ */
-.slidev-layout.center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 4rem;
-}
+/* Layout-specific styles now handled by scoped styles in .vue files:
+   - three-cols.vue, center.vue, image-left.vue, image-right.vue */
 
 /* ============================================
    Code Block Container
@@ -168,13 +117,5 @@ p, li {
 @media (max-width: 768px) {
   .slidev-layout {
     padding: 2rem;
-  }
-
-  .slidev-layout.two-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .slidev-layout.three-cols .columns {
-    grid-template-columns: 1fr;
   }
 }

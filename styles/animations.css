@@ -21,7 +21,7 @@
 
    Direction:  default = clockwise / anim-border-ccw
    Speed:      anim-border-slow (8s) / default (4s) / anim-border-fast (2s)
-   Colors:     default / anim-border-green / anim-border-warm
+   Colors:     default / ocean / sunset / neon / ice / fire / mint / gold
    ============================================ */
 
 @property --border-angle {
@@ -155,9 +155,6 @@
   --ab-dim: rgba(251, 191, 36, 0.08);
 }
 
-/* Legacy aliases */
-.anim-border-green { --ab-c1: var(--one-dark-green, #98c379); --ab-c2: var(--one-dark-cyan, #56b6c2); --ab-c3: var(--one-dark-blue, #61afef); --ab-dim: rgba(152, 195, 121, 0.08); }
-.anim-border-warm  { --ab-c1: var(--one-dark-yellow, #e5c07b); --ab-c2: var(--one-dark-red, #e06c75); --ab-c3: var(--one-dark-magenta, #c678dd); --ab-dim: rgba(229, 192, 123, 0.08); }
 
 /* ============================================
    2. Shimmer / Shine sweep
