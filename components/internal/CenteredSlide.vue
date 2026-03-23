@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-slide" :class="{ 'centered-dark': dark }" :style="{ padding, maxWidth: contentMaxWidth }">
+  <div class="centered-slide" :class="{ 'centered-dark': dark }" :style="{ padding }">
     <div class="centered-content" :style="{ maxWidth: contentMaxWidth, textAlign: align }">
       <slot />
     </div>
