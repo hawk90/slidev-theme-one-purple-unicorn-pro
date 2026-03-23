@@ -1,18 +1,11 @@
 <template>
   <div class="slidev-layout cover">
-    <div class="cover-content">
+    <CenteredSlide dark content-max-width="48rem">
       <slot />
-    </div>
+    </CenteredSlide>
   </div>
 </template>
 
-<style scoped>
-.cover {
-  @apply h-full flex items-center justify-center;
-  background: var(--dark-bg);
-}
-
-.cover-content {
-  @apply text-center max-w-4xl mx-auto px-8;
-}
-</style>
+<script setup lang="ts">
+import CenteredSlide from '../components/internal/CenteredSlide.vue'
+</script>

@@ -1,18 +1,11 @@
 <template>
   <div class="slidev-layout center">
-    <div class="center-content">
+    <CenteredSlide padding="4rem" content-max-width="64rem">
       <slot />
-    </div>
+    </CenteredSlide>
   </div>
 </template>
 
-<style scoped>
-.center {
-  @apply h-full flex flex-col items-center justify-center;
-  padding: 4rem;
-}
-
-.center-content {
-  @apply text-center;
-}
-</style>
+<script setup lang="ts">
+import CenteredSlide from '../components/internal/CenteredSlide.vue'
+</script>

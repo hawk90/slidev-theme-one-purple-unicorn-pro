@@ -1,45 +1,17 @@
 <template>
-  <div class="slidev-layout image-layout" :class="`image-${side}`">
-    <div v-if="side === 'left'" class="image-container" :style="imageStyle" />
-    <div class="content">
+  <div class="slidev-layout image-layout">
+    <MediaPanel :src="image" type="image" :side="side" :background-size="backgroundSize">
       <slot />
-    </div>
-    <div v-if="side === 'right'" class="image-container" :style="imageStyle" />
+    </MediaPanel>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import MediaPanel from '../components/internal/MediaPanel.vue'
 
-const props = defineProps({
+defineProps({
   image: { type: String, required: true },
   side: { type: String, default: 'left' },
   backgroundSize: { type: String, default: 'cover' },
 })
-
-const imageStyle = computed(() => ({
-  backgroundImage: `url(${props.image})`,
-  backgroundSize: props.backgroundSize,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-}))
 </script>
-
-<style scoped>
-.image-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100%;
-  height: 100%;
-}
-
-.image-container {
-  width: 100%;
-  height: 100%;
-}
-
-.content {
-  padding: 2rem;
-  overflow: auto;
-}
-</style>

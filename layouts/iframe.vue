@@ -1,19 +1,17 @@
 <template>
-  <div class="slidev-layout iframe-layout" :class="`iframe-${side}`">
-    <div v-if="side === 'left' || side === 'full'" class="iframe-container">
-      <iframe :src="url" :style="iframeStyle" frameborder="0" allowfullscreen />
+  <div class="slidev-layout iframe-layout">
+    <div v-if="side === 'full'" class="iframe-full">
+      <iframe :src="url" :style="iframeScale" frameborder="0" allowfullscreen />
     </div>
-    <div v-if="side !== 'full'" class="content">
+    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale">
       <slot />
-    </div>
-    <div v-if="side === 'right'" class="iframe-container">
-      <iframe :src="url" :style="iframeStyle" frameborder="0" allowfullscreen />
-    </div>
+    </MediaPanel>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import MediaPanel from '../components/internal/MediaPanel.vue'
 
 const props = defineProps({
   url: { type: String, required: true },
@@ -21,7 +19,7 @@ const props = defineProps({
   scale: { type: [Number, String], default: 1 },
 })
 
-const iframeStyle = computed(() => {
+const iframeScale = computed(() => {
   const s = Number(props.scale)
   return {
     width: `${100 / s}%`,
@@ -33,33 +31,13 @@ const iframeStyle = computed(() => {
 </script>
 
 <style scoped>
-.iframe-layout {
-  width: 100%;
-  height: 100%;
-}
-
 .iframe-full {
-  overflow: hidden;
-}
-
-.iframe-left,
-.iframe-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.iframe-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.iframe-container iframe {
+.iframe-full iframe {
   border: none;
-}
-
-.content {
-  padding: 2rem;
-  overflow: auto;
 }
 </style>

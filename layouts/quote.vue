@@ -1,19 +1,19 @@
 <template>
   <div class="slidev-layout quote">
-    <div class="quote-mark">"</div>
-    <div class="quote-content">
-      <slot />
-    </div>
+    <CenteredSlide dark content-max-width="48rem">
+      <div class="quote-mark">"</div>
+      <div class="quote-content">
+        <slot />
+      </div>
+    </CenteredSlide>
   </div>
 </template>
 
-<style scoped>
-.quote {
-  @apply h-full flex flex-col items-center justify-center;
-  padding: 4rem 6rem;
-  background: var(--dark-bg);
-}
+<script setup lang="ts">
+import CenteredSlide from '../components/internal/CenteredSlide.vue'
+</script>
 
+<style scoped>
 .quote-mark {
   font-size: 5rem;
   line-height: 1;
@@ -24,11 +24,6 @@
   background-clip: text;
   opacity: 0.6;
   margin-bottom: -1rem;
-}
-
-.quote-content {
-  @apply text-center;
-  max-width: 48rem;
 }
 
 .quote-content :deep(p) {
