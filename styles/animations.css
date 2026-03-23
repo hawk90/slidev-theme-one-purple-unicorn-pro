@@ -61,11 +61,11 @@
   background: conic-gradient(
     from var(--border-angle),
     var(--ab-c1) 0%,
-    var(--ab-c2) 8%,
-    var(--ab-c3) 16%,
-    var(--ab-dim) 35%,
-    var(--ab-dim) 65%,
-    var(--ab-c1) 84%,
+    var(--ab-c2) 12%,
+    var(--ab-c3) 25%,
+    var(--ab-dim) 40%,
+    var(--ab-dim) 60%,
+    var(--ab-c1) 75%,
     var(--ab-c1) 100%
   );
   -webkit-mask:
@@ -261,36 +261,28 @@
 
    Speed: anim-glow-slow (4s) / default (2s) / anim-glow-fast (1s)
    ============================================ */
-/* Uses a pseudo-element for the glow so the animation only
-   changes opacity (GPU-composited) instead of box-shadow (repaint). */
+/* Direct box-shadow animation — no pseudo-element so it
+   won't conflict with shimmer (::after) or border (::before). */
 .anim-glow {
   --glow-color: 198, 120, 221;
   --glow-intensity: 0.5;
-  position: relative;
-}
-
-.anim-glow::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow:
-    0 0 20px rgba(var(--glow-color), var(--glow-intensity)),
-    0 0 44px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
-  opacity: 0.4;
   animation: glow-pulse 2s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: -1;
 }
 
 @keyframes glow-pulse {
-  from { opacity: 0.4; }
-  to   { opacity: 1; }
+  from {
+    box-shadow: 0 0 8px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+  }
+  to {
+    box-shadow:
+      0 0 20px rgba(var(--glow-color), var(--glow-intensity)),
+      0 0 44px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+  }
 }
 
 /* Speed */
-.anim-glow-slow::after { animation-duration: 4s; }
-.anim-glow-fast::after { animation-duration: 1s; }
+.anim-glow-slow { animation-duration: 4s; }
+.anim-glow-fast { animation-duration: 1s; }
 
 /* Color presets */
 .anim-glow-purple { --glow-color: 198, 120, 221; }
@@ -466,32 +458,32 @@
    Usage: Add hover-* class to any element.
    ============================================ */
 
-/* Lift — rises with shadow */
+/* Lift — rises with deep shadow */
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 12px rgba(198, 120, 221, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 16px rgba(198, 120, 221, 0.2);
 }
 
-/* Scale — subtle grow */
+/* Scale — noticeable grow */
 .hover-scale {
-  transition: transform 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
 }
 .hover-scale:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
-/* Glow on hover — border glow appears */
+/* Glow on hover — colored glow appears */
 .hover-glow {
   transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
 .hover-glow:hover {
-  box-shadow: 0 0 16px rgba(198, 120, 221, 0.5), 0 0 32px rgba(198, 120, 221, 0.15);
+  box-shadow: 0 0 20px rgba(198, 120, 221, 0.6), 0 0 40px rgba(198, 120, 221, 0.2);
 }
 
 .hover-glow-blue {
@@ -499,7 +491,7 @@
   cursor: pointer;
 }
 .hover-glow-blue:hover {
-  box-shadow: 0 0 16px rgba(97, 175, 239, 0.5), 0 0 32px rgba(97, 175, 239, 0.15);
+  box-shadow: 0 0 20px rgba(97, 175, 239, 0.6), 0 0 40px rgba(97, 175, 239, 0.2);
 }
 
 .hover-glow-green {
@@ -507,16 +499,16 @@
   cursor: pointer;
 }
 .hover-glow-green:hover {
-  box-shadow: 0 0 16px rgba(152, 195, 121, 0.5), 0 0 32px rgba(152, 195, 121, 0.15);
+  box-shadow: 0 0 20px rgba(152, 195, 121, 0.6), 0 0 40px rgba(152, 195, 121, 0.2);
 }
 
-/* Tilt — 3D perspective tilt toward cursor */
+/* Tilt — dramatic 3D perspective */
 .hover-tilt {
   transition: transform 0.3s ease;
   cursor: pointer;
 }
 .hover-tilt:hover {
-  transform: perspective(600px) rotateX(2deg) rotateY(-2deg);
+  transform: perspective(500px) rotateX(4deg) rotateY(-4deg);
 }
 
 /* Border reveal — gradient border fades in */
