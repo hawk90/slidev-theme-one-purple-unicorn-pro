@@ -134,7 +134,7 @@ Optimized with hash map.
 - Space: $O(n)$
 
 ---
-layout: two-cols-header
+layout: two-cols
 ---
 
 # Two Columns with Header
@@ -200,7 +200,8 @@ Advanced:
 - `protocol`
 
 ---
-layout: image-left
+layout: image
+side: left
 image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800
 ---
 
@@ -218,7 +219,8 @@ image: https://example.com/photo.jpg
 ```
 
 ---
-layout: image-right
+layout: image
+side: right
 image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800
 ---
 
@@ -1461,10 +1463,10 @@ layout: center
 | Layout | `default`, `center` | Basic content |
 | Layout | `full`, `full-text` | Full bleed variants |
 | Layout | `full-image`, `full-split` | Background image + overlay/panel |
-| Layout | `two-cols`, `two-cols-header`, `three-cols` | Multi-column |
-| Layout | `image-left`, `image-right` | Image + content |
+| Layout | `two-cols`, `three-cols` | Multi-column (divider, labels) |
+| Layout | `image` | Image + content (side: left/right) |
 | Layout | `quote`, `statement`, `fact` | PPT-style emphasis |
-| Layout | `iframe`, `iframe-left`, `iframe-right` | Embedded web content |
+| Layout | `iframe` | Embed (side: full/left/right) |
 | Component | `<PatternCard>` | Signal / Template / Alternatives |
 | Component | `<StoryBox>` | History, Tips, Insights sidebar |
 | Component | `<ComplexityTable>` | N-limit algorithm reference |

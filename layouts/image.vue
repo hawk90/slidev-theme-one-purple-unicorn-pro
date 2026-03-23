@@ -1,9 +1,10 @@
 <template>
-  <div class="slidev-layout image-left">
-    <div class="image-container" :style="imageStyle" />
+  <div class="slidev-layout image-layout" :class="`image-${side}`">
+    <div v-if="side === 'left'" class="image-container" :style="imageStyle" />
     <div class="content">
       <slot />
     </div>
+    <div v-if="side === 'right'" class="image-container" :style="imageStyle" />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import { computed } from 'vue'
 
 const props = defineProps({
   image: { type: String, required: true },
+  side: { type: String, default: 'left' },
   backgroundSize: { type: String, default: 'cover' },
 })
 
@@ -24,17 +26,20 @@ const imageStyle = computed(() => ({
 </script>
 
 <style scoped>
-.image-left {
+.image-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  @apply w-full h-full;
+  width: 100%;
+  height: 100%;
 }
 
 .image-container {
-  @apply w-full h-full;
+  width: 100%;
+  height: 100%;
 }
 
 .content {
-  @apply p-8 overflow-auto;
+  padding: 2rem;
+  overflow: auto;
 }
 </style>
