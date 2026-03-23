@@ -941,14 +941,12 @@ Custom: `style="--gt-c1: #ff6b6b; --gt-c2: #ffa500; ..."`
 
 <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
   <div class="anim-float" style="font-size: 3rem;">🚀</div>
-  <div class="anim-bounce" style="font-size: 3rem;">⬇️</div>
   <div style="font-size: 1.5rem; font-family: var(--slidev-theme-font-mono, monospace);">
     <span style="color: var(--one-dark-green);">$</span> npm install<span class="anim-cursor">|</span>
   </div>
 </div>
 
 - `anim-float` — gentle up-down floating
-- `anim-bounce` — attention-grabbing bounce
 - `anim-cursor` — terminal-style blinking cursor
 
 ### Staggered Delays
@@ -982,14 +980,6 @@ Combine with any entrance animation for cascading reveals.
   `hover-scale`
 
   Subtle grow
-
-  </div>
-  <div class="card hover-tilt" style="text-align: center;">
-
-  ### Tilt
-  `hover-tilt`
-
-  3D perspective
 
   </div>
 </div>
@@ -1028,14 +1018,6 @@ Combine with any entrance animation for cascading reveals.
   Light sweep
 
   </div>
-  <div class="card hover-gradient" style="text-align: center; border-radius: 0.75rem;">
-
-  ### Gradient
-  `hover-gradient`
-
-  Background fill
-
-  </div>
   <div class="card hover-border" style="text-align: center; border-radius: 0.75rem;">
 
   ### Border
@@ -1046,30 +1028,11 @@ Combine with any entrance animation for cascading reveals.
   </div>
 </div>
 
-### Text Hover Effects
-
-<p style="font-size: 1.25rem; margin-top: 1.5rem;">
-  <span class="hover-shake" style="display: inline-block; cursor: pointer;">hover-shake</span> — attention-grabbing shake
-</p>
-
-<p style="font-size: 1.25rem;">
-  <span class="hover-rotate" style="display: inline-block;">hover-rotate</span> — subtle 3° rotation
-</p>
-
 링크의 그라디언트 밑줄은 `<a>` 태그에 자동 적용됩니다: [hover to see]()
 
 ---
 
-# Hover: Reveal & Combos
-
-<div class="hover-reveal card" style="text-align: center; border-radius: 0.75rem; margin-bottom: 1rem;">
-
-### Blur Reveal
-`hover-reveal` — starts blurry, clears on hover. Great for spoilers or progressive disclosure.
-
-</div>
-
-### Combining Effects
+# Hover: Combinations
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
   <div class="anim-border hover-scale" style="text-align: center;">
@@ -1487,13 +1450,11 @@ layout: center
 | Animation | `anim-gradient-text` | Flowing rainbow text |
 | Animation | `anim-fade-*` | Entrance animations (up, left, right) |
 | Animation | `anim-pop` | Scale pop entrance |
-| Animation | `anim-float` / `anim-bounce` | Floating / bouncing motion |
+| Animation | `anim-float` | Gentle floating motion |
 | Animation | `anim-cursor` | Terminal blinking cursor |
 | Hover | `hover-lift/scale/tilt` | Transform-based hover |
 | Hover | `hover-glow/glow-blue/glow-green` | Color glow on hover |
 | Hover | `hover-shine/gradient/border` | Sweep, fill, border reveal |
-| Hover | `hover-shake/rotate` | Text hover effects |
-| Hover | `hover-reveal` | Blur → clear on hover |
 | Transition | `slide-left/right/up` | Directional slide transitions |
 | Transition | `fade`, `scale-fade`, `blur-fade` | Fade-based transitions |
 

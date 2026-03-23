@@ -6,22 +6,6 @@
 
 /* ============================================
    1. Animated Gradient Border
-   Usage: <div class="anim-border">content</div>
-   A gradient beam travels along the border edges.
-
-   How it works:
-   - @property allows animating the conic-gradient's
-     starting angle from 0deg to 360deg
-   - CSS mask cuts out the center, leaving only a 2px
-     border ring visible
-   - The gradient genuinely rotates around the border path
-
-   Requires Chromium (Chrome, Edge, Electron, Slidev).
-   Falls back to a static gradient border in Firefox/Safari.
-
-   Direction:  default = clockwise / anim-border-ccw
-   Speed:      anim-border-slow (8s) / default (4s) / anim-border-fast (2s)
-   Colors:     default / ocean / sunset / neon / ice / fire / mint / gold
    ============================================ */
 
 @property --border-angle {
@@ -30,15 +14,6 @@
   inherits: false;
 }
 
-/* --- Base: uses CSS variables for full customization ---
-   Override --ab-c1, --ab-c2, --ab-c3, --ab-dim inline
-   to create any color scheme you want:
-
-   <div class="anim-border"
-     style="--ab-c1: #ff6b6b; --ab-c2: #ffa500; --ab-c3: #ffd700; --ab-dim: rgba(255,107,107,0.08);">
-     Custom colors!
-   </div>
-*/
 .anim-border {
   --ab-c1: var(--one-dark-blue, #61afef);
   --ab-c2: var(--one-dark-magenta, #c678dd);
@@ -73,7 +48,7 @@
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: border-rotate 4s linear infinite;
+  animation: border-rotate 6s linear infinite;
   z-index: -1;
 }
 
@@ -85,96 +60,24 @@
   to { --border-angle: -360deg; }
 }
 
-/* Direction */
-.anim-border-ccw::before {
-  animation-name: border-rotate-ccw;
-}
+.anim-border-ccw::before { animation-name: border-rotate-ccw; }
+.anim-border-slow::before { animation-duration: 10s; }
+.anim-border-fast::before { animation-duration: 3s; }
 
-/* Speed variants */
-.anim-border-slow::before { animation-duration: 8s; }
-.anim-border-fast::before { animation-duration: 2s; }
-
-/* ---- Preset color themes ---- */
-
-/* Purple (default) — blue → purple → red */
-/* (already set by base variables) */
-
-/* Ocean — green → cyan → blue */
-.anim-border-ocean {
-  --ab-c1: var(--one-dark-green, #98c379);
-  --ab-c2: var(--one-dark-cyan, #56b6c2);
-  --ab-c3: var(--one-dark-blue, #61afef);
-  --ab-dim: rgba(152, 195, 121, 0.08);
-}
-
-/* Sunset — yellow → red → purple */
-.anim-border-sunset {
-  --ab-c1: var(--one-dark-yellow, #e5c07b);
-  --ab-c2: var(--one-dark-red, #e06c75);
-  --ab-c3: var(--one-dark-magenta, #c678dd);
-  --ab-dim: rgba(229, 192, 123, 0.08);
-}
-
-/* Neon — cyan → magenta → yellow */
-.anim-border-neon {
-  --ab-c1: #00f5ff;
-  --ab-c2: #ff00e5;
-  --ab-c3: #ffe600;
-  --ab-dim: rgba(0, 245, 255, 0.08);
-}
-
-/* Ice — white → light blue → blue */
-.anim-border-ice {
-  --ab-c1: #e0f0ff;
-  --ab-c2: #7ec8e3;
-  --ab-c3: #3a86c8;
-  --ab-dim: rgba(126, 200, 227, 0.08);
-}
-
-/* Fire — red → orange → yellow */
-.anim-border-fire {
-  --ab-c1: #ef4444;
-  --ab-c2: #f97316;
-  --ab-c3: #eab308;
-  --ab-dim: rgba(239, 68, 68, 0.08);
-}
-
-/* Mint — emerald → teal → green */
-.anim-border-mint {
-  --ab-c1: #34d399;
-  --ab-c2: #2dd4bf;
-  --ab-c3: #22d3ee;
-  --ab-dim: rgba(52, 211, 153, 0.08);
-}
-
-/* Gold — gold → amber → bronze */
-.anim-border-gold {
-  --ab-c1: #fbbf24;
-  --ab-c2: #f59e0b;
-  --ab-c3: #d97706;
-  --ab-dim: rgba(251, 191, 36, 0.08);
-}
-
+/* Color presets */
+.anim-border-ocean  { --ab-c1: var(--one-dark-green, #98c379); --ab-c2: var(--one-dark-cyan, #56b6c2); --ab-c3: var(--one-dark-blue, #61afef); --ab-dim: rgba(152, 195, 121, 0.08); }
+.anim-border-sunset { --ab-c1: var(--one-dark-yellow, #e5c07b); --ab-c2: var(--one-dark-red, #e06c75); --ab-c3: var(--one-dark-magenta, #c678dd); --ab-dim: rgba(229, 192, 123, 0.08); }
+.anim-border-neon   { --ab-c1: #00f5ff; --ab-c2: #ff00e5; --ab-c3: #ffe600; --ab-dim: rgba(0, 245, 255, 0.08); }
+.anim-border-ice    { --ab-c1: #e0f0ff; --ab-c2: #7ec8e3; --ab-c3: #3a86c8; --ab-dim: rgba(126, 200, 227, 0.08); }
+.anim-border-fire   { --ab-c1: #ef4444; --ab-c2: #f97316; --ab-c3: #eab308; --ab-dim: rgba(239, 68, 68, 0.08); }
+.anim-border-mint   { --ab-c1: #34d399; --ab-c2: #2dd4bf; --ab-c3: #22d3ee; --ab-dim: rgba(52, 211, 153, 0.08); }
+.anim-border-gold   { --ab-c1: #fbbf24; --ab-c2: #f59e0b; --ab-c3: #d97706; --ab-dim: rgba(251, 191, 36, 0.08); }
 
 /* ============================================
-   2. Shimmer / Shine sweep
-   Usage: <div class="anim-shimmer">content</div>
-   A light sweep moves across the element.
-
-   Directions:
-     default = left→right
-     anim-shimmer-right  = right→left
-     anim-shimmer-down   = top→bottom
-     anim-shimmer-up     = bottom→top
-     anim-shimmer-diag   = diagonal ↘
-
-   Speed: anim-shimmer-slow (5s) / default (3s) / anim-shimmer-fast (1.5s)
-
-   Custom color:
-     style="--shimmer-color: rgba(198,120,221,0.15);"
+   2. Shimmer
    ============================================ */
 .anim-shimmer {
-  --shimmer-color: rgba(255, 255, 255, 0.1);
+  --shimmer-color: rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -193,26 +96,23 @@
   );
   background-size: var(--shimmer-size, 200% 100%);
   animation-name: shimmer-lr;
-  animation-duration: 3s;
+  animation-duration: 4s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   pointer-events: none;
 }
 
-/* Default: left → right */
 @keyframes shimmer-lr {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-/* Right → left */
 .anim-shimmer-right::after { animation-name: shimmer-rl; }
 @keyframes shimmer-rl {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
-/* Top → bottom */
 .anim-shimmer-down { --shimmer-angle: 180deg; --shimmer-size: 100% 200%; }
 .anim-shimmer-down::after { animation-name: shimmer-down; }
 @keyframes shimmer-down {
@@ -220,7 +120,6 @@
   100% { background-position: 0 -200%; }
 }
 
-/* Bottom → top */
 .anim-shimmer-up { --shimmer-angle: 0deg; --shimmer-size: 100% 200%; }
 .anim-shimmer-up::after { animation-name: shimmer-up; }
 @keyframes shimmer-up {
@@ -228,7 +127,6 @@
   100% { background-position: 0 200%; }
 }
 
-/* Diagonal ↘ */
 .anim-shimmer-diag { --shimmer-angle: 135deg; --shimmer-size: 300% 300%; }
 .anim-shimmer-diag::after { animation-name: shimmer-diag; }
 @keyframes shimmer-diag {
@@ -236,55 +134,38 @@
   100% { background-position: -200% 200%; }
 }
 
-/* Speed */
-.anim-shimmer-slow::after { animation-duration: 5s; }
-.anim-shimmer-fast::after { animation-duration: 1.5s; }
+.anim-shimmer-slow::after { animation-duration: 6s; }
+.anim-shimmer-fast::after { animation-duration: 2s; }
 
-/* Color presets */
-.anim-shimmer-purple { --shimmer-color: rgba(198, 120, 221, 0.12); }
-.anim-shimmer-blue   { --shimmer-color: rgba(97, 175, 239, 0.12); }
-.anim-shimmer-green  { --shimmer-color: rgba(152, 195, 121, 0.12); }
-.anim-shimmer-warm   { --shimmer-color: rgba(229, 192, 123, 0.12); }
-.anim-shimmer-neon   { --shimmer-color: rgba(0, 245, 255, 0.15); }
+.anim-shimmer-purple { --shimmer-color: rgba(198, 120, 221, 0.10); }
+.anim-shimmer-blue   { --shimmer-color: rgba(97, 175, 239, 0.10); }
+.anim-shimmer-green  { --shimmer-color: rgba(152, 195, 121, 0.10); }
+.anim-shimmer-warm   { --shimmer-color: rgba(229, 192, 123, 0.10); }
+.anim-shimmer-neon   { --shimmer-color: rgba(0, 245, 255, 0.12); }
 
 /* ============================================
    3. Glow Pulse
-   Usage: <div class="anim-glow">content</div>
-   A soft pulsing glow around the element.
-
-   Custom:
-     style="--glow-color: 239, 68, 68; --glow-intensity: 0.6;"
-
-   Presets: (default=purple)
-     anim-glow-blue, anim-glow-green, anim-glow-red,
-     anim-glow-cyan, anim-glow-gold, anim-glow-neon
-
-   Speed: anim-glow-slow (4s) / default (2s) / anim-glow-fast (1s)
    ============================================ */
-/* Direct box-shadow animation — no pseudo-element so it
-   won't conflict with shimmer (::after) or border (::before). */
 .anim-glow {
   --glow-color: 198, 120, 221;
-  --glow-intensity: 0.5;
-  animation: glow-pulse 2s ease-in-out infinite alternate;
+  --glow-intensity: 0.35;
+  animation: glow-pulse 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow-pulse {
   from {
-    box-shadow: 0 0 8px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+    box-shadow: 0 0 6px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
   }
   to {
     box-shadow:
-      0 0 20px rgba(var(--glow-color), var(--glow-intensity)),
-      0 0 44px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+      0 0 16px rgba(var(--glow-color), var(--glow-intensity)),
+      0 0 36px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.2));
   }
 }
 
-/* Speed */
 .anim-glow-slow { animation-duration: 4s; }
-.anim-glow-fast { animation-duration: 1s; }
+.anim-glow-fast { animation-duration: 1.2s; }
 
-/* Color presets */
 .anim-glow-purple { --glow-color: 198, 120, 221; }
 .anim-glow-blue   { --glow-color: 97, 175, 239; }
 .anim-glow-green  { --glow-color: 152, 195, 121; }
@@ -294,27 +175,13 @@
 .anim-glow-neon   { --glow-color: 0, 245, 255; }
 
 /* ============================================
-   4. Fade & Slide Entrances
-   Usage: <div class="anim-fade-in">...</div>
-   Plays once on mount.
+   4. Entrances (play once)
    ============================================ */
-.anim-fade-in {
-  animation: fade-in 0.6s ease both;
-}
+.anim-fade-in    { animation: fade-in 0.4s ease both; }
+.anim-fade-up    { animation: fade-up 0.4s ease both; }
+.anim-fade-left  { animation: fade-left 0.4s ease both; }
+.anim-fade-right { animation: fade-right 0.4s ease both; }
 
-.anim-fade-up {
-  animation: fade-up 0.6s ease both;
-}
-
-.anim-fade-left {
-  animation: fade-left 0.6s ease both;
-}
-
-.anim-fade-right {
-  animation: fade-right 0.6s ease both;
-}
-
-/* Staggered delays */
 .anim-delay-1 { animation-delay: 0.1s; }
 .anim-delay-2 { animation-delay: 0.2s; }
 .anim-delay-3 { animation-delay: 0.3s; }
@@ -327,24 +194,22 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(1rem); }
+  from { opacity: 0; transform: translateY(0.75rem); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-left {
-  from { opacity: 0; transform: translateX(-1rem); }
+  from { opacity: 0; transform: translateX(-0.75rem); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fade-right {
-  from { opacity: 0; transform: translateX(1rem); }
+  from { opacity: 0; transform: translateX(0.75rem); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 /* ============================================
    5. Typing Cursor
-   Usage: <span class="anim-cursor">|</span>
-   Blinking cursor for code/terminal feel.
    ============================================ */
 .anim-cursor {
   display: inline-block;
@@ -359,17 +224,6 @@
 
 /* ============================================
    6. Gradient Text Flow
-   Usage: <span class="anim-gradient-text">text</span>
-   Gradient colors shift through the text.
-
-   Custom:
-     style="--gt-c1: #ff6b6b; --gt-c2: #ffa500; --gt-c3: #ffd700;"
-
-   Presets: (default=rainbow)
-     anim-gradient-text-ocean, anim-gradient-text-sunset,
-     anim-gradient-text-fire, anim-gradient-text-neon
-
-   Speed: anim-gt-slow (8s) / default (4s) / anim-gt-fast (2s)
    ============================================ */
 .anim-gradient-text {
   --gt-c1: var(--one-dark-blue, #61afef);
@@ -378,8 +232,7 @@
   --gt-c4: var(--one-dark-yellow, #e5c07b);
   --gt-c5: var(--one-dark-green, #98c379);
 
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     var(--gt-c1), var(--gt-c2), var(--gt-c3),
     var(--gt-c4), var(--gt-c5), var(--gt-c1)
   );
@@ -387,129 +240,82 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-flow 4s linear infinite;
+  animation: gradient-flow 5s linear infinite;
 }
 
 @keyframes gradient-flow {
   to { background-position: 200% center; }
 }
 
-/* Speed */
-.anim-gt-slow { animation-duration: 8s; }
-.anim-gt-fast { animation-duration: 2s; }
+.anim-gt-slow { animation-duration: 10s; }
+.anim-gt-fast { animation-duration: 3s; }
 
-/* Presets */
-.anim-gradient-text-ocean {
-  --gt-c1: #98c379; --gt-c2: #56b6c2; --gt-c3: #61afef;
-  --gt-c4: #56b6c2; --gt-c5: #98c379;
-}
-.anim-gradient-text-sunset {
-  --gt-c1: #e5c07b; --gt-c2: #e06c75; --gt-c3: #c678dd;
-  --gt-c4: #e06c75; --gt-c5: #e5c07b;
-}
-.anim-gradient-text-fire {
-  --gt-c1: #ef4444; --gt-c2: #f97316; --gt-c3: #eab308;
-  --gt-c4: #f97316; --gt-c5: #ef4444;
-}
-.anim-gradient-text-neon {
-  --gt-c1: #00f5ff; --gt-c2: #ff00e5; --gt-c3: #ffe600;
-  --gt-c4: #ff00e5; --gt-c5: #00f5ff;
-}
+.anim-gradient-text-ocean  { --gt-c1: #98c379; --gt-c2: #56b6c2; --gt-c3: #61afef; --gt-c4: #56b6c2; --gt-c5: #98c379; }
+.anim-gradient-text-sunset { --gt-c1: #e5c07b; --gt-c2: #e06c75; --gt-c3: #c678dd; --gt-c4: #e06c75; --gt-c5: #e5c07b; }
+.anim-gradient-text-fire   { --gt-c1: #ef4444; --gt-c2: #f97316; --gt-c3: #eab308; --gt-c4: #f97316; --gt-c5: #ef4444; }
+.anim-gradient-text-neon   { --gt-c1: #00f5ff; --gt-c2: #ff00e5; --gt-c3: #ffe600; --gt-c4: #ff00e5; --gt-c5: #00f5ff; }
 
 /* ============================================
-   7. Float / Bounce
-   Usage: <div class="anim-float">icon</div>
-   Gentle floating motion.
+   7. Float
    ============================================ */
 .anim-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 3.5s ease-in-out infinite;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-.anim-bounce {
-  animation: bounce 2s ease infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40%  { transform: translateY(-8px); }
-  60%  { transform: translateY(-4px); }
+  50%      { transform: translateY(-4px); }
 }
 
 /* ============================================
-   8. Scale Pop (for v-click reveals)
-   Usage: <div class="anim-pop">content</div>
+   8. Scale Pop (for v-click)
    ============================================ */
 .anim-pop {
-  animation: scale-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: scale-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 @keyframes scale-pop {
-  from { opacity: 0; transform: scale(0.8); }
+  from { opacity: 0; transform: scale(0.9); }
   to   { opacity: 1; transform: scale(1); }
 }
 
 /* ============================================
    9. Hover Effects
-   Usage: Add hover-* class to any element.
    ============================================ */
 
-/* Lift — rises with deep shadow */
+/* Lift — rises with shadow */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
 }
 .hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 16px rgba(198, 120, 221, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 8px rgba(198, 120, 221, 0.1);
 }
 
-/* Scale — noticeable grow */
+/* Scale — gentle grow */
 .hover-scale {
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.2s ease;
   cursor: pointer;
 }
 .hover-scale:hover {
-  transform: scale(1.08);
+  transform: scale(1.04);
 }
 
-/* Glow on hover — colored glow appears */
+/* Glow — colored glow on hover */
 .hover-glow {
   transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
 .hover-glow:hover {
-  box-shadow: 0 0 20px rgba(198, 120, 221, 0.6), 0 0 40px rgba(198, 120, 221, 0.2);
+  box-shadow: 0 0 16px rgba(198, 120, 221, 0.4), 0 0 32px rgba(198, 120, 221, 0.12);
 }
 
-.hover-glow-blue {
-  transition: box-shadow 0.3s ease;
-  cursor: pointer;
-}
-.hover-glow-blue:hover {
-  box-shadow: 0 0 20px rgba(97, 175, 239, 0.6), 0 0 40px rgba(97, 175, 239, 0.2);
-}
+.hover-glow-blue { transition: box-shadow 0.3s ease; cursor: pointer; }
+.hover-glow-blue:hover { box-shadow: 0 0 16px rgba(97, 175, 239, 0.4), 0 0 32px rgba(97, 175, 239, 0.12); }
 
-.hover-glow-green {
-  transition: box-shadow 0.3s ease;
-  cursor: pointer;
-}
-.hover-glow-green:hover {
-  box-shadow: 0 0 20px rgba(152, 195, 121, 0.6), 0 0 40px rgba(152, 195, 121, 0.2);
-}
-
-/* Tilt — dramatic 3D perspective */
-.hover-tilt {
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-.hover-tilt:hover {
-  transform: perspective(500px) rotateX(4deg) rotateY(-4deg);
-}
+.hover-glow-green { transition: box-shadow 0.3s ease; cursor: pointer; }
+.hover-glow-green:hover { box-shadow: 0 0 16px rgba(152, 195, 121, 0.4), 0 0 32px rgba(152, 195, 121, 0.12); }
 
 /* Border reveal — gradient border fades in */
 .hover-border {
@@ -552,160 +358,65 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 255, 255, 0.14) 50%,
-    rgba(255, 255, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
     transparent 100%
   );
-  transition: left 0.5s ease;
+  transition: left 0.6s ease;
   pointer-events: none;
 }
 .hover-shine:hover::after {
   left: 150%;
 }
 
-/* Color shift — background gradient appears */
-.hover-gradient {
-  position: relative;
-  z-index: 0;
-  transition: color 0.3s ease;
-  cursor: pointer;
-}
-.hover-gradient::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-soft-1, linear-gradient(135deg, rgba(97, 175, 239, 0.12), rgba(198, 120, 221, 0.12)));
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-  pointer-events: none;
-}
-.hover-gradient:hover::before {
-  opacity: 1;
-}
-
-/* Shake — attention-grabbing shake */
-.hover-shake:hover {
-  animation: hover-shake 0.4s ease-in-out;
-}
-
-@keyframes hover-shake {
-  0%, 100% { transform: translateX(0); }
-  20%  { transform: translateX(-3px); }
-  40%  { transform: translateX(3px); }
-  60%  { transform: translateX(-2px); }
-  80%  { transform: translateX(2px); }
-}
-
-/* Rotate — subtle rotation */
-.hover-rotate {
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-.hover-rotate:hover {
-  transform: rotate(3deg);
-}
-
-/* Blur reveal — starts blurry, clears on hover */
-.hover-reveal {
-  filter: blur(3px);
-  opacity: 0.6;
-  transition: filter 0.3s ease, opacity 0.3s ease;
-  cursor: pointer;
-}
-.hover-reveal:hover {
-  filter: blur(0);
-  opacity: 1;
-}
-
 /* ============================================
-   Slide Transitions (Slidev Vue transitions)
-   Applied via frontmatter: transition: slide-left
+   Slide Transitions
    ============================================ */
 
-/* Slide Left */
 .slide-left-enter-active,
 .slide-left-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.slide-left-enter-from {
-  opacity: 0;
-  transform: translateX(40px);
-}
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-40px);
-}
+.slide-left-enter-from { opacity: 0; transform: translateX(24px); }
+.slide-left-leave-to   { opacity: 0; transform: translateX(-24px); }
 
-/* Slide Right */
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(40px);
-}
+.slide-right-enter-from { opacity: 0; transform: translateX(-24px); }
+.slide-right-leave-to   { opacity: 0; transform: translateX(24px); }
 
-/* Slide Up */
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.slide-up-enter-from {
-  opacity: 0;
-  transform: translateY(40px);
-}
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(-40px);
-}
+.slide-up-enter-from { opacity: 0; transform: translateY(24px); }
+.slide-up-leave-to   { opacity: 0; transform: translateY(-24px); }
 
-/* Fade */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.4s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
 
-/* Scale Fade */
 .scale-fade-enter-active,
 .scale-fade-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.scale-fade-enter-from {
-  opacity: 0;
-  transform: scale(0.92);
-}
-.scale-fade-leave-to {
-  opacity: 0;
-  transform: scale(1.08);
-}
+.scale-fade-enter-from { opacity: 0; transform: scale(0.95); }
+.scale-fade-leave-to   { opacity: 0; transform: scale(1.05); }
 
-/* Blur Fade */
 .blur-fade-enter-active,
 .blur-fade-leave-active {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.blur-fade-enter-from {
-  opacity: 0;
-  filter: blur(8px);
-  transform: scale(0.96);
-}
-.blur-fade-leave-to {
-  opacity: 0;
-  filter: blur(8px);
-  transform: scale(1.04);
-}
+.blur-fade-enter-from { opacity: 0; filter: blur(4px); transform: scale(0.97); }
+.blur-fade-leave-to   { opacity: 0; filter: blur(4px); transform: scale(1.03); }
 
 /* ============================================
    Accessibility & Print Safety
@@ -733,7 +444,6 @@
     animation: none !important;
   }
   .anim-float,
-  .anim-bounce,
   .anim-pop,
   .anim-fade-in,
   .anim-fade-up,
@@ -743,17 +453,4 @@
     opacity: 1 !important;
     transform: none !important;
   }
-  .hover-reveal {
-    filter: none !important;
-    opacity: 1 !important;
-  }
-}
-
-/* Legacy static classes (backwards compatible) */
-.glow {
-  box-shadow: 0 0 30px rgba(97, 175, 239, 0.4);
-}
-
-.blob {
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 }
