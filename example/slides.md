@@ -233,12 +233,13 @@ Same props available:
 - `backgroundSize` (optional)
 
 ---
-layout: comparison
+layout: two-cols
+divider: true
 leftLabel: Naive
 rightLabel: Optimized
 ---
 
-# Comparison Layout
+# Two Cols with Labels
 
 ::left::
 
@@ -1462,7 +1463,6 @@ layout: center
 | Layout | `full-image`, `full-split` | Background image + overlay/panel |
 | Layout | `two-cols`, `two-cols-header`, `three-cols` | Multi-column |
 | Layout | `image-left`, `image-right` | Image + content |
-| Layout | `comparison` | Before/After with labels |
 | Layout | `quote`, `statement`, `fact` | PPT-style emphasis |
 | Layout | `iframe`, `iframe-left`, `iframe-right` | Embedded web content |
 | Component | `<PatternCard>` | Signal / Template / Alternatives |
