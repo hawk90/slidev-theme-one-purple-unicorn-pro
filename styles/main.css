@@ -310,26 +310,11 @@ blockquote p:last-child {
   overflow: hidden;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-vibrant);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
 
 .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
   border-color: var(--primary-700);
-}
-
-.card:hover::before {
-  transform: translateX(0);
 }
 
 /* Alert Boxes */
