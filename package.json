@@ -15,13 +15,12 @@
     "name": "Hawk",
     "email": "hawking90a@gmail.com"
   },
-  "main": "./index.ts",
   "files": [
-    "index.ts",
     "layouts/**/*",
     "components/**/*",
     "styles/**/*",
     "setup/**/*",
+    "utils/**/*",
     "uno.config.ts",
     "global-top.vue",
     "global-bottom.vue",
@@ -30,7 +29,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro"
+    "url": "git+https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro.git"
   },
   "homepage": "https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro",
   "bugs": {
@@ -48,26 +47,10 @@
     }
   },
   "dependencies": {
-    "@slidev/types": "latest",
-    "codemirror-theme-vars": "^0.1.2",
-    "prism-theme-vars": "^0.2.4",
-    "theme-vitesse": "^0.6.0"
-  },
-  "devDependencies": {
-    "postcss": "^8.4.24",
-    "postcss-cli": "^10.1.0",
-    "postcss-import": "^15.1.0",
-    "postcss-nested": "^6.0.1",
-    "postcss-custom-properties": "^13.1.4",
-    "autoprefixer": "^10.4.14",
-    "cssnano": "^6.0.1"
+    "@slidev/types": ">=0.47.0"
   },
   "scripts": {
-    "dev": "echo 'Theme development mode - changes are automatically reflected'",
-    "build": "echo 'Building theme...' && npm link",
-    "watch": "echo 'Watching for changes...'",
     "link": "npm link && cd ../.. && npm link slidev-theme-one-purple-unicorn-pro",
-    "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro",
-    "prepublishOnly": "echo 'Preparing for publish...'"
+    "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro"
   }
 }

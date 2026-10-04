@@ -15,7 +15,7 @@ npm run link
 1. **CSS/Vue 파일 수정**
    - `styles/index.css` - 전역 스타일
    - `layouts/*.vue` - 레이아웃 컴포넌트
-   - `index.ts` - 테마 설정
+   - `package.json`의 `slidev` 필드 - 테마 설정 (폰트, colorSchema)
 
 2. **변경사항 확인**
    ```bash
@@ -31,7 +31,6 @@ npm run link
 
 ```
 slidev-theme-one-purple-unicorn-pro/
-├── index.ts           # 테마 설정
 ├── styles.css         # 엔트리 CSS
 ├── styles/
 │   └── index.css      # 메인 스타일
