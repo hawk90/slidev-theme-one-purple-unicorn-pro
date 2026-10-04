@@ -1,13 +1,13 @@
 <template>
   <div class="media-panel" :class="`media-${side}`">
     <div v-if="side === 'left'" class="media-container" :style="mediaStyle">
-      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allowfullscreen />
+      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
     </div>
     <div class="media-content">
       <slot />
     </div>
     <div v-if="side === 'right'" class="media-container" :style="mediaStyle">
-      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allowfullscreen />
+      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
     </div>
   </div>
 </template>

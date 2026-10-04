@@ -1,7 +1,7 @@
 <template>
   <div class="slidev-layout iframe-layout">
     <div v-if="side === 'full'" class="iframe-full">
-      <iframe :src="url" :style="iframeScale" frameborder="0" allowfullscreen />
+      <iframe :src="url" :style="iframeScale" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
     </div>
     <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale">
       <slot />
