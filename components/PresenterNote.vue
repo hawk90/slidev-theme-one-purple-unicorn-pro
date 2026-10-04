@@ -18,7 +18,7 @@
   display: flex;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
-  background: rgba(198, 120, 221, 0.06);
+  background: color-mix(in srgb, var(--primary-400) 6%, transparent);
   border: 1px dashed var(--primary-700, #5c3d8f);
   border-radius: 0.5rem;
   margin: 0.5rem 0;

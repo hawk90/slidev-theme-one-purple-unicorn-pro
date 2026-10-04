@@ -6,26 +6,17 @@
    ============================================ */
 
 /* Dark theme tables for special layouts */
-.slidev-layout.cover table th,
-.slidev-layout.intro table th,
-.slidev-layout.end table th,
-.slidev-layout.section table th {
+.slidev-layout:is(.cover, .intro, .end, .section) table th {
   background: var(--one-dark-bg-light);
   color: var(--one-dark-blue);
 }
 
-.slidev-layout.cover table td,
-.slidev-layout.intro table td,
-.slidev-layout.end table td,
-.slidev-layout.section table td {
+.slidev-layout:is(.cover, .intro, .end, .section) table td {
   border-bottom: 1px solid rgba(171, 178, 191, 0.2);
   color: var(--one-dark-fg);
 }
 
-.slidev-layout.cover table tr:hover,
-.slidev-layout.intro table tr:hover,
-.slidev-layout.end table tr:hover,
-.slidev-layout.section table tr:hover {
+.slidev-layout:is(.cover, .intro, .end, .section) table tr:hover {
   background: rgba(171, 178, 191, 0.05);
 }
 
@@ -34,27 +25,18 @@
    ============================================ */
 
 /* Dark theme lists for special layouts */
-.slidev-layout.cover ul li::marker,
-.slidev-layout.intro ul li::marker,
-.slidev-layout.end ul li::marker,
-.slidev-layout.section ul li::marker {
+.slidev-layout:is(.cover, .intro, .end, .section) ul li::marker {
   color: var(--one-dark-cyan);
 }
 
-.slidev-layout.cover ol li::marker,
-.slidev-layout.intro ol li::marker,
-.slidev-layout.end ol li::marker,
-.slidev-layout.section ol li::marker {
+.slidev-layout:is(.cover, .intro, .end, .section) ol li::marker {
   color: var(--one-dark-yellow);
 }
 
 /* ============================================
    Blockquotes (layout-specific overrides)
    ============================================ */
-.slidev-layout.cover blockquote,
-.slidev-layout.intro blockquote,
-.slidev-layout.end blockquote,
-.slidev-layout.section blockquote {
+.slidev-layout:is(.cover, .intro, .end, .section) blockquote {
   border-left-color: var(--one-dark-magenta);
   color: var(--one-dark-fg);
 }
@@ -62,17 +44,11 @@
 /* ============================================
    Links (layout-specific overrides)
    ============================================ */
-.slidev-layout.cover a,
-.slidev-layout.intro a,
-.slidev-layout.end a,
-.slidev-layout.section a {
+.slidev-layout:is(.cover, .intro, .end, .section) a {
   color: var(--one-dark-cyan);
 }
 
-.slidev-layout.cover a:hover,
-.slidev-layout.intro a:hover,
-.slidev-layout.end a:hover,
-.slidev-layout.section a:hover {
+.slidev-layout:is(.cover, .intro, .end, .section) a:hover {
   color: var(--one-dark-yellow);
 }
 
@@ -81,10 +57,7 @@
    ============================================ */
 /* strong color: same as main.css default (--one-dark-yellow), no override needed */
 
-.slidev-layout.cover em,
-.slidev-layout.intro em,
-.slidev-layout.end em,
-.slidev-layout.section em {
+.slidev-layout:is(.cover, .intro, .end, .section) em {
   color: var(--one-dark-cyan);
 }
 

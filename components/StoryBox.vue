@@ -41,27 +41,27 @@ const iconMap: Record<string, string> = {
 }
 
 .story-history {
-  background: rgba(198, 120, 221, 0.08);
+  background: color-mix(in srgb, var(--one-dark-magenta) 8%, transparent);
   border-color: var(--one-dark-magenta, #c678dd);
 }
 
 .story-insight {
-  background: rgba(229, 192, 123, 0.08);
+  background: color-mix(in srgb, var(--one-dark-yellow) 8%, transparent);
   border-color: var(--one-dark-yellow, #e5c07b);
 }
 
 .story-warning {
-  background: rgba(224, 108, 117, 0.08);
+  background: color-mix(in srgb, var(--one-dark-red) 8%, transparent);
   border-color: var(--one-dark-red, #e06c75);
 }
 
 .story-tip {
-  background: rgba(152, 195, 121, 0.08);
+  background: color-mix(in srgb, var(--one-dark-green) 8%, transparent);
   border-color: var(--one-dark-green, #98c379);
 }
 
 .story-person {
-  background: rgba(97, 175, 239, 0.08);
+  background: color-mix(in srgb, var(--one-dark-blue) 8%, transparent);
   border-color: var(--one-dark-blue, #61afef);
 }
 

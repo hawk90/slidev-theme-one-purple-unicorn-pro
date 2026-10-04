@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout full-image">
+  <div class="slidev-layout full-image slide-dark slide-bare">
     <FullBleed
       :image="image"
       :background-size="backgroundSize"

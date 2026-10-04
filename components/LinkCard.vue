@@ -39,7 +39,7 @@ defineProps({
 }
 
 .link-card:hover {
-  border-color: var(--primary-600, #7c4dbc);
+  border-color: var(--primary-600, #a652b8);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

@@ -66,17 +66,17 @@ const gridStyle = computed(() => {
 }
 
 .grid-label-0 {
-  background: rgba(59, 130, 246, 0.15);
+  background: color-mix(in srgb, var(--one-dark-blue) 15%, transparent);
   color: var(--one-dark-blue, #61afef);
 }
 
 .grid-label-1 {
-  background: rgba(16, 185, 129, 0.15);
+  background: color-mix(in srgb, var(--one-dark-green) 15%, transparent);
   color: var(--one-dark-green, #98c379);
 }
 
 .grid-label-2 {
-  background: rgba(198, 120, 221, 0.15);
+  background: color-mix(in srgb, var(--one-dark-magenta) 15%, transparent);
   color: var(--one-dark-magenta, #c678dd);
 }
 </style>

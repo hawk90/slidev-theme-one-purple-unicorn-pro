@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout section">
+  <div class="slidev-layout section slide-dark slide-bare">
     <CenteredSlide dark content-max-width="48rem">
       <slot />
     </CenteredSlide>

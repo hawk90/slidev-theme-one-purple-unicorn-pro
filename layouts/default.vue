@@ -5,7 +5,8 @@
 </template>
 
 <style scoped>
+/* Padding/typography come from the content-slide rules in styles/index.css */
 .default {
-  @apply h-full p-8;
+  @apply h-full;
 }
 </style>

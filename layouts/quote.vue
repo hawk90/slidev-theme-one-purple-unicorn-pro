@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout quote">
+  <div class="slidev-layout quote slide-dark slide-bare">
     <CenteredSlide dark content-max-width="48rem">
       <div class="quote-mark">"</div>
       <div class="quote-content">

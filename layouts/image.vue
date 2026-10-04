@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout image-layout">
+  <div class="slidev-layout image-layout slide-bare">
     <MediaPanel :src="image" type="image" :side="side" :background-size="backgroundSize">
       <slot />
     </MediaPanel>

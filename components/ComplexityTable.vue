@@ -70,7 +70,7 @@ defineProps({
   font-weight: 700;
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
-  background: rgba(198, 120, 221, 0.1);
+  background: color-mix(in srgb, var(--primary-400) 10%, transparent);
   color: var(--primary-400, #c678dd);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
   letter-spacing: 0.02em;
@@ -111,7 +111,7 @@ tbody tr:hover {
 }
 
 .ct-highlight {
-  background: rgba(198, 120, 221, 0.08) !important;
+  background: color-mix(in srgb, var(--primary-400) 8%, transparent) !important;
 }
 
 .ct-highlight td {

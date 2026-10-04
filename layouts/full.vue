@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout full">
+  <div class="slidev-layout full slide-bare">
     <slot />
   </div>
 </template>

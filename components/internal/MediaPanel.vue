@@ -1,19 +1,17 @@
 <template>
   <div class="media-panel" :class="`media-${side}`">
-    <div v-if="side === 'left'" class="media-container" :style="mediaStyle">
-      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+    <div class="media-container" :style="mediaStyle">
+      <ScaledIframe v-if="type === 'iframe'" :src="src" :scale="scale" />
     </div>
     <div class="media-content">
       <slot />
-    </div>
-    <div v-if="side === 'right'" class="media-container" :style="mediaStyle">
-      <iframe v-if="type === 'iframe'" :src="src" :style="iframeScale" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import ScaledIframe from './ScaledIframe.vue'
 
 const props = defineProps({
   src: { type: String, required: true },
@@ -34,16 +32,6 @@ const mediaStyle = computed(() => {
   }
   return {}
 })
-
-const iframeScale = computed(() => {
-  const s = Number(props.scale)
-  return {
-    width: `${100 / s}%`,
-    height: `${100 / s}%`,
-    transform: `scale(${s})`,
-    transformOrigin: '0 0',
-  }
-})
 </script>
 
 <style scoped>
@@ -60,8 +48,8 @@ const iframeScale = computed(() => {
   overflow: hidden;
 }
 
-.media-container iframe {
-  border: none;
+.media-right .media-container {
+  order: 2;
 }
 
 .media-content {

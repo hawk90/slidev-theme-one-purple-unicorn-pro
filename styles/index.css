@@ -1,10 +1,9 @@
 /* ========== Content Slide Layout ========== */
 /* Styles for content slides — layouts that show regular text/code content.
-   Only SPECIAL layouts (cover, section, full variants, etc.) are excluded.
-   Content layouts like two-cols, three-cols KEEP these styles. */
+   Layouts with their own typography/positioning opt out by adding
+   `slide-bare` to their root element (see layouts/*.vue). */
 
-/* Exclude list: only layouts with their own typography/positioning */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) {
+.slidev-layout:not(.slide-bare) {
   box-sizing: border-box;
   font-size: 18px;
   line-height: 1.3;
@@ -13,7 +12,7 @@
 }
 
 /* ========== H1 Absolute Positioning (Content Slides Only) ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h1 {
+.slidev-layout:not(.slide-bare) h1 {
   position: absolute;
   top: 15px;
   left: 30px;
@@ -33,54 +32,44 @@
   overflow: visible;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h1 + * {
+.slidev-layout:not(.slide-bare) h1 + * {
   margin-top: 0;
 }
 
 /* ========== Content Heading Sizes ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h2 {
+.slidev-layout:not(.slide-bare) h2 {
   font-size: 1.3em;
   color: var(--content-h2);
   margin: 1.2rem 0 0.5rem;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h1 + h2 {
+.slidev-layout:not(.slide-bare) h1 + h2 {
   margin-top: 0;
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h3 {
+.slidev-layout:not(.slide-bare) h3 {
   font-size: 1.15em;
   color: var(--content-h3);
 }
 
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) h4 {
+.slidev-layout:not(.slide-bare) h4 {
   font-size: 1.1em;
   color: var(--content-h4);
 }
 
 /* ========== Content List Marker Color ========== */
-.slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) li::marker {
+.slidev-layout:not(.slide-bare) li::marker {
   color: var(--content-marker);
 }
 
 /* ========== Cover/Intro/End/Section Overrides ========== */
-.slidev-layout.cover,
-.slidev-layout.intro,
-.slidev-layout.end,
-.slidev-layout.section {
-  background: var(--cover-bg);
+/* Background and centering come from CenteredSlide (layouts/*.vue) */
+.slidev-layout:is(.cover, .intro, .end, .section) {
   color: var(--cover-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  position: relative;
 }
 
-.slidev-layout.cover h1,
-.slidev-layout.intro h1,
-.slidev-layout.end h1,
-.slidev-layout.section h1 {
+.slidev-layout:is(.cover, .intro, .end, .section) h1 {
   font-size: 3rem;
   font-weight: 700;
   background: var(--cover-h1-gradient);
@@ -96,20 +85,14 @@
   max-height: none;
 }
 
-.slidev-layout.cover h1 *,
-.slidev-layout.intro h1 *,
-.slidev-layout.end h1 *,
-.slidev-layout.section h1 * {
+.slidev-layout:is(.cover, .intro, .end, .section) h1 * {
   background: inherit;
   -webkit-background-clip: inherit;
   background-clip: inherit;
   -webkit-text-fill-color: inherit;
 }
 
-.slidev-layout.cover h2,
-.slidev-layout.intro h2,
-.slidev-layout.end h2,
-.slidev-layout.section h2 {
+.slidev-layout:is(.cover, .intro, .end, .section) h2 {
   font-size: 1.5rem;
   font-weight: 400;
   background: var(--cover-h2-gradient);
@@ -121,10 +104,7 @@
   text-align: center;
 }
 
-.slidev-layout.cover p,
-.slidev-layout.intro p,
-.slidev-layout.end p,
-.slidev-layout.section p {
+.slidev-layout:is(.cover, .intro, .end, .section) p {
   color: var(--cover-text);
   font-size: 1.125rem;
 }

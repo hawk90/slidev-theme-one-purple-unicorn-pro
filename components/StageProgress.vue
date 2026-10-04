@@ -25,13 +25,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
+import { TITLE_LAYOUTS } from '../utils/layouts'
 
 const nav = useNav()
 const { currentLayout, currentSlideRoute, go } = nav
 
-const hiddenLayouts = ['cover', 'intro', 'end']
-
-const isHidden = computed(() => hiddenLayouts.includes(currentLayout.value))
+const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
 
 const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}

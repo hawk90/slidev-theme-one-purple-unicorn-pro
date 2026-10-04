@@ -92,14 +92,14 @@ defineProps({
 }
 
 .pattern-signal {
-  background: rgba(224, 108, 117, 0.06);
+  background: color-mix(in srgb, var(--one-dark-red) 6%, transparent);
 }
 
 .pattern-template {
-  background: rgba(97, 175, 239, 0.06);
+  background: color-mix(in srgb, var(--one-dark-blue) 6%, transparent);
 }
 
 .pattern-alt {
-  background: rgba(229, 192, 123, 0.06);
+  background: color-mix(in srgb, var(--one-dark-yellow) 6%, transparent);
 }
 </style>

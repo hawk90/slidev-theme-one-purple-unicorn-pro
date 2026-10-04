@@ -26,34 +26,15 @@ html:not(.dark) .slidev-layout {
   color: var(--light-text-primary);
 }
 
-/* Override for content layout types to be light */
-html:not(.dark) .slidev-layout.default,
-html:not(.dark) .slidev-layout.two-cols-layout,
-html:not(.dark) .slidev-layout.three-cols-layout,
-html:not(.dark) .slidev-layout.image-layout,
-html:not(.dark) .slidev-layout.full,
-html:not(.dark) .slidev-layout.iframe-layout {
-  background: var(--light-bg);
-  color: var(--light-text-primary);
-}
-
-/* Special layouts keep dark background */
-html:not(.dark) .slidev-layout.cover,
-html:not(.dark) .slidev-layout.intro,
-html:not(.dark) .slidev-layout.section,
-html:not(.dark) .slidev-layout.end,
-html:not(.dark) .slidev-layout.quote,
-html:not(.dark) .slidev-layout.statement,
-html:not(.dark) .slidev-layout.fact,
-html:not(.dark) .slidev-layout.full-image,
-html:not(.dark) .slidev-layout.full-split {
+/* Dark layouts (root has `slide-dark`) keep a dark background in light mode */
+html:not(.dark) .slidev-layout.slide-dark {
   background: var(--dark-bg);
   color: var(--one-dark-fg-bright);
 }
 
 /* Also apply to slide container in preview/overview */
-html:not(.dark) .slidev-overview .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split),
-html:not(.dark) .slidev-presenter .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) {
+html:not(.dark) .slidev-overview .slidev-layout:not(.slide-dark),
+html:not(.dark) .slidev-presenter .slidev-layout:not(.slide-dark) {
   background: var(--light-bg);
   color: var(--light-text-primary);
 }
@@ -61,38 +42,44 @@ html:not(.dark) .slidev-presenter .slidev-layout:not(.cover):not(.intro):not(.se
 /* ============================================
    Typography for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) h1 {
+/* Content slides get heading/marker colors from styles/index.css;
+   bare layouts (center, image, full-text, ...) get them here */
+html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h1 {
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) h2 {
+html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h2 {
   color: var(--one-dark-blue);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) h3 {
+html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h3 {
   color: var(--one-dark-magenta);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) h4 {
+html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h4 {
   color: var(--light-text-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) p {
+html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
+  color: var(--one-dark-blue);
+}
+
+html:not(.dark) .slidev-layout:not(.slide-dark) p {
   color: var(--light-text-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) strong {
+html:not(.dark) .slidev-layout:not(.slide-dark) strong {
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) em {
+html:not(.dark) .slidev-layout:not(.slide-dark) em {
   color: var(--one-dark-yellow-dark);
 }
 
 /* ============================================
    Code Blocks - Dark Theme (One Dark Pro)
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) :not(pre) > code {
+html:not(.dark) .slidev-layout:not(.slide-dark) :not(pre) > code {
   background: var(--light-bg-tertiary);
   color: var(--one-dark-blue);
   border: 1px solid var(--light-border);
@@ -101,55 +88,51 @@ html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):n
 /* ============================================
    Links for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) a {
+html:not(.dark) .slidev-layout:not(.slide-dark) a {
   color: var(--one-dark-blue);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) a:hover {
+html:not(.dark) .slidev-layout:not(.slide-dark) a:hover {
   color: var(--one-dark-cyan);
 }
 
 /* ============================================
    Lists for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) li {
+html:not(.dark) .slidev-layout:not(.slide-dark) li {
   color: var(--light-text-secondary);
-}
-
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) li::marker {
-  color: var(--one-dark-blue);
 }
 
 /* ============================================
    Tables for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) table {
+html:not(.dark) .slidev-layout:not(.slide-dark) table {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) thead {
+html:not(.dark) .slidev-layout:not(.slide-dark) thead {
   background: var(--light-bg-tertiary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) th {
+html:not(.dark) .slidev-layout:not(.slide-dark) th {
   color: var(--light-text-primary);
   border-bottom: 2px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) td {
+html:not(.dark) .slidev-layout:not(.slide-dark) td {
   color: var(--light-text-secondary);
   border-bottom: 1px solid var(--light-border-light);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) tbody tr:hover {
+html:not(.dark) .slidev-layout:not(.slide-dark) tbody tr:hover {
   background: var(--light-bg-tertiary);
 }
 
 /* ============================================
    Blockquotes for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) blockquote {
+html:not(.dark) .slidev-layout:not(.slide-dark) blockquote {
   border-left: 3px solid var(--one-dark-blue);
   background: var(--light-bg-secondary);
   color: var(--light-text-muted);
@@ -158,44 +141,44 @@ html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):n
 /* ============================================
    Cards and Containers for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .card {
+html:not(.dark) .slidev-layout:not(.slide-dark) .card {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .gradient-card {
+html:not(.dark) .slidev-layout:not(.slide-dark) .gradient-card {
   background: var(--light-bg-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .glass-gradient {
+html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .gradient-border {
+html:not(.dark) .slidev-layout:not(.slide-dark) .gradient-border {
   background: var(--light-bg);
 }
 
 /* ============================================
    Alerts for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .alert-info {
+html:not(.dark) .slidev-layout:not(.slide-dark) .alert-info {
   background: rgba(97, 175, 239, 0.08);
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .alert-success {
+html:not(.dark) .slidev-layout:not(.slide-dark) .alert-success {
   background: rgba(152, 195, 121, 0.08);
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .alert-warning {
+html:not(.dark) .slidev-layout:not(.slide-dark) .alert-warning {
   background: rgba(229, 192, 123, 0.08);
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .alert-error {
+html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
   background: rgba(224, 108, 117, 0.08);
   color: var(--light-text-primary);
 }
@@ -203,39 +186,39 @@ html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):n
 /* ============================================
    Buttons for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) button:not(.btn-gradient):not(.btn-gradient-subtle) {
+html:not(.dark) .slidev-layout:not(.slide-dark) button:not(.btn-gradient):not(.btn-gradient-subtle) {
   background: var(--light-bg-tertiary);
   color: var(--light-text-primary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) button:not(.btn-gradient):not(.btn-gradient-subtle):hover {
+html:not(.dark) .slidev-layout:not(.slide-dark) button:not(.btn-gradient):not(.btn-gradient-subtle):hover {
   background: var(--light-bg-secondary);
 }
 
 /* ============================================
    Utility overrides for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .text-muted {
+html:not(.dark) .slidev-layout:not(.slide-dark) .text-muted {
   color: var(--light-text-muted);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .text-primary {
+html:not(.dark) .slidev-layout:not(.slide-dark) .text-primary {
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .text-secondary {
+html:not(.dark) .slidev-layout:not(.slide-dark) .text-secondary {
   color: var(--light-text-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .bg-primary {
+html:not(.dark) .slidev-layout:not(.slide-dark) .bg-primary {
   background: var(--light-bg);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .bg-secondary {
+html:not(.dark) .slidev-layout:not(.slide-dark) .bg-secondary {
   background: var(--light-bg-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.cover):not(.intro):not(.section):not(.end):not(.quote):not(.statement):not(.fact):not(.full-image):not(.full-split) .bg-tertiary {
+html:not(.dark) .slidev-layout:not(.slide-dark) .bg-tertiary {
   background: var(--light-bg-tertiary);
 }

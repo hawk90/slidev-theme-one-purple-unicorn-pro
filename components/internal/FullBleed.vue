@@ -90,9 +90,6 @@ const panelStyle = computed(() => ({
 }
 
 .full-bleed-panel-content :deep(h1) {
-  position: static;
-  height: auto;
-  max-height: none;
   font-size: 2rem;
   color: white;
 }

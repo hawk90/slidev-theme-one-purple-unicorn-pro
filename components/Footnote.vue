@@ -23,7 +23,7 @@
   color: var(--primary-400, #c678dd);
   font-size: 0.65rem;
   text-decoration: none;
-  border-bottom: 1px dashed var(--primary-600, #7c4dbc);
+  border-bottom: 1px dashed var(--primary-600, #a652b8);
   transition: color 0.2s ease, border-color 0.2s ease;
   pointer-events: auto;
   cursor: pointer;

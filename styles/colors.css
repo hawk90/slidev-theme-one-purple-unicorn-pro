@@ -23,6 +23,7 @@
   --primary-300: #d98eff;
   --primary-400: #c678dd;
   --primary-500: #b665cb;
+  --primary-600: #a652b8;
   --primary-700: #8e449c;
   --primary-800: #6b3377;
   --primary-900: #482252;
@@ -137,7 +138,6 @@
   --content-inline-code-color: var(--primary-400);
 
   /* Cover/Section Layout Colors */
-  --cover-bg: linear-gradient(135deg, var(--dark-bg), #1e1e2e);
   --cover-text: var(--dark-fg);
   --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
   --cover-h2-gradient: linear-gradient(135deg, #a78bfa, #60a5fa);

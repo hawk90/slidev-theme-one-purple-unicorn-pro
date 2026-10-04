@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout full-text">
+  <div class="slidev-layout full-text slide-bare">
     <slot />
   </div>
 </template>
@@ -18,9 +18,6 @@
 }
 
 .full-text :deep(h1) {
-  position: static;
-  height: auto;
-  max-height: none;
   font-size: 1.75rem;
   margin-bottom: 1rem;
 }

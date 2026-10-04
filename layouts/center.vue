@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout center">
+  <div class="slidev-layout center slide-bare">
     <CenteredSlide padding="4rem" content-max-width="64rem">
       <slot />
     </CenteredSlide>

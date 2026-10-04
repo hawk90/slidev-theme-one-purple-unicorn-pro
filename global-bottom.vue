@@ -13,12 +13,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
+import { NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 
 const { currentPage, total, currentLayout, currentSlideRoute } = useNav()
 
-const hiddenLayouts = ['cover', 'section', 'intro', 'end']
-
-const isHidden = computed(() => hiddenLayouts.includes(currentLayout.value))
+const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
 // progressBar frontmatter option:
 //   "always" (default) → all slides

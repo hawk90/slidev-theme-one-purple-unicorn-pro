@@ -24,32 +24,32 @@ defineProps({
 }
 
 .badge-default {
-  background: rgba(198, 120, 221, 0.15);
+  background: color-mix(in srgb, var(--primary-400) 15%, transparent);
   color: var(--primary-400, #c678dd);
 }
 
 .badge-blue {
-  background: rgba(97, 175, 239, 0.15);
+  background: color-mix(in srgb, var(--one-dark-blue) 15%, transparent);
   color: var(--one-dark-blue, #61afef);
 }
 
 .badge-green {
-  background: rgba(152, 195, 121, 0.15);
+  background: color-mix(in srgb, var(--one-dark-green) 15%, transparent);
   color: var(--one-dark-green, #98c379);
 }
 
 .badge-red {
-  background: rgba(224, 108, 117, 0.15);
+  background: color-mix(in srgb, var(--one-dark-red) 15%, transparent);
   color: var(--one-dark-red, #e06c75);
 }
 
 .badge-yellow {
-  background: rgba(229, 192, 123, 0.15);
+  background: color-mix(in srgb, var(--one-dark-yellow) 15%, transparent);
   color: var(--one-dark-yellow, #e5c07b);
 }
 
 .badge-cyan {
-  background: rgba(86, 182, 194, 0.15);
+  background: color-mix(in srgb, var(--one-dark-cyan) 15%, transparent);
   color: var(--one-dark-cyan, #56b6c2);
 }
 
