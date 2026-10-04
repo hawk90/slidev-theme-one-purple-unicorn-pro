@@ -214,7 +214,8 @@ Content appears on the right while an image fills the left half.
 - Great for visual storytelling
 
 ```yaml
-layout: image-left
+layout: image
+side: left
 image: https://example.com/photo.jpg
 ```
 
@@ -226,7 +227,7 @@ image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800
 
 # Image Right
 
-Mirror of `image-left` layout.
+Mirror of the left-side `image` layout (`side: right`).
 
 Content on the left, image on the right.
 

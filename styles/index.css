@@ -1,7 +1,7 @@
 /* ========== Content Slide Layout ========== */
 /* Styles for content slides — layouts that show regular text/code content.
    Only SPECIAL layouts (cover, section, full variants, etc.) are excluded.
-   Content layouts like two-cols, three-cols, comparison KEEP these styles. */
+   Content layouts like two-cols, three-cols KEEP these styles. */
 
 /* Exclude list: only layouts with their own typography/positioning */
 .slidev-layout:not(.cover):not(.intro):not(.end):not(.section):not(.full):not(.full-image):not(.full-text):not(.full-split):not(.quote):not(.statement):not(.fact):not(.center):not(.iframe-layout):not(.image-layout) {

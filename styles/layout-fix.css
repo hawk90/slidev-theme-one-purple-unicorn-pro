@@ -53,7 +53,7 @@
 }
 
 /* Layout-specific styles now handled by scoped styles in .vue files:
-   - three-cols.vue, center.vue, image-left.vue, image-right.vue */
+   - three-cols.vue, center.vue, image.vue */
 
 /* ============================================
    Code Block Container
