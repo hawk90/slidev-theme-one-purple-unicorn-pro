@@ -4,10 +4,7 @@
     <table>
       <thead>
         <tr>
-          <th>N</th>
-          <th>Target</th>
-          <th>Algorithm</th>
-          <th v-if="showComplexity">Complexity</th>
+          <th v-for="c in columns" :key="c.key">{{ c.label }}</th>
         </tr>
       </thead>
       <tbody>
@@ -16,10 +13,12 @@
           :key="`row-${row.n}-${i}`"
           :class="{ 'ct-highlight': row.highlight }"
         >
-          <td class="ct-n">{{ row.n }}</td>
-          <td class="ct-target">{{ row.target }}</td>
-          <td class="ct-algo">{{ row.algo }}</td>
-          <td v-if="showComplexity" class="ct-complexity">{{ row.complexity }}</td>
+          <td v-for="c in columns" :key="c.key" :class="`ct-${c.key}`">
+            <template v-for="(p, j) in sup(row[c.key])" :key="j">
+              <sup v-if="p.sup">{{ p.text }}</sup>
+              <template v-else>{{ p.text }}</template>
+            </template>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -47,7 +46,14 @@ const DEFAULT_ROWS: Row[] = [
 </script>
 
 <script setup lang="ts">
-defineProps({
+import { computed } from 'vue'
+
+// Render "2^N" / "10^18" as superscripts: splits text into plain and ^-exponent parts
+function sup(text = '') {
+  return text.split(/\^(\w+)/).map((part, i) => ({ text: part, sup: i % 2 === 1 }))
+}
+
+const props = defineProps({
   title: { type: String, default: '' },
   rows: {
     type: Array as () => Row[],
@@ -55,6 +61,17 @@ defineProps({
   },
   showComplexity: { type: Boolean, default: true },
 })
+
+const COLUMNS = [
+  { key: 'n', label: 'N' },
+  { key: 'target', label: 'Target' },
+  { key: 'algo', label: 'Algorithm' },
+  { key: 'complexity', label: 'Complexity' },
+] as const
+
+const columns = computed(() =>
+  props.showComplexity ? COLUMNS : COLUMNS.filter(c => c.key !== 'complexity')
+)
 </script>
 
 <style scoped>
@@ -116,6 +133,11 @@ tbody tr:hover {
 
 .ct-highlight td {
   color: var(--text-primary, #dce0e8);
+}
+
+.complexity-table sup {
+  font-size: 0.7em;
+  line-height: 0;
 }
 
 .ct-n {

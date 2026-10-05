@@ -84,22 +84,24 @@ function goToStage(index: number) {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
 }
 
-/* Position variants */
+/* Position variants
+   Top variants sit in the strip above the content-slide h1 (top: 15px),
+   so keep them small and pinned to the edge */
 .stage-pos-top {
-  top: 1rem;
+  top: 4px;
   left: 50%;
   transform: translateX(-50%);
   flex-direction: row;
 }
 
 .stage-pos-top-left {
-  top: 1rem;
+  top: 4px;
   left: 2rem;
   flex-direction: row;
 }
 
 .stage-pos-top-right {
-  top: 1rem;
+  top: 4px;
   right: 2rem;
   flex-direction: row;
 }
@@ -145,6 +147,24 @@ function goToStage(index: number) {
 .stage-pos-right .stage-item {
   flex-direction: column;
   gap: 0.15rem;
+}
+
+:is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-label {
+  font-size: 0.5rem;
+}
+
+:is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-active .stage-label {
+  font-size: 0.55rem;
+}
+
+:is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-dot {
+  width: 5px;
+  height: 5px;
+}
+
+:is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-active .stage-dot {
+  width: 6px;
+  height: 6px;
 }
 
 /* Base item */
@@ -225,12 +245,12 @@ function goToStage(index: number) {
 
 .stage-upcoming .stage-dot {
   background: var(--text-muted, #5c6370);
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .stage-upcoming .stage-label {
   color: var(--text-muted, #5c6370);
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .stage-upcoming .stage-connector {

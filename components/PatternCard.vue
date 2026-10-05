@@ -1,34 +1,35 @@
 <template>
   <div class="pattern-card">
-    <div v-if="signal" class="pattern-section pattern-signal">
-      <div class="pattern-icon">&#x1F6A8;</div>
-      <div class="pattern-label">Signal</div>
-      <div class="pattern-body">{{ signal }}</div>
-    </div>
-    <div v-if="template" class="pattern-section pattern-template">
-      <div class="pattern-icon">&#x1F4DD;</div>
-      <div class="pattern-label">Template</div>
-      <div class="pattern-body">
-        <slot name="template">{{ template }}</slot>
+    <template v-for="s in SECTIONS" :key="s.key">
+      <div v-if="props[s.key] || slots[s.key]" class="pattern-section" :class="`pattern-${s.key}`">
+        <div class="pattern-icon">{{ s.icon }}</div>
+        <div class="pattern-label">{{ s.label }}</div>
+        <div class="pattern-body">
+          <slot :name="s.key">{{ props[s.key] }}</slot>
+        </div>
       </div>
-    </div>
-    <div v-if="alternatives" class="pattern-section pattern-alt">
-      <div class="pattern-icon">&#x1F500;</div>
-      <div class="pattern-label">Alternatives</div>
-      <div class="pattern-body">
-        <slot name="alternatives">{{ alternatives }}</slot>
-      </div>
-    </div>
+    </template>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { useSlots } from 'vue'
+
+const props = defineProps({
   signal: { type: String, default: '' },
   template: { type: String, default: '' },
   alternatives: { type: String, default: '' },
 })
+
+const slots = useSlots()
+
+// Each section is shown when its prop (plain text) or same-named slot (rich content) is given
+const SECTIONS = [
+  { key: 'signal', icon: '\u{1F6A8}', label: 'Signal' },
+  { key: 'template', icon: '\u{1F4DD}', label: 'Template' },
+  { key: 'alternatives', icon: '\u{1F500}', label: 'Alternatives' },
+] as const
 </script>
 
 <style scoped>
@@ -46,11 +47,16 @@ defineProps({
   align-items: flex-start;
   gap: 0.5rem;
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
+  background: color-mix(in srgb, var(--pattern-color) 6%, transparent);
 }
 
 .pattern-section:last-of-type {
   border-bottom: none;
 }
+
+.pattern-signal { --pattern-color: var(--one-dark-red, #e06c75); }
+.pattern-template { --pattern-color: var(--one-dark-blue, #61afef); }
+.pattern-alternatives { --pattern-color: var(--one-dark-yellow, #e5c07b); }
 
 .pattern-icon {
   font-size: 0.85rem;
@@ -67,39 +73,16 @@ defineProps({
   min-width: 5.5rem;
   flex-shrink: 0;
   margin-top: 0.15rem;
-}
-
-.pattern-signal .pattern-label {
-  color: var(--one-dark-red, #e06c75);
-}
-
-.pattern-template .pattern-label {
-  color: var(--one-dark-blue, #61afef);
-}
-
-.pattern-alt .pattern-label {
-  color: var(--one-dark-yellow, #e5c07b);
+  color: var(--pattern-color);
 }
 
 .pattern-body {
   font-size: 0.8rem;
   line-height: 1.5;
-  color: var(--text-secondary, #abb2bf);
+  color: var(--text-primary, #abb2bf);
 }
 
 .pattern-body :deep(code) {
   font-size: 0.75rem;
-}
-
-.pattern-signal {
-  background: color-mix(in srgb, var(--one-dark-red) 6%, transparent);
-}
-
-.pattern-template {
-  background: color-mix(in srgb, var(--one-dark-blue) 6%, transparent);
-}
-
-.pattern-alt {
-  background: color-mix(in srgb, var(--one-dark-yellow) 6%, transparent);
 }
 </style>

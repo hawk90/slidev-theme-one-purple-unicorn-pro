@@ -36,34 +36,16 @@ const iconMap: Record<string, string> = {
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0;
-  border-left: 3px solid;
+  border-left: 3px solid var(--story-color);
+  background: color-mix(in srgb, var(--story-color) 8%, transparent);
   font-size: 0.8rem;
 }
 
-.story-history {
-  background: color-mix(in srgb, var(--one-dark-magenta) 8%, transparent);
-  border-color: var(--one-dark-magenta, #c678dd);
-}
-
-.story-insight {
-  background: color-mix(in srgb, var(--one-dark-yellow) 8%, transparent);
-  border-color: var(--one-dark-yellow, #e5c07b);
-}
-
-.story-warning {
-  background: color-mix(in srgb, var(--one-dark-red) 8%, transparent);
-  border-color: var(--one-dark-red, #e06c75);
-}
-
-.story-tip {
-  background: color-mix(in srgb, var(--one-dark-green) 8%, transparent);
-  border-color: var(--one-dark-green, #98c379);
-}
-
-.story-person {
-  background: color-mix(in srgb, var(--one-dark-blue) 8%, transparent);
-  border-color: var(--one-dark-blue, #61afef);
-}
+.story-history { --story-color: var(--one-dark-magenta, #c678dd); }
+.story-insight { --story-color: var(--one-dark-yellow, #e5c07b); }
+.story-warning { --story-color: var(--one-dark-red, #e06c75); }
+.story-tip { --story-color: var(--one-dark-green, #98c379); }
+.story-person { --story-color: var(--one-dark-blue, #61afef); }
 
 .story-header {
   display: flex;
@@ -82,13 +64,18 @@ const iconMap: Record<string, string> = {
   color: var(--text-primary, #dce0e8);
 }
 
+html:not(.dark) .story-title {
+  color: var(--light-text-primary, #1a1d23);
+}
+
 .story-year {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-size: 0.65rem;
-  color: var(--text-muted, #5c6370);
-  background: var(--bg-tertiary, rgba(255, 255, 255, 0.06));
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.25rem;
+  font-weight: 600;
+  color: var(--story-color);
+  background: color-mix(in srgb, var(--story-color) 15%, transparent);
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
   margin-left: auto;
 }
 
