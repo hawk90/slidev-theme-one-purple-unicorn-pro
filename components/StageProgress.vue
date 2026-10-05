@@ -1,25 +1,29 @@
 <template>
-  <div
+  <nav
     v-if="!isHidden && stages.length > 0"
     class="stage-progress"
     :class="[`stage-pos-${position}`, { 'chrome-on-dark': onDark }]"
+    aria-label="Stages"
   >
-    <div
+    <button
       v-for="(stage, i) in stages"
       :key="`stage-${stage}-${i}`"
+      type="button"
       class="stage-item stage-clickable"
       :class="{
         'stage-done': i < currentIndex,
         'stage-active': i === currentIndex,
         'stage-upcoming': i > currentIndex,
       }"
-      @click="goToStage(i)"
+      :aria-current="i === currentIndex ? 'step' : undefined"
+      @click="onStageClick($event, i)"
+      @keydown.space.stop
     >
-      <div class="stage-dot" />
+      <span class="stage-dot" />
       <span class="stage-label">{{ stage }}</span>
-      <div v-if="i < stages.length - 1" class="stage-connector" />
-    </div>
-  </div>
+      <span v-if="i < stages.length - 1" class="stage-connector" />
+    </button>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -49,6 +53,14 @@ const position = computed(() =>
 
 // Pre-compute stages key for comparison (avoids JSON.stringify per click)
 const stagesKey = computed(() => stages.value.join('|||'))
+
+// A mouse click leaves no focus behind, so Space / arrows keep driving the
+// slides; keyboard activation (Enter / Space) keeps focus on the button.
+// Space is stopped here so it activates the button instead of advancing.
+function onStageClick(event: MouseEvent, index: number) {
+  if (event.detail > 0) (event.currentTarget as HTMLElement).blur()
+  goToStage(index)
+}
 
 function goToStage(index: number) {
   // Explicit stageMap takes priority
@@ -170,6 +182,24 @@ function goToStage(index: number) {
 .stage-clickable {
   cursor: pointer;
   pointer-events: auto;
+  /* Reset button chrome */
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+}
+
+.stage-clickable:focus-visible {
+  outline: 1px solid var(--stage-active-color, var(--primary-400, #c678dd));
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.stage-clickable:focus-visible .stage-label {
+  opacity: 1 !important;
 }
 
 .stage-clickable:hover .stage-dot {
@@ -182,6 +212,7 @@ function goToStage(index: number) {
 
 /* Dot */
 .stage-dot {
+  display: block;
   width: var(--stage-dot-size, 6px);
   height: var(--stage-dot-size, 6px);
   border-radius: 50%;
@@ -197,6 +228,7 @@ function goToStage(index: number) {
 }
 
 .stage-connector {
+  display: block;
   width: 1.5rem;
   height: 1px;
   margin: 0 0.25rem;

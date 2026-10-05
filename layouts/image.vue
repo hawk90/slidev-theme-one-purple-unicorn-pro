@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout image-layout slide-bare">
-    <MediaPanel :src="image" type="image" :side="side" :background-size="backgroundSize">
+    <MediaPanel :src="image" type="image" :side="side" :background-size="backgroundSize" :alt="alt">
       <slot />
     </MediaPanel>
   </div>
@@ -13,5 +13,6 @@ defineProps({
   image: { type: String, required: true },
   side: { type: String, default: 'left' },
   backgroundSize: { type: String, default: 'cover' },
+  alt: { type: String, default: '' },
 })
 </script>

@@ -83,8 +83,10 @@ mark {
 
 /* ============================================
    Code Blocks
+   Scoped to slides: Slidev's own UI (the web editor overlays a textarea on a
+   highlighted <pre>) must not get slide code styles, or the caret drifts.
    ============================================ */
-pre {
+:where(.slidev-layout) pre {
   background: var(--bg-code);
   border: 1px solid var(--border-default);
   border-radius: 0.75rem;
@@ -114,14 +116,14 @@ pre {
 }
 
 
-code {
+:where(.slidev-layout) code {
   font-family: var(--font-mono);
   font-size: 0.8rem;  /* Reduced from 0.9rem */
   font-variant-ligatures: none;
   line-height: 1.2;  /* Tight line height for code */
 }
 
-:not(pre) > code {
+:where(.slidev-layout) :not(pre) > code {
   /* When a chip wraps, give each line its own padding and corners */
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;

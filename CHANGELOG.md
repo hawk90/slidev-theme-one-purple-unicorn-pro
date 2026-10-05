@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.0.1
+
+### Fixes
+
+- Slidev's web editor: the caret no longer drifts away from the text. Theme code-block
+  styles (padding, border, line height) applied to the editor too; they now apply to
+  slides only. Slides look the same.
+- Stage indicator steps are buttons: reachable with Tab, activated with Enter / Space,
+  current step announced to screen readers. Mouse clicks look and behave as before.
+- `iframe` `scale`: zero, negative or non-numeric values fall back to 1 instead of
+  making the page disappear.
+- `progressBarSkip`: pages below 1 or past the last page are ignored, so they no longer
+  skew `progressBarSkipMode: exclude`, and huge ranges stay cheap.
+- `image` layout image URLs with spaces or parentheses load correctly.
+
+### Added
+
+- `image` layout `alt` and `iframe` layout `title` for screen readers.
+
 ## 3.0.0
 
 Includes everything from 2.2.0 (tagged, not published to npm).

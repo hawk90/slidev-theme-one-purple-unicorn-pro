@@ -41,7 +41,7 @@ const progressMode = computed(() => {
 // progressBarSkipMode:
 //   "hide" (default) → only hide the bar on those pages
 //   "exclude"        → also leave them out of the progress calculation
-const skipPages = computed(() => parsePageList(headmatter.value.progressBarSkip))
+const skipPages = computed(() => parsePageList(headmatter.value.progressBarSkip, total.value))
 const excludeSkipped = computed(() => headmatter.value.progressBarSkipMode === 'exclude')
 
 // Export / print (PDF, PNG): progressBarInExport / pageNumberInExport (headmatter)
@@ -68,7 +68,7 @@ const progress = computed(() => {
   let page = currentPage.value
   let count = total.value
   if (excludeSkipped.value) {
-    const skipped = [...skipPages.value].filter(n => n <= count)
+    const skipped = [...skipPages.value]
     page -= skipped.filter(n => n < page).length
     count -= skipped.length
   }

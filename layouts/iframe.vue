@@ -1,9 +1,9 @@
 <template>
   <div class="slidev-layout iframe-layout slide-bare">
     <div v-if="side === 'full'" class="iframe-full">
-      <ScaledIframe :src="url" :scale="scale" />
+      <ScaledIframe :src="url" :scale="scale" :title="title" />
     </div>
-    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale">
+    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale" :title="title">
       <slot />
     </MediaPanel>
   </div>
@@ -17,6 +17,7 @@ defineProps({
   url: { type: String, required: true },
   side: { type: String, default: 'full' },
   scale: { type: [Number, String], default: 1 },
+  title: { type: String, default: undefined },
 })
 </script>
 

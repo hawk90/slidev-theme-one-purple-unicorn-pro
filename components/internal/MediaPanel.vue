@@ -1,7 +1,12 @@
 <template>
   <div class="media-panel" :class="`media-${side}`">
-    <div class="media-container" :style="mediaStyle">
-      <ScaledIframe v-if="type === 'iframe'" :src="src" :scale="scale" />
+    <div
+      class="media-container"
+      :style="mediaStyle"
+      :role="type === 'image' ? (alt ? 'img' : 'presentation') : undefined"
+      :aria-label="type === 'image' && alt ? alt : undefined"
+    >
+      <ScaledIframe v-if="type === 'iframe'" :src="src" :scale="scale" :title="title" />
     </div>
     <div class="media-content">
       <slot />
@@ -19,12 +24,15 @@ const props = defineProps({
   side: { type: String, default: 'left' },
   backgroundSize: { type: String, default: 'cover' },
   scale: { type: [Number, String], default: 1 },
+  // Text for screen readers: alt for an image (empty = decorative), title for an iframe
+  alt: { type: String, default: '' },
+  title: { type: String, default: undefined },
 })
 
 const mediaStyle = computed(() => {
   if (props.type === 'image') {
     return {
-      backgroundImage: `url(${props.src})`,
+      backgroundImage: `url(${JSON.stringify(props.src)})`,
       backgroundSize: props.backgroundSize,
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',

@@ -4,6 +4,12 @@
 
 import type { ShikiTransformer } from 'shiki'
 
+// HAST node types, taken from Shiki's own hook signatures (no extra dependency)
+type Element = Parameters<NonNullable<ShikiTransformer['span']>>[0]
+type Content = Element['children'][number]
+type Root = Parameters<NonNullable<ShikiTransformer['root']>>[0]
+type Node = Root | Root['children'][number]
+
 interface TokenDef {
   pattern: RegExp
   color: string
@@ -93,11 +99,10 @@ const cudaTokens: TokenDef[] = [
   },
 ]
 
-function processSpan(span: any) {
-  if (span.type !== 'element' || span.tagName !== 'span') return
-  if (!span.children) return
+function processSpan(span: Element) {
+  if (span.tagName !== 'span' || !span.children) return
 
-  const newChildren: any[] = []
+  const newChildren: Content[] = []
 
   for (const child of span.children) {
     if (child.type !== 'text') {
@@ -158,18 +163,18 @@ function processSpan(span: any) {
 }
 
 // Extract text from a HAST node
-function getNodeText(node: any): string {
+function getNodeText(node: Node): string {
   if (node.type === 'text') return node.value || ''
-  if (node.children) return node.children.map(getNodeText).join('')
+  if ('children' in node) return node.children.map(getNodeText).join('')
   return ''
 }
 
 // Collect all span elements in a node tree
-function collectSpans(node: any, result: any[] = []): any[] {
+function collectSpans(node: Node, result: Element[] = []): Element[] {
   if (node.type === 'element' && node.tagName === 'span') {
     result.push(node)
   }
-  if (node.children) {
+  if ('children' in node) {
     for (const child of node.children) {
       collectSpans(child, result)
     }
@@ -178,8 +183,8 @@ function collectSpans(node: any, result: any[] = []): any[] {
 }
 
 // Cross-span: mark kernel function names and <<< >>> launch syntax
-function markKernelLaunch(codeNode: any) {
-  const lines = codeNode.children?.filter((c: any) => c.type === 'element') || []
+function markKernelLaunch(codeNode: Element) {
+  const lines = codeNode.children.filter((c): c is Element => c.type === 'element')
 
   for (const line of lines) {
     const spans = collectSpans(line)
@@ -212,7 +217,7 @@ export function cudaTransformer(): ShikiTransformer {
   return {
     name: 'cuda-highlighter',
     pre(node) {
-      const code = node.children?.find((c: any) => c.tagName === 'code')
+      const code = node.children.find((c): c is Element => c.type === 'element' && c.tagName === 'code')
       if (code) {
         markKernelLaunch(code)
       }
