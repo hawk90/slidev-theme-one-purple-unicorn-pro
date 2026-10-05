@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.0.2
+
+### Fixes
+
+- **PDF export: gradient text.** Titles, title-slide subtitles, `.gradient-text*`,
+  `.anim-gradient-text*` and the quote marks are CSS gradient text, which PDF viewers draw
+  differently: macOS Preview showed a solid gradient bar (or black text) instead of the
+  title, other viewers a thin box around it. In exports (`slidev export`, the browser
+  export page) the theme now draws that text as a high-resolution image of the same
+  gradient over the original, which stays invisible in place, so the text can still be
+  searched and copied. The presentation itself is unchanged.
+
+### Example
+
+- `npm run export` in `example/` (adds `playwright-chromium`).
+
 ## 3.0.1
 
 ### Fixes

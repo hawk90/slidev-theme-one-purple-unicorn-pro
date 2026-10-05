@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "slidev slides.md --port 3031",
-    "build": "slidev build slides.md"
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
   },
   "dependencies": {
     "@slidev/cli": "^53.0.0"
@@ -11,5 +12,8 @@
   "private": true,
   "overrides": {
     "magic-string@1.4.3": "1.4.2"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.63.0"
   }
 }
