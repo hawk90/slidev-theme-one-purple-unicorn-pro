@@ -398,6 +398,8 @@ quote, statement, fact, and full variants
 layout: quote
 ---
 
+<div style="position: absolute; top: 1.25rem; left: 1.5rem;"><Badge variant="gray">layout: quote</Badge></div>
+
 The best way to predict the future is to invent it.
 
 **— Alan Kay, 1971**
@@ -406,6 +408,8 @@ The best way to predict the future is to invent it.
 layout: statement
 ---
 
+<div style="position: absolute; top: 1.25rem; left: 1.5rem;"><Badge variant="gray">layout: statement</Badge></div>
+
 # Performance matters more than features.
 
 A fast, simple system will always beat a slow, complex one in the long run.
@@ -413,6 +417,8 @@ A fast, simple system will always beat a slow, complex one in the long run.
 ---
 layout: fact
 ---
+
+<div style="position: absolute; top: 1.25rem; left: 1.5rem;"><Badge variant="gray">layout: fact</Badge></div>
 
 ## DID YOU KNOW?
 
@@ -953,7 +959,7 @@ Works best on dark backgrounds.
 
 ### Gradient Border
 
-This uses `.gradient-border` class with a gradient outline effect via pseudo-element.
+This uses `.gradient-border` class: a gradient painted on the element's own border.
 
 </div>
 
