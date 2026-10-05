@@ -13,6 +13,8 @@ const running = new WeakMap<Element, Animation>()
 
 function animate(el: HTMLElement) {
   running.get(el)?.cancel()
+  // Reached the export page from the presentation: keep the static ring there
+  if (isPrintMode()) { el.classList.remove('ab-beam'); return }
   // offsetWidth/Height: layout size, unaffected by the slide's CSS scaling
   const bw = el.offsetWidth
   const bh = el.offsetHeight

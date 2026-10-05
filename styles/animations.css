@@ -533,28 +533,39 @@
   }
 }
 
-@media print {
-  .anim-border::before,
-  .anim-shimmer::after,
-  .anim-cursor {
-    animation: none !important;
-  }
-  [class*="anim-glow"] {
-    animation: none !important;
-    box-shadow: none !important;
-  }
-  .anim-gradient-text,
-  [class*="anim-gradient-text-"] {
-    animation: none !important;
-  }
-  .anim-float,
-  .anim-pop,
-  .anim-fade-in,
-  .anim-fade-up,
-  .anim-fade-left,
-  .anim-fade-right {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+/* PDF/PNG export and printing: html.print-mode (utils/print-export.ts). A
+   still picture of each effect; `slidev export` uses screen media, so this
+   can't be @media print. */
+.print-mode .anim-border::before,
+.print-mode .anim-cursor,
+.print-mode .anim-gradient-text,
+.print-mode [class*="anim-gradient-text-"] {
+  animation: none !important;
+}
+/* A light band frozen mid-sweep looks like a smudge */
+.print-mode .anim-shimmer::after,
+.print-mode .hover-shine::after {
+  display: none !important;
+}
+/* Glow: the pulse's bright end, held */
+.print-mode .anim-glow {
+  animation: none !important;
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 100%), transparent),
+    0 0 36px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 20%), transparent);
+}
+.print-mode .anim-float,
+.print-mode .anim-pop,
+.print-mode .anim-fade-in,
+.print-mode .anim-fade-up,
+.print-mode .anim-fade-left,
+.print-mode .anim-fade-right {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Pseudo-elements redrawn as images in an export */
+.print-no-before::before,
+.print-no-after::after {
+  content: none !important;
 }

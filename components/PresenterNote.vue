@@ -35,10 +35,9 @@
   font-size: 0.75rem;
   margin: 0;
 }
+</style>
 
-@media print {
-  .presenter-note {
-    display: none !important;
-  }
-}
+<style>
+/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts) */
+.print-mode .presenter-note { display: none !important; }
 </style>

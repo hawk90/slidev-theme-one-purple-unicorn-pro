@@ -70,8 +70,9 @@ defineExpose({ start, stop, remaining })
 .countdown-sm { --countdown-size: 1rem; }
 .countdown-lg { --countdown-size: 3rem; }
 .countdown-xl { --countdown-size: 5rem; }
+</style>
 
-@media print {
-  .countdown { display: none !important; }
-}
+<style>
+/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts) */
+.print-mode .countdown { display: none !important; }
 </style>

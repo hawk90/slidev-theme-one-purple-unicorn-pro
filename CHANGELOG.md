@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.0.3
+
+### Fixes
+
+- **PDF export: border light, glow and shadows.** The `anim-border` light filled the whole
+  card in most PDF viewers (its mask was dropped), and macOS Preview showed every blurred
+  shadow (code blocks, tables, cards, `anim-glow`, the progress bar, title text shadows)
+  as a translucent rectangle. In exports they are now drawn as images, like gradient text
+  in 3.0.2.
+- **Export look didn't apply to `slidev export`.** The still-picture rules (no shimmer
+  band, finished entrance animations, hidden `Countdown` / `PresenterNote`) were
+  `@media print`, which `slidev export` doesn't use. They now hang off `html.print-mode`,
+  set for `slidev export`, the browser export page and browser printing. `anim-glow`
+  keeps a steady glow instead of none.
+
+### Internal
+
+- One `isPrintMode` for the border light and the export code; the export redraw scans
+  only newly added slides after the first pass and measures one-line text as a whole.
+
 ## 3.0.2
 
 ### Fixes
