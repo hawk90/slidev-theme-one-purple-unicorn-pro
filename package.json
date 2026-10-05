@@ -1,6 +1,7 @@
 {
   "name": "slidev-theme-one-purple-unicorn-pro",
   "version": "3.0.4",
+  "packageManager": "npm@12.2.0",
   "type": "module",
   "description": "One Purple Unicorn Pro theme for Slidev - Purple/Indigo focused theme with clean macOS style",
   "keywords": [
@@ -8,7 +9,7 @@
     "slidev"
   ],
   "engines": {
-    "node": ">=20.12.0",
+    "node": ">=24",
     "slidev": ">=52.0.0"
   },
   "author": {
