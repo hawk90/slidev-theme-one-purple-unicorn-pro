@@ -779,6 +779,10 @@ progressBar: false           # hidden
 
 progressBarSkip: 2, 5-6      # pages without the bar (list, ranges, or array)
 progressBarSkipMode: exclude # hide (default) | exclude: also leave them out of the progress
+pageNumber: false            # hide the page number
+
+progressBarInExport: false   # PDF / PNG exports only
+pageNumberInExport: false
 ```
 
 The bar tracks the current page with a gradient fill and glow effect.

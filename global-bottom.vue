@@ -5,7 +5,7 @@
   </div>
 
   <!-- Page Indicator -->
-  <div v-if="!isHidden" class="slide-indicator" :class="{ 'chrome-on-dark': onDark }">
+  <div v-if="showPageNumber" class="slide-indicator" :class="{ 'chrome-on-dark': onDark }">
     {{ currentPage }} / {{ total }}
   </div>
 </template>
@@ -16,7 +16,7 @@ import { useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 
-const { currentPage, total, currentLayout, currentSlideRoute, slides } = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute, slides, isPrintMode } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
@@ -32,7 +32,7 @@ const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontma
 //   false              → completely off
 const progressMode = computed(() => {
   const val = frontmatter.value.progressBar ?? headmatter.value.progressBar
-  if (val === false || val === 'false') return 'off'
+  if (isOff(val)) return 'off'
   if (val === 'content') return 'content'
   return 'always'
 })
@@ -44,7 +44,20 @@ const progressMode = computed(() => {
 const skipPages = computed(() => parsePageList(headmatter.value.progressBarSkip))
 const excludeSkipped = computed(() => headmatter.value.progressBarSkipMode === 'exclude')
 
+// Export / print (PDF, PNG): progressBarInExport / pageNumberInExport (headmatter)
+// turn each one off in exports only; the presentation itself is unchanged.
+const isOff = (v: unknown) => v === false || v === 'false'
+const hiddenInExport = (key: string) => isPrintMode.value && isOff(headmatter.value[key])
+
+// pageNumber: false hides the page number (headmatter for the deck, or a slide)
+const showPageNumber = computed(() => {
+  if (isHidden.value) return false
+  if (isOff(frontmatter.value.pageNumber ?? headmatter.value.pageNumber)) return false
+  return !hiddenInExport('pageNumberInExport')
+})
+
 const showBar = computed(() => {
+  if (hiddenInExport('progressBarInExport')) return false
   if (skipPages.value.has(currentPage.value)) return false
   if (progressMode.value === 'off') return false
   if (progressMode.value === 'content') return !isHidden.value

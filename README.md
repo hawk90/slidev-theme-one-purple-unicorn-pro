@@ -159,9 +159,9 @@ Click a stage to jump to the matching slide (or give `stageMap: [3, 7, 12]`).
 | `.macos-traffic-lights` / `.macos-traffic-light` | Window dots |
 | `.table-compact`, `.table-dense`, `.table-auto`, `.table-square` | Table variants (on the table or a wrapper) |
 
-## Progress Bar
+## Progress Bar & Page Number
 
-Set deck-wide options in the headmatter; a slide's own `progressBar` overrides it for that slide.
+Set deck-wide options in the headmatter; a slide's own `progressBar` / `pageNumber` overrides it for that slide.
 
 ```yaml
 ---
@@ -169,6 +169,11 @@ progressBar: content          # always (default) | content | false
 progressBarSkip: 2, 5-6       # pages without the bar (list, ranges, or an array)
 progressBarSkipMode: exclude  # hide (default): only hide the bar
                               # exclude: also leave skipped pages out of the progress
+pageNumber: false             # hide the page number (default: shown, except on title slides)
+
+# Exports only (PDF / PNG / ?print); the presentation is unchanged
+progressBarInExport: false
+pageNumberInExport: false
 ---
 ```
 
