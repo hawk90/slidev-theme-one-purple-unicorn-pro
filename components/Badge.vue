@@ -53,8 +53,9 @@ defineProps({
   color: var(--one-dark-cyan, #56b6c2);
 }
 
+/* Same treatment as <Kbd>: neutral fill with readable text */
 .badge-gray {
-  background: var(--bg-tertiary, rgba(255, 255, 255, 0.08));
-  color: var(--text-muted, #5c6370);
+  background: var(--bg-tertiary, #3e4452);
+  color: var(--text-primary, #abb2bf);
 }
 </style>
