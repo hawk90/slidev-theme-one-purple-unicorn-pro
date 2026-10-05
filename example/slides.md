@@ -26,9 +26,127 @@ It uses a dark background with gradient text for visual impact.
 layout: section
 ---
 
+# Markdown Basics
+
+Typography, lists, tables, code, and math
+
+---
+
+# Typography Showcase
+
+## Heading Level 2
+
+### Heading Level 3
+
+#### Heading Level 4
+
+This is a regular paragraph with **bold text**, *italic text*, and `inline code`. You can also use <mark>highlighted text</mark> for emphasis.
+
+> Blockquotes are styled with a left accent border and subtle background.
+
+---
+
+# Lists
+
+- First item in an unordered list
+- Second item with some detail
+  - Nested item one
+  - Nested item two
+    - Deeply nested
+- Third item
+
+1. First ordered item
+2. Second ordered item
+3. Third ordered item
+
+Task lists:
+
+- [x] Completed task
+- [x] Another done
+- [ ] Still pending
+
+---
+
+# Tables
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Dark Mode** | One Dark Pro color scheme | Supported |
+| **Light Mode** | Clean white backgrounds | Supported |
+| **Gradients** | Purple/Indigo/Pink | Built-in |
+| **Code Blocks** | Shiki syntax highlighting | Configured |
+| **Layouts** | 12 layouts included | All new |
+| **Components** | Cards, Alerts, Buttons | CSS classes |
+
+---
+
+# Code Highlighting
+
+## JavaScript
+
+```javascript
+const greet = (name) => {
+  console.log(`Hello, ${name}!`);
+  return `Welcome to Slidev`;
+};
+
+export default greet;
+```
+
+## Python
+
+```python
+def fibonacci(n: int) -> list[int]:
+    seq = [0, 1]
+    for i in range(2, n):
+        seq.append(seq[-1] + seq[-2])
+    return seq[:n]
+```
+
+---
+
+# CUDA / C++ Code
+
+```cpp
+__global__ void vectorAdd(float *a, float *b, float *c, int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    float *d_a;
+    cudaMalloc(&d_a, sizeof(float) * 1024);
+    vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
+    cudaDeviceSynchronize();
+    cudaFree(d_a);
+}
+```
+
+---
+
+# Math Support (KaTeX)
+
+Inline math: $E = mc^2$, complexity $O(n \log n)$, sum $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$
+
+Display math:
+
+$$
+\frac{1}{N} \sum_{i=1}^{N} x_i = \bar{x}
+$$
+
+$$
+f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x} \, d\xi
+$$
+
+---
+layout: section
+---
+
 # Layouts
 
-All 12 built-in layouts
+Content layouts: default, center, columns, image
 
 ---
 layout: default
@@ -135,6 +253,39 @@ Optimized with hash map.
 
 ---
 layout: two-cols
+divider: true
+leftLabel: Naive
+rightLabel: Optimized
+---
+
+# Two Cols with Labels
+
+::left::
+
+```python
+# O(n^2) brute force
+def two_sum(nums, target):
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+```
+
+::right::
+
+```python
+# O(n) hash map
+def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        diff = target - num
+        if diff in seen:
+            return [seen[diff], i]
+        seen[num] = i
+```
+
+---
+layout: two-cols
 ---
 
 # Two Columns with Header
@@ -236,45 +387,256 @@ Same props available:
 - `backgroundSize` (optional)
 
 ---
-layout: two-cols
-divider: true
-leftLabel: Naive
-rightLabel: Optimized
+layout: section
 ---
 
-# Two Cols with Labels
+# Emphasis & Full-Bleed Layouts
 
-::left::
+quote, statement, fact, and full variants
 
-```python
-# O(n^2) brute force
-def two_sum(nums, target):
-    for i in range(len(nums)):
-        for j in range(i+1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
+---
+layout: quote
+---
+
+The best way to predict the future is to invent it.
+
+**— Alan Kay, 1971**
+
+---
+layout: statement
+---
+
+# Performance matters more than features.
+
+A fast, simple system will always beat a slow, complex one in the long run.
+
+---
+layout: fact
+---
+
+## DID YOU KNOW?
+
+# 10x
+
+The performance gap between $O(n)$ and $O(n^2)$ at $n = 10{,}000$
+
+---
+layout: full
+---
+
+<div style="background: linear-gradient(135deg, #1a1b2e 0%, #2d1b4e 50%, #1a2744 100%); height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;">
+  <h1 style="font-size: 3rem; color: white;">Full Layout</h1>
+  <p style="color: rgba(255,255,255,0.6);">Zero padding — full bleed, DIY everything</p>
+</div>
+
+---
+layout: full-text
+---
+
+# Full Text Layout
+
+This layout gives you the entire slide area for text content — no absolute h1 positioning, no restrictive padding. Just clean, readable typography.
+
+Useful when you have a lot of content that needs to breathe, or when the default content layout's top-fixed h1 doesn't work for your slide structure.
+
+- Lists work naturally
+- **Bold** and *italic* are inherited from the theme
+- Code blocks: `inline code` works too
+
+---
+layout: full-image
+image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200
+---
+
+# Full Image Background
+
+## Text on top of a full-bleed photo
+
+The overlay darkens the image for readability.
+
+---
+layout: full-image
+image: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
+overlay: "linear-gradient(135deg, rgba(26,27,46,0.9) 0%, rgba(45,27,78,0.7) 100%)"
+---
+
+# Gradient Overlay
+
+## Custom overlay via frontmatter
+
+```yaml
+overlay: "linear-gradient(135deg, rgba(26,27,46,0.9), rgba(45,27,78,0.7))"
 ```
 
-::right::
+---
+layout: full-split
+image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200
+panelWidth: 45%
+panelSide: left
+---
 
-```python
-# O(n) hash map
-def two_sum(nums, target):
-    seen = {}
-    for i, num in enumerate(nums):
-        diff = target - num
-        if diff in seen:
-            return [seen[diff], i]
-        seen[num] = i
-```
+# Split Panel (Left)
+
+Content in a semi-transparent panel over the background image.
+
+- `panelWidth`: 45% (default)
+- `panelSide`: left / right
+- `panelColor`: any CSS color
+
+---
+layout: full-split
+image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200
+panelWidth: 40%
+panelSide: right
+panelColor: "rgba(255, 255, 255, 0.92)"
+---
+
+<h1 style="color: #1a1b2e;">White Panel (Right)</h1>
+
+<p style="color: #333;">White panel on the right side. Set <code style="color: #c678dd;">panelColor</code> to any value including white.</p>
+
+<ul style="color: #555;">
+<li>Corporate style</li>
+<li>High contrast text</li>
+<li>Works with any background</li>
+</ul>
 
 ---
 layout: section
 ---
 
-# Custom Components
+# Inline Components
 
-PatternCard, StoryBox, ComplexityTable, StageProgress
+Badge, Kbd, Footnote, LinkCard, FloatImage
+
+---
+
+# Badge & Kbd
+
+Inline badges: <Badge>Default</Badge> <Badge variant="blue">Blue</Badge> <Badge variant="green">Easy</Badge> <Badge variant="red">Hard</Badge> <Badge variant="yellow">Warning</Badge> <Badge variant="cyan">New</Badge> <Badge variant="gray">Deprecated</Badge>
+
+Keyboard keys: Press <Kbd>Space</Kbd> or <Kbd>→</Kbd> to advance. Use <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>F</Kbd> for fullscreen.
+
+### Badges in Context
+
+| Algorithm | Time | Space | Difficulty |
+|---|---|---|---|
+| Binary Search | $O(\log n)$ | $O(1)$ | <Badge variant="green">Easy</Badge> |
+| Merge Sort | $O(n \log n)$ | $O(n)$ | <Badge variant="yellow">Medium</Badge> |
+| Red-Black Tree | $O(\log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
+| FFT | $O(n \log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
+
+---
+
+# Footnote & LinkCard
+
+Cite a source in the text<sup>1</sup> and list it in a footnote at the bottom of the slide.
+
+### Link Cards
+
+<LinkCard href="https://arxiv.org/abs/2301.00001" title="Attention Is All You Need" description="Vaswani et al., 2017 — Transformer architecture" icon="📄" />
+
+<LinkCard href="https://github.com/slidevjs/slidev" title="Slidev on GitHub" description="Presentation slides for developers" icon="🐙" />
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+  <LinkCard href="https://example.com" title="Compact Mode" icon="⚡" :compact="true" />
+  <LinkCard href="https://example.com" title="Compact Mode" icon="📦" :compact="true" />
+</div>
+
+<Footnote>
+
+<sup>1</sup> Footnotes appear at the bottom with clickable links — [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762), [Slidev Docs](https://sli.dev)
+
+</Footnote>
+
+---
+
+# FloatImage Component
+
+<FloatImage
+  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400"
+  caption="Code on screen"
+  position="right"
+  width="35%"
+/>
+
+Newspaper-style text wrapping around images. The text flows naturally in an **ㄴ-shape** around the floated image.
+
+This is useful when you want to show a diagram or photo alongside explanatory text without splitting into rigid columns.
+
+Props:
+- `src` — image URL (required)
+- `position` — `right` (default) or `left`
+- `width` — image width, e.g. `35%`, `200px`
+- `caption` — optional caption text
+- `rounded` — border radius (default `true`)
+
+The remaining text continues to fill the space below the image once it runs past the bottom edge.
+
+---
+
+# FloatImage (Left)
+
+<FloatImage
+  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400"
+  caption="Laptop workspace"
+  position="left"
+  width="40%"
+/>
+
+When `position="left"`, the image floats to the left side and text wraps on the right.
+
+This mirrors the right-float layout and works well for alternating image positions across slides.
+
+You can combine FloatImage with other components like StoryBox or PatternCard — the float context is contained within the slide.
+
+---
+layout: section
+---
+
+# Content Components
+
+StoryBox, PatternCard, Timeline, ComplexityTable, Countdown, QR Code
+
+---
+
+# StoryBox Component
+
+Algorithm history and insight sidebars.
+
+<StoryBox title="Dijkstra's Algorithm" variant="history" year="1956" source="Edsger W. Dijkstra, 'A note on two problems in connexion with graphs'">
+
+**Edsger Dijkstra** invented the algorithm in 20 minutes at a cafe in Amsterdam. He was trying to find the shortest route between Rotterdam and Groningen. The algorithm was published 3 years later in 1959.
+
+</StoryBox>
+
+<StoryBox title="Why not negative weights?" variant="warning">
+
+Dijkstra's greedy approach assumes once a node is finalized, no shorter path exists. **Negative edges** break this invariant. Use **Bellman-Ford** instead.
+
+</StoryBox>
+
+---
+
+# StoryBox Variants
+
+<StoryBox title="Optimization Tip" variant="tip">
+
+For sparse graphs, use an adjacency list + priority queue for $O((V + E) \log V)$ instead of $O(V^2)$ with a matrix.
+
+</StoryBox>
+
+<StoryBox title="Key Insight" variant="insight">
+
+The **amortized cost** of union-find with path compression and union by rank is $O(\alpha(n))$, where $\alpha$ is the inverse Ackermann function — effectively constant.
+
+</StoryBox>
+
+<StoryBox title="Tony Hoare" variant="person" year="1960" source="ACM Turing Award 1980">
+
+Invented **QuickSort** at age 26. Also created the **Hoare partition scheme** and **CSP** (Communicating Sequential Processes).
+
+</StoryBox>
 
 ---
 
@@ -320,43 +682,19 @@ Use named slots for rich content inside template/alternatives.
 
 ---
 
-# StoryBox Component
+# Timeline Component
 
-Algorithm history and insight sidebars.
+<script setup>
+const timelineItems = [
+  { year: '1956', title: 'Dijkstra Algorithm', desc: 'Shortest path in weighted graphs' },
+  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
+  { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
+  { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
+  { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
+]
+</script>
 
-<StoryBox title="Dijkstra's Algorithm" variant="history" year="1956" source="Edsger W. Dijkstra, 'A note on two problems in connexion with graphs'">
-
-**Edsger Dijkstra** invented the algorithm in 20 minutes at a cafe in Amsterdam. He was trying to find the shortest route between Rotterdam and Groningen. The algorithm was published 3 years later in 1959.
-
-</StoryBox>
-
-<StoryBox title="Why not negative weights?" variant="warning">
-
-Dijkstra's greedy approach assumes once a node is finalized, no shorter path exists. **Negative edges** break this invariant. Use **Bellman-Ford** instead.
-
-</StoryBox>
-
----
-
-# StoryBox Variants
-
-<StoryBox title="Optimization Tip" variant="tip">
-
-For sparse graphs, use an adjacency list + priority queue for $O((V + E) \log V)$ instead of $O(V^2)$ with a matrix.
-
-</StoryBox>
-
-<StoryBox title="Key Insight" variant="insight">
-
-The **amortized cost** of union-find with path compression and union by rank is $O(\alpha(n))$, where $\alpha$ is the inverse Ackermann function — effectively constant.
-
-</StoryBox>
-
-<StoryBox title="Tony Hoare" variant="person" year="1960" source="ACM Turing Award 1980">
-
-Invented **QuickSort** at age 26. Also created the **Hoare partition scheme** and **CSP** (Communicating Sequential Processes).
-
-</StoryBox>
+<Timeline :active="2" :items="timelineItems" />
 
 ---
 
@@ -382,6 +720,62 @@ Pass custom rows to tailor for specific problem domains.
     { n: 'V ≤ 1,000,000', target: 'O(V+E)', algo: 'BFS / DFS / Topological Sort', complexity: 'O(V+E)', highlight: false },
   ]"
 />
+
+---
+
+# Countdown Timer
+
+<Countdown :minutes="5" label="remaining" size="lg" />
+
+Sizes: `sm`, `default`, `lg`, `xl`. Auto-starts by default.
+
+```html
+<Countdown :minutes="5" label="remaining" size="lg" />
+```
+
+---
+
+# QR Code
+
+<div style="display: flex; gap: 3rem; align-items: center;">
+
+<QRCode url="https://sli.dev" caption="Slidev Documentation" size="lg" />
+
+<div>
+
+Generate QR codes from any URL. Sizes: `sm`, `default`, `lg`, `xl`.
+
+```html
+<QRCode url="https://sli.dev" caption="Slidev Docs" size="lg" />
+```
+
+</div>
+</div>
+
+---
+layout: section
+---
+
+# Progress & Stages
+
+Progress bar options and stage indicator
+
+---
+
+# Progress Bar Options
+
+Set deck-wide options in the headmatter. A slide's own `progressBar` overrides it for that slide.
+
+```yaml
+progressBar: always          # all slides (default)
+progressBar: content         # only where the page number shows
+progressBar: false           # hidden
+
+progressBarSkip: 2, 5-6      # pages without the bar (list, ranges, or array)
+progressBarSkipMode: exclude # hide (default) | exclude: also leave them out of the progress
+```
+
+The bar tracks the current page with a gradient fill and glow effect.
 
 ---
 
@@ -484,204 +878,140 @@ Solve at least 3 problems per pattern. Vary the constraints — different sizes,
 </StoryBox>
 
 ---
+layout: section
+---
 
-# Footnote & Badge & LinkCard
+# CSS Components
 
-Text with references<sup>1</sup> and inline badges: <Badge>Default</Badge> <Badge variant="blue">Blue</Badge> <Badge variant="green">Easy</Badge> <Badge variant="red">Hard</Badge> <Badge variant="yellow">Warning</Badge> <Badge variant="cyan">New</Badge> <Badge variant="gray">Deprecated</Badge>
+Cards, Alerts, Gradients, Buttons
 
-### Link Cards
+---
 
-<LinkCard href="https://arxiv.org/abs/2301.00001" title="Attention Is All You Need" description="Vaswani et al., 2017 — Transformer architecture" icon="📄" />
+# Cards
 
-<LinkCard href="https://github.com/slidevjs/slidev" title="Slidev on GitHub" description="Presentation slides for developers" icon="🐙" />
+<div class="card">
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-  <LinkCard href="https://example.com" title="Compact Mode" icon="⚡" :compact="true" />
-  <LinkCard href="https://example.com" title="Compact Mode" icon="📦" :compact="true" />
+### Default Card
+
+Cards have a hover effect with gradient top border animation. Use the `.card` class on any div.
+
 </div>
 
-<Footnote>
+<div class="gradient-card">
 
-<sup>1</sup> Footnotes appear at the bottom with clickable links — [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762), [Slidev Docs](https://sli.dev)
+### Gradient Card
 
-</Footnote>
+Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
 
----
-
-# FloatImage Component
-
-<FloatImage
-  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400"
-  caption="Code on screen"
-  position="right"
-  width="35%"
-/>
-
-Newspaper-style text wrapping around images. The text flows naturally in an **ㄴ-shape** around the floated image.
-
-This is useful when you want to show a diagram or photo alongside explanatory text without splitting into rigid columns.
-
-Props:
-- `src` — image URL (required)
-- `position` — `right` (default) or `left`
-- `width` — image width, e.g. `35%`, `200px`
-- `caption` — optional caption text
-- `rounded` — border radius (default `true`)
-
-The remaining text continues to fill the space below the image once it runs past the bottom edge.
+</div>
 
 ---
 
-# FloatImage (Left)
+# Alert Boxes
 
-<FloatImage
-  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400"
-  caption="Laptop workspace"
-  position="left"
-  width="40%"
-/>
+<div class="alert alert-info">
+<strong>Info:</strong> This is an informational alert using <code>.alert .alert-info</code>.
+</div>
 
-When `position="left"`, the image floats to the left side and text wraps on the right.
+<div class="alert alert-success">
+<strong>Success:</strong> Operation completed successfully using <code>.alert .alert-success</code>.
+</div>
 
-This mirrors the right-float layout and works well for alternating image positions across slides.
+<div class="alert alert-warning">
+<strong>Warning:</strong> Please review before proceeding using <code>.alert .alert-warning</code>.
+</div>
 
-You can combine FloatImage with other components like StoryBox or PatternCard — the float context is contained within the slide.
-
----
-
-# Progress Bar Options
-
-The bottom progress bar has 3 modes via frontmatter:
-
-```yaml
-progressBar: always   # all slides (default)
-progressBar: content  # only where page number shows
-progressBar: false    # completely hidden
-```
-
-The bar automatically tracks `currentPage / total` with a gradient fill and glow effect.
-
----
-layout: section
----
-
-# Typography & Styling
+<div class="alert alert-error">
+<strong>Error:</strong> Something went wrong using <code>.alert .alert-error</code>.
+</div>
 
 ---
 
-# Typography Showcase
+# Gradient Text
 
-## Heading Level 2
+<h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
 
-### Heading Level 3
+<h2 class="gradient-text-2" style="-webkit-text-fill-color: transparent;">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
 
-#### Heading Level 4
-
-This is a regular paragraph with **bold text**, *italic text*, and `inline code`. You can also use <mark>highlighted text</mark> for emphasis.
-
-> Blockquotes are styled with a left accent border and subtle background.
+<h2 class="gradient-text-3" style="-webkit-text-fill-color: transparent;">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
 
 ---
 
-# Lists
+# Glass Morphism
 
-- First item in an unordered list
-- Second item with some detail
-  - Nested item one
-  - Nested item two
-    - Deeply nested
-- Third item
+<div class="glass-gradient" style="margin-bottom: 1rem;">
 
-1. First ordered item
-2. Second ordered item
-3. Third ordered item
+### Glass Card
 
-Task lists:
+This uses `.glass-gradient` class with backdrop blur and transparent gradient background.
 
-- [x] Completed task
-- [x] Another done
-- [ ] Still pending
+Works best on dark backgrounds.
 
----
+</div>
 
-# Tables
+<div class="gradient-border">
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Dark Mode** | One Dark Pro color scheme | Supported |
-| **Light Mode** | Clean white backgrounds | Supported |
-| **Gradients** | Purple/Indigo/Pink | Built-in |
-| **Code Blocks** | Shiki syntax highlighting | Configured |
-| **Layouts** | 12 layouts included | All new |
-| **Components** | Cards, Alerts, Buttons | CSS classes |
+### Gradient Border
 
----
-layout: section
----
+This uses `.gradient-border` class with a gradient outline effect via pseudo-element.
 
-# Code & Syntax
+</div>
 
 ---
 
-# Code Highlighting
+# macOS Buttons
 
-## JavaScript
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary">Primary</button>
+  <button class="btn-macos btn-macos-secondary">Secondary</button>
+  <button class="btn-macos btn-macos-destructive">Destructive</button>
+  <button class="btn-macos btn-macos-success">Success</button>
+</div>
 
-```javascript
-const greet = (name) => {
-  console.log(`Hello, ${name}!`);
-  return `Welcome to Slidev`;
-};
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary btn-macos-small">Small</button>
+  <button class="btn-macos btn-macos-primary">Regular</button>
+  <button class="btn-macos btn-macos-primary btn-macos-large">Large</button>
+</div>
 
-export default greet;
-```
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary btn-macos-rounded">Rounded</button>
+  <button class="btn-macos btn-macos-primary btn-macos-capsule">Capsule</button>
+  <button class="btn-macos btn-macos-toolbar">Toolbar</button>
+</div>
 
-## Python
+### Traffic Lights
 
-```python
-def fibonacci(n: int) -> list[int]:
-    seq = [0, 1]
-    for i in range(2, n):
-        seq.append(seq[-1] + seq[-2])
-    return seq[:n]
-```
-
----
-
-# CUDA / C++ Code
-
-```cpp
-__global__ void vectorAdd(float *a, float *b, float *c, int n) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < n) {
-        c[idx] = a[idx] + b[idx];
-    }
-}
-
-int main() {
-    float *d_a;
-    cudaMalloc(&d_a, sizeof(float) * 1024);
-    vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
-    cudaDeviceSynchronize();
-    cudaFree(d_a);
-}
-```
+<div class="macos-traffic-lights">
+  <div class="macos-traffic-light close"></div>
+  <div class="macos-traffic-light minimize"></div>
+  <div class="macos-traffic-light maximize"></div>
+</div>
 
 ---
 
-# Math Support (KaTeX)
+# Segmented Control & Utilities
 
-Inline math: $E = mc^2$, complexity $O(n \log n)$, sum $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$
+<div class="btn-macos-group" style="margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary">Day</button>
+  <button class="btn-macos">Week</button>
+  <button class="btn-macos">Month</button>
+</div>
 
-Display math:
+### Grid Utilities
 
-$$
-\frac{1}{N} \sum_{i=1}^{N} x_i = \bar{x}
-$$
+<div class="grid grid-cols-3 gap-4">
+  <div class="alert alert-info">Col 1</div>
+  <div class="alert alert-success">Col 2</div>
+  <div class="alert alert-warning">Col 3</div>
+</div>
 
-$$
-f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x} \, d\xi
-$$
+### Text Sizes
+
+<p class="text-sm">Small text (0.875rem)</p>
+<p>Regular text — default</p>
+<p class="text-lg">Large text (1.25rem)</p>
+<p class="text-xl">Extra large (1.5rem)</p>
 
 ---
 layout: section
@@ -1095,369 +1425,83 @@ All transitions:
 - Use `cubic-bezier(0.4, 0, 0.2, 1)` for smooth easing
 
 ---
-layout: section
----
 
-# CSS Components
+# Summary: Layouts
 
-Cards, Alerts, Gradients, Buttons
-
----
-
-# Cards
-
-<div class="card">
-
-### Default Card
-
-Cards have a hover effect with gradient top border animation. Use the `.card` class on any div.
-
-</div>
-
-<div class="gradient-card">
-
-### Gradient Card
-
-Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
-
-</div>
+| Name | Key Feature |
+|------|-------------|
+| `cover`, `intro`, `section`, `end` | Special slides |
+| `default`, `center` | Basic content |
+| `full`, `full-text` | Full bleed variants |
+| `full-image`, `full-split` | Background image + overlay/panel |
+| `two-cols`, `three-cols` | Multi-column (divider, labels) |
+| `image` | Image + content (side: left/right) |
+| `quote`, `statement`, `fact` | PPT-style emphasis |
+| `iframe` | Embed (side: full/left/right) |
+| `image-left`, `comparison`, ... | 1.x names kept as compatibility aliases |
 
 ---
-
-# Alert Boxes
-
-<div class="alert alert-info">
-<strong>Info:</strong> This is an informational alert using <code>.alert .alert-info</code>.
-</div>
-
-<div class="alert alert-success">
-<strong>Success:</strong> Operation completed successfully using <code>.alert .alert-success</code>.
-</div>
-
-<div class="alert alert-warning">
-<strong>Warning:</strong> Please review before proceeding using <code>.alert .alert-warning</code>.
-</div>
-
-<div class="alert alert-error">
-<strong>Error:</strong> Something went wrong using <code>.alert .alert-error</code>.
-</div>
-
+layout: two-cols
+leftLabel: Inline & Slide
+rightLabel: Content
 ---
 
-# Gradient Text
+# Summary: Components
 
-<h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
+::left::
 
-<h2 class="gradient-text-2" style="-webkit-text-fill-color: transparent;">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
+| Name | Key Feature |
+|------|-------------|
+| `<StageProgress>` | Stage indicator (via frontmatter) |
+| `<FloatImage>` | Newspaper-style ㄴ-wrap |
+| `<Footnote>` | Bottom footnotes with links |
+| `<Badge>` | Inline colored badges (7 colors) |
+| `<LinkCard>` | Clickable reference cards |
+| `<Kbd>` | Keyboard shortcut keys |
+| Progress Bar | Page tracking (3 modes + skip pages) |
 
-<h2 class="gradient-text-3" style="-webkit-text-fill-color: transparent;">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
+::right::
 
----
-
-# Glass Morphism
-
-<div class="glass-gradient" style="margin-bottom: 1rem;">
-
-### Glass Card
-
-This uses `.glass-gradient` class with backdrop blur and transparent gradient background.
-
-Works best on dark backgrounds.
-
-</div>
-
-<div class="gradient-border">
-
-### Gradient Border
-
-This uses `.gradient-border` class with a gradient outline effect via pseudo-element.
-
-</div>
+| Name | Key Feature |
+|------|-------------|
+| `<PatternCard>` | Signal / Template / Alternatives |
+| `<StoryBox>` | History, Tips, Insights sidebar |
+| `<ComplexityTable>` | N-limit algorithm reference |
+| `<Timeline>` | Vertical timeline with active state |
+| `<Countdown>` | Live countdown timer (4 sizes) |
+| `<QRCode>` | Auto-generated QR codes |
+| `<PresenterNote>` | Presenter-only notes |
 
 ---
-
-# macOS Buttons
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary">Primary</button>
-  <button class="btn-macos btn-macos-secondary">Secondary</button>
-  <button class="btn-macos btn-macos-destructive">Destructive</button>
-  <button class="btn-macos btn-macos-success">Success</button>
-</div>
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary btn-macos-small">Small</button>
-  <button class="btn-macos btn-macos-primary">Regular</button>
-  <button class="btn-macos btn-macos-primary btn-macos-large">Large</button>
-</div>
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary btn-macos-rounded">Rounded</button>
-  <button class="btn-macos btn-macos-primary btn-macos-capsule">Capsule</button>
-  <button class="btn-macos btn-macos-toolbar">Toolbar</button>
-</div>
-
-### Traffic Lights
-
-<div class="macos-traffic-lights">
-  <div class="macos-traffic-light close"></div>
-  <div class="macos-traffic-light minimize"></div>
-  <div class="macos-traffic-light maximize"></div>
-</div>
-
+layout: two-cols
+leftLabel: Animation
+rightLabel: Hover & Transition
 ---
 
-# Segmented Control & Utilities
-
-<div class="btn-macos-group" style="margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary">Day</button>
-  <button class="btn-macos">Week</button>
-  <button class="btn-macos">Month</button>
-</div>
-
-### Grid Utilities
-
-<div class="grid grid-cols-3 gap-4">
-  <div class="alert alert-info">Col 1</div>
-  <div class="alert alert-success">Col 2</div>
-  <div class="alert alert-warning">Col 3</div>
-</div>
-
-### Text Sizes
-
-<p class="text-sm">Small text (0.875rem)</p>
-<p>Regular text — default</p>
-<p class="text-lg">Large text (1.25rem)</p>
-<p class="text-xl">Extra large (1.5rem)</p>
-
----
-layout: section
----
-
-# PPT-Style Layouts & Full Variants
-
----
-layout: quote
----
-
-The best way to predict the future is to invent it.
-
-**— Alan Kay, 1971**
-
----
-layout: statement
----
-
-# Performance matters more than features.
-
-A fast, simple system will always beat a slow, complex one in the long run.
-
----
-layout: fact
----
-
-## DID YOU KNOW?
-
-# 10x
-
-The performance gap between $O(n)$ and $O(n^2)$ at $n = 10{,}000$
-
----
-layout: full
----
-
-<div style="background: linear-gradient(135deg, #1a1b2e 0%, #2d1b4e 50%, #1a2744 100%); height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;">
-  <h1 style="font-size: 3rem; color: white;">Full Layout</h1>
-  <p style="color: rgba(255,255,255,0.6);">Zero padding — full bleed, DIY everything</p>
-</div>
-
----
-layout: full-text
----
-
-# Full Text Layout
-
-This layout gives you the entire slide area for text content — no absolute h1 positioning, no restrictive padding. Just clean, readable typography.
-
-Useful when you have a lot of content that needs to breathe, or when the default content layout's top-fixed h1 doesn't work for your slide structure.
-
-- Lists work naturally
-- **Bold** and *italic* are inherited from the theme
-- Code blocks: `inline code` works too
-
----
-layout: full-image
-image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200
----
-
-# Full Image Background
-
-## Text on top of a full-bleed photo
-
-The overlay darkens the image for readability.
-
----
-layout: full-image
-image: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
-overlay: "linear-gradient(135deg, rgba(26,27,46,0.9) 0%, rgba(45,27,78,0.7) 100%)"
----
-
-# Gradient Overlay
-
-## Custom overlay via frontmatter
-
-```yaml
-overlay: "linear-gradient(135deg, rgba(26,27,46,0.9), rgba(45,27,78,0.7))"
-```
-
----
-layout: full-split
-image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200
-panelWidth: 45%
-panelSide: left
----
-
-# Split Panel (Left)
-
-Content in a semi-transparent panel over the background image.
-
-- `panelWidth`: 45% (default)
-- `panelSide`: left / right
-- `panelColor`: any CSS color
-
----
-layout: full-split
-image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200
-panelWidth: 40%
-panelSide: right
-panelColor: "rgba(255, 255, 255, 0.92)"
----
-
-<h1 style="color: #1a1b2e;">White Panel (Right)</h1>
-
-<p style="color: #333;">White panel on the right side. Set <code style="color: #c678dd;">panelColor</code> to any value including white.</p>
-
-<ul style="color: #555;">
-<li>Corporate style</li>
-<li>High contrast text</li>
-<li>Works with any background</li>
-</ul>
-
----
-layout: section
----
-
-# More Components
-
-Timeline, Countdown, QR Code, Keyboard
-
----
-
-# Timeline Component
-
-<script setup>
-const timelineItems = [
-  { year: '1956', title: 'Dijkstra Algorithm', desc: 'Shortest path in weighted graphs' },
-  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
-  { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
-  { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
-  { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
-]
-</script>
-
-<Timeline :active="2" :items="timelineItems" />
-
----
-
-# Countdown Timer
-
-<Countdown :minutes="5" label="remaining" size="lg" />
-
-Sizes: `sm`, `default`, `lg`, `xl`. Auto-starts by default.
-
-```html
-<Countdown :minutes="5" label="remaining" size="lg" />
-```
-
----
-
-# QR Code
-
-<div style="display: flex; gap: 3rem; align-items: center;">
-
-<QRCode url="https://sli.dev" caption="Slidev Documentation" size="lg" />
-
-<div>
-
-Generate QR codes from any URL. Sizes: `sm`, `default`, `lg`, `xl`.
-
-```html
-<QRCode url="https://sli.dev" caption="Slidev Docs" size="lg" />
-```
-
-</div>
-</div>
-
----
-
-# Keyboard Shortcuts & Badges
-
-### Keyboard Keys
-
-Press <Kbd>Space</Kbd> or <Kbd>→</Kbd> to advance. Use <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>F</Kbd> for fullscreen.
-
-### Badges in Context
-
-| Algorithm | Time | Space | Difficulty |
-|---|---|---|---|
-| Binary Search | $O(\log n)$ | $O(1)$ | <Badge variant="green">Easy</Badge> |
-| Merge Sort | $O(n \log n)$ | $O(n)$ | <Badge variant="yellow">Medium</Badge> |
-| Red-Black Tree | $O(\log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
-| FFT | $O(n \log n)$ | $O(n)$ | <Badge variant="red">Hard</Badge> |
-
----
-layout: center
----
-
-### All Layouts & Components
-
-| Type | Name | Key Feature |
-|------|------|-------------|
-| Layout | `cover`, `intro`, `section`, `end` | Special slides |
-| Layout | `default`, `center` | Basic content |
-| Layout | `full`, `full-text` | Full bleed variants |
-| Layout | `full-image`, `full-split` | Background image + overlay/panel |
-| Layout | `two-cols`, `three-cols` | Multi-column (divider, labels) |
-| Layout | `image` | Image + content (side: left/right) |
-| Layout | `quote`, `statement`, `fact` | PPT-style emphasis |
-| Layout | `iframe` | Embed (side: full/left/right) |
-| Component | `<PatternCard>` | Signal / Template / Alternatives |
-| Component | `<StoryBox>` | History, Tips, Insights sidebar |
-| Component | `<ComplexityTable>` | N-limit algorithm reference |
-| Component | `<StageProgress>` | Stage indicator (via frontmatter) |
-| Component | `<FloatImage>` | Newspaper-style ㄴ-wrap |
-| Component | `<Footnote>` | Bottom footnotes with links |
-| Component | `<Badge>` | Inline colored badges (7 colors) |
-| Component | `<LinkCard>` | Clickable reference cards |
-| Component | `<Timeline>` | Vertical timeline with active state |
-| Component | `<Countdown>` | Live countdown timer (4 sizes) |
-| Component | `<QRCode>` | Auto-generated QR codes |
-| Component | `<Kbd>` | Keyboard shortcut keys |
-| Component | `<PresenterNote>` | Presenter-only notes |
-| Global | Progress Bar | Auto page tracking (3 modes) |
-| Animation | `anim-border` | Rotating gradient border (3 colors) |
-| Animation | `anim-shimmer` | Light sweep effect |
-| Animation | `anim-glow-*` | Pulsing glow (purple, blue) |
-| Animation | `anim-gradient-text` | Flowing rainbow text |
-| Animation | `anim-fade-*` | Entrance animations (up, left, right) |
-| Animation | `anim-pop` | Scale pop entrance |
-| Animation | `anim-float` | Gentle floating motion |
-| Animation | `anim-cursor` | Terminal blinking cursor |
-| Hover | `hover-lift/scale/tilt` | Transform-based hover |
-| Hover | `hover-glow/glow-blue/glow-green` | Color glow on hover |
-| Hover | `hover-shine/gradient/border` | Sweep, fill, border reveal |
-| Transition | `slide-left/right/up` | Directional slide transitions |
-| Transition | `fade`, `scale-fade`, `blur-fade` | Fade-based transitions |
+# Summary: Animations & Effects
+
+::left::
+
+| Name | Key Feature |
+|------|-------------|
+| `anim-border` | Rotating gradient border (3 colors) |
+| `anim-shimmer` | Light sweep effect |
+| `anim-glow-*` | Pulsing glow (purple, blue) |
+| `anim-gradient-text` | Flowing rainbow text |
+| `anim-fade-*` | Entrance animations (up, left, right) |
+| `anim-pop` | Scale pop entrance |
+| `anim-float` | Gentle floating motion |
+| `anim-cursor` | Terminal blinking cursor |
+
+::right::
+
+| Name | Key Feature |
+|------|-------------|
+| `hover-lift/scale/tilt` | Transform-based hover |
+| `hover-glow/glow-blue/glow-green` | Color glow on hover |
+| `hover-shine/gradient/border` | Sweep, fill, border reveal |
+| `slide-left/right/up` | Directional slide transitions |
+| `fade`, `scale-fade`, `blur-fade` | Fade-based transitions |
 
 ---
 layout: end
