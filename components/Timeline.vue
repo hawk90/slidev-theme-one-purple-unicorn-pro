@@ -12,8 +12,8 @@
       </div>
       <div class="tl-content">
         <div v-if="item.year" class="tl-year">{{ item.year }}</div>
-        <div class="tl-title">{{ item.title }}</div>
-        <div v-if="item.desc" class="tl-desc">{{ item.desc }}</div>
+        <div class="tl-title" v-html="richText(item.title)" />
+        <div v-if="item.desc" class="tl-desc" v-html="richText(item.desc)" />
       </div>
     </div>
   </div>
@@ -28,6 +28,8 @@ interface TimelineItem {
 </script>
 
 <script setup lang="ts">
+import { richText } from '../utils/rich-text'
+
 defineProps({
   items: { type: Array as () => TimelineItem[], required: true },
   active: { type: Number, default: -1 },

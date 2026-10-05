@@ -5,7 +5,7 @@
         <div class="pattern-icon">{{ s.icon }}</div>
         <div class="pattern-label">{{ s.label }}</div>
         <div class="pattern-body">
-          <slot :name="s.key">{{ props[s.key] }}</slot>
+          <slot :name="s.key"><span v-html="richText(props[s.key])" /></slot>
         </div>
       </div>
     </template>
@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { useSlots } from 'vue'
+import { richText } from '../utils/rich-text'
 
 const props = defineProps({
   signal: { type: String, default: '' },

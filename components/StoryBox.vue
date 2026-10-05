@@ -2,7 +2,7 @@
   <div class="story-box" :class="`story-${variant}`">
     <div class="story-header">
       <span class="story-icon">{{ iconMap[variant] || iconMap.history }}</span>
-      <span class="story-title">{{ title }}</span>
+      <span class="story-title" v-html="richText(title)" />
       <span v-if="year" class="story-year">{{ year }}</span>
     </div>
     <div class="story-body">
@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { richText } from '../utils/rich-text'
+
 defineProps({
   title: { type: String, default: 'History' },
   variant: { type: String, default: 'history' },

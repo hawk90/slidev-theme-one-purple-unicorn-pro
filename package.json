@@ -47,7 +47,8 @@
     }
   },
   "dependencies": {
-    "@slidev/types": ">=0.47.0"
+    "@slidev/types": ">=0.47.0",
+    "katex": ">=0.16.0"
   },
   "scripts": {
     "link": "npm link && cd ../.. && npm link slidev-theme-one-purple-unicorn-pro",

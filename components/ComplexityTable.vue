@@ -13,12 +13,7 @@
           :key="`row-${row.n}-${i}`"
           :class="{ 'ct-highlight': row.highlight }"
         >
-          <td v-for="c in columns" :key="c.key" :class="`ct-${c.key}`">
-            <template v-for="(p, j) in sup(row[c.key])" :key="j">
-              <sup v-if="p.sup">{{ p.text }}</sup>
-              <template v-else>{{ p.text }}</template>
-            </template>
-          </td>
+          <td v-for="c in columns" :key="c.key" :class="`ct-${c.key}`" v-html="richText(row[c.key])" />
         </tr>
       </tbody>
     </table>
@@ -35,23 +30,21 @@ interface Row {
 }
 
 const DEFAULT_ROWS: Row[] = [
-  { n: 'N ≤ 10', target: 'O(N!)', algo: 'Brute Force / Permutation', complexity: 'O(N!)' },
-  { n: 'N ≤ 20', target: 'O(2^N)', algo: 'Bitmask DP / Backtracking', complexity: 'O(2^N · N)' },
-  { n: 'N ≤ 500', target: 'O(N³)', algo: 'Floyd-Warshall / DP', complexity: 'O(N³)' },
-  { n: 'N ≤ 5,000', target: 'O(N²)', algo: 'DP / Brute Force', complexity: 'O(N²)' },
-  { n: 'N ≤ 100,000', target: 'O(N log N)', algo: 'Sort / Segment Tree', complexity: 'O(N log N)' },
-  { n: 'N ≤ 1,000,000', target: 'O(N)', algo: 'Greedy / Linear Scan', complexity: 'O(N)' },
-  { n: 'N ≤ 10^18', target: 'O(log N)', algo: 'Binary Search / Math', complexity: 'O(log N)' },
+  { n: '$N \\le 10$', target: '$O(N!)$', algo: 'Brute Force / Permutation', complexity: '$O(N!)$' },
+  { n: '$N \\le 20$', target: '$O(2^N)$', algo: 'Bitmask DP / Backtracking', complexity: '$O(2^N \\cdot N)$' },
+  { n: '$N \\le 500$', target: '$O(N^3)$', algo: 'Floyd-Warshall / DP', complexity: '$O(N^3)$' },
+  { n: '$N \\le 5{,}000$', target: '$O(N^2)$', algo: 'DP / Brute Force', complexity: '$O(N^2)$' },
+  { n: '$N \\le 10^5$', target: '$O(N \\log N)$', algo: 'Sort / Segment Tree', complexity: '$O(N \\log N)$' },
+  { n: '$N \\le 10^6$', target: '$O(N)$', algo: 'Greedy / Linear Scan', complexity: '$O(N)$' },
+  { n: '$N \\le 10^{18}$', target: '$O(\\log N)$', algo: 'Binary Search / Math', complexity: '$O(\\log N)$' },
 ]
 </script>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
-// Render "2^N" / "10^18" as superscripts: splits text into plain and ^-exponent parts
-function sup(text = '') {
-  return text.split(/\^(\w+)/).map((part, i) => ({ text: part, sup: i % 2 === 1 }))
-}
+// Cells accept $...$ (KaTeX) and x^y (superscript)
+import { richText } from '../utils/rich-text'
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -113,7 +106,7 @@ th {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-primary, #c0c6d0);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
 }
 
