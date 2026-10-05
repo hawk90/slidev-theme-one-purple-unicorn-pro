@@ -5,6 +5,8 @@
 // Without this script (or without pseudo-element animation support) the
 // CSS conic rotation stays as the fallback.
 
+import { isPrintMode } from './print-mode'
+
 const REF_PERIMETER = 600 // px; a box this size takes --ab-duration per lap
 
 const running = new WeakMap<Element, Animation>()
@@ -44,14 +46,11 @@ function animate(el: HTMLElement) {
   }
 }
 
-// PDF/PNG export (?print or /export): keep the static CSS ring instead of a
-// light frozen at some point of its path
-const isPrintMode = () =>
-  new URLSearchParams(location.search).has('print') || /\/export\b/.test(location.pathname)
-
 export function setupBorderBeams() {
   if (typeof window === 'undefined' || !('animate' in Element.prototype)) return
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  // PDF/PNG export: keep the static CSS ring instead of a light frozen at some
+  // point of its path
   if (isPrintMode()) return
 
   const resize = new ResizeObserver(entries => entries.forEach(e => animate(e.target as HTMLElement)))

@@ -11,11 +11,11 @@
 // is unchanged and the PDF text can still be searched and copied. The
 // presentation itself is untouched.
 
-const DONE = 'data-print-gradient'
-const RESOLUTION = 4 // canvas pixels per CSS pixel
+import { isPrintMode } from './print-mode'
 
-const isPrintMode = () =>
-  new URLSearchParams(location.search).has('print') || /\/export\b/.test(location.pathname)
+const DONE = 'data-print-gradient'
+const PSEUDO = 'data-print-pseudo'
+const RESOLUTION = 4 // canvas pixels per CSS pixel
 
 const isTransparent = (color: string) =>
   color === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(color)
@@ -23,8 +23,6 @@ const isTransparent = (color: string) =>
 const isGradientStyle = (s: CSSStyleDeclaration) =>
   s.backgroundClip === 'text' && s.backgroundImage.startsWith('linear-gradient')
   && isTransparent(s.webkitTextFillColor)
-
-const isGradientText = (el: Element) => isGradientStyle(getComputedStyle(el))
 
 // A gradient ::before / ::after (e.g. the quote layout's closing mark) can't be
 // measured or covered, so it is replaced by a real span with the same computed
@@ -39,6 +37,7 @@ function materializePseudo(el: Element, which: '::before' | '::after') {
   }
   span.textContent = m[1].replace(/\\(.)/g, '$1')
   span.setAttribute('aria-hidden', 'true')
+  span.setAttribute(PSEUDO, '')
   if (which === '::before') el.prepend(span)
   else el.append(span)
   el.classList.add(which === '::before' ? 'print-no-before' : 'print-no-after')
@@ -109,35 +108,69 @@ function canvasGradient(ctx: CanvasRenderingContext2D, image: string, x: number,
   return g
 }
 
-// Text of `el` painted by its gradient, split into one run per line
+interface Run { text: string, parent: Element, left: number, top: number, right: number }
+
+let range: Range // created on first use (the module also loads outside the browser)
+function charRect(node: Text, i: number) {
+  range.setStart(node, i)
+  range.setEnd(node, i + 1)
+  const r = range.getClientRects()[0]
+  return r && r.width > 0 ? r : null
+}
+
+// Text of `el` painted by its gradient, one run per line. A text node on one
+// line (the usual title) is measured as a whole; only a node that wraps is
+// measured character by character to find its line breaks.
 function textRuns(el: Element) {
-  const runs: { text: string, parent: Element, rects: DOMRect[] }[] = []
+  const runs: Run[] = []
+  range ??= document.createRange()
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
-  const range = document.createRange()
   for (let node = walker.nextNode() as Text | null; node; node = walker.nextNode() as Text | null) {
     const parent = node.parentElement
-    if (!parent || !isTransparent(getComputedStyle(parent).webkitTextFillColor)) continue
-    let run: (typeof runs)[number] | null = null
+    if (!parent) continue
+    const ps = getComputedStyle(parent)
+    if (!isTransparent(ps.webkitTextFillColor)) continue
+
+    range.selectNodeContents(node)
+    const lines = [...range.getClientRects()].filter(r => r.width > 0)
+    if (lines.length === 0) continue
+
+    if (lines.length === 1) {
+      // Collapse white space as the browser did; keep an edge space only if
+      // it was rendered (it is when the text continues after inline content)
+      let text = node.data
+      if (!ps.whiteSpace.startsWith('pre') && ps.whiteSpace !== 'break-spaces') {
+        const end = node.data.trimEnd().length
+        text = text.replace(/[\t\n\f\r ]+/g, ' ')
+        if (text.startsWith(' ') && !charRect(node, 0)) text = text.slice(1)
+        if (text.endsWith(' ') && (end === 0 || !charRect(node, end))) text = text.slice(0, -1)
+      }
+      const r = lines[0]
+      runs.push({ text, parent, left: r.left, top: r.top, right: r.right })
+      continue
+    }
+
+    let run: Run | null = null
     for (let i = 0; i < node.data.length; i++) {
-      range.setStart(node, i)
-      range.setEnd(node, i + 1)
-      const r = range.getClientRects()[0]
-      if (!r || r.width === 0) continue // collapsed whitespace
-      if (!run || Math.abs(r.top - run.rects[0].top) > 1) {
-        run = { text: '', parent, rects: [] }
+      const r = charRect(node, i)
+      if (!r) continue // collapsed white space
+      if (!run || Math.abs(r.top - run.top) > 1) {
+        run = { text: '', parent, left: r.left, top: r.top, right: r.right }
         runs.push(run)
       }
       run.text += node.data[i]
-      run.rects.push(r)
+      run.right = r.right
     }
   }
   return runs
 }
 
-function redraw(el: HTMLElement) {
+// One scratch canvas for the gradient fill, reused by every element
+let paint: HTMLCanvasElement | null = null
+
+function redraw(el: HTMLElement, s: CSSStyleDeclaration) {
   el.setAttribute(DONE, '')
 
-  const s = getComputedStyle(el)
   const box = el.getBoundingClientRect()
   const zoom = el.offsetWidth ? box.width / el.offsetWidth : 1 // slide scaling
   const left = box.left + el.clientLeft * zoom
@@ -164,20 +197,18 @@ function redraw(el: HTMLElement) {
     ctx.font = `${ps.fontStyle} ${ps.fontWeight} ${ps.fontSize} ${ps.fontFamily}`
     ctx.letterSpacing = ps.letterSpacing === 'normal' ? '0px' : ps.letterSpacing
     const m = ctx.measureText(run.text)
-    const first = run.rects[0]
-    const width = (run.rects.at(-1)!.right - first.left) / zoom
     ctx.save()
-    ctx.translate((first.left - left) / zoom, (first.top - top) / zoom + m.fontBoundingBoxAscent)
-    if (m.width > 0) ctx.scale(width / m.width, 1) // match the laid-out width exactly
+    ctx.translate((run.left - left) / zoom, (run.top - top) / zoom + m.fontBoundingBoxAscent)
+    if (m.width > 0) ctx.scale((run.right - run.left) / zoom / m.width, 1) // match the laid-out width
     ctx.fillText(run.text, 0, 0)
     ctx.restore()
   }
 
   // 2. The gradient (tiled like the background), kept only where the text is.
-  // Painted on its own canvas first: with 'source-in' every fill would clear
-  // what the previous tile left.
-  const paint = document.createElement('canvas')
-  paint.width = canvas.width
+  // Painted on the scratch canvas first: with 'source-in' every fill would
+  // clear what the previous tile left.
+  paint ??= document.createElement('canvas')
+  paint.width = canvas.width // also clears it
   paint.height = canvas.height
   const pctx = paint.getContext('2d')!
   pctx.scale(RESOLUTION, RESOLUTION)
@@ -201,43 +232,75 @@ function redraw(el: HTMLElement) {
   el.appendChild(canvas)
 }
 
-function redrawAll() {
-  for (const el of document.querySelectorAll('.slidev-layout, .slidev-layout *')) {
-    if (el.closest(`[${DONE}]`) || el.classList.contains('print-gradient-text')) continue
+// Slide elements in `root` (the root itself included)
+function slideElements(root: Element | Document) {
+  const all = root instanceof Element ? [root, ...root.querySelectorAll('*')] : [...root.querySelectorAll('*')]
+  return all.filter(el => el.closest('.slidev-layout') && !el.closest(`[${DONE}]`)) as HTMLElement[]
+}
+
+function scan(root: Element | Document) {
+  for (const el of slideElements(root)) {
+    if (el.hasAttribute(PSEUDO)) continue
     if (!el.classList.contains('print-no-before')) materializePseudo(el, '::before')
     if (!el.classList.contains('print-no-after')) materializePseudo(el, '::after')
   }
   // Document order: an outer gradient element is redrawn (with its children's
-  // text) before its children are visited, so they are skipped
-  for (const el of document.querySelectorAll<HTMLElement>('.slidev-layout, .slidev-layout *')) {
-    if (el.closest(`[${DONE}]`) || el.classList.contains('print-gradient-text')) continue
-    if (isGradientText(el)) redraw(el)
+  // text) before its children come up, so they are skipped
+  for (const el of slideElements(root)) {
+    if (el.closest(`[${DONE}]`)) continue
+    const s = getComputedStyle(el)
+    if (isGradientStyle(s)) redraw(el, s)
   }
 }
+
+// Nodes this file adds; they never need a scan of their own
+const ownNode = (n: Element) => n.classList.contains('print-gradient-text') || n.hasAttribute(PSEUDO)
 
 export function setupPrintGradientText() {
   if (!isPrintMode()) return
 
-  // `slidev export` waits for .slidev-slide-loading to be removed before it
-  // captures, so hold the capture until the slides have settled and been redrawn
   const style = document.createElement('style')
   style.textContent = '.print-no-before::before, .print-no-after::after { content: none !important; }'
   document.head.appendChild(style)
 
+  // `slidev export` waits for .slidev-slide-loading to be removed before it
+  // captures, so hold the capture until the slides have settled and been redrawn
   const hold = document.createElement('div')
   hold.className = 'slidev-slide-loading'
   hold.style.display = 'none'
   document.body.appendChild(hold)
 
+  // First a full scan once the slides have settled, then only what is added
+  // later (e.g. another range on the browser export page)
+  let pending: Set<Element> | null = null
   let timer: number | undefined
   const schedule = () => {
     clearTimeout(timer)
     timer = window.setTimeout(async () => {
       await document.fonts.ready
-      redrawAll()
-      hold.remove()
+      if (pending === null) {
+        scan(document)
+        pending = new Set()
+        hold.remove()
+        return
+      }
+      const roots = [...pending].filter(r => r.isConnected)
+      pending.clear()
+      for (const r of roots) {
+        if (!roots.some(o => o !== r && o.contains(r))) scan(r)
+      }
     }, 300)
   }
-  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true })
+  new MutationObserver((mutations) => {
+    let added = false
+    for (const m of mutations) {
+      m.addedNodes.forEach((n) => {
+        if (!(n instanceof Element) || ownNode(n)) return
+        pending?.add(n)
+        added = true
+      })
+    }
+    if (added) schedule()
+  }).observe(document.body, { childList: true, subtree: true })
   schedule()
 }
