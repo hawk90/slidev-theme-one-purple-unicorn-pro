@@ -119,6 +119,19 @@ Left column content
 Right column content
 ```
 
+### Compatibility Aliases
+
+Layout names from 1.x still work. Each one is a preset of a current layout, and frontmatter values override the preset:
+
+| Alias | Equivalent |
+|---|---|
+| `image-left` / `image-right` | `layout: image` + `side: left` / `right` |
+| `iframe-left` / `iframe-right` | `layout: iframe` + `side: left` / `right` |
+| `two-cols-header` | `layout: two-cols` |
+| `comparison` | `layout: two-cols` + `divider: true`, `leftLabel: Before`, `rightLabel: After` |
+| `full-center` | `layout: center` + `padding: 2rem` |
+| `full-dark` | Dark centered slide with a large heading (similar to `statement`) |
+
 ## Color Palette
 
 - **Primary**: `#8b5cf6` (Purple)
