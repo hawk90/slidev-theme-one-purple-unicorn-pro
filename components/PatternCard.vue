@@ -76,6 +76,10 @@ const SECTIONS = [
   color: var(--pattern-color);
 }
 
+html:not(.dark) .pattern-label {
+  color: color-mix(in srgb, var(--pattern-color) 65%, black);
+}
+
 .pattern-body {
   font-size: 0.8rem;
   line-height: 1.5;

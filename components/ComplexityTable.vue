@@ -143,13 +143,15 @@ tbody tr:hover {
 .ct-n {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-weight: 600;
-  color: var(--one-dark-cyan, #56b6c2);
+  --ct-color: var(--one-dark-cyan, #56b6c2);
+  color: var(--ct-color);
   white-space: nowrap;
 }
 
 .ct-target {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
-  color: var(--one-dark-yellow, #e5c07b);
+  --ct-color: var(--one-dark-yellow, #e5c07b);
+  color: var(--ct-color);
   white-space: nowrap;
 }
 
@@ -159,7 +161,15 @@ tbody tr:hover {
 
 .ct-complexity {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
-  color: var(--one-dark-green, #98c379);
+  --ct-color: var(--one-dark-green, #98c379);
+  color: var(--ct-color);
   white-space: nowrap;
+}
+
+/* Light mode: darker ink so the column colors stay readable on white */
+html:not(.dark) .ct-n,
+html:not(.dark) .ct-target,
+html:not(.dark) .ct-complexity {
+  color: color-mix(in srgb, var(--ct-color) 65%, black);
 }
 </style>

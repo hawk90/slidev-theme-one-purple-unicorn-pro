@@ -65,18 +65,16 @@ const gridStyle = computed(() => {
   margin-bottom: 0.5rem;
 }
 
-.grid-label-0 {
-  background: color-mix(in srgb, var(--one-dark-blue) 15%, transparent);
-  color: var(--one-dark-blue, #61afef);
+.grid-label-0 { --label-color: var(--one-dark-blue, #61afef); }
+.grid-label-1 { --label-color: var(--one-dark-green, #98c379); }
+.grid-label-2 { --label-color: var(--one-dark-magenta, #c678dd); }
+
+.grid-label {
+  background: color-mix(in srgb, var(--label-color) 15%, transparent);
+  color: var(--label-color);
 }
 
-.grid-label-1 {
-  background: color-mix(in srgb, var(--one-dark-green) 15%, transparent);
-  color: var(--one-dark-green, #98c379);
-}
-
-.grid-label-2 {
-  background: color-mix(in srgb, var(--one-dark-magenta) 15%, transparent);
-  color: var(--one-dark-magenta, #c678dd);
+html:not(.dark) .grid-label {
+  color: color-mix(in srgb, var(--label-color) 65%, black);
 }
 </style>

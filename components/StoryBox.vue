@@ -64,10 +64,6 @@ const iconMap: Record<string, string> = {
   color: var(--text-primary, #dce0e8);
 }
 
-html:not(.dark) .story-title {
-  color: var(--light-text-primary, #1a1d23);
-}
-
 .story-year {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-size: 0.65rem;
@@ -77,6 +73,10 @@ html:not(.dark) .story-title {
   padding: 0.1rem 0.5rem;
   border-radius: 1rem;
   margin-left: auto;
+}
+
+html:not(.dark) .story-year {
+  color: color-mix(in srgb, var(--story-color) 65%, black);
 }
 
 .story-body {

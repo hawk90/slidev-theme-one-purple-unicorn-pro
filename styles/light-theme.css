@@ -26,6 +26,31 @@ html:not(.dark) .slidev-layout {
   color: var(--light-text-primary);
 }
 
+/* Light palette for content slides. Components and effects read these
+   variables (cards, tables, badges, kbd, animated boxes, ...), so they all
+   follow light mode from here. Dark layouts (`slide-dark`) are not matched
+   and keep the dark values from colors.css. Code blocks keep --bg-code. */
+html:not(.dark) .slidev-layout:not(.slide-dark) {
+  --bg-primary: var(--light-bg);
+  --bg-secondary: var(--light-bg-secondary);
+  --bg-tertiary: #eceef2;
+  --bg-overlay: rgba(255, 255, 255, 0.95);
+  --hover-bg: #eceef2;
+
+  --text-primary: var(--light-text-primary);
+  --text-bright: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-muted: var(--light-text-muted);
+
+  --border-default: var(--light-border);
+  --border-subtle: var(--light-border-light);
+
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
 /* Dark layouts (root has `slide-dark`) keep a dark background in light mode */
 html:not(.dark) .slidev-layout.slide-dark {
   background: var(--dark-bg);
@@ -106,26 +131,27 @@ html:not(.dark) .slidev-layout:not(.slide-dark) li {
 /* ============================================
    Tables for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) table {
+/* :where() keeps these low so component tables (e.g. ComplexityTable column colors) win */
+html:not(.dark) :where(.slidev-layout:not(.slide-dark)) table {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) thead {
+html:not(.dark) :where(.slidev-layout:not(.slide-dark)) thead {
   background: var(--light-bg-tertiary);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) th {
+html:not(.dark) :where(.slidev-layout:not(.slide-dark)) th {
   color: var(--light-text-primary);
   border-bottom: 2px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) td {
+html:not(.dark) :where(.slidev-layout:not(.slide-dark)) td {
   color: var(--light-text-secondary);
   border-bottom: 1px solid var(--light-border-light);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) tbody tr:hover {
+html:not(.dark) :where(.slidev-layout:not(.slide-dark)) tbody tr:hover {
   background: var(--light-bg-tertiary);
 }
 
@@ -146,18 +172,10 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .card {
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) .gradient-card {
-  background: var(--light-bg-secondary);
-}
-
 html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid var(--light-border);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .gradient-border {
-  background: var(--light-bg);
 }
 
 /* ============================================
