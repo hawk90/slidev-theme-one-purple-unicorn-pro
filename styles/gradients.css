@@ -144,51 +144,35 @@
   border-radius: 1rem;
   overflow: hidden;
   padding: 2rem;
-  border: 2px solid var(--gradient-unicorn-1);
+  /* Gradient border: fill on the padding box, gradient on the border box */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+    var(--gradient-unicorn-1) border-box;
 }
 
 /* ============================================
    Gradient Borders
    ============================================ */
 
-.gradient-border {
-  position: relative;
-  background: var(--bg-secondary);
-  border-radius: 1rem;
-  padding: 2rem;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: var(--gradient-unicorn-1);
-  border-radius: 1rem;
-  z-index: -1;
-}
-
-/* Static gradient border for PDF */
+/* Painted on the element's own border: fill on the padding box, gradient on
+   the border box. (A z-index:-1 pseudo-element ended up under the slide
+   background and never showed.) */
+.gradient-border,
 .gradient-border-animated {
-  position: relative;
-  background: var(--bg-secondary);
+  border: 2px solid transparent;
   border-radius: 1rem;
   padding: 2rem;
+  background:
+    linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+    var(--gradient-unicorn-1) border-box;
 }
 
-.gradient-border-animated::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: var(--gradient-static-1);
-  border-radius: 1rem;
-  z-index: -1;
-  /* No animation for PDF */
+/* Static gradient for PDF */
+.gradient-border-animated {
+  background:
+    linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+    var(--gradient-static-1) border-box;
 }
 
 /* ============================================

@@ -87,6 +87,7 @@ const panelStyle = computed(() => ({
 .full-bleed-panel-content {
   padding: 3rem;
   width: 100%;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .full-bleed-panel-content :deep(h1) {
@@ -94,11 +95,9 @@ const panelStyle = computed(() => ({
   color: white;
 }
 
-.full-bleed-panel-content :deep(p) {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.full-bleed-panel-content :deep(li) {
-  color: rgba(255, 255, 255, 0.8);
+/* Text follows the panel color (or a color set on its parent, e.g. a light
+   panel with <ul style="color: #555">) instead of being forced white */
+.full-bleed-panel-content :deep(:is(p, li)) {
+  color: inherit;
 }
 </style>
