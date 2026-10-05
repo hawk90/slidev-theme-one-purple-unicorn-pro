@@ -75,6 +75,8 @@ function goToStage(index: number) {
 </script>
 
 <style scoped>
+/* Variables: --stage-done-color, --stage-active-color, --stage-upcoming-color,
+   --stage-dot-size, --stage-font-size (top positions use smaller defaults) */
 .stage-progress {
   position: fixed;
   display: flex;
@@ -150,21 +152,21 @@ function goToStage(index: number) {
 }
 
 :is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-label {
-  font-size: 0.5rem;
+  font-size: var(--stage-font-size, 0.5rem);
 }
 
 :is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-active .stage-label {
-  font-size: 0.55rem;
+  font-size: calc(var(--stage-font-size, 0.5rem) * 1.1);
 }
 
 :is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-dot {
-  width: 5px;
-  height: 5px;
+  width: var(--stage-dot-size, 5px);
+  height: var(--stage-dot-size, 5px);
 }
 
 :is(.stage-pos-top, .stage-pos-top-left, .stage-pos-top-right) .stage-active .stage-dot {
-  width: 6px;
-  height: 6px;
+  width: calc(var(--stage-dot-size, 5px) * 1.2);
+  height: calc(var(--stage-dot-size, 5px) * 1.2);
 }
 
 /* Base item */
@@ -190,15 +192,15 @@ function goToStage(index: number) {
 
 /* Dot */
 .stage-dot {
-  width: 6px;
-  height: 6px;
+  width: var(--stage-dot-size, 6px);
+  height: var(--stage-dot-size, 6px);
   border-radius: 50%;
   flex-shrink: 0;
   transition: all var(--transition-base, 200ms ease);
 }
 
 .stage-label {
-  font-size: 0.6rem;
+  font-size: var(--stage-font-size, 0.6rem);
   letter-spacing: 0.03em;
   white-space: nowrap;
   transition: all var(--transition-base, 200ms ease);
@@ -213,30 +215,30 @@ function goToStage(index: number) {
 
 /* States */
 .stage-done .stage-dot {
-  background: var(--one-dark-green, #98c379);
+  background: var(--stage-done-color, var(--one-dark-green, #98c379));
 }
 
 .stage-done .stage-label {
-  color: var(--one-dark-green, #98c379);
+  color: var(--stage-done-color, var(--one-dark-green, #98c379));
   opacity: 0.7;
 }
 
 .stage-done .stage-connector {
-  background: var(--one-dark-green, #98c379);
+  background: var(--stage-done-color, var(--one-dark-green, #98c379));
   opacity: 0.4;
 }
 
 .stage-active .stage-dot {
-  background: var(--primary-400, #c678dd);
-  box-shadow: 0 0 6px var(--primary-400, #c678dd);
-  width: 8px;
-  height: 8px;
+  background: var(--stage-active-color, var(--primary-400, #c678dd));
+  box-shadow: 0 0 6px var(--stage-active-color, var(--primary-400, #c678dd));
+  width: calc(var(--stage-dot-size, 6px) * 1.33);
+  height: calc(var(--stage-dot-size, 6px) * 1.33);
 }
 
 .stage-active .stage-label {
-  color: var(--primary-400, #c678dd);
+  color: var(--stage-active-color, var(--primary-400, #c678dd));
   font-weight: 600;
-  font-size: 0.65rem;
+  font-size: calc(var(--stage-font-size, 0.6rem) * 1.08);
 }
 
 .stage-active .stage-connector {
@@ -244,17 +246,17 @@ function goToStage(index: number) {
 }
 
 .stage-upcoming .stage-dot {
-  background: var(--text-muted, #5c6370);
+  background: var(--stage-upcoming-color, var(--text-muted, #5c6370));
   opacity: 0.6;
 }
 
 .stage-upcoming .stage-label {
-  color: var(--text-muted, #5c6370);
+  color: var(--stage-upcoming-color, var(--text-muted, #5c6370));
   opacity: 0.6;
 }
 
 .stage-upcoming .stage-connector {
-  background: var(--text-muted, #5c6370);
+  background: var(--stage-upcoming-color, var(--text-muted, #5c6370));
   opacity: 0.2;
 }
 </style>

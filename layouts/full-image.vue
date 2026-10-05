@@ -5,8 +5,8 @@
       :background-size="backgroundSize"
       :background-position="position"
       :overlay="overlay"
-      align="center"
-      content-padding="3rem"
+      :align="align"
+      :content-padding="padding"
     >
       <slot />
     </FullBleed>
@@ -21,6 +21,8 @@ defineProps({
   backgroundSize: { type: String, default: 'cover' },
   overlay: { type: String, default: 'rgba(0, 0, 0, 0.55)' },
   position: { type: String, default: 'center' },
+  align: { type: String, default: 'center' },
+  padding: { type: String, default: '3rem' },
 })
 </script>
 

@@ -57,7 +57,8 @@ defineExpose({ start, stop, remaining })
 .countdown-time {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: var(--primary-400, #c678dd);
+  font-size: var(--countdown-size, 1.5rem);
+  color: var(--countdown-color, var(--primary-400, #c678dd));
 }
 
 .countdown-label {
@@ -65,11 +66,10 @@ defineExpose({ start, stop, remaining })
   color: var(--text-muted, #5c6370);
 }
 
-/* Sizes */
-.countdown-default .countdown-time { font-size: 1.5rem; }
-.countdown-sm .countdown-time { font-size: 1rem; }
-.countdown-lg .countdown-time { font-size: 3rem; }
-.countdown-xl .countdown-time { font-size: 5rem; }
+/* Sizes (presets for --countdown-size; any size works via the variable) */
+.countdown-sm { --countdown-size: 1rem; }
+.countdown-lg { --countdown-size: 3rem; }
+.countdown-xl { --countdown-size: 5rem; }
 
 @media print {
   .countdown { display: none !important; }

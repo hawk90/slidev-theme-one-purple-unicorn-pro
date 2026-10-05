@@ -223,17 +223,20 @@
 
 /* ============================================
    4. Entrances (play once)
+   --anim-duration (0.4s), --anim-distance (0.75rem), --anim-delay (0s)
+   anim-delay-1..5 are presets for --anim-delay; any value works inline.
    ============================================ */
-.anim-fade-in    { animation: fade-in 0.4s ease both; }
-.anim-fade-up    { animation: fade-up 0.4s ease both; }
-.anim-fade-left  { animation: fade-left 0.4s ease both; }
-.anim-fade-right { animation: fade-right 0.4s ease both; }
+.anim-fade-in    { animation: fade-in    var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
+.anim-fade-up    { animation: fade-up    var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
+.anim-fade-left  { animation: fade-left  var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
+.anim-fade-right { animation: fade-right var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
 
-.anim-delay-1 { animation-delay: 0.1s; }
-.anim-delay-2 { animation-delay: 0.2s; }
-.anim-delay-3 { animation-delay: 0.3s; }
-.anim-delay-4 { animation-delay: 0.4s; }
-.anim-delay-5 { animation-delay: 0.5s; }
+/* Presets; animation-delay also applies them to any other animation */
+.anim-delay-1 { --anim-delay: 0.1s; animation-delay: var(--anim-delay); }
+.anim-delay-2 { --anim-delay: 0.2s; animation-delay: var(--anim-delay); }
+.anim-delay-3 { --anim-delay: 0.3s; animation-delay: var(--anim-delay); }
+.anim-delay-4 { --anim-delay: 0.4s; animation-delay: var(--anim-delay); }
+.anim-delay-5 { --anim-delay: 0.5s; animation-delay: var(--anim-delay); }
 
 @keyframes fade-in {
   from { opacity: 0; }
@@ -241,17 +244,17 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(0.75rem); }
+  from { opacity: 0; transform: translateY(var(--anim-distance, 0.75rem)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-left {
-  from { opacity: 0; transform: translateX(-0.75rem); }
+  from { opacity: 0; transform: translateX(calc(-1 * var(--anim-distance, 0.75rem))); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fade-right {
-  from { opacity: 0; transform: translateX(0.75rem); }
+  from { opacity: 0; transform: translateX(var(--anim-distance, 0.75rem)); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
@@ -260,8 +263,8 @@
    ============================================ */
 .anim-cursor {
   display: inline-block;
-  animation: blink 1s step-end infinite;
-  color: var(--primary-400, #c678dd);
+  animation: blink var(--cursor-duration, 1s) step-end infinite;
+  color: var(--cursor-color, var(--primary-400, #c678dd));
   font-weight: 100;
 }
 
@@ -310,24 +313,26 @@
 /* ============================================
    7. Float
    ============================================ */
+/* --float-distance (4px), --float-duration (3.5s) */
 .anim-float {
-  animation: float 3.5s ease-in-out infinite;
+  animation: float var(--float-duration, 3.5s) ease-in-out infinite;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
+  50%      { transform: translateY(calc(-1 * var(--float-distance, 4px))); }
 }
 
 /* ============================================
    8. Scale Pop (for v-click)
    ============================================ */
+/* --pop-scale (0.9 start size), --anim-duration (0.35s), --anim-delay */
 .anim-pop {
-  animation: scale-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: scale-pop var(--anim-duration, 0.35s) cubic-bezier(0.34, 1.56, 0.64, 1) var(--anim-delay, 0s) both;
 }
 
 @keyframes scale-pop {
-  from { opacity: 0; transform: scale(0.9); }
+  from { opacity: 0; transform: scale(var(--pop-scale, 0.9)); }
   to   { opacity: 1; transform: scale(1); }
 }
 

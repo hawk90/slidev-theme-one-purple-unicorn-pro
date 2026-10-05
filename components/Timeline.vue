@@ -7,7 +7,7 @@
       :class="{ 'tl-active': i === active }"
     >
       <div class="tl-marker">
-        <div class="tl-dot" />
+        <div class="tl-dot" :style="item.color ? { '--tl-dot-color': item.color, '--tl-active-color': item.color } : undefined" />
         <div v-if="i < items.length - 1" class="tl-line" />
       </div>
       <div class="tl-content">
@@ -24,6 +24,7 @@ interface TimelineItem {
   title: string
   year?: string
   desc?: string
+  color?: string // dot color for this item
 }
 </script>
 
@@ -37,6 +38,8 @@ defineProps({
 </script>
 
 <style scoped>
+/* Variables: --tl-dot-color, --tl-active-color, --tl-line-color, --tl-year-color;
+   per item: { color } */
 .timeline {
   display: flex;
   flex-direction: column;
@@ -62,15 +65,15 @@ defineProps({
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--text-muted, #5c6370);
+  background: var(--tl-dot-color, var(--text-muted, #5c6370));
   flex-shrink: 0;
   margin-top: 0.3rem;
   transition: all 0.2s ease;
 }
 
 .tl-active .tl-dot {
-  background: var(--primary-400, #c678dd);
-  box-shadow: 0 0 6px var(--primary-400, #c678dd);
+  background: var(--tl-active-color, var(--primary-400, #c678dd));
+  box-shadow: 0 0 6px var(--tl-active-color, var(--primary-400, #c678dd));
   width: 10px;
   height: 10px;
 }
@@ -78,7 +81,7 @@ defineProps({
 .tl-line {
   width: 2px;
   flex: 1;
-  background: var(--border-default, rgba(255, 255, 255, 0.1));
+  background: var(--tl-line-color, var(--border-default, rgba(255, 255, 255, 0.1)));
   margin: 0.25rem 0;
 }
 
@@ -89,7 +92,7 @@ defineProps({
 .tl-year {
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-size: 0.65rem;
-  color: var(--primary-400, #c678dd);
+  color: var(--tl-year-color, var(--primary-400, #c678dd));
   font-weight: 600;
 }
 

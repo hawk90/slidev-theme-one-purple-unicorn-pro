@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout cover slide-dark slide-bare">
-    <CenteredSlide dark content-max-width="48rem">
+    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
     </CenteredSlide>
   </div>
@@ -8,4 +8,9 @@
 
 <script setup lang="ts">
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
+
+defineProps({
+  padding: { type: String, default: '4rem 6rem' },
+  contentMaxWidth: { type: String, default: '48rem' },
+})
 </script>

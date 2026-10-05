@@ -5,18 +5,19 @@
 
 .slidev-layout:not(.slide-bare) {
   box-sizing: border-box;
-  font-size: 18px;
+  /* --slide-font-size, --slide-padding, --slide-title-top, --slide-padding-x */
+  font-size: var(--slide-font-size, 18px);
   line-height: 1.3;
-  padding: 70px 30px 20px 30px;
+  padding: var(--slide-padding, 70px var(--slide-padding-x, 30px) 20px var(--slide-padding-x, 30px));
   text-align: left;
 }
 
 /* ========== H1 Absolute Positioning (Content Slides Only) ========== */
 .slidev-layout:not(.slide-bare) h1 {
   position: absolute;
-  top: 15px;
-  left: 30px;
-  right: 30px;
+  top: var(--slide-title-top, 15px);
+  left: var(--slide-padding-x, 30px);
+  right: var(--slide-padding-x, 30px);
   margin: 0;
   padding: 0;
   font-size: 1.6em;

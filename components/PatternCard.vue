@@ -1,11 +1,16 @@
 <template>
   <div class="pattern-card">
-    <template v-for="s in SECTIONS" :key="s.key">
-      <div v-if="props[s.key] || slots[s.key]" class="pattern-section" :class="`pattern-${s.key}`">
+    <template v-for="s in list" :key="s.key">
+      <div
+        v-if="textOf(s) || slots[s.key]"
+        class="pattern-section"
+        :class="`pattern-${s.key}`"
+        :style="s.color ? { '--pattern-color': s.color } : undefined"
+      >
         <div class="pattern-icon">{{ s.icon }}</div>
         <div class="pattern-label">{{ s.label }}</div>
         <div class="pattern-body">
-          <slot :name="s.key"><span v-html="richText(props[s.key])" /></slot>
+          <slot :name="s.key"><span v-html="richText(textOf(s))" /></slot>
         </div>
       </div>
     </template>
@@ -14,23 +19,37 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from 'vue'
+import { computed, useSlots } from 'vue'
 import { richText } from '../utils/rich-text'
+
+interface Section {
+  key: string
+  label: string
+  icon?: string
+  color?: string
+  text?: string
+}
 
 const props = defineProps({
   signal: { type: String, default: '' },
   template: { type: String, default: '' },
   alternatives: { type: String, default: '' },
+  // Replace the default sections: [{ key, label, icon?, color?, text? }].
+  // Content comes from the same-named slot, else `text`, else the same-named prop.
+  sections: { type: Array as () => Section[], default: null },
 })
 
 const slots = useSlots()
 
-// Each section is shown when its prop (plain text) or same-named slot (rich content) is given
-const SECTIONS = [
+const SECTIONS: Section[] = [
   { key: 'signal', icon: '\u{1F6A8}', label: 'Signal' },
   { key: 'template', icon: '\u{1F4DD}', label: 'Template' },
   { key: 'alternatives', icon: '\u{1F500}', label: 'Alternatives' },
-] as const
+]
+
+const list = computed(() => props.sections ?? SECTIONS)
+
+const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.key] as string ?? ''
 </script>
 
 <style scoped>
@@ -55,6 +74,8 @@ const SECTIONS = [
   border-bottom: none;
 }
 
+/* Default accent for custom sections; the built-in ones override it */
+.pattern-section { --pattern-color: var(--primary-400, #c678dd); }
 .pattern-signal { --pattern-color: var(--one-dark-red, #e06c75); }
 .pattern-template { --pattern-color: var(--one-dark-blue, #61afef); }
 .pattern-alternatives { --pattern-color: var(--one-dark-yellow, #e5c07b); }

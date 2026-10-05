@@ -1,7 +1,7 @@
 <template>
-  <div class="story-box" :class="`story-${variant}`">
+  <div class="story-box" :class="`story-${variant}`" :style="color ? { '--story-color': color } : undefined">
     <div class="story-header">
-      <span class="story-icon">{{ iconMap[variant] || iconMap.history }}</span>
+      <span class="story-icon">{{ icon || iconMap[variant] || iconMap.history }}</span>
       <span class="story-title" v-html="richText(title)" />
       <span v-if="year" class="story-year">{{ year }}</span>
     </div>
@@ -22,6 +22,9 @@ defineProps({
   variant: { type: String, default: 'history' },
   year: { type: String, default: '' },
   source: { type: String, default: '' },
+  // Custom accent color / icon; override the variant's
+  color: { type: String, default: '' },
+  icon: { type: String, default: '' },
 })
 
 const iconMap: Record<string, string> = {
@@ -35,8 +38,8 @@ const iconMap: Record<string, string> = {
 
 <style scoped>
 .story-box {
-  border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
+  border-radius: var(--story-radius, 0.75rem);
+  padding: var(--story-padding, 0.75rem 1rem);
   margin: 0.75rem 0;
   border-left: 3px solid var(--story-color);
   background: color-mix(in srgb, var(--story-color) 8%, transparent);

@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout quote slide-dark slide-bare">
-    <CenteredSlide dark content-max-width="48rem">
+    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
       <div class="quote-mark">&ldquo;</div>
       <div class="quote-content">
         <slot />
@@ -11,11 +11,16 @@
 
 <script setup lang="ts">
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
+
+defineProps({
+  padding: { type: String, default: '4rem 6rem' },
+  contentMaxWidth: { type: String, default: '48rem' },
+})
 </script>
 
 <style scoped>
 .quote-mark {
-  font-size: 5rem;
+  font-size: var(--quote-mark-size, 5rem);
   line-height: 1;
   font-family: Georgia, 'Noto Serif KR', serif;
   background: var(--gradient-primary);
@@ -27,7 +32,7 @@ import CenteredSlide from '../components/internal/CenteredSlide.vue'
 }
 
 .quote-content :deep(p) {
-  font-size: 1.4rem;
+  font-size: var(--quote-size, 1.4rem);
   line-height: 1.6;
   font-style: italic;
   color: var(--text-primary, #dce0e8);

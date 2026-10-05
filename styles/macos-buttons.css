@@ -30,14 +30,14 @@
 .btn-macos {
   /* Typography */
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  font-size: 13px;
+  font-size: var(--macos-font-size, 13px);
   font-weight: 400;
   letter-spacing: -0.01em;
 
   /* Layout */
-  padding: 5px 12px;
+  padding: var(--macos-padding, 5px 12px);
   min-width: 60px;
-  height: 28px;
+  height: var(--macos-height, 28px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +46,7 @@
   /* Appearance */
   background: var(--macos-button-bg);
   border: 1px solid var(--macos-button-border);
-  border-radius: 6px;
+  border-radius: var(--macos-radius, 6px);
   color: var(--light-text-primary);
 
   /* Behavior */

@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout fact slide-dark slide-bare">
-    <CenteredSlide dark content-max-width="48rem">
+    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
     </CenteredSlide>
   </div>
@@ -8,11 +8,16 @@
 
 <script setup lang="ts">
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
+
+defineProps({
+  padding: { type: String, default: '4rem 6rem' },
+  contentMaxWidth: { type: String, default: '48rem' },
+})
 </script>
 
 <style scoped>
 .fact :deep(h1) {
-  font-size: 4rem;
+  font-size: var(--fact-size, 4rem);
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 1rem;

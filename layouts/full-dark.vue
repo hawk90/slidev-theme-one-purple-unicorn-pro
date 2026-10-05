@@ -1,7 +1,7 @@
 <template>
   <!-- Kept for backward compatibility: dark centered slide with large heading -->
   <div class="slidev-layout full-dark slide-dark slide-bare">
-    <CenteredSlide dark padding="3rem" content-max-width="52rem">
+    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
     </CenteredSlide>
   </div>
@@ -9,6 +9,11 @@
 
 <script setup lang="ts">
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
+
+defineProps({
+  padding: { type: String, default: '3rem' },
+  contentMaxWidth: { type: String, default: '52rem' },
+})
 </script>
 
 <style scoped>

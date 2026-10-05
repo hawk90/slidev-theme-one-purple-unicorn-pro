@@ -7,10 +7,10 @@
 <style scoped>
 .footnote {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  right: 6rem;
-  font-size: 0.75rem;
+  bottom: var(--footnote-bottom, 2rem);
+  left: var(--footnote-left, 2rem);
+  right: var(--footnote-right, 6rem);
+  font-size: var(--footnote-size, 0.75rem);
   line-height: 1.4;
   color: var(--text-muted, #5c6370);
   border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));

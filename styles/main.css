@@ -312,9 +312,9 @@ blockquote p:last-child {
 .card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: var(--card-radius, 0.75rem);
+  padding: var(--card-padding, 1.5rem);
+  margin: var(--card-margin, 1.5rem 0);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -322,17 +322,17 @@ blockquote p:last-child {
 
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(calc(-1 * var(--card-hover-lift, 2px)));
   box-shadow: var(--shadow-xl);
   border-color: var(--primary-700);
 }
 
 /* Alert Boxes */
 .alert {
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  border-radius: 0.5rem;
-  border-left: 4px solid;
+  padding: var(--alert-padding, 1rem 1.5rem);
+  margin: var(--alert-margin, 1.5rem 0);
+  border-radius: var(--alert-radius, 0.5rem);
+  border-left: var(--alert-border-width, 4px) solid;
 }
 
 .alert-info {

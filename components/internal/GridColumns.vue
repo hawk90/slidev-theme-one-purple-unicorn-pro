@@ -3,7 +3,14 @@
     <template v-for="(_, i) in count" :key="i">
       <div v-if="divider && i > 0" class="grid-divider" />
       <div class="grid-col">
-        <div v-if="labels[i]" class="grid-label" :class="`grid-label-${i}`">{{ labels[i] }}</div>
+        <div
+          v-if="labels[i]"
+          class="grid-label"
+          :class="`grid-label-${i}`"
+          :style="labelColors[i] ? { '--label-color': labelColors[i] } : undefined"
+        >
+          {{ labels[i] }}
+        </div>
         <slot :name="slotNames[i]" />
       </div>
     </template>
@@ -18,6 +25,7 @@ const props = defineProps({
   widths: { type: Array as () => string[], default: () => [] },
   divider: { type: Boolean, default: false },
   labels: { type: Array as () => string[], default: () => [] },
+  labelColors: { type: Array as () => string[], default: () => [] },
 })
 
 const slotNames = computed(() => {

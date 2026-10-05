@@ -1,7 +1,7 @@
 <template>
-  <div class="qrcode" :class="`qrcode-${size}`">
+  <div class="qrcode" :class="presetSize ? `qrcode-${size}` : ''" :style="presetSize ? undefined : { '--qrcode-size': size }">
     <img
-      :src="`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`"
+      :src="imageSrc"
       :alt="`QR: ${url}`"
       class="qrcode-img"
     />
@@ -10,11 +10,21 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   url: { type: String, required: true },
   caption: { type: String, default: '' },
+  // sm | default | lg | xl, or any CSS length (e.g. "150px")
   size: { type: String, default: 'default' },
+  // QR image service; {data} is replaced with the encoded url
+  api: { type: String, default: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={data}' },
+  // Use your own image instead of the service
+  src: { type: String, default: '' },
 })
+
+const presetSize = computed(() => ['sm', 'default', 'lg', 'xl'].includes(props.size))
+const imageSrc = computed(() => props.src || props.api.replace('{data}', encodeURIComponent(props.url)))
 </script>
 
 <style scoped>
@@ -26,6 +36,8 @@ defineProps({
 }
 
 .qrcode-img {
+  width: var(--qrcode-size, 120px);
+  height: var(--qrcode-size, 120px);
   border-radius: 0.5rem;
   background: white;
   padding: 0.5rem;
@@ -39,8 +51,16 @@ defineProps({
 }
 
 /* Sizes */
-.qrcode-sm .qrcode-img { width: 80px; height: 80px; }
-.qrcode-default .qrcode-img { width: 120px; height: 120px; }
-.qrcode-lg .qrcode-img { width: 180px; height: 180px; }
-.qrcode-xl .qrcode-img { width: 240px; height: 240px; }
+.qrcode-sm .qrcode-img {
+  width: var(--qrcode-size, 120px);
+  height: var(--qrcode-size, 120px); width: 80px; height: 80px; }
+.qrcode-default .qrcode-img {
+  width: var(--qrcode-size, 120px);
+  height: var(--qrcode-size, 120px); width: 120px; height: 120px; }
+.qrcode-lg .qrcode-img {
+  width: var(--qrcode-size, 120px);
+  height: var(--qrcode-size, 120px); width: 180px; height: 180px; }
+.qrcode-xl .qrcode-img {
+  width: var(--qrcode-size, 120px);
+  height: var(--qrcode-size, 120px); width: 240px; height: 240px; }
 </style>

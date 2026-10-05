@@ -63,32 +63,34 @@ const progress = computed(() => {
 </script>
 
 <style scoped>
+/* Theme variables: --progress-height, --progress-track, --progress-color,
+   --progress-glow, --page-number-size/-color/-right/-bottom */
 .progress-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.06);
+  height: var(--progress-height, 3px);
+  background: var(--progress-track, rgba(255, 255, 255, 0.06));
   z-index: 100;
   pointer-events: none;
 }
 
 .progress-fill {
   height: 100%;
-  background: var(--gradient-primary, linear-gradient(90deg, #61afef, #c678dd));
+  background: var(--progress-color, var(--gradient-primary, linear-gradient(90deg, #61afef, #c678dd)));
   border-radius: 0 2px 2px 0;
   transition: width 300ms ease;
-  box-shadow: 0 0 8px rgba(198, 120, 221, 0.4);
+  box-shadow: var(--progress-glow, 0 0 8px rgba(198, 120, 221, 0.4));
 }
 
 .slide-indicator {
   position: fixed;
-  right: 2rem;
-  bottom: 1.5rem;
+  right: var(--page-number-right, 2rem);
+  bottom: var(--page-number-bottom, 1.5rem);
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.75rem;
-  color: var(--text-muted, #5c6370);
+  font-size: var(--page-number-size, 0.75rem);
+  color: var(--page-number-color, var(--text-muted, #5c6370));
   letter-spacing: 0.05em;
   opacity: 0.7;
   z-index: 10;

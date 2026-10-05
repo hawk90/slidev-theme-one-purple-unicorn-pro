@@ -8,6 +8,7 @@
       :widths="[leftWidth, rightWidth]"
       :divider="divider"
       :labels="[leftLabel, rightLabel]"
+      :label-colors="[leftLabelColor, rightLabelColor]"
     >
       <template #left><slot name="left" /></template>
       <template #right><slot name="right" /></template>
@@ -27,6 +28,8 @@ defineProps({
   divider: { type: Boolean, default: false },
   leftLabel: { type: String, default: '' },
   rightLabel: { type: String, default: '' },
+  leftLabelColor: { type: String, default: '' },
+  rightLabelColor: { type: String, default: '' },
 })
 </script>
 
