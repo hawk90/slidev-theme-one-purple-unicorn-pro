@@ -1,10 +1,11 @@
 // Shared pieces for redrawing slide effects as images in PDF export
 // (see print-export.ts): canvas setup, CSS value parsing, text measurement.
 
-export const RESOLUTION = 4 // canvas pixels per CSS pixel
+export const RESOLUTION = 4 // canvas pixels per CSS pixel (text and rings)
 
+// "transparent", rgba(…, 0) or color(… / 0)
 export const isTransparent = (color: string) =>
-  color === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(color)
+  color === 'transparent' || /[,/]\s*0\)$/.test(color)
 
 // Split a CSS list at top-level commas: "a, f(b, c), d" → ["a", "f(b, c)", "d"]
 export function splitList(value: string) {
@@ -62,20 +63,37 @@ export function paddingBox(el: HTMLElement) {
   }
 }
 
-// An absolutely placed canvas covering w×h CSS px, drawn at RESOLUTION
-export function overlayCanvas(className: string, w: number, h: number) {
+// The canvas features the redraw uses (Chromium 99+, Safari 16.4+, Firefox
+// 112+); without them effects are left to the CSS
+export const canRedraw = () =>
+  typeof CanvasRenderingContext2D !== 'undefined'
+  && 'roundRect' in CanvasRenderingContext2D.prototype
+  && 'createConicGradient' in CanvasRenderingContext2D.prototype
+
+// Browsers refuse larger canvases (and then draw nothing), so big areas get a
+// lower resolution
+const MAX_SIDE = 8192
+const MAX_AREA = 32 * 1024 * 1024
+
+// An absolutely placed canvas covering w×h CSS px at (x, y), drawn at
+// `resolution` canvas pixels per CSS pixel (less if it would be too big).
+// null when no canvas can be made; the caller then leaves the CSS as it is.
+export function overlayCanvas(className: string, w: number, h: number, x = 0, y = 0, resolution = RESOLUTION) {
+  if (!(w > 0 && h > 0)) return null
+  const res = Math.min(resolution, MAX_SIDE / w, MAX_SIDE / h, Math.sqrt(MAX_AREA / (w * h)))
   const canvas = document.createElement('canvas')
   canvas.className = className
   canvas.setAttribute('aria-hidden', 'true')
-  canvas.width = Math.ceil(w * RESOLUTION)
-  canvas.height = Math.ceil(h * RESOLUTION)
+  canvas.width = Math.max(1, Math.ceil(w * res))
+  canvas.height = Math.max(1, Math.ceil(h * res))
   Object.assign(canvas.style, {
-    position: 'absolute', left: '0', top: '0', width: `${w}px`, height: `${h}px`,
+    position: 'absolute', left: `${x}px`, top: `${y}px`, width: `${w}px`, height: `${h}px`,
     pointerEvents: 'none',
   })
-  const ctx = canvas.getContext('2d')!
-  ctx.scale(RESOLUTION, RESOLUTION)
-  return { canvas, ctx }
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return null
+  ctx.scale(res, res)
+  return { canvas, ctx, res }
 }
 
 // Corner radii [top-left, top-right, bottom-right, bottom-left] in px
@@ -88,7 +106,7 @@ export function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w
   ctx.roundRect(x, y, w, h, radii.map(r => Math.max(0, Math.min(r, max))))
 }
 
-export interface TextRun { text: string, parent: Element, left: number, top: number, right: number }
+export interface TextRun { text: string, parent: Element, left: number, top: number, right: number, bottom: number }
 
 let range: Range // created on first use (the module also loads outside the browser)
 function charRect(node: Text, i: number) {
@@ -99,14 +117,21 @@ function charRect(node: Text, i: number) {
 }
 
 // Text inside `el` as laid out, one run per line, for the text nodes whose
-// parent passes `accept`. A text node on one line (the usual case) is measured
-// as a whole; only a node that wraps is measured per character to find its
-// line breaks.
-export function textRuns(el: Element, accept: (parent: CSSStyleDeclaration) => boolean) {
+// parent passes `accept` (only `el`'s own text nodes when `own`). A text node
+// on one line (the usual case) is measured as a whole; only a node that wraps
+// is measured per character to find its line breaks.
+export function textRuns(el: Element, accept: (parent: CSSStyleDeclaration) => boolean, own = false) {
   const runs: TextRun[] = []
   range ??= document.createRange()
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
-  for (let node = walker.nextNode() as Text | null; node; node = walker.nextNode() as Text | null) {
+  const nodes: Text[] = []
+  if (own) {
+    el.childNodes.forEach(n => n.nodeType === Node.TEXT_NODE && nodes.push(n as Text))
+  }
+  else {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n as Text)
+  }
+  for (const node of nodes) {
     const parent = node.parentElement
     if (!parent) continue
     const ps = getComputedStyle(parent)
@@ -127,7 +152,7 @@ export function textRuns(el: Element, accept: (parent: CSSStyleDeclaration) => b
         if (text.endsWith(' ') && (end === 0 || !charRect(node, end))) text = text.slice(0, -1)
       }
       const r = lines[0]
-      runs.push({ text, parent, left: r.left, top: r.top, right: r.right })
+      runs.push({ text, parent, left: r.left, top: r.top, right: r.right, bottom: r.bottom })
       continue
     }
 
@@ -136,11 +161,12 @@ export function textRuns(el: Element, accept: (parent: CSSStyleDeclaration) => b
       const r = charRect(node, i)
       if (!r) continue // collapsed white space
       if (!run || Math.abs(r.top - run.top) > 1) {
-        run = { text: '', parent, left: r.left, top: r.top, right: r.right }
+        run = { text: '', parent, left: r.left, top: r.top, right: r.right, bottom: r.bottom }
         runs.push(run)
       }
       run.text += node.data[i]
       run.right = r.right
+      run.bottom = Math.max(run.bottom, r.bottom)
     }
   }
   return runs

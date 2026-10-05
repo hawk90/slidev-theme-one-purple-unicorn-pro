@@ -7,7 +7,7 @@
 // painted in its gradient, laid over the original, which stays in place
 // (invisible) for layout and text search.
 
-import { colorStops, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, RESOLUTION, textRuns } from './print-canvas'
+import { colorStops, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, textRuns } from './print-canvas'
 
 export const GRADIENT_DONE = 'data-print-gradient'
 export const PSEUDO = 'data-print-pseudo'
@@ -19,8 +19,7 @@ export const isGradientText = (s: CSSStyleDeclaration) =>
 // A gradient ::before / ::after (e.g. the quote layout's closing mark) can't be
 // measured or covered, so it is replaced by a real span with the same computed
 // style and text, which is then redrawn like any other element
-export function materializePseudo(el: Element, which: '::before' | '::after') {
-  const ps = getComputedStyle(el, which)
+export function materializePseudo(el: Element, which: '::before' | '::after', ps: CSSStyleDeclaration) {
   const m = ps.content.match(/^"(.*)"$/s)
   if (!m || !isGradientText(ps)) return
   const span = document.createElement('span')
@@ -69,16 +68,29 @@ function linearGradient(ctx: CanvasRenderingContext2D, image: string, x: number,
 // One scratch canvas for the gradient fill, reused by every element
 let paint: HTMLCanvasElement | null = null
 
+// Room around the text boxes for glyph overhang (italics, swashes)
+const OVERHANG = 6
+
 export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
   el.setAttribute(GRADIENT_DONE, '')
   const box = paddingBox(el)
-  const { width: w, height: h } = box
-  if (!w || !h) return
-  const { canvas, ctx } = overlayCanvas('print-gradient-text', w, h)
+  const { width: w, height: h, zoom } = box
+  const runs = textRuns(el, ps => isTransparent(ps.webkitTextFillColor))
+  if (!w || !h || !runs.length) return
+
+  // The canvas covers only the text (in the element's coordinates); the
+  // gradient is still laid out over the whole element
+  const x = Math.max(-OVERHANG, Math.min(...runs.map(r => (r.left - box.left) / zoom)) - OVERHANG)
+  const y = Math.max(-OVERHANG, Math.min(...runs.map(r => (r.top - box.top) / zoom)) - OVERHANG)
+  const cw = Math.max(...runs.map(r => (r.right - box.left) / zoom)) + OVERHANG - x
+  const ch = Math.max(...runs.map(r => (r.bottom - box.top) / zoom)) + OVERHANG - y
+  const made = overlayCanvas('print-gradient-text', cw, ch, x, y)
+  if (!made) return
+  const { canvas, ctx, res } = made
+  ctx.translate(-x, -y)
 
   // 1. The text, in any solid color, at the positions the browser laid it out
-  for (const run of textRuns(el, ps => isTransparent(ps.webkitTextFillColor)))
-    fillRun(ctx, run, box.left, box.top, box.zoom)
+  for (const run of runs) fillRun(ctx, run, box.left, box.top, zoom)
 
   // 2. The gradient (tiled like the background), kept only where the text is.
   // Painted on the scratch canvas first: with 'source-in' every fill would
@@ -86,23 +98,27 @@ export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
   paint ??= document.createElement('canvas')
   paint.width = canvas.width // also clears it
   paint.height = canvas.height
-  const pctx = paint.getContext('2d')!
-  pctx.scale(RESOLUTION, RESOLUTION)
+  const pctx = paint.getContext('2d')
+  if (!pctx) return
+  pctx.scale(res, res)
+  pctx.translate(-x, -y)
   const size = s.backgroundSize.split(' ')[0]
   const tile = size.endsWith('px') ? Number.parseFloat(size) : w
   const posX = s.backgroundPositionX
   const pos = posX.endsWith('%') ? (w - tile) * Number.parseFloat(posX) / 100 : Number.parseFloat(posX) || 0
   const offset = pos % tile
-  for (let x = offset > 0 ? offset - tile : offset; x < w; x += tile) {
-    pctx.fillStyle = linearGradient(pctx, s.backgroundImage, x, tile, h)
-    pctx.fillRect(x, 0, tile, h)
+  for (let tx = offset > 0 ? offset - tile : offset; tx < w; tx += tile) {
+    if (tx + tile < x || tx > x + cw) continue // outside the canvas
+    pctx.fillStyle = linearGradient(pctx, s.backgroundImage, tx, tile, h)
+    pctx.fillRect(tx, 0, tile, h)
   }
   ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.globalCompositeOperation = 'source-in'
   ctx.drawImage(paint, 0, 0)
 
+  // Only now that the image is complete: keep the original for layout and
+  // text selection, hide its paint
   if (s.position === 'static') el.style.position = 'relative'
-  // Keep the original for layout and text selection; hide its paint
   el.style.setProperty('background', 'none', 'important')
   el.style.setProperty('-webkit-text-fill-color', 'transparent', 'important')
   el.appendChild(canvas)

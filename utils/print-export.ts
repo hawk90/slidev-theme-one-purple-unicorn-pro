@@ -10,9 +10,12 @@
 // shadows (print-effects.ts).
 
 import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText } from './print-gradient-text'
-import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE } from './print-effects'
+import type { TextShadowJob } from './print-effects'
+import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
+import { canRedraw } from './print-canvas'
 import { isPrintMode } from './print-mode'
 
+const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
 // Slide content and the theme's slide chrome (global-top / global-bottom)
 const SLIDE = '.slidev-layout, .progress-bar, .slide-indicator, .stage-progress'
@@ -23,28 +26,46 @@ function slideElements(root: Element | Document) {
   return all.filter(el => el.closest(SLIDE) && !el.matches(OWN)) as HTMLElement[]
 }
 
+// Every redraw step only replaces an effect once its image is complete, so a
+// step that fails leaves that effect to the CSS; the others carry on
+let failures = 0
+function attempt(step: () => void) {
+  try {
+    step()
+  }
+  catch (e) {
+    report(e)
+  }
+}
+function report(e: unknown) {
+  if (failures++ < 3) console.warn('[theme] PDF export: an effect is left as CSS:', e)
+}
+
 function redraw(root: Element | Document) {
-  // Gradient ::before / ::after become real elements first
+  // Pseudo-elements: gradient ones become real elements, masked rings images
   for (const el of slideElements(root)) {
     if (el.hasAttribute(PSEUDO) || el.closest(`[${GRADIENT_DONE}]`)) continue
-    if (!el.classList.contains('print-no-before')) materializePseudo(el, '::before')
-    if (!el.classList.contains('print-no-after')) materializePseudo(el, '::after')
+    for (const which of ['::before', '::after'] as const) {
+      if (el.classList.contains(which === '::before' ? 'print-no-before' : 'print-no-after')) continue
+      const ps = getComputedStyle(el, which)
+      if (ps.content === 'none') continue
+      attempt(() => materializePseudo(el, which, ps))
+      if (!el.hasAttribute(RING_DONE)) attempt(() => redrawRing(el, which, ps))
+    }
   }
-  const els = slideElements(root)
-  for (const el of els) {
-    if (el.hasAttribute(RING_DONE)) continue
-    if (!el.classList.contains('print-no-before')) redrawRing(el, '::before')
-    if (!el.classList.contains('print-no-after')) redrawRing(el, '::after')
-  }
-  for (const el of els) redrawBoxShadow(el, getComputedStyle(el))
-  redrawTextShadows(els)
-  // Document order: an outer gradient element is redrawn with its children's
-  // text before the children come up, so they are skipped
-  for (const el of els) {
-    if (el.closest(`[${GRADIENT_DONE}]`)) continue
+  // Then each element once: its box shadow, its gradient text, and its text
+  // shadow, which is drawn after all are read (see redrawTextShadows)
+  const textShadows: TextShadowJob[] = []
+  for (const el of slideElements(root)) {
     const s = getComputedStyle(el)
-    if (isGradientText(s)) redrawGradientText(el, s)
+    attempt(() => redrawBoxShadow(el, s))
+    const job = textShadowJob(el, s)
+    if (job) textShadows.push(job)
+    // Document order: an outer gradient element is redrawn with its
+    // children's text before the children come up, so they are skipped
+    if (isGradientText(s) && !el.closest(`[${GRADIENT_DONE}]`)) attempt(() => redrawGradientText(el, s))
   }
+  redrawTextShadows(textShadows, report)
 }
 
 let started = false
@@ -53,10 +74,12 @@ function start() {
   started = true
   // `slidev export` waits for .slidev-slide-loading to be removed before it
   // captures, so hold the capture until the slides have settled and been redrawn
+  // (at most HOLD_MS: a font that never loads must not stall the export)
   const hold = document.createElement('div')
   hold.className = 'slidev-slide-loading'
   hold.style.display = 'none'
   document.body.appendChild(hold)
+  setTimeout(() => hold.remove(), HOLD_MS)
 
   // A full pass once the slides have settled, then only what is added later
   // (e.g. another range on the browser export page)
@@ -65,18 +88,25 @@ function start() {
   const schedule = () => {
     clearTimeout(timer)
     timer = window.setTimeout(async () => {
-      await document.fonts.ready
-      if (!isPrintMode()) return
-      if (pending === null) {
-        redraw(document)
-        pending = new Set()
-        hold.remove()
-        return
+      try {
+        await document.fonts.ready
+        if (!isPrintMode() || !canRedraw()) return
+        if (pending === null) {
+          pending = new Set()
+          redraw(document)
+          return
+        }
+        const roots = [...pending].filter(r => r.isConnected)
+        pending.clear()
+        for (const r of roots) {
+          if (!roots.some(o => o !== r && o.contains(r))) redraw(r)
+        }
       }
-      const roots = [...pending].filter(r => r.isConnected)
-      pending.clear()
-      for (const r of roots) {
-        if (!roots.some(o => o !== r && o.contains(r))) redraw(r)
+      catch (e) {
+        report(e)
+      }
+      finally {
+        hold.remove()
       }
     }, 300)
   }

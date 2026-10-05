@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.0.4
+
+### Fixes
+
+- **PDF export memory and size.** Shadows were drawn on a slide-sized canvas at 4× per
+  slide (about 2 GB of canvas for the 78-slide example); each shadow now gets a canvas
+  just big enough for it at 2×, and gradient text a canvas the size of its text. About
+  9× less memory; PDFs are smaller than before 3.0.3 (example 11.9 → 8.1 MB).
+- **Export safety.** A failure while redrawing one effect leaves that effect to the CSS
+  and the rest carries on, and the export never waits more than 15 s (a font that never
+  loads used to stall `slidev export` until it failed). Canvases that would be too big
+  get a lower resolution instead of coming out blank, and browsers without the canvas
+  features used (Chromium 99, Safari 16.4, Firefox 112) keep the CSS effects.
+
+### Internal
+
+- Each element's styles are read once per pass; text shadows only measure the element's
+  own text; one transparency check.
+
 ## 3.0.3
 
 ### Fixes
