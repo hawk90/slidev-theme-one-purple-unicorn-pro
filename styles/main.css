@@ -123,6 +123,9 @@ code {
 }
 
 :not(pre) > code {
+  /* When a chip wraps, give each line its own padding and corners */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   background: var(--bg-tertiary);
   color: var(--primary-300);
   padding: 0.2rem 0.4rem;  /* Reduced padding */
@@ -267,6 +270,12 @@ td {
   border-top: 1px solid var(--border-default);
   color: var(--text-primary);
   font-size: 0.85rem;
+}
+
+/* Code chips in table cells stay on one line (the column widens instead of
+   the chip breaking and overlapping the next line) */
+td code:not(pre code) {
+  white-space: nowrap;
 }
 
 tbody tr:hover {

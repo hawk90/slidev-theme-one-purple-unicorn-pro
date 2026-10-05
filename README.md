@@ -177,6 +177,7 @@ Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props suppor
 | `anim-shimmer` | `--shimmer-color`, `--shimmer-width`, `--shimmer-travel`, `--shimmer-duration` |
 | `anim-glow` | `--glow`, `--glow-intensity`, `--glow-duration` |
 | `anim-gradient-text` | `--gt-c1` … `--gt-c5`, `--gt-period`, `--gt-duration` |
+| Slide transitions (`slide-left`, `fade`, ...) | `--slide-transition-duration` |
 | Hover (`hover-*`) | `--hover-duration`, `--hover-lift`, `--hover-scale`, `--hover-tilt-x`, `--hover-tilt-y`, `--hover-glow`, `--hover-border-c1/-c2`, `--hover-gradient-c1/-c2`, `--hover-shine-color`, `--hover-shine-width` |
 
 ## Color Palette
