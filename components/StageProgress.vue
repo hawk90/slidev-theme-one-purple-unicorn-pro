@@ -2,7 +2,7 @@
   <div
     v-if="!isHidden && stages.length > 0"
     class="stage-progress"
-    :class="`stage-pos-${position}`"
+    :class="[`stage-pos-${position}`, { 'chrome-on-dark': onDark }]"
   >
     <div
       v-for="(stage, i) in stages"
@@ -25,12 +25,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-import { TITLE_LAYOUTS } from '../utils/layouts'
+import { DARK_LAYOUTS, TITLE_LAYOUTS } from '../utils/layouts'
 
 const nav = useNav()
 const { currentLayout, currentSlideRoute, go } = nav
 
 const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
+const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
 const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}

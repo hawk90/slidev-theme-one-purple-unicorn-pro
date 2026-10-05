@@ -293,7 +293,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-flow 5s linear infinite;
+  animation: gradient-flow var(--gt-duration, 5s) linear infinite;
 }
 
 @keyframes gradient-flow {
@@ -301,9 +301,10 @@
   to   { background-position: var(--gt-period) 0; }
 }
 
-/* Speed (anim-gt-slow/-fast kept as aliases) */
-.anim-gradient-text-slow, .anim-gt-slow { animation-duration: 10s; }
-.anim-gradient-text-fast, .anim-gt-fast { animation-duration: 3s; }
+/* Speed: --gt-duration (time per color cycle); presets below
+   (anim-gt-slow/-fast kept as aliases) */
+.anim-gradient-text-slow, .anim-gt-slow { --gt-duration: 10s; }
+.anim-gradient-text-fast, .anim-gt-fast { --gt-duration: 3s; }
 
 .anim-gradient-text-ocean  { --gt-c1: #98c379; --gt-c2: #56b6c2; --gt-c3: #61afef; --gt-c4: #56b6c2; --gt-c5: #98c379; }
 .anim-gradient-text-sunset { --gt-c1: #e5c07b; --gt-c2: #e06c75; --gt-c3: #c678dd; --gt-c4: #e06c75; --gt-c5: #e5c07b; }

@@ -8,7 +8,7 @@
     "slidev"
   ],
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=20.12.0",
     "slidev": ">=0.47.0"
   },
   "author": {

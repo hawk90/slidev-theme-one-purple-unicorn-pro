@@ -8,8 +8,12 @@ const plain = (s: string) => escapeHtml(s).replace(/\^(\w+)/g, '<sup>$1</sup>')
 
 // Render component prop text: $...$ as KaTeX math, the rest as escaped text
 // (so props get the same math as Markdown, which does not reach inside props)
+// Write \$ for a literal dollar sign.
+const DOLLAR = '\u0000'
+
 export function richText(text: unknown): string {
   return String(text ?? '')
+    .replace(/\\\$/g, DOLLAR)
     .split(/(\$[^$]+\$)/)
     .map(part =>
       part.length > 2 && part.startsWith('$') && part.endsWith('$')
@@ -17,4 +21,5 @@ export function richText(text: unknown): string {
         : plain(part),
     )
     .join('')
+    .replaceAll(DOLLAR, '$')
 }

@@ -1093,7 +1093,7 @@ Direction: `anim-border-ccw` / Speed: `anim-border-slow` (10s) / `anim-border-fa
 
 # Animated Border — Custom Colors
 
-CSS 변수로 직접 색상 지정 가능:
+Set the colors directly with CSS variables:
 
 <div class="anim-border" style="--ab-c1: #ff6b6b; --ab-c2: #ffa500; --ab-c3: #ffd700; margin-bottom: 1rem;">
 
@@ -1107,12 +1107,12 @@ CSS 변수로 직접 색상 지정 가능:
 
 </div>
 
-| 변수 | 역할 |
+| Variable | Role |
 |---|---|
-| `--ab-c1` | 헤드 시작 색상 |
-| `--ab-c2` | 헤드 중간 색상 |
-| `--ab-c3` | 헤드 끝 색상 |
-| `--ab-dim` | 꼬리 색상 (선택, 기본값은 `--ab-c1`을 옅게) |
+| `--ab-c1` | Light head color |
+| `--ab-c2` | Light middle color |
+| `--ab-c3` | Light tail color |
+| `--ab-dim` | Resting border color (optional; defaults to a faint `--ab-c1`) |
 
 Speed: `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
 
@@ -1384,7 +1384,7 @@ Custom: `style="--hover-lift: 8px; --hover-scale: 1.1; --hover-glow: #ff6b6b; --
   </div>
 </div>
 
-링크의 그라디언트 밑줄은 `<a>` 태그에 자동 적용됩니다: [hover to see]()
+Links get a gradient underline on hover automatically: [hover to see]()
 
 ---
 

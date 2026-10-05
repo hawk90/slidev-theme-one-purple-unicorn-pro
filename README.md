@@ -8,7 +8,8 @@ A professional Slidev theme with purple and indigo gradients, optimized for tech
 - **Light & Dark Modes**: User-configurable theme switching
 - **Korean + English Support**: Noto Sans KR font for mixed language presentations
 - **Clean Layouts**: Special layouts for cover, intro, section, and end slides
-- **Code Highlighting**: Vitesse theme for consistent syntax highlighting
+- **Code Highlighting**: Custom One Dark-based Shiki theme (incl. CUDA/C++ keywords)
+- **Components & Effects**: callouts, pattern cards, complexity tables (with KaTeX), timelines, animated borders, shimmer, hover effects — all customizable
 
 ## Installation
 
@@ -31,35 +32,15 @@ colorSchema: light  # or 'dark', 'auto'
 
 ## Theme Modes
 
-### Light Mode (Default)
+Set the color mode for the whole deck in the headmatter (Slidev applies it deck-wide):
+
 ```yaml
 ---
-colorSchema: light
+colorSchema: auto   # auto (default, follows the system / toggle) | light | dark
 ---
 ```
 
-### Dark Mode
-```yaml
----
-colorSchema: dark
----
-```
-
-### Auto Mode (System Preference)
-```yaml
----
-colorSchema: auto
----
-```
-
-You can also switch themes per slide:
-```yaml
----
-colorSchema: dark
----
-
-# This slide uses dark mode
-```
+Content slides switch between light and dark palettes. Title and emphasis layouts (`cover`, `intro`, `section`, `end`, `quote`, `statement`, `fact`, `full-*`) stay dark in both modes; code blocks always use the dark code theme.
 
 ## Available Layouts
 
@@ -195,15 +176,24 @@ Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props suppor
 | `anim-border` | `--ab-c1`, `--ab-c2`, `--ab-c3`, `--ab-dim`, `--ab-len`, `--ab-duration` |
 | `anim-shimmer` | `--shimmer-color`, `--shimmer-width`, `--shimmer-travel`, `--shimmer-duration` |
 | `anim-glow` | `--glow`, `--glow-intensity`, `--glow-duration` |
-| `anim-gradient-text` | `--gt-c1` … `--gt-c5`, `--gt-period` |
+| `anim-gradient-text` | `--gt-c1` … `--gt-c5`, `--gt-period`, `--gt-duration` |
 | Hover (`hover-*`) | `--hover-duration`, `--hover-lift`, `--hover-scale`, `--hover-tilt-x`, `--hover-tilt-y`, `--hover-glow`, `--hover-border-c1/-c2`, `--hover-gradient-c1/-c2`, `--hover-shine-color`, `--hover-shine-width` |
 
 ## Color Palette
 
-- **Primary**: `#8b5cf6` (Purple)
-- **Secondary**: `#6366f1` (Indigo)
-- **Accent**: `#ec4899` (Pink)
-- **Gradient**: Purple → Blue
+One Dark accents with a purple → blue gradient:
+
+| Token | Dark mode | Light mode |
+|---|---|---|
+| `--one-dark-blue` | `#61afef` | `#1f6fb2` |
+| `--one-dark-magenta` / `--primary-400` | `#c678dd` | `#9b3fb8` |
+| `--one-dark-green` | `#98c379` | `#3d7a1f` |
+| `--one-dark-yellow` | `#e5c07b` | `#8a6200` |
+| `--one-dark-red` | `#e06c75` | `#b8323f` |
+| `--one-dark-cyan` | `#56b6c2` | `#157a87` |
+| `--text-primary` / `--text-muted` | `#c0c6d0` / `#858c98` | `#1a1d23` / `#6b7280` |
+
+Light-mode accents are deeper so text stays readable (≥ 4.5:1) on white.
 
 ## Typography
 
@@ -211,20 +201,18 @@ Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props suppor
 - **Mono**: JetBrains Mono, Fira Code
 - **Serif**: Noto Serif KR
 
-## CSS Variables
+## Overriding Colors
 
-You can override theme variables in your slides:
+Theme colors are CSS variables, so a deck can override them in a global style (e.g. `styles/index.css` in your project):
 
 ```css
 :root {
-  --primary: #8b5cf6;
-  --primary-light: #a78bfa;
-  --primary-dark: #7c3aed;
-  --secondary: #6366f1;
-  --accent: #ec4899;
-  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+  --primary-400: #a855f7;
+  --one-dark-blue: #3b82f6;
 }
 ```
+
+See [Customization](#customization) for per-component and per-effect variables.
 
 ## License
 

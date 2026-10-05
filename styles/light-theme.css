@@ -80,6 +80,16 @@ html:not(.dark) .slidev-layout.slide-dark {
   color: var(--one-dark-fg-bright);
 }
 
+/* Slide chrome (stage indicator, page number, progress track) sits outside
+   .slidev-layout, so it needs its own light palette; over dark layouts it
+   keeps the dark-mode colors (.chrome-on-dark) */
+html:not(.dark) :is(.stage-progress, .slide-indicator, .progress-bar):not(.chrome-on-dark) {
+  --one-dark-green: #3d7a1f;
+  --primary-400: #9b3fb8;
+  --text-muted: var(--light-text-muted);
+  --progress-track: rgba(0, 0, 0, 0.06);
+}
+
 /* Slidev gives inline code a light background in light mode; inside dark
    layouts keep the dark-mode chip so it is not pastel-on-white */
 html:not(.dark) .slidev-layout.slide-dark :not(pre) > code {

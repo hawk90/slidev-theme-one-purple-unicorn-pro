@@ -42,9 +42,15 @@ function animate(el: HTMLElement) {
   }
 }
 
+// PDF/PNG export (?print or /export): keep the static CSS ring instead of a
+// light frozen at some point of its path
+const isPrintMode = () =>
+  new URLSearchParams(location.search).has('print') || /\/export\b/.test(location.pathname)
+
 export function setupBorderBeams() {
   if (typeof window === 'undefined' || !('animate' in Element.prototype)) return
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (isPrintMode()) return
 
   const resize = new ResizeObserver(entries => entries.forEach(e => animate(e.target as HTMLElement)))
   const watch = (root: ParentNode) =>
@@ -58,6 +64,19 @@ export function setupBorderBeams() {
         if (n.classList.contains('anim-border')) resize.observe(n)
         watch(n)
       })
+      m.removedNodes.forEach((n) => {
+        if (!(n instanceof HTMLElement)) return
+        const els = n.classList.contains('anim-border') ? [n] : [...n.querySelectorAll('.anim-border')]
+        els.forEach((el) => { resize.unobserve(el); running.get(el)?.cancel() })
+      })
     }
   }).observe(document.body, { childList: true, subtree: true })
+
+  // Browser print: show the static ring
+  window.matchMedia('print').addEventListener('change', (e) => {
+    document.querySelectorAll<HTMLElement>('.anim-border').forEach((el) => {
+      if (e.matches) { running.get(el)?.cancel(); el.classList.remove('ab-beam') }
+      else animate(el)
+    })
+  })
 }

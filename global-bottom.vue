@@ -1,11 +1,11 @@
 <template>
   <!-- Progress Bar: always or content-only based on frontmatter -->
-  <div v-if="showBar" class="progress-bar">
+  <div v-if="showBar" class="progress-bar" :class="{ 'chrome-on-dark': onDark }">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
   </div>
 
   <!-- Page Indicator -->
-  <div v-if="!isHidden" class="slide-indicator">
+  <div v-if="!isHidden" class="slide-indicator" :class="{ 'chrome-on-dark': onDark }">
     {{ currentPage }} / {{ total }}
   </div>
 </template>
@@ -13,12 +13,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-import { NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
+import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 
 const { currentPage, total, currentLayout, currentSlideRoute, slides } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
+const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
 // Deck-wide options come from the headmatter (first slide's frontmatter);
 // a slide's own frontmatter overrides progressBar for that slide.
