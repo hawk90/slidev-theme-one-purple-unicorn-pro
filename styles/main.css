@@ -232,11 +232,21 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   margin: 1rem 0;
-  border-radius: 0.75rem;
+  /* Corner radius: set --table-radius on the table or a wrapper (0 = square box) */
+  border-radius: var(--table-radius, 0.75rem);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
   background: var(--bg-secondary);
 }
+
+/* Tables do not clip their cells to border-radius, so a hovered or shaded
+   corner row would show square corners; round the corner cells too */
+:is(thead, tbody:first-child) > tr:first-child > :first-child { border-top-left-radius: var(--table-radius, 0.75rem); }
+:is(thead, tbody:first-child) > tr:first-child > :last-child  { border-top-right-radius: var(--table-radius, 0.75rem); }
+tbody:last-child > tr:last-child > :first-child { border-bottom-left-radius: var(--table-radius, 0.75rem); }
+tbody:last-child > tr:last-child > :last-child  { border-bottom-right-radius: var(--table-radius, 0.75rem); }
+
+.table-square { --table-radius: 0; }
 
 thead {
   background: var(--gradient-subtle);
