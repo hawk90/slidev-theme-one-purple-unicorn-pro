@@ -7,7 +7,6 @@ node_modules/
 src/
 
 # Example files
-example.md
 example/
 
 # Build files

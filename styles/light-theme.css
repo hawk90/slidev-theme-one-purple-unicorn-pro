@@ -72,6 +72,10 @@ html:not(.dark) .slidev-layout:not(.slide-dark) {
   --content-h4: var(--primary-300);
   --content-marker: var(--primary-400);
   --content-inline-code-color: var(--primary-400);
+
+  /* Small accent text on its own tint (badges, labels) mixes in this much
+     of its color with black, i.e. a slightly deeper ink */
+  --ink-depth: 80%;
 }
 
 /* Dark layouts (root has `slide-dark`) keep a dark background in light mode */
@@ -182,7 +186,6 @@ html:not(.dark) :where(.slidev-layout:not(.slide-dark)) thead {
 }
 
 html:not(.dark) :where(.slidev-layout:not(.slide-dark)) th {
-  color: var(--light-text-primary);
   border-bottom: 2px solid var(--light-border);
 }
 
@@ -205,13 +208,8 @@ html:not(.dark) .slidev-layout:not(.slide-dark) blockquote {
 }
 
 /* ============================================
-   Cards and Containers for Light Theme
+   Containers for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) .card {
-  background: var(--light-bg-secondary);
-  border: 1px solid var(--light-border);
-}
-
 html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
@@ -223,60 +221,29 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
    ============================================ */
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-info {
   background: rgba(97, 175, 239, 0.08);
-  color: var(--light-text-primary);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-success {
   background: rgba(152, 195, 121, 0.08);
-  color: var(--light-text-primary);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-warning {
   background: rgba(229, 192, 123, 0.08);
-  color: var(--light-text-primary);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
   background: rgba(224, 108, 117, 0.08);
-  color: var(--light-text-primary);
 }
 
 /* ============================================
    Buttons for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) button:not(.btn-gradient):not(.btn-gradient-subtle) {
+html:not(.dark) .slidev-layout:not(.slide-dark) button {
   background: var(--light-bg-tertiary);
   color: var(--light-text-primary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) button:not(.btn-gradient):not(.btn-gradient-subtle):hover {
+html:not(.dark) .slidev-layout:not(.slide-dark) button:hover {
   background: var(--light-bg-secondary);
-}
-
-/* ============================================
-   Utility overrides for Light Theme
-   ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) .text-muted {
-  color: var(--light-text-muted);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .text-primary {
-  color: var(--light-text-primary);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .text-secondary {
-  color: var(--light-text-secondary);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .bg-primary {
-  background: var(--light-bg);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .bg-secondary {
-  background: var(--light-bg-secondary);
-}
-
-html:not(.dark) .slidev-layout:not(.slide-dark) .bg-tertiary {
-  background: var(--light-bg-tertiary);
 }

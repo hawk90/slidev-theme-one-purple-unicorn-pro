@@ -8,9 +8,7 @@
 
 <script setup lang="ts">
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
+import { centeredLayoutProps } from '../utils/layout-props'
 
-defineProps({
-  padding: { type: String, default: '4rem' },
-  contentMaxWidth: { type: String, default: '64rem' },
-})
+defineProps(centeredLayoutProps('64rem', '4rem'))
 </script>

@@ -62,7 +62,7 @@ const gridStyle = computed(() => {
 }
 
 .grid-label {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -79,12 +79,8 @@ const gridStyle = computed(() => {
 
 .grid-label {
   background: color-mix(in srgb, var(--label-color) 15%, transparent);
-  color: var(--label-color);
+  color: color-mix(in srgb, var(--label-color) var(--ink-depth, 100%), black);
 }
 
 
-/* Light mode: small text on its own tint needs a little more depth */
-html:not(.dark) .grid-label {
-  color: color-mix(in srgb, var(--label-color) 80%, black);
-}
 </style>

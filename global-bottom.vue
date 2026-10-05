@@ -89,7 +89,7 @@ const progress = computed(() => {
   position: fixed;
   right: var(--page-number-right, 2rem);
   bottom: var(--page-number-bottom, 1.5rem);
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: var(--page-number-size, 0.75rem);
   color: var(--page-number-color, var(--text-muted, #5c6370));
   letter-spacing: 0.05em;

@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.15rem 0.45rem;
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.75em;
   line-height: 1.4;
   color: var(--text-bright, #e6e6e6);

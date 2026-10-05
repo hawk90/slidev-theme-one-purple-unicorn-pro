@@ -36,14 +36,10 @@ defineProps({
 
 .badge:not(.badge-gray) {
   background: color-mix(in srgb, var(--badge-color) 15%, transparent);
-  color: var(--badge-color);
+  color: color-mix(in srgb, var(--badge-color) var(--ink-depth, 100%), black);
 }
 
 
-/* Light mode: small text on its own tint needs a little more depth */
-html:not(.dark) .badge:not(.badge-gray) {
-  color: color-mix(in srgb, var(--badge-color) 80%, black);
-}
 
 /* Same treatment as <Kbd>: neutral fill with readable text */
 .badge-gray {

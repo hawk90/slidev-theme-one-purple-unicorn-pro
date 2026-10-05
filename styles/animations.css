@@ -117,16 +117,26 @@
   --shimmer-color: rgba(198, 120, 221, 0.16);
 }
 
-.anim-shimmer::after {
+/* Light band shared by .anim-shimmer and .hover-shine: --band-width / --band-color */
+.anim-shimmer::after,
+.hover-shine::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--shimmer-width);
-  background: linear-gradient(90deg, transparent, var(--shimmer-color) 50%, transparent);
-  animation: shimmer-x var(--shimmer-duration) ease-in-out infinite;
+  width: var(--band-width);
+  background: linear-gradient(90deg, transparent, var(--band-color) 50%, transparent);
   pointer-events: none;
+}
+
+.anim-shimmer {
+  --band-width: var(--shimmer-width);
+  --band-color: var(--shimmer-color);
+}
+
+.anim-shimmer::after {
+  animation: shimmer-x var(--shimmer-duration) ease-in-out infinite;
 }
 
 /* Sweep during the first 60% of the cycle, rest for the remainder */
@@ -443,16 +453,12 @@
 :where(html:not(.dark)) .hover-shine {
   --hover-shine-color: rgba(198, 120, 221, 0.18);
 }
+.hover-shine {
+  --band-width: var(--hover-shine-width, clamp(60px, 35%, 180px));
+  --band-color: var(--hover-shine-color);
+}
 .hover-shine::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--hover-shine-width, clamp(60px, 35%, 180px));
-  background: linear-gradient(90deg, transparent, var(--hover-shine-color) 50%, transparent);
   transform: translateX(-100%);
-  pointer-events: none;
 }
 .hover-shine:hover::after {
   animation: hover-shine-sweep var(--hover-duration, 0.9s) ease-out;

@@ -84,7 +84,7 @@ function goToStage(index: number) {
   align-items: center;
   gap: 0;
   z-index: 10;
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
 }
 
 /* Position variants

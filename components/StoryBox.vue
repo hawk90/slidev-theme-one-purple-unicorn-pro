@@ -70,20 +70,16 @@ const iconMap: Record<string, string> = {
 }
 
 .story-year {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
-  color: var(--story-color);
+  color: color-mix(in srgb, var(--story-color) var(--ink-depth, 100%), black);
   background: color-mix(in srgb, var(--story-color) 15%, transparent);
   padding: 0.1rem 0.5rem;
   border-radius: 1rem;
   margin-left: auto;
 }
 
-/* Light mode: small text on its own tint needs a little more depth */
-html:not(.dark) .story-year {
-  color: color-mix(in srgb, var(--story-color) 80%, black);
-}
 
 .story-body {
   color: var(--text-secondary, #abb2bf);

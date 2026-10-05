@@ -87,7 +87,7 @@ const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.ke
 }
 
 .pattern-label {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -95,13 +95,9 @@ const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.ke
   min-width: 5.5rem;
   flex-shrink: 0;
   margin-top: 0.15rem;
-  color: var(--pattern-color);
+  color: color-mix(in srgb, var(--pattern-color) var(--ink-depth, 100%), black);
 }
 
-/* Light mode: small text on its own tint needs a little more depth */
-html:not(.dark) .pattern-label {
-  color: color-mix(in srgb, var(--pattern-color) 80%, black);
-}
 
 .pattern-body {
   font-size: 0.8rem;

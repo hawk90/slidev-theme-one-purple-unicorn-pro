@@ -1,6 +1,9 @@
 /* Dark Unicorn Theme - One Dark Pro Color System */
 
 :root {
+  /* Monospace stack used by labels, chips, counters */
+  --font-mono: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+
   /* One Dark Pro Base Colors */
   --one-dark-bg: #2e323b;
   --one-dark-bg-light: #3e4452;

@@ -30,30 +30,7 @@
   overflow-wrap: break-word;
 }
 
-/* ============================================
-   Fix absolute positioning
-   ============================================ */
-.slidev-layout .absolute {
-  position: absolute;
-  max-width: calc(100% - 8rem);
-}
 
-/* ============================================
-   Grid and Flex Fixes
-   ============================================ */
-.slidev-layout .grid {
-  display: grid;
-  max-width: 100%;
-}
-
-.slidev-layout .flex {
-  display: flex;
-  max-width: 100%;
-  flex-wrap: wrap;
-}
-
-/* Layout-specific styles now handled by scoped styles in .vue files:
-   - three-cols.vue, center.vue, image.vue */
 
 /* ============================================
    Code Block Container
@@ -93,23 +70,6 @@ p, li {
   word-wrap: break-word;
 }
 
-/* ============================================
-   Utility Overrides
-   ============================================ */
-.slidev-layout .w-full {
-  width: 100%;
-  max-width: 100%;
-}
-
-.slidev-layout .h-full {
-  height: 100%;
-  max-height: 100%;
-}
-
-.slidev-layout .mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
 
 /* ============================================
    Responsive Adjustments

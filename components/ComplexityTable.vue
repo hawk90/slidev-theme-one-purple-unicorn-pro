@@ -81,7 +81,7 @@ const columns = computed(() =>
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
   background: color-mix(in srgb, var(--primary-400) 10%, transparent);
-  color: var(--primary-400, #c678dd);
+  color: color-mix(in srgb, var(--primary-400, #c678dd) var(--ink-depth, 100%), black);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
   letter-spacing: 0.02em;
 }
@@ -134,7 +134,7 @@ tbody tr:hover {
 }
 
 .ct-n {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-weight: 600;
   --ct-color: var(--one-dark-cyan, #56b6c2);
   color: var(--ct-color);
@@ -142,7 +142,7 @@ tbody tr:hover {
 }
 
 .ct-target {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   --ct-color: var(--one-dark-yellow, #e5c07b);
   color: var(--ct-color);
   white-space: nowrap;
@@ -153,15 +153,11 @@ tbody tr:hover {
 }
 
 .ct-complexity {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   --ct-color: var(--one-dark-green, #98c379);
   color: var(--ct-color);
   white-space: nowrap;
 }
 
 
-/* Light mode: small title text on its own tint needs a little more depth */
-html:not(.dark) .ct-title {
-  color: color-mix(in srgb, var(--primary-400, #c678dd) 80%, black);
-}
 </style>

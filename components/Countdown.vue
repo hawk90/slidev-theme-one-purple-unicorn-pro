@@ -51,7 +51,7 @@ defineExpose({ start, stop, remaining })
   display: inline-flex;
   align-items: baseline;
   gap: 0.5rem;
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
 }
 
 .countdown-time {

@@ -90,7 +90,7 @@ defineProps({
 }
 
 .tl-year {
-  font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--tl-year-color, var(--primary-400, #c678dd));
   font-weight: 600;
