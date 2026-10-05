@@ -1081,7 +1081,7 @@ A gradient beam rotates along the border path. 8 presets + custom CSS variables.
   <div class="anim-border anim-border-gold" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Gold</div>
 </div>
 
-Direction: `anim-border-ccw` / Speed: `anim-border-slow` (8s) / `anim-border-fast` (2s)
+Direction: `anim-border-ccw` / Speed: `anim-border-slow` (10s) / `anim-border-fast` (3s)
 
 ---
 
@@ -1089,14 +1089,14 @@ Direction: `anim-border-ccw` / Speed: `anim-border-slow` (8s) / `anim-border-fas
 
 CSS 변수로 직접 색상 지정 가능:
 
-<div class="anim-border" style="--ab-c1: #ff6b6b; --ab-c2: #ffa500; --ab-c3: #ffd700; --ab-dim: rgba(255,107,107,0.08); margin-bottom: 1rem;">
+<div class="anim-border" style="--ab-c1: #ff6b6b; --ab-c2: #ffa500; --ab-c3: #ffd700; margin-bottom: 1rem;">
 
 ### Inline Custom
 
 ```html
 <div class="anim-border"
   style="--ab-c1: #ff6b6b; --ab-c2: #ffa500;
-         --ab-c3: #ffd700; --ab-dim: rgba(255,107,107,0.08);">
+         --ab-c3: #ffd700;">
 ```
 
 </div>
@@ -1106,9 +1106,9 @@ CSS 변수로 직접 색상 지정 가능:
 | `--ab-c1` | 헤드 시작 색상 |
 | `--ab-c2` | 헤드 중간 색상 |
 | `--ab-c3` | 헤드 끝 색상 |
-| `--ab-dim` | 꼬리 (어두운 구간) 색상 |
+| `--ab-dim` | 꼬리 색상 (선택, 기본값은 `--ab-c1`을 옅게) |
 
-Speed: `anim-border-slow` (8s) / default (4s) / `anim-border-fast` (2s)
+Speed: `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
 
 ---
 
@@ -1193,14 +1193,14 @@ Speed: `anim-border-slow` (8s) / default (4s) / `anim-border-fast` (2s)
   **Neon**
 
   </div>
-  <div class="card anim-glow" style="--glow-color: 255, 107, 107; text-align: center; padding: 0.75rem; border-radius: 0.75rem;">
+  <div class="card anim-glow" style="--glow: #ff6b6b; text-align: center; padding: 0.75rem; border-radius: 0.75rem;">
 
   **Custom**
 
   </div>
 </div>
 
-Custom: `style="--glow-color: 255, 107, 107; --glow-intensity: 0.6;"`
+Custom: `style="--glow: #ff6b6b; --glow-intensity: 0.6;"` (any CSS color)
 
 ---
 
@@ -1311,6 +1311,14 @@ Combine with any entrance animation for cascading reveals.
   `hover-scale`
 
   Subtle grow
+
+  </div>
+  <div class="card hover-tilt" style="text-align: center;">
+
+  ### Tilt
+  `hover-tilt`
+
+  3D tilt toward you
 
   </div>
 </div>

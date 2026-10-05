@@ -18,7 +18,8 @@
   --ab-c1: var(--one-dark-blue, #61afef);
   --ab-c2: var(--one-dark-magenta, #c678dd);
   --ab-c3: var(--one-dark-red, #e06c75);
-  --ab-dim: rgba(97, 175, 239, 0.08);
+  /* Tail color; derived from --ab-c1 unless set explicitly */
+  --ab-dim: color-mix(in srgb, var(--ab-c1) 8%, transparent);
 
   position: relative;
   background: var(--bg-secondary, #1e2030);
@@ -30,7 +31,9 @@
 .anim-border::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  /* Ring sits on the box edge (not outside it) so overflow:hidden on the
+     same element, e.g. .card or .anim-shimmer, does not clip it */
+  inset: 0;
   border-radius: inherit;
   padding: 2px;
   background: conic-gradient(
@@ -48,7 +51,7 @@
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: border-rotate 6s linear infinite;
+  animation: border-rotate var(--ab-duration, 6s) linear infinite;
   z-index: -1;
 }
 
@@ -61,25 +64,38 @@
 }
 
 .anim-border-ccw::before { animation-name: border-rotate-ccw; }
-.anim-border-slow::before { animation-duration: 10s; }
-.anim-border-fast::before { animation-duration: 3s; }
+.anim-border-slow { --ab-duration: 10s; }
+.anim-border-fast { --ab-duration: 3s; }
 
 /* Color presets */
-.anim-border-ocean  { --ab-c1: var(--one-dark-green, #98c379); --ab-c2: var(--one-dark-cyan, #56b6c2); --ab-c3: var(--one-dark-blue, #61afef); --ab-dim: rgba(152, 195, 121, 0.08); }
-.anim-border-sunset { --ab-c1: var(--one-dark-yellow, #e5c07b); --ab-c2: var(--one-dark-red, #e06c75); --ab-c3: var(--one-dark-magenta, #c678dd); --ab-dim: rgba(229, 192, 123, 0.08); }
-.anim-border-neon   { --ab-c1: #00f5ff; --ab-c2: #ff00e5; --ab-c3: #ffe600; --ab-dim: rgba(0, 245, 255, 0.08); }
-.anim-border-ice    { --ab-c1: #e0f0ff; --ab-c2: #7ec8e3; --ab-c3: #3a86c8; --ab-dim: rgba(126, 200, 227, 0.08); }
-.anim-border-fire   { --ab-c1: #ef4444; --ab-c2: #f97316; --ab-c3: #eab308; --ab-dim: rgba(239, 68, 68, 0.08); }
-.anim-border-mint   { --ab-c1: #34d399; --ab-c2: #2dd4bf; --ab-c3: #22d3ee; --ab-dim: rgba(52, 211, 153, 0.08); }
-.anim-border-gold   { --ab-c1: #fbbf24; --ab-c2: #f59e0b; --ab-c3: #d97706; --ab-dim: rgba(251, 191, 36, 0.08); }
+.anim-border-ocean  { --ab-c1: var(--one-dark-green, #98c379); --ab-c2: var(--one-dark-cyan, #56b6c2); --ab-c3: var(--one-dark-blue, #61afef); }
+.anim-border-sunset { --ab-c1: var(--one-dark-yellow, #e5c07b); --ab-c2: var(--one-dark-red, #e06c75); --ab-c3: var(--one-dark-magenta, #c678dd); }
+.anim-border-neon   { --ab-c1: #00f5ff; --ab-c2: #ff00e5; --ab-c3: #ffe600; }
+.anim-border-ice    { --ab-c1: #e0f0ff; --ab-c2: #7ec8e3; --ab-c3: #3a86c8; }
+.anim-border-fire   { --ab-c1: #ef4444; --ab-c2: #f97316; --ab-c3: #eab308; }
+.anim-border-mint   { --ab-c1: #34d399; --ab-c2: #2dd4bf; --ab-c3: #22d3ee; }
+.anim-border-gold   { --ab-c1: #fbbf24; --ab-c2: #f59e0b; --ab-c3: #d97706; }
 
 /* ============================================
    2. Shimmer
+   A light band sweeps across the element once per cycle, then rests.
+   The band is a separate layer moved with transform, so every direction
+   crosses the whole element and there is no background-repeat seam.
    ============================================ */
 .anim-shimmer {
-  --shimmer-color: rgba(255, 255, 255, 0.08);
+  --shimmer-color: rgba(255, 255, 255, 0.14);
+  --shimmer-angle: 90deg;
+  --shimmer-from: translateX(-100%);
+  --shimmer-to: translateX(100%);
+  --shimmer-duration: 4s;
   position: relative;
   overflow: hidden;
+}
+
+/* Light mode: a white band is invisible on light cards; tint it instead.
+   :where() keeps this below the color presets in specificity. */
+:where(html:not(.dark)) .anim-shimmer {
+  --shimmer-color: rgba(198, 120, 221, 0.14);
 }
 
 .anim-shimmer::after {
@@ -87,92 +103,76 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    var(--shimmer-angle, 90deg),
-    transparent 0%,
-    transparent 35%,
+    var(--shimmer-angle),
+    transparent 30%,
     var(--shimmer-color) 50%,
-    transparent 65%,
-    transparent 100%
+    transparent 70%
   );
-  background-size: var(--shimmer-size, 200% 100%);
-  animation-name: shimmer-lr;
-  animation-duration: 4s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  transform: var(--shimmer-from);
+  animation: shimmer-sweep var(--shimmer-duration) ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes shimmer-lr {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+/* Sweep during the first 60% of the cycle, rest for the remainder */
+@keyframes shimmer-sweep {
+  0%        { transform: var(--shimmer-from); }
+  60%, 100% { transform: var(--shimmer-to); }
 }
 
-.anim-shimmer-right::after { animation-name: shimmer-rl; }
-@keyframes shimmer-rl {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
+/* Directions */
+.anim-shimmer-right { --shimmer-from: translateX(100%);  --shimmer-to: translateX(-100%); }
+.anim-shimmer-down  { --shimmer-angle: 180deg; --shimmer-from: translateY(-100%); --shimmer-to: translateY(100%); }
+.anim-shimmer-up    { --shimmer-angle: 0deg;   --shimmer-from: translateY(100%);  --shimmer-to: translateY(-100%); }
+/* Diagonal band would end inside the box, so the layer is oversized (2x) to keep
+   its edges outside; it then only needs to travel half its own size */
+.anim-shimmer-diag  { --shimmer-angle: 135deg; --shimmer-from: translate(-50%, -50%); --shimmer-to: translate(50%, 50%); }
+.anim-shimmer-diag::after { inset: -50%; }
 
-.anim-shimmer-down { --shimmer-angle: 180deg; --shimmer-size: 100% 200%; }
-.anim-shimmer-down::after { animation-name: shimmer-down; }
-@keyframes shimmer-down {
-  0%   { background-position: 0 200%; }
-  100% { background-position: 0 -200%; }
-}
+/* Speed */
+.anim-shimmer-slow { --shimmer-duration: 6s; }
+.anim-shimmer-fast { --shimmer-duration: 2s; }
 
-.anim-shimmer-up { --shimmer-angle: 0deg; --shimmer-size: 100% 200%; }
-.anim-shimmer-up::after { animation-name: shimmer-up; }
-@keyframes shimmer-up {
-  0%   { background-position: 0 -200%; }
-  100% { background-position: 0 200%; }
-}
-
-.anim-shimmer-diag { --shimmer-angle: 135deg; --shimmer-size: 300% 300%; }
-.anim-shimmer-diag::after { animation-name: shimmer-diag; }
-@keyframes shimmer-diag {
-  0%   { background-position: 200% -200%; }
-  100% { background-position: -200% 200%; }
-}
-
-.anim-shimmer-slow::after { animation-duration: 6s; }
-.anim-shimmer-fast::after { animation-duration: 2s; }
-
-.anim-shimmer-purple { --shimmer-color: rgba(198, 120, 221, 0.10); }
-.anim-shimmer-blue   { --shimmer-color: rgba(97, 175, 239, 0.10); }
-.anim-shimmer-green  { --shimmer-color: rgba(152, 195, 121, 0.10); }
-.anim-shimmer-warm   { --shimmer-color: rgba(229, 192, 123, 0.10); }
-.anim-shimmer-neon   { --shimmer-color: rgba(0, 245, 255, 0.12); }
+/* Color presets */
+.anim-shimmer-purple { --shimmer-color: color-mix(in srgb, var(--one-dark-magenta, #c678dd) 18%, transparent); }
+.anim-shimmer-blue   { --shimmer-color: color-mix(in srgb, var(--one-dark-blue, #61afef) 18%, transparent); }
+.anim-shimmer-green  { --shimmer-color: color-mix(in srgb, var(--one-dark-green, #98c379) 18%, transparent); }
+.anim-shimmer-warm   { --shimmer-color: color-mix(in srgb, var(--one-dark-yellow, #e5c07b) 18%, transparent); }
+.anim-shimmer-neon   { --shimmer-color: rgba(0, 245, 255, 0.18); }
 
 /* ============================================
    3. Glow Pulse
+   --glow: any CSS color. The older --glow-color: "r, g, b" form still works.
    ============================================ */
 .anim-glow {
-  --glow-color: 198, 120, 221;
+  --glow: rgb(var(--glow-color, 198, 120, 221));
   --glow-intensity: 0.35;
-  animation: glow-pulse 2.5s ease-in-out infinite alternate;
+  --glow-duration: 2.5s;
+  animation: glow-pulse var(--glow-duration) ease-in-out infinite alternate;
 }
 
 @keyframes glow-pulse {
   from {
-    box-shadow: 0 0 6px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3));
+    box-shadow: 0 0 6px color-mix(in srgb, var(--glow) calc(var(--glow-intensity) * 30%), transparent);
   }
   to {
     box-shadow:
-      0 0 16px rgba(var(--glow-color), var(--glow-intensity)),
-      0 0 36px rgba(var(--glow-color), calc(var(--glow-intensity) * 0.2));
+      0 0 16px color-mix(in srgb, var(--glow) calc(var(--glow-intensity) * 100%), transparent),
+      0 0 36px color-mix(in srgb, var(--glow) calc(var(--glow-intensity) * 20%), transparent);
   }
 }
 
-.anim-glow-slow { animation-duration: 4s; }
-.anim-glow-fast { animation-duration: 1.2s; }
+/* Speed */
+.anim-glow-slow { --glow-duration: 4s; }
+.anim-glow-fast { --glow-duration: 1.2s; }
 
-.anim-glow-purple { --glow-color: 198, 120, 221; }
-.anim-glow-blue   { --glow-color: 97, 175, 239; }
-.anim-glow-green  { --glow-color: 152, 195, 121; }
-.anim-glow-red    { --glow-color: 224, 108, 117; }
-.anim-glow-cyan   { --glow-color: 86, 182, 194; }
-.anim-glow-gold   { --glow-color: 251, 191, 36; }
-.anim-glow-neon   { --glow-color: 0, 245, 255; }
+/* Color presets */
+.anim-glow-purple { --glow: var(--one-dark-magenta, #c678dd); }
+.anim-glow-blue   { --glow: var(--one-dark-blue, #61afef); }
+.anim-glow-green  { --glow: var(--one-dark-green, #98c379); }
+.anim-glow-red    { --glow: var(--one-dark-red, #e06c75); }
+.anim-glow-cyan   { --glow: var(--one-dark-cyan, #56b6c2); }
+.anim-glow-gold   { --glow: #fbbf24; }
+.anim-glow-neon   { --glow: #00f5ff; }
 
 /* ============================================
    4. Entrances (play once)
@@ -247,8 +247,9 @@
   to { background-position: 200% center; }
 }
 
-.anim-gt-slow { animation-duration: 10s; }
-.anim-gt-fast { animation-duration: 3s; }
+/* Speed (anim-gt-slow/-fast kept as aliases) */
+.anim-gradient-text-slow, .anim-gt-slow { animation-duration: 10s; }
+.anim-gradient-text-fast, .anim-gt-fast { animation-duration: 3s; }
 
 .anim-gradient-text-ocean  { --gt-c1: #98c379; --gt-c2: #56b6c2; --gt-c3: #61afef; --gt-c4: #56b6c2; --gt-c5: #98c379; }
 .anim-gradient-text-sunset { --gt-c1: #e5c07b; --gt-c2: #e06c75; --gt-c3: #c678dd; --gt-c4: #e06c75; --gt-c5: #e5c07b; }
@@ -300,6 +301,16 @@
 }
 .hover-scale:hover {
   transform: scale(1.04);
+}
+
+/* Tilt — slight 3D tilt toward the viewer */
+.hover-tilt {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.hover-tilt:hover {
+  transform: perspective(800px) rotateX(4deg) rotateY(-6deg) translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
 /* Glow — colored glow on hover */
