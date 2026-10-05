@@ -499,7 +499,7 @@ panelColor: "rgba(255, 255, 255, 0.92)"
 
 <h1 style="color: #1a1b2e;">White Panel (Right)</h1>
 
-<p style="color: #333;">White panel on the right side. Set <code style="color: #c678dd;">panelColor</code> to any value including white.</p>
+<p style="color: #333;">White panel on the right side. Set <code>panelColor</code> to any value including white.</p>
 
 <ul style="color: #555;">
 <li>Corporate style</li>

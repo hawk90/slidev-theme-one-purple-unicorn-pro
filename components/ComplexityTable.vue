@@ -159,10 +159,9 @@ tbody tr:hover {
   white-space: nowrap;
 }
 
-/* Light mode: darker ink so the column colors stay readable on white */
-html:not(.dark) .ct-n,
-html:not(.dark) .ct-target,
-html:not(.dark) .ct-complexity {
-  color: color-mix(in srgb, var(--ct-color) 65%, black);
+
+/* Light mode: small title text on its own tint needs a little more depth */
+html:not(.dark) .ct-title {
+  color: color-mix(in srgb, var(--primary-400, #c678dd) 80%, black);
 }
 </style>

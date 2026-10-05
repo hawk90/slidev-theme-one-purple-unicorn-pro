@@ -77,8 +77,9 @@ const iconMap: Record<string, string> = {
   margin-left: auto;
 }
 
+/* Light mode: small text on its own tint needs a little more depth */
 html:not(.dark) .story-year {
-  color: color-mix(in srgb, var(--story-color) 65%, black);
+  color: color-mix(in srgb, var(--story-color) 80%, black);
 }
 
 .story-body {
@@ -97,7 +98,7 @@ html:not(.dark) .story-year {
 
 .story-source {
   font-size: 0.7rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-secondary, #939aa3);
   font-style: italic;
   margin-top: 0.4rem;
 }

@@ -77,8 +77,9 @@ const SECTIONS = [
   color: var(--pattern-color);
 }
 
+/* Light mode: small text on its own tint needs a little more depth */
 html:not(.dark) .pattern-label {
-  color: color-mix(in srgb, var(--pattern-color) 65%, black);
+  color: color-mix(in srgb, var(--pattern-color) 80%, black);
 }
 
 .pattern-body {

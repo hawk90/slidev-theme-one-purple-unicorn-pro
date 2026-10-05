@@ -74,7 +74,9 @@ const gridStyle = computed(() => {
   color: var(--label-color);
 }
 
+
+/* Light mode: small text on its own tint needs a little more depth */
 html:not(.dark) .grid-label {
-  color: color-mix(in srgb, var(--label-color) 65%, black);
+  color: color-mix(in srgb, var(--label-color) 80%, black);
 }
 </style>

@@ -39,9 +39,10 @@ defineProps({
   color: var(--badge-color);
 }
 
-/* Light mode: pastel text is too faint on a light tint; use a darker ink */
+
+/* Light mode: small text on its own tint needs a little more depth */
 html:not(.dark) .badge:not(.badge-gray) {
-  color: color-mix(in srgb, var(--badge-color) 65%, black);
+  color: color-mix(in srgb, var(--badge-color) 80%, black);
 }
 
 /* Same treatment as <Kbd>: neutral fill with readable text */
