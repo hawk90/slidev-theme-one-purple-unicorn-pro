@@ -55,6 +55,26 @@
   z-index: -1;
 }
 
+/* Constant-speed light along the border (utils/border-beam.ts adds .ab-beam
+   and animates --ab-x/--ab-y). The light has a fixed length (--ab-len), so
+   it looks the same on small and large boxes. Without the script the conic
+   rotation above is used. */
+@property --ab-x { syntax: '<length>'; initial-value: 0px; inherits: false; }
+@property --ab-y { syntax: '<length>'; initial-value: 0px; inherits: false; }
+
+.anim-border.ab-beam::before {
+  animation: none;
+  background:
+    radial-gradient(
+      circle var(--ab-len, 90px) at var(--ab-x) var(--ab-y),
+      var(--ab-c1) 0%,
+      var(--ab-c2) 35%,
+      var(--ab-c3) 65%,
+      transparent 100%
+    ),
+    linear-gradient(var(--ab-dim), var(--ab-dim));
+}
+
 @keyframes border-rotate {
   to { --border-angle: 360deg; }
 }
@@ -79,14 +99,13 @@
 /* ============================================
    2. Shimmer
    A light band sweeps across the element once per cycle, then rests.
-   The band is a separate layer moved with transform, so every direction
-   crosses the whole element and there is no background-repeat seam.
+   The band width adapts to the element (clamped) and it travels a fixed
+   distance per cycle, so its speed is the same on small and large boxes.
    ============================================ */
 .anim-shimmer {
   --shimmer-color: rgba(255, 255, 255, 0.14);
-  --shimmer-angle: 90deg;
-  --shimmer-from: translateX(-100%);
-  --shimmer-to: translateX(100%);
+  --shimmer-width: clamp(60px, 35%, 180px);
+  --shimmer-travel: 1100px;
   --shimmer-duration: 4s;
   position: relative;
   overflow: hidden;
@@ -95,38 +114,66 @@
 /* Light mode: a white band is invisible on light cards; tint it instead.
    :where() keeps this below the color presets in specificity. */
 :where(html:not(.dark)) .anim-shimmer {
-  --shimmer-color: rgba(198, 120, 221, 0.14);
+  --shimmer-color: rgba(198, 120, 221, 0.16);
 }
 
 .anim-shimmer::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    var(--shimmer-angle),
-    transparent 30%,
-    var(--shimmer-color) 50%,
-    transparent 70%
-  );
-  transform: var(--shimmer-from);
-  animation: shimmer-sweep var(--shimmer-duration) ease-in-out infinite;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--shimmer-width);
+  background: linear-gradient(90deg, transparent, var(--shimmer-color) 50%, transparent);
+  animation: shimmer-x var(--shimmer-duration) ease-in-out infinite;
   pointer-events: none;
 }
 
 /* Sweep during the first 60% of the cycle, rest for the remainder */
-@keyframes shimmer-sweep {
-  0%        { transform: var(--shimmer-from); }
-  60%, 100% { transform: var(--shimmer-to); }
+@keyframes shimmer-x {
+  0%        { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(var(--shimmer-travel)); }
 }
 
-/* Directions */
-.anim-shimmer-right { --shimmer-from: translateX(100%);  --shimmer-to: translateX(-100%); }
-.anim-shimmer-down  { --shimmer-angle: 180deg; --shimmer-from: translateY(-100%); --shimmer-to: translateY(100%); }
-.anim-shimmer-up    { --shimmer-angle: 0deg;   --shimmer-from: translateY(100%);  --shimmer-to: translateY(-100%); }
-/* Diagonal band would end inside the box, so the layer is oversized (2x) to keep
-   its edges outside; it then only needs to travel half its own size */
-.anim-shimmer-diag  { --shimmer-angle: 135deg; --shimmer-from: translate(-50%, -50%); --shimmer-to: translate(50%, 50%); }
-.anim-shimmer-diag::after { inset: -50%; }
+/* Right to left: start at the right edge */
+.anim-shimmer-right::after { left: auto; right: 0; animation-name: shimmer-x-rev; }
+@keyframes shimmer-x-rev {
+  0%        { transform: translateX(100%); }
+  60%, 100% { transform: translateX(calc(-1 * var(--shimmer-travel))); }
+}
+
+/* Vertical: full-width band moving down / up */
+/* Boxes are usually short, so the vertical band is thinner */
+.anim-shimmer-down, .anim-shimmer-up { --shimmer-width: clamp(16px, 45%, 120px); --shimmer-travel: 600px; }
+.anim-shimmer-down::after,
+.anim-shimmer-up::after {
+  left: 0;
+  right: 0;
+  width: auto;
+  height: var(--shimmer-width);
+  background: linear-gradient(180deg, transparent, var(--shimmer-color) 50%, transparent);
+}
+.anim-shimmer-down::after { top: 0; bottom: auto; animation-name: shimmer-y; }
+.anim-shimmer-up::after   { top: auto; bottom: 0; animation-name: shimmer-y-rev; }
+@keyframes shimmer-y {
+  0%        { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(var(--shimmer-travel)); }
+}
+@keyframes shimmer-y-rev {
+  0%        { transform: translateY(100%); }
+  60%, 100% { transform: translateY(calc(-1 * var(--shimmer-travel))); }
+}
+
+/* Diagonal: a tall, slanted band moving left to right */
+.anim-shimmer-diag::after {
+  top: -100%;
+  bottom: -100%;
+  animation-name: shimmer-diag;
+}
+@keyframes shimmer-diag {
+  0%        { transform: translateX(-150%) rotate(20deg); }
+  60%, 100% { transform: translateX(var(--shimmer-travel)) rotate(20deg); }
+}
 
 /* Speed */
 .anim-shimmer-slow { --shimmer-duration: 6s; }
@@ -236,7 +283,10 @@
     var(--gt-c1), var(--gt-c2), var(--gt-c3),
     var(--gt-c4), var(--gt-c5), var(--gt-c1)
   );
-  background-size: 200% auto;
+  /* One color cycle per --gt-period, so short and long text get the same
+     color spacing and speed */
+  --gt-period: 16em;
+  background-size: var(--gt-period) 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -244,7 +294,8 @@
 }
 
 @keyframes gradient-flow {
-  to { background-position: 200% center; }
+  from { background-position: 0 0; }
+  to   { background-position: var(--gt-period) 0; }
 }
 
 /* Speed (anim-gt-slow/-fast kept as aliases) */
@@ -282,58 +333,57 @@
 
 /* ============================================
    9. Hover Effects
+   Every value is a variable with the previous look as its default:
+   --hover-duration, --hover-lift, --hover-scale, --hover-tilt-x/-y,
+   --hover-glow (any color), --hover-border-c1/-c2, --hover-gradient-c1/-c2,
+   --hover-shine-color
    ============================================ */
+:is(.hover-lift, .hover-scale, .hover-tilt, .hover-glow, .hover-glow-blue, .hover-glow-green, .hover-border, .hover-gradient, .hover-shine) {
+  cursor: pointer;
+}
 
 /* Lift — rises with shadow */
 .hover-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
+  transition: transform var(--hover-duration, 0.25s) ease, box-shadow var(--hover-duration, 0.25s) ease;
 }
 .hover-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(-1 * var(--hover-lift, 4px)));
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 8px rgba(198, 120, 221, 0.1);
 }
 
 /* Scale — gentle grow */
 .hover-scale {
-  transition: transform 0.2s ease;
-  cursor: pointer;
+  transition: transform var(--hover-duration, 0.2s) ease;
 }
 .hover-scale:hover {
-  transform: scale(1.04);
+  transform: scale(var(--hover-scale, 1.04));
 }
 
 /* Tilt — slight 3D tilt toward the viewer */
 .hover-tilt {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  transition: transform var(--hover-duration, 0.3s) ease, box-shadow var(--hover-duration, 0.3s) ease;
 }
 .hover-tilt:hover {
-  transform: perspective(800px) rotateX(4deg) rotateY(-6deg) translateY(-2px);
+  transform: perspective(800px) rotateX(var(--hover-tilt-x, 4deg)) rotateY(var(--hover-tilt-y, -6deg)) translateY(-2px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* Glow — colored glow on hover */
-.hover-glow {
-  transition: box-shadow 0.3s ease;
-  cursor: pointer;
+/* Glow — colored glow on hover; -blue / -green are color presets */
+.hover-glow, .hover-glow-blue, .hover-glow-green {
+  transition: box-shadow var(--hover-duration, 0.3s) ease;
 }
-.hover-glow:hover {
-  box-shadow: 0 0 16px rgba(198, 120, 221, 0.4), 0 0 32px rgba(198, 120, 221, 0.12);
+.hover-glow-blue  { --hover-glow: var(--one-dark-blue, #61afef); }
+.hover-glow-green { --hover-glow: var(--one-dark-green, #98c379); }
+:is(.hover-glow, .hover-glow-blue, .hover-glow-green):hover {
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta, #c678dd)) 40%, transparent),
+    0 0 32px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta, #c678dd)) 12%, transparent);
 }
-
-.hover-glow-blue { transition: box-shadow 0.3s ease; cursor: pointer; }
-.hover-glow-blue:hover { box-shadow: 0 0 16px rgba(97, 175, 239, 0.4), 0 0 32px rgba(97, 175, 239, 0.12); }
-
-.hover-glow-green { transition: box-shadow 0.3s ease; cursor: pointer; }
-.hover-glow-green:hover { box-shadow: 0 0 16px rgba(152, 195, 121, 0.4), 0 0 32px rgba(152, 195, 121, 0.12); }
 
 /* Border reveal — gradient border fades in */
 .hover-border {
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
 }
 .hover-border::after {
   content: '';
@@ -341,44 +391,69 @@
   inset: 0;
   border: 2px solid transparent;
   border-radius: inherit;
-  background: linear-gradient(135deg, var(--one-dark-blue, #61afef), var(--one-dark-magenta, #c678dd)) border-box;
+  background: linear-gradient(135deg, var(--hover-border-c1, var(--one-dark-blue, #61afef)), var(--hover-border-c2, var(--one-dark-magenta, #c678dd))) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--hover-duration, 0.3s) ease;
   pointer-events: none;
 }
 .hover-border:hover::after {
   opacity: 1;
 }
 
-/* Shine — light sweep on hover */
+/* Gradient fill — a soft gradient fades in behind the content */
+.hover-gradient {
+  position: relative;
+  z-index: 0;
+}
+.hover-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--hover-gradient-c1, var(--one-dark-blue, #61afef)) 14%, transparent),
+    color-mix(in srgb, var(--hover-gradient-c2, var(--one-dark-magenta, #c678dd)) 14%, transparent));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--hover-duration, 0.3s) ease;
+  z-index: -1;
+  pointer-events: none;
+}
+.hover-gradient:hover::before {
+  opacity: 1;
+}
+
+/* Shine — one light sweep each time the pointer enters.
+   Same band as .anim-shimmer: width adapts to the element, fixed travel
+   distance so the speed does not depend on size. Played as an animation
+   (not a transition) so leaving does not sweep back. */
 .hover-shine {
+  --hover-shine-color: rgba(255, 255, 255, 0.18);
   position: relative;
   overflow: hidden;
-  cursor: pointer;
+}
+:where(html:not(.dark)) .hover-shine {
+  --hover-shine-color: rgba(198, 120, 221, 0.18);
 }
 .hover-shine::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 45%,
-    rgba(255, 255, 255, 0.10) 50%,
-    rgba(255, 255, 255, 0.06) 55%,
-    transparent 100%
-  );
-  transition: left 0.6s ease;
+  bottom: 0;
+  left: 0;
+  width: var(--hover-shine-width, clamp(60px, 35%, 180px));
+  background: linear-gradient(90deg, transparent, var(--hover-shine-color) 50%, transparent);
+  transform: translateX(-100%);
   pointer-events: none;
 }
 .hover-shine:hover::after {
-  left: 150%;
+  animation: hover-shine-sweep var(--hover-duration, 0.9s) ease-out;
+}
+@keyframes hover-shine-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(1100px); }
 }
 
 /* ============================================

@@ -653,7 +653,7 @@ Recognizing algorithm patterns — Signal, Template, and Alternatives.
 <PatternCard
   signal="Sorted array + find pair/target → consider two pointers or binary search"
   template="Initialize left=0, right=n-1. Move pointers based on comparison with target."
-  alternatives="Hash map O(n) space, brute force O(n²)"
+  alternatives="Hash map $O(n)$ space, brute force $O(n^2)$"
 />
 
 <PatternCard
@@ -693,7 +693,7 @@ Use named slots for rich content inside template/alternatives.
 <script setup>
 const timelineItems = [
   { year: '1956', title: 'Dijkstra Algorithm', desc: 'Shortest path in weighted graphs' },
-  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average O(n log n)' },
+  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare — average $O(n \\log n)$' },
   { year: '1962', title: 'AVL Trees', desc: 'First self-balancing BST' },
   { year: '1970', title: 'B-Trees', desc: 'Rudolf Bayer — database indexing' },
   { year: '1972', title: 'Red-Black Trees', desc: 'Rudolf Bayer — improved BST' },
@@ -719,11 +719,11 @@ Pass custom rows to tailor for specific problem domains.
 <ComplexityTable
   title="Graph Algorithm Selection"
   :rows="[
-    { n: 'V ≤ 20', target: 'O(2^V)', algo: 'Bitmask DP (TSP, Hamiltonian)', complexity: 'O(2^V · V²)', highlight: false },
-    { n: 'V ≤ 500', target: 'O(V³)', algo: 'Floyd-Warshall (All-Pairs SP)', complexity: 'O(V³)', highlight: false },
-    { n: 'V ≤ 10,000', target: 'O(V·E)', algo: 'Bellman-Ford / SPFA', complexity: 'O(V·E)', highlight: false },
-    { n: 'V ≤ 100,000', target: 'O(E log V)', algo: 'Dijkstra + Priority Queue', complexity: 'O((V+E) log V)', highlight: true },
-    { n: 'V ≤ 1,000,000', target: 'O(V+E)', algo: 'BFS / DFS / Topological Sort', complexity: 'O(V+E)', highlight: false },
+    { n: '$V \\le 20$', target: '$O(2^V)$', algo: 'Bitmask DP (TSP, Hamiltonian)', complexity: '$O(2^V \\cdot V^2)$', highlight: false },
+    { n: '$V \\le 500$', target: '$O(V^3)$', algo: 'Floyd-Warshall (All-Pairs SP)', complexity: '$O(V^3)$', highlight: false },
+    { n: '$V \\le 10^4$', target: '$O(V \\cdot E)$', algo: 'Bellman-Ford / SPFA', complexity: '$O(V \\cdot E)$', highlight: false },
+    { n: '$V \\le 10^5$', target: '$O(E \\log V)$', algo: 'Dijkstra + Priority Queue', complexity: '$O((V+E) \\log V)$', highlight: true },
+    { n: '$V \\le 10^6$', target: '$O(V+E)$', algo: 'BFS / DFS / Topological Sort', complexity: '$O(V+E)$', highlight: false },
   ]"
 />
 
@@ -855,10 +855,10 @@ currentStage: 2
   title="Sorting Comparison"
   :showComplexity="false"
   :rows="[
-    { n: 'Small N', target: 'O(N²)', algo: 'Insertion Sort (cache-friendly)', highlight: false },
-    { n: 'General', target: 'O(N log N)', algo: 'Merge Sort (stable, guaranteed)', highlight: true },
-    { n: 'General', target: 'O(N log N)', algo: 'Quick Sort (faster in practice)', highlight: false },
-    { n: 'Integers', target: 'O(N)', algo: 'Counting / Radix Sort', highlight: false },
+    { n: 'Small N', target: '$O(N^2)$', algo: 'Insertion Sort (cache-friendly)', highlight: false },
+    { n: 'General', target: '$O(N \\log N)$', algo: 'Merge Sort (stable, guaranteed)', highlight: true },
+    { n: 'General', target: '$O(N \\log N)$', algo: 'Quick Sort (faster in practice)', highlight: false },
+    { n: 'Integers', target: '$O(N)$', algo: 'Counting / Radix Sort', highlight: false },
   ]"
 />
 
@@ -1350,6 +1350,9 @@ Combine with any entrance animation for cascading reveals.
   </div>
 </div>
 
+
+Custom: `style="--hover-lift: 8px; --hover-scale: 1.1; --hover-glow: #ff6b6b; --hover-duration: 0.5s"`
+
 ---
 
 # Hover: Shine, Gradient, Border Reveal
@@ -1361,6 +1364,14 @@ Combine with any entrance animation for cascading reveals.
   `hover-shine`
 
   Light sweep
+
+  </div>
+  <div class="card hover-gradient" style="text-align: center;">
+
+  ### Gradient
+  `hover-gradient`
+
+  Soft gradient fill
 
   </div>
   <div class="card hover-border" style="text-align: center; border-radius: 0.75rem;">
