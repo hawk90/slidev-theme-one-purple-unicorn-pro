@@ -26,7 +26,7 @@ defineProps({
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   background: var(--bg-secondary, #1e2030);
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
+  border: 1px solid color-mix(in srgb, var(--text-primary, #c0c6d0) 22%, transparent);
   border-radius: 0.75rem;
   text-decoration: none;
   color: inherit;
@@ -65,7 +65,7 @@ defineProps({
 .link-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-bright, #e6e6e6);
 }
 
 .link-card-compact .link-title {
@@ -74,7 +74,7 @@ defineProps({
 
 .link-desc {
   font-size: 0.7rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-secondary, #939aa3);
   margin-top: 0.15rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -83,7 +83,7 @@ defineProps({
 
 .link-arrow {
   font-size: 0.85rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--primary-400, #c678dd);
   flex-shrink: 0;
   transition: transform 0.2s ease, color 0.2s ease;
 }

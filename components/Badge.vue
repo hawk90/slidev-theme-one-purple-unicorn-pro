@@ -46,7 +46,12 @@ html:not(.dark) .badge:not(.badge-gray) {
 
 /* Same treatment as <Kbd>: neutral fill with readable text */
 .badge-gray {
-  background: var(--bg-tertiary, #3e4452);
-  color: var(--text-primary, #abb2bf);
+  background: var(--key-bg, var(--bg-tertiary, #3e4452));
+  color: var(--text-bright, #e6e6e6);
+}
+
+html.dark .badge-gray,
+.slide-dark .badge-gray {
+  --key-bg: #4b5263;
 }
 </style>

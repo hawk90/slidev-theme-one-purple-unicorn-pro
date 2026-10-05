@@ -10,13 +10,19 @@
   font-family: var(--slidev-theme-font-mono, 'JetBrains Mono', monospace);
   font-size: 0.75em;
   line-height: 1.4;
-  color: var(--text-primary, #dce0e8);
-  background: var(--bg-tertiary, #2a2e3a);
+  color: var(--text-bright, #e6e6e6);
+  background: var(--key-bg, var(--bg-tertiary, #3e4452));
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.15));
-  border-bottom-width: 2px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.35);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   white-space: nowrap;
   vertical-align: middle;
+}
+
+/* Dark mode: one step lighter than the card surface so the key stands out */
+html.dark .kbd,
+.slide-dark .kbd {
+  --key-bg: #4b5263;
 }
 </style>

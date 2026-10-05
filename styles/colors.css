@@ -69,10 +69,10 @@
   --bg-overlay: rgba(40, 44, 52, 0.95);
 
   /* Text Colors */
-  --text-primary: #abb2bf;    /* Main text */
+  --text-primary: #c0c6d0;    /* Main text (body copy) */
   --text-bright: #e6e6e6;     /* Bright text */
   --text-secondary: #939aa3;  /* Secondary text */
-  --text-muted: #5c6370;      /* Muted/comments */
+  --text-muted: #858c98;      /* Muted: captions, secondary labels */
   --text-disabled: #4b5263;   /* Disabled state */
 
   /* Semantic Colors */

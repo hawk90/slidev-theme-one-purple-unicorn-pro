@@ -61,7 +61,7 @@ h4 {
 p {
   line-height: 1.4;
   margin: 0.5rem 0;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-size: 0.9rem;
 }
 
@@ -191,7 +191,7 @@ ol {
 
 li {
   margin: 0.3rem 0;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: 1.4;
   font-size: 0.9rem;
   list-style: inherit;
@@ -265,7 +265,7 @@ th {
 td {
   padding: 0.5rem 0.75rem;
   border-top: 1px solid var(--border-default);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-size: 0.85rem;
 }
 
