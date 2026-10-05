@@ -9,7 +9,7 @@
   ],
   "engines": {
     "node": ">=20.12.0",
-    "slidev": ">=0.47.0"
+    "slidev": ">=52.0.0"
   },
   "author": {
     "name": "Hawk",
@@ -25,7 +25,8 @@
     "global-top.vue",
     "global-bottom.vue",
     "styles.css",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
@@ -40,18 +41,25 @@
     "colorSchema": "both",
     "defaults": {
       "fonts": {
-        "sans": "Noto Sans KR, Inter, system-ui",
+        "sans": "Noto Sans KR, Inter",
         "serif": "Noto Serif KR",
-        "mono": "JetBrains Mono, Fira Code, monospace"
+        "mono": "JetBrains Mono, Fira Code",
+        "weights": "400"
       }
     }
   },
   "dependencies": {
-    "@slidev/types": ">=0.47.0",
-    "katex": ">=0.16.0"
+    "@slidev/types": ">=52.0.0",
+    "katex": "^0.18.7"
   },
   "scripts": {
     "link": "npm link && cd ../.. && npm link slidev-theme-one-purple-unicorn-pro",
-    "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro"
+    "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro",
+    "check:decks": "node scripts/check-decks.mjs"
+  },
+  "devDependencies": {
+    "pixelmatch": "^7.2.0",
+    "playwright": "^1.63.0",
+    "pngjs": "^7.0.0"
   }
 }

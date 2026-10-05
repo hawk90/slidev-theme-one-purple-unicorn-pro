@@ -36,3 +36,4 @@ example/package-lock.json
 # Misc
 *.log
 .cache/
+deck-check/

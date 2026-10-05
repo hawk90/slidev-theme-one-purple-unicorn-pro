@@ -4,7 +4,7 @@
 
 ### 초기 설정 (최초 1회)
 ```bash
-# 테마 루트: setup/shiki.ts 등이 쓰는 의존성(@slidev/types, katex)
+# 테마 루트: setup/·utils/ 가 쓰는 의존성(@slidev/types, katex)
 npm install
 
 # 예시 덱: Slidev CLI
@@ -32,6 +32,7 @@ slidev-theme-one-purple-unicorn-pro/
 │   ├── index.css        # 본문 슬라이드 공통 스타일 (slide-bare 제외)
 │   ├── main.css         # 타이포그래피, 표, 카드, 알림
 │   ├── animations.css   # anim-* / hover-* (컴포넌트 스타일보다 뒤에 로드)
+│   ├── layout-fix.css   # 넘침 방지, grid/flex/absolute 가드(변수로 조절)
 │   └── ...
 ├── layouts/             # 레이아웃 (옛 이름은 프리셋 별칭)
 ├── components/          # 공개 컴포넌트 (Badge, StoryBox, ...)
@@ -45,7 +46,9 @@ slidev-theme-one-purple-unicorn-pro/
 
 ## 규칙
 
-- **레이아웃 역할 클래스**: 레이아웃 루트에 `slide-dark`(라이트 모드에서도 어두운 배경), `slide-bare`(본문 공통 스타일 제외)를 붙여요. CSS는 레이아웃 이름 목록 대신 이 클래스로 판단해요.
+- **레이아웃 역할 클래스**: 레이아웃 루트에 `slide-title`(cover·intro·section·end), `slide-dark`(라이트 모드에서도 어두운 배경), `slide-bare`(본문 공통 스타일 제외)를 붙여요. CSS는 레이아웃 이름 목록 대신 이 클래스로 판단해요. JS 쪽 목록은 `utils/layouts.ts` 하나만 써요.
+- **공용 조각**: 옅은 색 칩은 `.tint-chip`(`--tint`, `--tint-amount`), 열 레이아웃은 `components/internal/ColumnsLayout.vue`, 가운데 정렬 레이아웃 prop은 `utils/layout-props.ts`를 써요.
+- **효과 변수**: 기본값을 요소에 직접 선언하지 말고 `--_이름: var(--공개이름, 기본값)` 형태의 내부 변수로 풀어 쓰세요. 그래야 사용자가 `:root`나 부모 요소에서 값을 바꿀 수 있어요.
 - **파라미터화**: 값은 `var(--이름, 기본값)` 형태로 열어 두고, 기본값은 현재 모습 그대로 유지해요. 새 변수는 README의 Customization 표에 추가하세요.
 - **색**: 직접 색 값 대신 `colors.css`의 토큰을 쓰세요. 라이트 모드 값은 `light-theme.css`에서 재정의해요. 다른 변수를 참조하는 변수(`--content-*` 등)는 재정의할 때 같이 다시 선언해야 해요.
 - **Vue scoped CSS**: `:global(A) B`는 B가 빠질 수 있어서 쓰지 마세요. `html.dark .x`처럼 일반 선택자를 쓰면 돼요.
