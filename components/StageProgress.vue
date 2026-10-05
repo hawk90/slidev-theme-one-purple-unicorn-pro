@@ -27,8 +27,7 @@ import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 import { DARK_LAYOUTS, TITLE_LAYOUTS } from '../utils/layouts'
 
-const nav = useNav()
-const { currentLayout, currentSlideRoute, go } = nav
+const { currentLayout, currentSlideRoute, go, slides } = useNav()
 
 const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
 const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
@@ -60,11 +59,9 @@ function goToStage(index: number) {
   }
 
   // Auto-detect: scan slide routes for matching stages + currentStage
-  const slides = (nav as any).slides?.value || (nav as any).navState?.slides
-  if (!slides) return
 
   const key = stagesKey.value
-  for (const slide of slides) {
+  for (const slide of slides.value) {
     const fm = slide?.meta?.slide?.frontmatter
     if (!fm?.stages) continue
     if (fm.stages.join('|||') === key && fm.currentStage === index) {
@@ -123,17 +120,6 @@ function goToStage(index: number) {
   flex-direction: column;
 }
 
-.stage-pos-left .stage-connector {
-  width: 1px;
-  height: 1.5rem;
-  margin: 0.25rem 0;
-}
-
-.stage-pos-left .stage-item {
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
 .stage-pos-right {
   top: 50%;
   right: 1.5rem;
@@ -141,12 +127,15 @@ function goToStage(index: number) {
   flex-direction: column;
 }
 
+/* Vertical positions: items stack, connectors run vertically */
+.stage-pos-left .stage-connector,
 .stage-pos-right .stage-connector {
   width: 1px;
   height: 1.5rem;
   margin: 0.25rem 0;
 }
 
+.stage-pos-left .stage-item,
 .stage-pos-right .stage-item {
   flex-direction: column;
   gap: 0.15rem;

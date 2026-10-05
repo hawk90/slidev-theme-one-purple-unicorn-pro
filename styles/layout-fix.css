@@ -33,6 +33,31 @@
 
 
 /* ============================================
+   Utility guards (kept for existing decks)
+   These change UnoCSS's grid / flex / absolute inside slides, and decks
+   rely on them. Each is a variable: e.g. --grid-padding-x: 0 turns the
+   grid padding off, --flex-wrap: nowrap keeps flex rows on one line.
+   ============================================ */
+.slidev-layout .grid {
+  max-width: 100%;
+}
+
+/* Same specificity as a single class, so utilities like px-0 still win */
+:where(.slidev-layout) .grid {
+  padding-left: var(--grid-padding-x, 2rem);
+  padding-right: var(--grid-padding-x, 2rem);
+}
+
+.slidev-layout .flex {
+  max-width: 100%;
+  flex-wrap: var(--flex-wrap, wrap);
+}
+
+.slidev-layout .absolute {
+  max-width: var(--absolute-max-width, calc(100% - 8rem));
+}
+
+/* ============================================
    Code Block Container
    ============================================ */
 .slidev-layout pre {

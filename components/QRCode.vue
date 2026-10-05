@@ -50,17 +50,8 @@ const imageSrc = computed(() => props.src || props.api.replace('{data}', encodeU
   text-align: center;
 }
 
-/* Sizes */
-.qrcode-sm .qrcode-img {
-  width: var(--qrcode-size, 120px);
-  height: var(--qrcode-size, 120px); width: 80px; height: 80px; }
-.qrcode-default .qrcode-img {
-  width: var(--qrcode-size, 120px);
-  height: var(--qrcode-size, 120px); width: 120px; height: 120px; }
-.qrcode-lg .qrcode-img {
-  width: var(--qrcode-size, 120px);
-  height: var(--qrcode-size, 120px); width: 180px; height: 180px; }
-.qrcode-xl .qrcode-img {
-  width: var(--qrcode-size, 120px);
-  height: var(--qrcode-size, 120px); width: 240px; height: 240px; }
+/* Size presets set --qrcode-size; size="150px" or an inline --qrcode-size wins */
+.qrcode-sm { --qrcode-size: 80px; }
+.qrcode-lg { --qrcode-size: 180px; }
+.qrcode-xl { --qrcode-size: 240px; }
 </style>

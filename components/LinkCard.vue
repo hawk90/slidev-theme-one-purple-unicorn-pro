@@ -90,6 +90,5 @@ defineProps({
 
 .link-card:hover .link-arrow {
   transform: translateX(3px);
-  color: var(--primary-400, #c678dd);
 }
 </style>

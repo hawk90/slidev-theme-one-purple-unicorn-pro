@@ -12,8 +12,8 @@
   display: none;
 }
 
-/* Only visible in presenter mode or when explicitly shown */
-.slidev-page.presenter .presenter-note,
+/* Only visible in the presenter view (.slidev-presenter) or with class="show" */
+.slidev-presenter .presenter-note,
 .presenter-note.show {
   display: flex;
   gap: 0.5rem;

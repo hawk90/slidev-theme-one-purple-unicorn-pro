@@ -63,14 +63,13 @@
   color: var(--content-marker);
 }
 
-/* ========== Cover/Intro/End/Section Overrides ========== */
-/* Background and centering come from CenteredSlide (layouts/*.vue) */
-.slidev-layout:is(.cover, .intro, .end, .section) {
+/* ========== Title layouts (cover, intro, section, end: root has `slide-title`) ========== */
+/* Background, centering and text alignment come from CenteredSlide (intro: `align` prop) */
+.slidev-layout.slide-title {
   color: var(--cover-text);
-  text-align: center;
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) h1 {
+.slidev-layout.slide-title h1 {
   font-size: 3rem;
   font-weight: 700;
   background: var(--cover-h1-gradient);
@@ -81,19 +80,18 @@
   margin: 0 0 2rem;
   position: static;
   top: auto;
-  text-align: center;
   height: auto;
   max-height: none;
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) h1 * {
+.slidev-layout.slide-title h1 * {
   background: inherit;
   -webkit-background-clip: inherit;
   background-clip: inherit;
   -webkit-text-fill-color: inherit;
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) h2 {
+.slidev-layout.slide-title h2 {
   font-size: 1.5rem;
   font-weight: 400;
   background: var(--cover-h2-gradient);
@@ -102,10 +100,9 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
   margin: 1rem 0;
-  text-align: center;
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) p {
+.slidev-layout.slide-title p {
   color: var(--cover-text);
   font-size: 1.125rem;
 }

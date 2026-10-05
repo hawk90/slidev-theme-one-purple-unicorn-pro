@@ -6,7 +6,6 @@
 @import './styles/layout.css';
 @import './styles/layout-fix.css';
 @import './styles/light-theme.css';
-@import './styles/dark-theme.css';
 @import './styles/code-theme.css';
 @import './styles/macos-buttons.css';
 /* Animation/hover utilities load after component styles (e.g. .card) so they win */

@@ -95,7 +95,7 @@ const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.ke
   min-width: 5.5rem;
   flex-shrink: 0;
   margin-top: 0.15rem;
-  color: color-mix(in srgb, var(--pattern-color) var(--ink-depth, 100%), black);
+  color: color-mix(in srgb, var(--pattern-color) var(--ink-depth, 100%), var(--ink-mix, black));
 }
 
 

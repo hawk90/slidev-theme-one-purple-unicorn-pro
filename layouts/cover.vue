@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout cover slide-dark slide-bare">
+  <div class="slidev-layout cover slide-title slide-dark slide-bare">
     <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
     </CenteredSlide>

@@ -1,9 +1,0 @@
-/* Dark Theme for One Purple Unicorn Pro */
-/* Dark is the default theme — main.css already applies dark colors.
-   This file only contains rules that MUST differ in dark mode
-   beyond what CSS variables handle automatically. */
-
-/* Force Shiki code blocks to dark background even if Slidev overrides */
-html.dark .shiki {
-  background: var(--bg-code) !important;
-}

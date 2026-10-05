@@ -3,7 +3,7 @@
     <div class="story-header">
       <span class="story-icon">{{ icon || iconMap[variant] || iconMap.history }}</span>
       <span class="story-title" v-html="richText(title)" />
-      <span v-if="year" class="story-year">{{ year }}</span>
+      <span v-if="year" class="story-year tint-chip">{{ year }}</span>
     </div>
     <div class="story-body">
       <slot />
@@ -73,8 +73,7 @@ const iconMap: Record<string, string> = {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
-  color: color-mix(in srgb, var(--story-color) var(--ink-depth, 100%), black);
-  background: color-mix(in srgb, var(--story-color) 15%, transparent);
+  --tint: var(--story-color);
   padding: 0.1rem 0.5rem;
   border-radius: 1rem;
   margin-left: auto;

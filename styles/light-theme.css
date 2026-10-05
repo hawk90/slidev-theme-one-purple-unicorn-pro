@@ -12,10 +12,6 @@
 
   --light-border: #e5e7eb;
   --light-border-light: #f3f4f6;
-
-  /* Code block keeps dark theme for contrast */
-  --light-code-bg: var(--one-dark-bg);
-  --light-code-fg: var(--one-dark-fg);
 }
 
 /* ============================================
@@ -26,16 +22,21 @@ html:not(.dark) .slidev-layout {
   color: var(--light-text-primary);
 }
 
-/* Light palette for content slides. Components and effects read these
-   variables (cards, tables, badges, kbd, animated boxes, ...), so they all
-   follow light mode from here. Dark layouts (`slide-dark`) are not matched
-   and keep the dark values from colors.css. Code blocks keep --bg-code. */
-html:not(.dark) .slidev-layout:not(.slide-dark) {
-  --bg-primary: var(--light-bg);
+/* Light palette for content slides and the slide chrome around them (stage
+   indicator, page number, progress bar sit outside .slidev-layout).
+   Components and effects read these variables, so they all follow light
+   mode from here. Dark layouts (`slide-dark`, chrome `.chrome-on-dark`) are
+   not matched and keep the dark values from colors.css. Code blocks keep
+   --bg-code. */
+html:not(.dark) :is(
+  .slidev-layout:not(.slide-dark),
+  .stage-progress:not(.chrome-on-dark),
+  .slide-indicator:not(.chrome-on-dark),
+  .progress-bar:not(.chrome-on-dark)
+) {
   --bg-secondary: var(--light-bg-secondary);
   --bg-tertiary: #eceef2;
-  --bg-overlay: rgba(255, 255, 255, 0.95);
-  --hover-bg: #eceef2;
+  --key-bg: var(--light-key-bg, #eceef2);
 
   --text-primary: var(--light-text-primary);
   --text-bright: var(--light-text-primary);
@@ -43,55 +44,45 @@ html:not(.dark) .slidev-layout:not(.slide-dark) {
   --text-muted: var(--light-text-muted);
 
   --border-default: var(--light-border);
-  --border-subtle: var(--light-border-light);
 
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 
   /* Accents: the One Dark pastels are ~2-3:1 on white; use deeper shades
-     (each >= 4.5:1 on white). Variables derived from them (--content-*)
-     resolve where they are declared, so they are re-declared here too. */
-  --one-dark-blue: #1f6fb2;
-  --one-dark-cyan: #157a87;
-  --one-dark-green: #3d7a1f;
-  --one-dark-yellow: #8a6200;
-  --one-dark-yellow-dark: #9a5b1e;
-  --one-dark-red: #b8323f;
-  --one-dark-purple: #9b3fb8;
-  --one-dark-magenta: #9b3fb8;
-  --primary-300: #8a3aa6;
-  --primary-400: #9b3fb8;
-  --primary-500: #8e3aa8;
-  --primary-600: #7f3396;
-  --secondary-400: #1f6fb2;
+     (each >= 4.5:1 on white). Override them with the --light-* variables
+     (e.g. on :root). Variables derived from them (--content-*) resolve where
+     they are declared, so they are re-declared here too. */
+  --one-dark-blue: var(--light-blue, #1f6fb2);
+  --one-dark-cyan: var(--light-cyan, #157a87);
+  --one-dark-green: var(--light-green, #3d7a1f);
+  --one-dark-yellow: var(--light-yellow, #8a6200);
+  --one-dark-yellow-dark: var(--light-orange, #9a5b1e);
+  --one-dark-red: var(--light-red, #b8323f);
+  --one-dark-purple: var(--light-magenta, #9b3fb8);
+  --one-dark-magenta: var(--light-magenta, #9b3fb8);
+  --primary-300: var(--light-primary-300, #8a3aa6);
+  --primary-400: var(--light-primary, #9b3fb8);
+  --primary-500: var(--light-primary-500, #8e3aa8);
+  --primary-600: var(--light-primary-600, #7f3396);
+  --secondary-400: var(--light-blue, #1f6fb2);
 
   --content-h2: var(--primary-400);
   --content-h3: var(--secondary-400);
   --content-h4: var(--primary-300);
   --content-marker: var(--primary-400);
-  --content-inline-code-color: var(--primary-400);
 
-  /* Small accent text on its own tint (badges, labels) mixes in this much
-     of its color with black, i.e. a slightly deeper ink */
+  /* Small accent text on its own tint: slightly deeper ink in light mode */
   --ink-depth: 80%;
+  --ink-mix: black;
+
+  --_progress-track-default: rgba(0, 0, 0, 0.06);
 }
 
 /* Dark layouts (root has `slide-dark`) keep a dark background in light mode */
 html:not(.dark) .slidev-layout.slide-dark {
   background: var(--dark-bg);
   color: var(--one-dark-fg-bright);
-}
-
-/* Slide chrome (stage indicator, page number, progress track) sits outside
-   .slidev-layout, so it needs its own light palette; over dark layouts it
-   keeps the dark-mode colors (.chrome-on-dark) */
-html:not(.dark) :is(.stage-progress, .slide-indicator, .progress-bar):not(.chrome-on-dark) {
-  --one-dark-green: #3d7a1f;
-  --primary-400: #9b3fb8;
-  --text-muted: var(--light-text-muted);
-  --progress-track: rgba(0, 0, 0, 0.06);
 }
 
 /* Slidev gives inline code a light background in light mode; inside dark
@@ -101,22 +92,11 @@ html:not(.dark) .slidev-layout.slide-dark :not(pre) > code {
   color: var(--primary-300);
 }
 
-/* Also apply to slide container in preview/overview */
-html:not(.dark) .slidev-overview .slidev-layout:not(.slide-dark),
-html:not(.dark) .slidev-presenter .slidev-layout:not(.slide-dark) {
-  background: var(--light-bg);
-  color: var(--light-text-primary);
-}
-
 /* ============================================
    Typography for Light Theme
    ============================================ */
 /* Content slides get heading/marker colors from styles/index.css;
    bare layouts (center, image, full-text, ...) get them here */
-html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h1 {
-  color: var(--light-text-primary);
-}
-
 html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h2 {
   color: var(--one-dark-blue);
 }

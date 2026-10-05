@@ -72,7 +72,7 @@ const progress = computed(() => {
   left: 0;
   width: 100%;
   height: var(--progress-height, 3px);
-  background: var(--progress-track, rgba(255, 255, 255, 0.06));
+  background: var(--progress-track, var(--_progress-track-default, rgba(255, 255, 255, 0.06)));
   z-index: 100;
   pointer-events: none;
 }

@@ -5,13 +5,8 @@
   --macos-blue: #007AFF;
   --macos-blue-hover: #0051D5;
   --macos-gray: #8E8E93;
-  --macos-gray-hover: #636366;
   --macos-red: #FF3B30;
   --macos-green: #34C759;
-  --macos-yellow: #FFCC00;
-  --macos-purple: #AF52DE;
-  --macos-pink: #FF2D55;
-  --macos-teal: #5AC8FA;
 
   /* macOS Button Backgrounds */
   --macos-button-bg: rgba(0, 0, 0, 0.05);
@@ -198,7 +193,6 @@ html.dark .btn-macos-toolbar:hover {
 }
 
 .btn-macos-regular {
-  /* Default size */
 }
 
 .btn-macos-large {

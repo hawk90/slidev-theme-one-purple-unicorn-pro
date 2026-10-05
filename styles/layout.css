@@ -6,17 +6,17 @@
    ============================================ */
 
 /* Dark theme tables for special layouts */
-.slidev-layout:is(.cover, .intro, .end, .section) table th {
+.slidev-layout.slide-title table th {
   background: var(--one-dark-bg-light);
   color: var(--one-dark-blue);
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) table td {
+.slidev-layout.slide-title table td {
   border-bottom: 1px solid rgba(171, 178, 191, 0.2);
-  color: var(--one-dark-fg);
+  color: var(--text-primary);
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) table tr:hover {
+.slidev-layout.slide-title table tr:hover {
   background: rgba(171, 178, 191, 0.05);
 }
 
@@ -25,30 +25,30 @@
    ============================================ */
 
 /* Dark theme lists for special layouts */
-.slidev-layout:is(.cover, .intro, .end, .section) ul li::marker {
+.slidev-layout.slide-title ul li::marker {
   color: var(--one-dark-cyan);
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) ol li::marker {
+.slidev-layout.slide-title ol li::marker {
   color: var(--one-dark-yellow);
 }
 
 /* ============================================
    Blockquotes (layout-specific overrides)
    ============================================ */
-.slidev-layout:is(.cover, .intro, .end, .section) blockquote {
+.slidev-layout.slide-title blockquote {
   border-left-color: var(--one-dark-magenta);
-  color: var(--one-dark-fg);
+  color: var(--text-primary);
 }
 
 /* ============================================
    Links (layout-specific overrides)
    ============================================ */
-.slidev-layout:is(.cover, .intro, .end, .section) a {
+.slidev-layout.slide-title a {
   color: var(--one-dark-cyan);
 }
 
-.slidev-layout:is(.cover, .intro, .end, .section) a:hover {
+.slidev-layout.slide-title a:hover {
   color: var(--one-dark-yellow);
 }
 
@@ -57,7 +57,7 @@
    ============================================ */
 /* strong color: same as main.css default (--one-dark-yellow), no override needed */
 
-.slidev-layout:is(.cover, .intro, .end, .section) em {
+.slidev-layout.slide-title em {
   color: var(--one-dark-cyan);
 }
 

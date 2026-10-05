@@ -5,7 +5,7 @@
       <div class="grid-col">
         <div
           v-if="labels[i]"
-          class="grid-label"
+          class="grid-label tint-chip"
           :class="`grid-label-${i}`"
           :style="labelColors[i] ? { '--label-color': labelColors[i] } : undefined"
         >
@@ -71,16 +71,12 @@ const gridStyle = computed(() => {
   border-radius: 1rem;
   width: fit-content;
   margin-bottom: 0.5rem;
+  --tint: var(--label-color);
 }
 
 .grid-label-0 { --label-color: var(--one-dark-blue, #61afef); }
 .grid-label-1 { --label-color: var(--one-dark-green, #98c379); }
 .grid-label-2 { --label-color: var(--one-dark-magenta, #c678dd); }
-
-.grid-label {
-  background: color-mix(in srgb, var(--label-color) 15%, transparent);
-  color: color-mix(in srgb, var(--label-color) var(--ink-depth, 100%), black);
-}
 
 
 </style>

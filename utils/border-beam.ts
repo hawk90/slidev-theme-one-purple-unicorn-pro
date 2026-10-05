@@ -26,11 +26,13 @@ function animate(el: HTMLElement) {
     [0, 0, perimeter],
   ]
   const frames = corners.map(([x, y, d]) => ({ '--ab-x': `${x}px`, '--ab-y': `${y}px`, offset: d / perimeter }))
-  const seconds = Number.parseFloat(getComputedStyle(el).getPropertyValue('--ab-duration')) || 6
+  const raw = getComputedStyle(el).getPropertyValue('--ab-duration').trim()
+  const ms = raw.endsWith('ms') ? Number.parseFloat(raw) : Number.parseFloat(raw) * 1000
+  const lapMs = Number.isFinite(ms) && ms > 0 ? ms : 6000
   try {
     const anim = el.animate(frames, {
       pseudoElement: '::before',
-      duration: (seconds * 1000 * perimeter) / REF_PERIMETER,
+      duration: (lapMs * perimeter) / REF_PERIMETER,
       iterations: Number.POSITIVE_INFINITY,
       direction: el.classList.contains('anim-border-ccw') ? 'reverse' : 'normal',
     })

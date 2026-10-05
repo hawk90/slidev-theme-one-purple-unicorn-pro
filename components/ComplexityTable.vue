@@ -1,6 +1,6 @@
 <template>
   <div class="complexity-table">
-    <div v-if="title" class="ct-title">{{ title }}</div>
+    <div v-if="title" class="ct-title tint-chip">{{ title }}</div>
     <table>
       <thead>
         <tr>
@@ -70,7 +70,7 @@ const columns = computed(() =>
 <style scoped>
 .complexity-table {
   margin: 0.75rem 0;
-  border-radius: 0.75rem;
+  border-radius: var(--table-radius, 0.75rem);
   overflow: hidden;
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
   background: var(--bg-secondary, #1e2030);
@@ -80,8 +80,8 @@ const columns = computed(() =>
   font-weight: 700;
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
-  background: color-mix(in srgb, var(--primary-400) 10%, transparent);
-  color: color-mix(in srgb, var(--primary-400, #c678dd) var(--ink-depth, 100%), black);
+  --tint: var(--primary-400, #c678dd);
+  --tint-amount: 10%;
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
   letter-spacing: 0.02em;
 }
@@ -128,7 +128,7 @@ tbody tr:hover {
   color: var(--text-primary, #dce0e8);
 }
 
-.complexity-table sup {
+.complexity-table :deep(sup) {
   font-size: 0.7em;
   line-height: 0;
 }
@@ -136,15 +136,13 @@ tbody tr:hover {
 .ct-n {
   font-family: var(--font-mono);
   font-weight: 600;
-  --ct-color: var(--one-dark-cyan, #56b6c2);
-  color: var(--ct-color);
+  color: var(--one-dark-cyan, #56b6c2);
   white-space: nowrap;
 }
 
 .ct-target {
   font-family: var(--font-mono);
-  --ct-color: var(--one-dark-yellow, #e5c07b);
-  color: var(--ct-color);
+  color: var(--one-dark-yellow, #e5c07b);
   white-space: nowrap;
 }
 
@@ -154,8 +152,7 @@ tbody tr:hover {
 
 .ct-complexity {
   font-family: var(--font-mono);
-  --ct-color: var(--one-dark-green, #98c379);
-  color: var(--ct-color);
+  color: var(--one-dark-green, #98c379);
   white-space: nowrap;
 }
 
