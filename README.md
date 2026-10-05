@@ -132,6 +132,19 @@ Layout names from 1.x still work. Each one is a preset of a current layout, and 
 | `full-center` | `layout: center` + `padding: 2rem` |
 | `full-dark` | Dark centered slide with a large heading (similar to `statement`) |
 
+## Progress Bar
+
+Set deck-wide options in the headmatter; a slide's own `progressBar` overrides it for that slide.
+
+```yaml
+---
+progressBar: content          # always (default) | content | false
+progressBarSkip: 2, 5-6       # pages without the bar (list, ranges, or an array)
+progressBarSkipMode: exclude  # hide (default): only hide the bar
+                              # exclude: also leave skipped pages out of the progress
+---
+```
+
 ## Color Palette
 
 - **Primary**: `#8b5cf6` (Purple)

@@ -14,31 +14,52 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 import { NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
+import { parsePageList } from './utils/pages'
 
-const { currentPage, total, currentLayout, currentSlideRoute } = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute, slides } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
-// progressBar frontmatter option:
+// Deck-wide options come from the headmatter (first slide's frontmatter);
+// a slide's own frontmatter overrides progressBar for that slide.
+const headmatter = computed(() => slides.value[0]?.meta?.slide?.frontmatter ?? {})
+const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
+
+// progressBar:
 //   "always" (default) → all slides
 //   "content"          → only where page number is shown (hides on cover/section/intro/end)
 //   false              → completely off
 const progressMode = computed(() => {
-  const val = currentSlideRoute.value?.meta?.slide?.frontmatter?.progressBar
+  const val = frontmatter.value.progressBar ?? headmatter.value.progressBar
   if (val === false || val === 'false') return 'off'
   if (val === 'content') return 'content'
   return 'always'
 })
 
+// progressBarSkip: pages without the bar, e.g. "1, 5, 10-12" or [1, 5, "10-12"]
+// progressBarSkipMode:
+//   "hide" (default) → only hide the bar on those pages
+//   "exclude"        → also leave them out of the progress calculation
+const skipPages = computed(() => parsePageList(headmatter.value.progressBarSkip))
+const excludeSkipped = computed(() => headmatter.value.progressBarSkipMode === 'exclude')
+
 const showBar = computed(() => {
+  if (skipPages.value.has(currentPage.value)) return false
   if (progressMode.value === 'off') return false
   if (progressMode.value === 'content') return !isHidden.value
   return true // always
 })
 
-const progress = computed(() =>
-  total.value > 1 ? ((currentPage.value - 1) / (total.value - 1)) * 100 : 0
-)
+const progress = computed(() => {
+  let page = currentPage.value
+  let count = total.value
+  if (excludeSkipped.value) {
+    const skipped = [...skipPages.value].filter(n => n <= count)
+    page -= skipped.filter(n => n < page).length
+    count -= skipped.length
+  }
+  return count > 1 ? ((page - 1) / (count - 1)) * 100 : 0
+})
 </script>
 
 <style scoped>
