@@ -13,7 +13,12 @@ if [ -f rust-toolchain.toml ] && command -v rustup >/dev/null 2>&1; then
   rustup show active-toolchain >/dev/null   # installs the pinned toolchain on first use
 fi
 if command -v corepack >/dev/null 2>&1; then
-  corepack enable >/dev/null 2>&1 || true   # honors "packageManager" in package.json
+  corepack enable >/dev/null 2>&1 || true   # pnpm/yarn shims only; corepack leaves npm alone
+fi
+want_npm=$(node -p 'require("./package.json").packageManager?.match(/^npm@(.+)$/)?.[1] ?? ""' 2>/dev/null || true)
+have_npm=$(npm -v 2>/dev/null || true)
+if [ -n "$want_npm" ] && [ "$want_npm" != "$have_npm" ]; then
+  echo "bootstrap: npm ${have_npm:-not found}, package.json wants npm@$want_npm — npm i -g npm@$want_npm" >&2
 fi
 
 scripts/sync-deps.sh --all

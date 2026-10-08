@@ -14,7 +14,7 @@ npm install
 
 ### 툴체인·훅 자동화
 
-- Node 24 (`.node-version`, mise가 자동 인식) / npm 12 (`packageManager`). `scripts/bootstrap.sh` 한 번이면 mise 설치 → corepack → `npm ci` → 훅 연결까지 끝납니다.
+- Node 24 (`.node-version`, mise가 자동 인식) / npm 12 (`packageManager`). npm은 corepack이 관리하지 않으니 `npm i -g npm@<버전>`으로 직접 맞추세요. 버전이 다르면 bootstrap이 경고합니다. `scripts/bootstrap.sh` 한 번이면 mise 설치 → npm 버전 확인 → `npm ci` → 훅 연결까지 끝납니다.
 - `.githooks/`의 post-merge / post-checkout / post-rewrite 훅이 `scripts/sync-deps.sh`를 불러, `package-lock.json`이 바뀐 pull·checkout 뒤에만 `npm ci`를 다시 돌립니다.
 - 의존성 업데이트는 Renovate(`renovate.json`)가 월요일 아침에 묶음 PR로 올립니다. CI가 없는 저장소라 자동 머지는 꺼져 있습니다.
 
