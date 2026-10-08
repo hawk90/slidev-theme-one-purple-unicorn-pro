@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+# $1 = "amend" or "rebase". Only rebase moves ORIG_HEAD; amend leaves a stale one behind.
+[ "${1:-}" = rebase ] || exit 0
 exec "$(git rev-parse --show-toplevel)/scripts/sync-deps.sh"
