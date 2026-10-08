@@ -268,6 +268,10 @@ Light-mode accents are deeper so text stays readable (≥ 4.5:1) on white. To re
 }
 ```
 
+## Development
+
+Working on the theme itself needs Node 24 and npm 12 (checked through `devEngines`). Run `scripts/bootstrap.sh` once, then `cd example && npm run dev`. See [DEV.md](DEV.md) (Korean) for the workflow, conventions and release steps.
+
 ## License
 
 [MIT](LICENSE)

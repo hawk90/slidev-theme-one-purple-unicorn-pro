@@ -2,21 +2,26 @@
 
 ## 개발 환경 설정
 
+### 요구 사항
+- **Node 24**: `.node-version`에 고정돼 있고, mise·fnm이 자동으로 읽어요.
+- **npm 12**: `npm i -g npm@12`로 맞추세요.
+- 둘 다 `package.json`의 `devEngines`로 검사해요. 버전이 다르면 npm이 `install`·`ci`·`run`을 멈춰요(`EBADDEVENGINES`). 테마를 설치해서 쓰는 사람에게는 적용되지 않아요.
+
 ### 초기 설정 (최초 1회)
 ```bash
-# 테마 루트: setup/·utils/ 가 쓰는 의존성(@slidev/types, katex)
-npm install
-
-# 예시 덱: Slidev CLI
-cd example
-npm install
+scripts/bootstrap.sh   # mise install(Node) → 루트 npm ci, example/ npm install → git 훅 연결
+```
+다시 돌려도 안전해요. 수동으로 하려면:
+```bash
+npm ci                                  # 테마 루트: setup/·utils/ 가 쓰는 의존성(@slidev/types, katex)
+(cd example && npm install)             # 예시 덱: Slidev CLI (lockfile은 커밋하지 않음)
+git config core.hooksPath .githooks
 ```
 
-### 툴체인·훅 자동화
-
-- Node 24 (`.node-version`, mise가 자동 인식) / npm 12. `package.json`의 `devEngines`로 npm이 `install`·`ci`·`run` 전에 직접 검사하고, 버전이 다르면 멈춥니다. npm은 `npm i -g npm@12`로 맞추세요. `scripts/bootstrap.sh` 한 번이면 mise 설치 → `npm ci` → 훅 연결까지 끝납니다.
-- `.githooks/`의 post-merge / post-checkout / post-rewrite 훅이 `scripts/sync-deps.sh`를 불러, `package-lock.json`이 바뀐 pull·checkout 뒤에만 `npm ci`를 다시 돌립니다. lockfile을 커밋하지 않는 `example/`은 `package.json`이 바뀌면 `npm install`을 돌립니다(bootstrap 때도 설치).
-- 의존성 업데이트는 Renovate(`renovate.json`)가 월요일 아침에 묶음 PR로 올립니다. CI가 없는 저장소라 자동 머지는 꺼져 있습니다.
+### 의존성 자동 동기화
+- `.githooks/`의 post-merge / post-checkout / post-rewrite 훅이 `scripts/sync-deps.sh`를 불러요. pull·checkout·rebase 뒤에 `package-lock.json`이 바뀌었을 때만 `npm ci`를 다시 돌리고, `commit --amend` 때는 건너뛰어요.
+- lockfile을 커밋하지 않는 `example/`은 `package.json`이 바뀌면 `npm install`을 돌려요.
+- 의존성 업데이트는 Renovate(`renovate.json`)가 월요일 아침에 묶음 PR로 올려요. CI가 없는 저장소라 자동 머지는 꺼져 있어요.
 
 ### 개발 워크플로우
 ```bash
@@ -62,6 +67,12 @@ slidev-theme-one-purple-unicorn-pro/
 ## 검증
 
 변경 전후로 데모 덱 전체를 다크·라이트로 캡처해서 비교하면 의도하지 않은 변경을 잡을 수 있어요. 특히 선택자 우선순위를 바꾸는 리팩터링은 꼭 비교하세요.
+
+배포 전에는 이 테마를 쓰는 실제 덱으로 확인하세요. 덱마다 지금 쓰는 테마와 이 저장소의 테마로 각각 Slidev를 띄워 모든 슬라이드를 캡처하고, 달라진 슬라이드를 diff 이미지와 함께 `./deck-check`에 남겨요. 덱 프로젝트는 건드리지 않아요.
+```bash
+npm run check:decks -- ../career_slide/slides.md --mode both
+# --pages 1-20, --current <theme>(테마를 CLI로 지정하는 덱), --out <dir>, --threshold <pixels>
+```
 
 ## 배포
 
