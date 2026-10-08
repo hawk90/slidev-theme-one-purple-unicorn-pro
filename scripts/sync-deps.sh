@@ -7,7 +7,7 @@
 #   scripts/sync-deps.sh --all           # install everything (bootstrap / fresh clone)
 #
 # Runs npm ci / pnpm install --frozen-lockfile / cargo fetch only for the lockfiles that
-# changed. Never runs in CI. Exit code is 0 even if an install fails, so a hook can't
+# changed, and npm install for a changed package.json that has no tracked lockfile. Never runs in CI. Exit code is 0 even if an install fails, so a hook can't
 # block git; failures are printed.
 set -u
 cd "$(git rev-parse --show-toplevel)" || exit 0
@@ -42,6 +42,13 @@ while IFS= read -r lock; do [ -n "$lock" ] || continue
   d=$(dirname "$lock"); [ -f "$d/package.json" ] || continue
   run "$d" "pnpm install --frozen-lockfile" pnpm install --frozen-lockfile
 done < <(changed 'pnpm-lock.yaml' '*/pnpm-lock.yaml' '**/pnpm-lock.yaml' | grep -v node_modules | sort -u)
+
+# package.json with no tracked lockfile (e.g. a gitignored example/package-lock.json): npm install
+while IFS= read -r pkg; do [ -n "$pkg" ] || continue
+  d=$(dirname "$pkg")
+  [ -n "$(git ls-files -- "$d/package-lock.json" "$d/pnpm-lock.yaml")" ] && continue
+  run "$d" "npm install" npm install --no-fund --no-audit
+done < <(changed 'package.json' '*/package.json' '**/package.json' | grep -v node_modules | sort -u)
 
 while IFS= read -r lock; do [ -n "$lock" ] || continue
   d=$(dirname "$lock"); [ -f "$d/Cargo.toml" ] || continue
