@@ -1,6 +1,10 @@
 /* Dark Unicorn Theme - One Dark Pro Color System */
 
-:root {
+/* The dark palette: the page default, and in light mode (which re-declares
+   these on <body>, light-theme.css) what dark layouts (`slide-dark`) and the
+   chrome over them (`chrome-on-dark`) go back to */
+:root,
+html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
   /* Fonts come from the deck's `fonts:` headmatter (defaults in package.json);
      Slidev exposes the mono stack as --slidev-code-font-family */
   --font-mono: var(--slidev-code-font-family, 'JetBrains Mono', monospace);
@@ -84,6 +88,9 @@
   --cover-text: var(--dark-fg);
   --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
   --cover-h2-gradient: linear-gradient(135deg, #a78bfa, #60a5fa);
+
+  /* Light-mode only; unset so the dark fallbacks apply again */
+  --_progress-track-default: initial;
 
   /* Transitions */
   --transition-fast: 150ms ease;
