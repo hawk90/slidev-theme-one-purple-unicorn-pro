@@ -3,6 +3,19 @@
    This file forces dark background on code blocks
    even when Slidev tries to override it. */
 
+/* Nerd Font icons in code (zsh/powerline prompts, , , …): the symbols-only
+   font is bundled (MIT, fonts/), used for the Private Use Area only, after the
+   deck's code font, and loaded only where such a glyph appears */
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/SymbolsNerdFontMono-Regular.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+E000-F8FF, U+F0000-FFFFD;
+}
+.slidev-layout pre.slidev-code {
+  font-family: var(--font-mono) !important;
+}
+
 /* Force dark background on code blocks in slides (not Slidev's editor) */
 :where(.slidev-layout) pre,
 :where(.slidev-layout) .shiki,
@@ -17,6 +30,176 @@
 :where(.slidev-layout) .slidev-monaco-container {
   --slidev-code-background: var(--bg-code, #21252b);
   text-align: left;
+}
+
+/* Code lines start at the left on centered layouts too (cover, center…) */
+:where(.slidev-layout) :is(.slidev-code-wrapper, pre) {
+  text-align: left;
+}
+
+/* A block's title (```ts [file.ts]) and code groups (::code-group): one
+   window, a title bar with macOS dots over the code. The frame (border,
+   corners, shadow) is on the outer box only, so bar and code line up. Dark in
+   both modes, like the code. Variables: --code-title-bg, --code-title-color,
+   --code-title-dots (none hides the dots) */
+:where(.slidev-layout) :is(.slidev-code-wrapper:has(> .slidev-code-block-title), .slidev-code-group) {
+  border: 1px solid var(--_root-border-default, rgba(171, 178, 191, 0.15));
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-code, #21252b);
+}
+:where(.slidev-layout) :is(.slidev-code-block-title, .slidev-code-group-tabs) {
+  background: var(--code-title-bg, #1b1e23);
+  color: var(--code-title-color, var(--_root-text-muted, #858c98));
+  border-radius: 0;
+  box-shadow: inset 0 -1px rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  /* Slidev's tab colors are dark in light mode; the bar is dark in both */
+  --slidev-code-tab-text-color: var(--code-title-color, var(--_root-text-muted, #858c98));
+  --slidev-code-tab-active-text-color: var(--_root-text-bright, #e6e6e6);
+}
+:where(.slidev-layout) .slidev-code-block-title {
+  padding: 0.45rem 0.75rem;
+}
+/* Names start right after the dots, at the same place in titles and tabs:
+   the same side padding, and no file-type icon. Slidev adds an icon slot only
+   for names it knows (.ts, npm…, not kernel.cu), and it stays empty unless the
+   deck installs @iconify-json/vscode-icons, so names moved from block to block */
+:where(.slidev-layout) .slidev-code-group-tabs {
+  padding: 0 0.75rem;
+  gap: 0;
+}
+:where(.slidev-layout) :is(.slidev-code-block-title, .slidev-code-tab) > :not(:last-child) {
+  display: none;
+}
+/* Tabs as tall as a title bar; the active one is underlined under its label
+   only (Slidev underlines the whole tab, icon slot and padding included) */
+:where(.slidev-layout) .slidev-code-group-tabs .slidev-code-tab {
+  padding: 0.45rem 0.5rem;
+  font-size: inherit; /* the bar's size, as in a title */
+  border-bottom: 0 !important;
+}
+:where(.slidev-layout) .slidev-code-group-tabs .slidev-code-tab > :last-child {
+  position: relative;
+  line-height: 1em; /* as the title's label: same bar height */
+}
+:where(.slidev-layout) .slidev-code-group-tabs .slidev-code-tab[style*="tab-active-text-color"] > :last-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.45rem; /* at the bar's edge */
+  height: 2px;
+  border-radius: 1px;
+  background: var(--_root-primary-400, #c678dd);
+}
+:where(.slidev-layout) :is(.slidev-code-block-title, .slidev-code-group-tabs)::before {
+  content: '';
+  display: var(--code-title-dots, block);
+  flex: none;
+  width: 2.5rem;
+  height: 0.6rem;
+  margin-right: 0.5rem;
+  background:
+    radial-gradient(circle at 0.3rem 50%, #ff5f57 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 1.25rem 50%, #febc2e 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 2.2rem 50%, #28c840 0.28rem, transparent 0.3rem);
+}
+/* The code inside the window: no frame of its own (Slidev's radius is !important) */
+:where(.slidev-layout) :is(.slidev-code-wrapper:has(> .slidev-code-block-title), .slidev-code-group) pre.slidev-code {
+  margin: 0;
+  border: none;
+  border-radius: 0 !important;
+  box-shadow: none;
+}
+
+/* Code lines. Never a scrollbar in a slide's code: long lines wrap instead
+   (a scrolled block can't be read on a projector or in a PDF); with
+   --code-max-height set, what doesn't fit is cut off. Each line is its own
+   box, so wrapped text hangs under the code (not under a line number) and a
+   focus tint spans the whole row. */
+.slidev-layout pre.slidev-code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden !important;
+}
+.slidev-layout pre.slidev-code code {
+  display: block;
+}
+.slidev-layout pre.slidev-code .line {
+  --_indent: 2ch; /* a wrapped line's hang */
+  --_lead: 0px; /* room on the left: the line-number gutter */
+  --_shift: 0px; /* a focused line reaching into the block's padding */
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  width: 100%;
+  line-height: var(--slidev-code-line-height, 18px);
+  min-height: var(--slidev-code-line-height, 18px); /* an empty line keeps its row (a focus tint has no gap) */
+  padding-left: calc(var(--_shift) + var(--_lead) + var(--_indent));
+  text-indent: calc(-1 * var(--_indent));
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Line numbers (Slidev: `lineNumbers: true` in the headmatter for the deck,
+   {lines:true} / {lines:false} on a block, {startLine:10}): "12 │ code", a
+   gutter for three digits, then a rule. Variables: --code-ln-color,
+   --code-ln-rule */
+.slidev-layout .slidev-code-line-numbers pre.slidev-code .line {
+  --_lead: calc(3ch + 0.6rem + 1rem); /* number, space, rule, space */
+}
+.slidev-layout .slidev-code-line-numbers pre.slidev-code .line::before {
+  position: absolute;
+  left: var(--_shift);
+  top: 0;
+  width: 3ch;
+  margin: 0;
+  text-indent: 0;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--code-ln-color, var(--_root-text-muted, #858c98));
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+/* The rule is drawn once behind the numbers, so dimmed lines don't fade it */
+.slidev-layout .slidev-code-line-numbers pre.slidev-code code {
+  background-image: linear-gradient(var(--code-ln-rule, rgba(255, 255, 255, 0.12)), var(--code-ln-rule, rgba(255, 255, 255, 0.12)));
+  background-size: 1px 100%;
+  background-position: calc(3ch + 0.6rem) 0;
+  background-repeat: no-repeat;
+}
+
+/* Line focus ({2-3}, click steps {1|2-3|all}), one of two styles:
+   - dim (default): the other lines are dimmed, less than Slidev's 0.3 so
+     they stay readable on a projector (--code-dim-opacity, 0.45);
+   - tint (`code-focus-tint`: a slide's `class`, or themeConfig codeFocus:
+     tint for the deck): nothing dimmed, the focused lines get a tint
+     (--code-focus-bg), for readers who find dimmed text hard to read. */
+.slidev-layout .slidev-code .slidev-code-dishonored {
+  opacity: var(--code-dim-opacity, 0.45);
+}
+/* Only when some lines are not focused (all focused = nothing to mark); the
+   tint reaches into the left padding, not past the right edge (a scrollbar) */
+.slidev-layout pre.slidev-code:has(.slidev-code-dishonored) .slidev-code-highlighted {
+  --_shift: var(--slidev-code-padding, 0.75rem);
+  width: calc(100% + var(--_shift));
+  margin-left: calc(-1 * var(--_shift));
+  background: var(--code-focus-bg, transparent);
+}
+/* Shell output (setup/terminal-transformer.ts): lines after a `$ ` prompt
+   that are not commands. Variable: --code-output-color */
+.slidev-layout pre.slidev-code .line-output,
+.slidev-layout pre.slidev-code .line-output span {
+  color: var(--code-output-color, var(--_root-text-secondary, #939aa3)) !important;
+}
+
+:is(.code-focus-tint, html.code-focus-tint .slidev-layout) {
+  --code-dim-opacity: 1;
+  --code-focus-bg: rgba(255, 255, 255, 0.1);
 }
 
 /* Scrollbar styling for code blocks */

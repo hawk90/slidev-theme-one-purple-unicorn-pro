@@ -29,6 +29,7 @@
     "email": "hawking90a@gmail.com"
   },
   "files": [
+    "fonts/**/*",
     "layouts/**/*",
     "components/**/*",
     "styles/**/*",

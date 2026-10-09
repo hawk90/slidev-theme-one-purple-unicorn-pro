@@ -2,8 +2,9 @@
 
 :root {
   /* Fonts come from the deck's `fonts:` headmatter (defaults in package.json);
-     Slidev exposes the mono stack as --slidev-code-font-family */
-  --font-mono: var(--slidev-code-font-family, 'JetBrains Mono', monospace);
+     Slidev exposes the mono stack as --slidev-code-font-family. Nerd Font
+     icons (prompt glyphs) come last, from the bundled symbols font */
+  --font-mono: var(--slidev-code-font-family, 'JetBrains Mono', monospace), 'Symbols Nerd Font Mono';
 
   /* One Dark Pro Base Colors */
   --one-dark-bg: #2e323b;

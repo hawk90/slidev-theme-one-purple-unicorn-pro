@@ -9,7 +9,7 @@ A Slidev theme with purple → blue gradients and One Dark colors, built for tec
 - **Layouts**: title, columns, image/iframe, quote/statement/fact, full-bleed
 - **Components**: badges, keys, footnotes, link cards, story boxes, pattern cards, complexity tables (with KaTeX), timelines, countdown, QR codes
 - **Effects**: animated borders, shimmer, glow, gradient text, entrance animations, hover effects
-- **Code**: custom One Dark-based Shiki theme (incl. CUDA/C++ keywords)
+- **Code**: custom One Dark-based Shiki theme (incl. CUDA/C++ keywords), window title bars, line numbers, line focus, shell sessions, Nerd Font icons; long lines wrap (never a scrollbar)
 - **Customizable**: every size, color and speed has a default and a variable or prop
 
 ## Installation
@@ -125,6 +125,23 @@ Layout names from 1.x still work as presets of current layouts; frontmatter valu
 | `two-cols-header` | `two-cols` |
 | `comparison` | `two-cols` + `divider: true`, `leftLabel: Before`, `rightLabel: After` |
 | `full-center` | `center` + `padding: 2rem` |
+
+## Code Blocks
+
+Code uses Slidev's own syntax; the theme styles it:
+
+````md
+```ts [src/kernel.ts] {2|3-4|all}{lines:true}
+…
+```
+````
+
+- **Title** (`[file.ts]`, and `::code-group` tabs): a window bar with macOS dots over the code. `--code-title-dots: none` hides the dots; `--code-title-bg`, `--code-title-color`.
+- **Line numbers** (`lineNumbers: true` in the headmatter, or `{lines:true}` / `{lines:false}` on a block, `{startLine:10}`): `12 │ code`. `--code-ln-color`, `--code-ln-rule`.
+- **Line focus** (`{2-3}`, or per click `{1|2-3|all}`): the other lines are dimmed (`--code-dim-opacity`, 0.45). `class: code-focus-tint` on a slide (or `themeConfig: { codeFocus: tint }` for the deck) dims nothing and tints the focused lines instead (`--code-focus-bg`).
+- **Shell sessions**: in a `bash` / `sh` / `zsh` / `console` block with prompt lines (`$ cmd`, `% cmd`, or a themed prompt ending in `❯` / `➜`), the other lines are output, shown muted (`--code-output-color`). Use ```` ```bash [zsh] ```` for a terminal window; `tree` output works as a file tree.
+- **Nerd Font icons** (powerline prompts and the like) render everywhere, exports included: the theme bundles the symbols-only Nerd Font (MIT), loaded only on slides that use one.
+- **Long lines wrap** under their code, never a scrollbar. Code blocks have no height cap unless you set `--code-max-height` or Slidev's `{maxHeight:'…'}`; what doesn't fit is then cut off, not scrolled.
 
 ## Components
 
@@ -245,7 +262,7 @@ Every value below defaults to the theme's look.
 |---|---|
 | Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-title-top`, `--slide-font-size` |
 | Emphasis layouts | `--quote-mark-size`, `--quote-size`, `--statement-size`, `--fact-size`, `--full-text-padding` |
-| Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; e.g. `330px` makes longer code scroll) |
+| Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; code that doesn't fit is cut off, never scrolled) |
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
