@@ -13,10 +13,24 @@
   --macos-button-bg-hover: rgba(0, 0, 0, 0.08);
   --macos-button-border: rgba(0, 0, 0, 0.12);
 
+  --macos-button-bg-active: rgba(0, 0, 0, 0.1);
+  --macos-button-text: var(--light-text-primary);
+
   /* Dark mode variants */
   --macos-dark-button-bg: rgba(255, 255, 255, 0.1);
   --macos-dark-button-bg-hover: rgba(255, 255, 255, 0.15);
   --macos-dark-button-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode, and dark layouts in light mode: the base button switches by
+   variables, so the color variants below (same specificity, later) still win */
+html.dark,
+.slide-dark {
+  --macos-button-bg: var(--macos-dark-button-bg);
+  --macos-button-bg-hover: var(--macos-dark-button-bg-hover);
+  --macos-button-bg-active: rgba(255, 255, 255, 0.2);
+  --macos-button-border: var(--macos-dark-button-border);
+  --macos-button-text: rgba(255, 255, 255, 0.85);
 }
 
 /* ============================================
@@ -42,7 +56,7 @@
   background: var(--macos-button-bg);
   border: 1px solid var(--macos-button-border);
   border-radius: var(--macos-radius, 6px);
-  color: var(--light-text-primary);
+  color: var(--macos-button-text);
 
   /* Behavior */
   cursor: default;
@@ -60,7 +74,7 @@
 
 /* Active state */
 .btn-macos:active {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--macos-button-bg-active);
   transform: scale(0.97);
 }
 
@@ -108,7 +122,7 @@
 }
 
 /* Dark mode secondary */
-html.dark .btn-macos-secondary {
+:is(html.dark, .slide-dark) .btn-macos-secondary {
   background: linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 100%);
   border: 1px solid #545456;
   color: #FFFFFF;
@@ -159,7 +173,7 @@ html.dark .btn-macos-secondary {
   color: var(--light-text-primary);
 }
 
-html.dark .btn-macos-toolbar:hover {
+:is(html.dark, .slide-dark) .btn-macos-toolbar:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
@@ -304,18 +318,6 @@ html.dark .btn-macos-toolbar:hover {
   background: #28CA42;
 }
 
-.macos-traffic-lights:hover .macos-traffic-light.close {
-  background: #FF5F57;
-}
-
-.macos-traffic-lights:hover .macos-traffic-light.minimize {
-  background: #FFBD2E;
-}
-
-.macos-traffic-lights:hover .macos-traffic-light.maximize {
-  background: #28CA42;
-}
-
 /* Symbols on hover */
 .macos-traffic-light::after {
   content: '';
@@ -330,19 +332,3 @@ html.dark .btn-macos-toolbar:hover {
   opacity: 1;
 }
 
-/* ============================================
-   Dark Theme Adjustments
-   ============================================ */
-html.dark .btn-macos {
-  background: var(--macos-dark-button-bg);
-  border-color: var(--macos-dark-button-border);
-  color: rgba(255, 255, 255, 0.85);
-}
-
-html.dark .btn-macos:hover {
-  background: var(--macos-dark-button-bg-hover);
-}
-
-html.dark .btn-macos:active {
-  background: rgba(255, 255, 255, 0.2);
-}

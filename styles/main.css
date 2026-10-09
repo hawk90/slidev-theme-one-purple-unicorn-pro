@@ -4,7 +4,7 @@
    Base Layout
    ============================================ */
 .slidev-layout {
-  background: var(--dark-bg, #1a1b26);
+  background: var(--slide-bg, var(--dark-bg, #1a1b26)); /* light mode: light-theme.css */
   color: var(--text-primary);
   position: relative;
   /* Korean: wrap between words, not inside them (browsers break Hangul at any
@@ -17,7 +17,7 @@
 /* ============================================
    Typography
    ============================================ */
-h1 {
+:where(.slidev-layout) h1 {
   font-size: 1.75rem;  /* Slidev-optimized size */
   font-weight: 800;
   background: var(--gradient-primary);
@@ -29,7 +29,7 @@ h1 {
   letter-spacing: -0.02em;
 }
 
-h2 {
+:where(.slidev-layout) h2 {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-400);
@@ -37,12 +37,12 @@ h2 {
 }
 
 /* First h2 right after h1 needs no top margin */
-h1 + h2 {
+:where(.slidev-layout) h1 + h2 {
   margin-top: 0;
 }
 
 
-h3 {
+:where(.slidev-layout) h3 {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--secondary-400);
@@ -50,35 +50,35 @@ h3 {
 }
 
 /* First h3 right after h2 needs less top margin */
-h2 + h3 {
+:where(.slidev-layout) h2 + h3 {
   margin-top: 0.3rem;
 }
 
-h4 {
+:where(.slidev-layout) h4 {
   font-size: 1rem;
   font-weight: 600;
   color: var(--primary-300);
   margin: 0.5rem 0 0.2rem;
 }
 
-p {
+:where(.slidev-layout) p {
   line-height: 1.4;
   margin: 0.5rem 0;
   color: var(--text-primary);
   font-size: 0.9rem;
 }
 
-strong, b {
+:where(.slidev-layout) strong, :where(.slidev-layout) b {
   color: var(--one-dark-yellow);
   font-weight: 800;
 }
 
-em {
+:where(.slidev-layout) em {
   color: var(--primary-300);
   font-style: italic;
 }
 
-mark {
+:where(.slidev-layout) mark {
   background: linear-gradient(120deg, var(--primary-900) 0%, var(--primary-800) 100%);
   color: var(--primary-100);
   padding: 0.125rem 0.375rem;
@@ -143,7 +143,7 @@ mark {
 /* ============================================
    Links
    ============================================ */
-a {
+:where(.slidev-layout) a {
   color: var(--primary-400);
   text-decoration: none;
   position: relative;
@@ -151,7 +151,7 @@ a {
   transition: color 0.2s;
 }
 
-a::after {
+:where(.slidev-layout) a::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -162,33 +162,33 @@ a::after {
   transition: width 0.3s ease;
 }
 
-a:hover {
+:where(.slidev-layout) a:hover {
   color: var(--primary-300);
 }
 
-a:hover::after {
+:where(.slidev-layout) a:hover::after {
   width: 100%;
 }
 
 /* ============================================
    Lists
    ============================================ */
-ul, ol {
+:where(.slidev-layout) ul, :where(.slidev-layout) ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
 }
 
-ul {
+:where(.slidev-layout) ul {
   list-style-type: disc;
   list-style-position: outside;
 }
 
-ol {
+:where(.slidev-layout) ol {
   list-style-type: decimal;
   list-style-position: outside;
 }
 
-li {
+:where(.slidev-layout) li {
   margin: 0.3rem 0;
   color: var(--text-primary);
   line-height: 1.4;
@@ -197,16 +197,16 @@ li {
   display: list-item;
 }
 
-li::marker {
+:where(.slidev-layout) li::marker {
   color: var(--primary-500);
 }
 
 /* Checkbox list items — hide bullet, add spacing */
-li:has(> input[type="checkbox"]) {
+:where(.slidev-layout) li:has(> input[type="checkbox"]) {
   list-style: none;
 }
 
-li > input[type="checkbox"] {
+:where(.slidev-layout) li > input[type="checkbox"] {
   margin-right: 0.5rem;
 }
 
@@ -217,7 +217,7 @@ li > input[type="checkbox"] {
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  max-height: 70vh;
+  max-height: var(--image-max-height, 386px); /* 70% of the slide, not of the window */
   width: auto;
   height: auto;
   object-fit: contain;
@@ -226,7 +226,7 @@ li > input[type="checkbox"] {
 /* ============================================
    Tables
    ============================================ */
-table {
+:where(.slidev-layout) table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
@@ -240,18 +240,18 @@ table {
 
 /* Tables do not clip their cells to border-radius, so a hovered or shaded
    corner row would show square corners; round the corner cells too */
-:is(thead, tbody:first-child) > tr:first-child > :first-child { border-top-left-radius: var(--table-radius, 0.75rem); }
-:is(thead, tbody:first-child) > tr:first-child > :last-child  { border-top-right-radius: var(--table-radius, 0.75rem); }
-tbody:last-child > tr:last-child > :first-child { border-bottom-left-radius: var(--table-radius, 0.75rem); }
-tbody:last-child > tr:last-child > :last-child  { border-bottom-right-radius: var(--table-radius, 0.75rem); }
+:where(.slidev-layout) :is(thead, tbody:first-child) > tr:first-child > :first-child { border-top-left-radius: var(--table-radius, 0.75rem); }
+:where(.slidev-layout) :is(thead, tbody:first-child) > tr:first-child > :last-child { border-top-right-radius: var(--table-radius, 0.75rem); }
+:where(.slidev-layout) tbody:last-child > tr:last-child > :first-child { border-bottom-left-radius: var(--table-radius, 0.75rem); }
+:where(.slidev-layout) tbody:last-child > tr:last-child > :last-child { border-bottom-right-radius: var(--table-radius, 0.75rem); }
 
 .table-square { --table-radius: 0; }
 
-thead {
+:where(.slidev-layout) thead {
   background: var(--gradient-subtle);
 }
 
-th {
+:where(.slidev-layout) th {
   color: var(--text-primary);
   padding: 0.6rem 0.75rem;
   text-align: left;
@@ -261,7 +261,7 @@ th {
   letter-spacing: 0.05em;
 }
 
-td {
+:where(.slidev-layout) td {
   padding: 0.5rem 0.75rem;
   border-top: 1px solid var(--border-default);
   color: var(--text-primary);
@@ -270,11 +270,11 @@ td {
 
 /* Code chips in table cells stay on one line (the column widens instead of
    the chip breaking and overlapping the next line) */
-td code:not(pre code) {
+:where(.slidev-layout) td code:not(pre code) {
   white-space: nowrap;
 }
 
-tbody tr:hover {
+:where(.slidev-layout) tbody tr:hover {
   background: var(--bg-tertiary);
 }
 
@@ -295,7 +295,7 @@ table.table-auto { width: auto; }
 /* ============================================
    Blockquotes
    ============================================ */
-blockquote {
+:where(.slidev-layout) blockquote {
   border-left: 3px solid var(--primary-500);
   background: var(--bg-secondary);
   padding: 1rem 1.5rem;
@@ -305,7 +305,7 @@ blockquote {
   color: var(--text-secondary);
 }
 
-blockquote p:last-child {
+:where(.slidev-layout) blockquote p:last-child {
   margin-bottom: 0;
 }
 
@@ -320,7 +320,7 @@ blockquote p:last-child {
   border-radius: var(--card-radius, 0.75rem);
   padding: var(--card-padding, 1.5rem);
   margin: var(--card-margin, 1.5rem 0);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
 }

@@ -17,10 +17,8 @@
 /* ============================================
    Light Layout Base - content slides default to white
    ============================================ */
-html:not(.dark) .slidev-layout {
-  background: var(--light-bg);
-  color: var(--light-text-primary);
-}
+/* Through --slide-bg (main.css) and --text-primary, so a slide's own
+   background or text color class still wins, as in dark mode */
 
 /* Light palette, for the whole page: content slides, the slide chrome
    (stage indicator, page number, progress bar) and anything else a deck or
@@ -31,6 +29,7 @@ html:not(.dark) .slidev-layout {
    root: variables derived at the root (--error, --gradient-primary, …) keep
    their dark-mode values, as before. */
 html:not(.dark) body {
+  --slide-bg: var(--light-bg);
   --bg-secondary: var(--light-bg-secondary);
   --bg-tertiary: #eceef2;
   --key-bg: var(--light-key-bg, #eceef2);
@@ -76,11 +75,6 @@ html:not(.dark) body {
   --_progress-track-default: rgba(0, 0, 0, 0.06);
 }
 
-/* Dark layouts (root has `slide-dark`) keep a dark background in light mode */
-html:not(.dark) .slidev-layout.slide-dark {
-  background: var(--dark-bg);
-  color: var(--one-dark-fg-bright);
-}
 
 /* Slidev gives inline code a light background in light mode; inside dark
    layouts keep the dark-mode chip so it is not pastel-on-white */
@@ -110,15 +104,15 @@ html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
   color: var(--one-dark-blue);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) p {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) p {
   color: var(--light-text-secondary);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) strong {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) strong {
   color: var(--light-text-primary);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) em {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) em {
   color: var(--one-dark-yellow-dark);
 }
 
@@ -134,18 +128,18 @@ html:not(.dark) .slidev-layout:not(.slide-dark) :not(pre) > code {
 /* ============================================
    Links for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) a {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) a {
   color: var(--one-dark-blue);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) a:hover {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) a:hover {
   color: var(--one-dark-cyan);
 }
 
 /* ============================================
    Lists for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) li {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) li {
   color: var(--light-text-secondary);
 }
 
@@ -215,12 +209,12 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
 /* ============================================
    Buttons for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) button {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button {
   background: var(--light-bg-tertiary);
   color: var(--light-text-primary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) button:hover {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button:hover {
   background: var(--light-bg-secondary);
 }
