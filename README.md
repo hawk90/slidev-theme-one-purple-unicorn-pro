@@ -245,7 +245,7 @@ Every value below defaults to the theme's look.
 |---|---|
 | Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-title-top`, `--slide-font-size` |
 | Emphasis layouts | `--quote-mark-size`, `--quote-size`, `--statement-size`, `--fact-size`, `--full-text-padding` |
-| Code blocks, images | `--code-max-height` (330px: 60% of the slide; longer code scrolls), `--image-max-height` (386px: 70%) |
+| Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; e.g. `330px` makes longer code scroll) |
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |

@@ -61,10 +61,10 @@
    ============================================ */
 .slidev-layout pre {
   max-width: 100%;
-  /* In slide pixels (60% of the default 552px-tall slide), not vh: vh follows
-     the browser window, so the cut-off moved with the window and exports
-     (a tall viewport) had none */
-  max-height: var(--code-max-height, 330px);
+  /* No cap by default (set --code-max-height, e.g. 330px, to scroll long
+     code). Not vh: vh follows the browser window, not the scaled slide, so
+     the cut-off only hit small windows and never fullscreen or exports */
+  max-height: var(--code-max-height, none);
   overflow: auto;
 }
 
