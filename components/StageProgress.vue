@@ -40,19 +40,23 @@ const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}
 )
 
-const stages = computed(() => (frontmatter.value.stages as string[]) || [])
+const stages = computed(() => listOf(frontmatter.value.stages))
 
 const currentIndex = computed(() => {
   const val = frontmatter.value.currentStage
-  return val !== undefined ? (val as number) : -1
+  return val !== undefined && val !== '' ? Number(val) : -1
 })
 
 const position = computed(() =>
   (frontmatter.value.stagePosition as string) || 'top'
 )
 
-// Pre-compute stages key for comparison (avoids JSON.stringify per click)
-const stagesKey = computed(() => stages.value.join('|||'))
+// `stages` is a list; anything else (a stray string) shows no indicator
+function listOf(v: unknown): string[] {
+  return Array.isArray(v) ? v.map(String) : []
+}
+
+const sameStages = (a: string[], b: string[]) => a.length === b.length && a.every((s, i) => s === b[i])
 
 // A mouse click leaves no focus behind, so Space / arrows keep driving the
 // slides; keyboard activation (Enter / Space) keeps focus on the button.
@@ -72,11 +76,10 @@ function goToStage(index: number) {
 
   // Auto-detect: scan slide routes for matching stages + currentStage
 
-  const key = stagesKey.value
   for (const slide of slides.value) {
     const fm = slide?.meta?.slide?.frontmatter
-    if (!fm?.stages) continue
-    if (fm.stages.join('|||') === key && fm.currentStage === index) {
+    if (!fm) continue
+    if (Number(fm.currentStage) === index && sameStages(listOf(fm.stages), stages.value)) {
       go(slide.no ?? slide.idx + 1)
       return
     }
