@@ -5,6 +5,11 @@ import { terminalTransformer } from './terminal-transformer'
 
 export default defineShikiSetup(() => ({
   theme: theme as any,
+  // No time limit per line (Shiki's default is 500 ms, then the rest of the
+  // line is left as one token). The first lines of a block are tokenized while
+  // the grammar is still compiling (C++ is heavy on the JS regex engine), and
+  // on a busy machine they came out in one color, in dev and in exports.
+  tokenizeTimeLimit: 0,
   transformers: [
     cudaTransformer(),
     terminalTransformer(),

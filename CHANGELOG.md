@@ -37,6 +37,10 @@
 
 - **Code lines were centered on centered layouts** (cover, center…); they start at the
   left now.
+- **The first lines of a code block sometimes came out in one color** (in dev and in
+  exports, on a busy machine): Shiki gives up on a line after 500 ms and leaves the
+  rest as one token, and the first lines are highlighted while a heavy grammar (C++)
+  is still compiling. The theme now sets no per-line time limit.
 - **`quote` lost its closing mark** when the quote was a heading (`# "…"`) or a single
   paragraph with no attribution, and a lone paragraph was styled as an attribution.
 - **A `<Footnote>` overlapped a bottom stage indicator** (`stagePosition: bottom`); it now
