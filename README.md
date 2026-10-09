@@ -65,7 +65,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 
 | Layout | Use | Options (frontmatter) |
 |---|---|---|
-| `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`) |
+| `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`; `cover`: the talk's details, see [Talk details](#talk-details-cover-and-footer)) |
 | `default` | Content slide (title pinned at the top) | |
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth`, `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
@@ -192,25 +192,29 @@ footerInExport: false
 ---
 ```
 
-The **footer line** shows the talk's details at the bottom left of content slides; the page number stays at the bottom right, and a long line ends in "…" before it. Like the page number, it is hidden on title slides and section dividers. It is off unless `footer` is set:
+### Talk details: cover and footer
+
+Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:
 
 ```yaml
 ---
 title: CUDA Memory Optimization
-author: Jane Doe
-footer: true                  # "title · author"
-# footer: "Any text"          # or your own text
-# footer:                     # or the parts you want, shown in the order written
-#   event: GTC 2026
-#   title: true               # true: the deck's title / author; or your own text
-#   date: 2026-10-09          # quote "2026.10": YAML reads it as a number
-#   team: GPU Team            # any other key is a part too
-#   logo: /logo.svg           # from public/, before the text
-#   separator: " | "          # default " · "
+author: Jane Doe              # one name (Slidev also puts it in the PDF/PPTX metadata)
+# authors:                    # several people: names or { name, affiliation }
+#   - { name: Jane Doe, affiliation: GPU Team }
+#   - Alex Kim
+affiliation: GPU Team, ACME
+event: GTC 2026
+date: '2026-10-09'            # quote "2026.10": YAML reads it as a number
+logo: /logo.svg               # from public/; crop it without padding
+footer: true                  # show them at the bottom left (off by default)
+# footer: [title, event]      # or pick the ones you want, in this order
 ---
 ```
 
-A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true`, a string or an object shows that, so a slide can have a footer even when the deck has none (`footer: "Appendix"`). A slide's text keeps the deck's logo. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
+- **Cover**: the first slide shows the details that are set; `coverInfo: false` turns them off there. Another `cover` slide shows them only with `coverInfo: true`, and its own `author` / `authors` / `affiliation` / `event` / `date` / `logo` replace the deck's.
+- **Footer**: `footer: true` shows title · author · event · date and the logo (those that are set); a list picks them in its order (`logo` and `affiliation` too). The page number stays at the bottom right, and a long line ends in "…" before it. Like the page number, it is hidden on title slides and section dividers.
+- A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true` or a list shows it, so a slide can have a footer even when the deck has none. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
 
 ## Customization
 
@@ -244,6 +248,7 @@ Every value below defaults to the theme's look.
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
+| Cover details | `--cover-info-color`, `--cover-info-muted`, `--cover-logo-height` |
 | Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage` (where a `<Footnote>` goes then) |
 | Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size` |
 

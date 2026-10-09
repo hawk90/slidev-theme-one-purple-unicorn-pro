@@ -13,12 +13,15 @@
   hover glows, progress glow and light-mode shimmer were fixed purple/blue; they now use
   `--primary-400` / `--secondary-400`, so a `:root` override reaches them too. In light
   mode, `--secondary-400` follows `--light-secondary` (no longer `--light-blue`).
-- **Footer line.** `footer:` shows the talk's details at the bottom left of content slides:
-  `true` for title · author, a string, or an object whose parts (`event`, `title`,
-  `author`, `date`, any other key) show in the order written, with optional `logo` and
-  `separator`. A slide's own `footer` replaces the deck's (`false` hides it, and a slide
-  can have one when the deck has none); `footerInExport: false` leaves it out of exports.
-  Off unless set.
+- **Talk details on the cover and in a footer line.** Write `author` (or `authors`,
+  each a name or `{ name, affiliation }`), `affiliation`, `event`, `date` and `logo`
+  once in the headmatter. The first slide's `cover` shows them under the title
+  (`coverInfo: false` turns that off; another cover shows them with `coverInfo: true`
+  and can replace any of them). `footer: true` shows title · author · event · date and
+  the logo at the bottom left of content slides, or `footer: [title, event]` picks
+  them; a slide's own `footer` (`false`, `true`, a list) replaces the deck's;
+  `footerInExport: false` leaves it out of exports. The footer is off unless set.
+  A deck whose headmatter already has `author` now shows it on its cover.
 - **`quote` takes a `>` blockquote** as the quote, with the attribution after it.
 
 ### Fixes

@@ -5,9 +5,9 @@
   </div>
 
   <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
-  <div v-if="footerText || footerLogo" class="slide-footer" :class="{ 'chrome-on-dark': onDark }">
-    <img v-if="footerLogo" :src="footerLogo" alt="" class="slide-footer-logo" />
-    <span v-if="footerText" class="slide-footer-text">{{ footerText }}</span>
+  <div v-if="footer" class="slide-footer" :class="{ 'chrome-on-dark': onDark }">
+    <img v-if="footer.logo" :src="resolveAssetUrl(footer.logo)" alt="" class="slide-footer-logo" />
+    <span v-if="footer.text" class="slide-footer-text">{{ footer.text }}</span>
   </div>
 
   <!-- Page Indicator -->
@@ -21,6 +21,7 @@ import { computed } from 'vue'
 import { resolveAssetUrl, useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
+import { footerParts, isOff } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, slides, isPrintMode } = useNav()
 
@@ -52,7 +53,6 @@ const excludeSkipped = computed(() => headmatter.value.progressBarSkipMode === '
 
 // Export / print (PDF, PNG): progressBarInExport / pageNumberInExport (headmatter)
 // turn each one off in exports only; the presentation itself is unchanged.
-const isOff = (v: unknown) => v === false || v === 'false'
 const hiddenInExport = (key: string) => isPrintMode.value && isOff(headmatter.value[key])
 
 // pageNumber: false hides the page number (headmatter for the deck, or a slide)
@@ -70,54 +70,20 @@ const showBar = computed(() => {
   return true // always
 })
 
-// footer: true → "title · author"; a string → that text; or an object whose
-// entries show in the order written: title / author (true = the deck's, or
-// your text), any other part (event: …, date: …, team: …), plus logo (from
-// public/) and separator (default " · "). A slide's own `footer` (false, true,
-// a string or an object) replaces the deck's for that slide, so a slide can
-// also turn it on. Hidden where the page number is (cover, intro, end,
-// section). Not to be confused with <Footnote>.
-type FooterConfig = Record<string, unknown>
-const FOOTER_OPTIONS = new Set(['logo', 'separator'])
-
-const deckFooter = computed(() => headmatter.value.footer)
-const footerConfig = computed<FooterConfig | null>(() => {
+// footer: true shows the talk's details from the headmatter (title · author ·
+// event · date, and the logo: those that are set; see utils/talk-info.ts), or
+// a list picks them in its order ([title, event]). A slide's own `footer`
+// (false, true, a list) replaces the deck's for that slide, so a slide can
+// also turn it on; `true` there keeps the deck's list. Hidden where the page
+// number is (cover, intro, end, section). Not to be confused with <Footnote>.
+const footer = computed(() => {
+  if (isHidden.value || hiddenInExport('footerInExport')) return null
+  const deck = headmatter.value.footer
   // The first slide's frontmatter is the headmatter: its `footer` is the deck's
   const own = currentPage.value > 1 ? frontmatter.value.footer : undefined
-  const val = own === undefined ? deckFooter.value : own
-  if (isOff(val) || val == null) return null
-  if (val === true || val === 'true') return { title: true, author: true }
-  if (typeof val === 'string') return { text: val }
-  if (typeof val === 'object') return val as FooterConfig
-  return { text: String(val) }
-})
-
-const showFooter = computed(() =>
-  !!footerConfig.value && !isHidden.value && !hiddenInExport('footerInExport'))
-
-// A part's value as text: `date: 2026-10-09` comes from YAML as a date
-const partText = (v: unknown) => v instanceof Date ? v.toISOString().slice(0, 10) : String(v)
-
-const footerText = computed(() => {
-  const c = footerConfig.value
-  if (!showFooter.value || !c) return ''
-  if ('text' in c) return partText(c.text)
-  const parts = Object.entries(c)
-    .filter(([key]) => !FOOTER_OPTIONS.has(key))
-    .map(([key, v]) => {
-      if (v === true && (key === 'title' || key === 'author')) v = headmatter.value[key]
-      return v === false || v === true || v == null || v === '' ? '' : partText(v)
-    })
-  const sep = c.separator ?? (deckFooter.value as FooterConfig | undefined)?.separator ?? ' · '
-  return parts.filter(Boolean).join(String(sep))
-})
-
-// A slide's text-only footer keeps the deck's logo
-const footerLogo = computed(() => {
-  if (!showFooter.value) return ''
-  const deck = deckFooter.value
-  const logo = footerConfig.value?.logo ?? (deck && typeof deck === 'object' ? (deck as FooterConfig).logo : undefined)
-  return typeof logo === 'string' ? resolveAssetUrl(logo) : ''
+  const value = own === undefined ? deck : (own === true || own === 'true') && Array.isArray(deck) ? deck : own
+  const parts = footerParts(value, headmatter.value)
+  return parts && (parts.text || parts.logo) ? parts : null
 })
 
 const progress = computed(() => {
