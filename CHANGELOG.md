@@ -35,6 +35,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - **Code lines were centered on centered layouts** (cover, center…); they start at the
   left now.
 - **The first lines of a code block sometimes came out in one color** (in dev and in
@@ -92,6 +95,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - **Image paths in `image`, `full-image` and `full-split`.** A root path such as
   `image: /bg.png` ignored the deck's base, so it 404'd in a build with `--base /sub/`
   (GitHub Pages and other subpath hosting); it now resolves like Slidev's own layouts.
@@ -142,6 +148,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - **PDF export memory and size.** Shadows were drawn on a slide-sized canvas at 4× per
   slide (about 2 GB of canvas for the 78-slide example); each shadow now gets a canvas
   just big enough for it at 2×, and gradient text a canvas the size of its text. About
@@ -161,6 +170,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - **PDF export: border light, glow and shadows.** The `anim-border` light filled the whole
   card in most PDF viewers (its mask was dropped), and macOS Preview showed every blurred
   shadow (code blocks, tables, cards, `anim-glow`, the progress bar, title text shadows)
@@ -181,6 +193,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - **PDF export: gradient text.** Titles, title-slide subtitles, `.gradient-text*`,
   `.anim-gradient-text*` and the quote marks are CSS gradient text, which PDF viewers draw
   differently: macOS Preview showed a solid gradient bar (or black text) instead of the
@@ -197,6 +212,9 @@
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - Slidev's web editor: the caret no longer drifts away from the text. Theme code-block
   styles (padding, border, line height) applied to the editor too; they now apply to
   slides only. Slides look the same.
@@ -264,6 +282,9 @@ Includes everything from 2.2.0 (tagged, not published to npm).
 
 ### Fixes
 
+- **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
+  `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
+  (`foo<std::vector<int>><<<g, b>>>`) are marked.
 - Presenter notes show in the presenter view.
 - Readable text: dark mode body / muted text, keys, link cards; light mode accents, slide
   chrome; table and quote text on title slides; full-split panel text.
