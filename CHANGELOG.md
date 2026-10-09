@@ -25,6 +25,10 @@
   were split across lines ("드라이버" / "와", "맛보기입" / "니다", "(제" / "안)"). Slide text now
   wraps between words (`word-break: keep-all`); a token longer than the line, such as a
   URL, still wraps.
+- **Export detection on decks hosted under `/export/`.** Any page whose path contained
+  `/export` counted as an export, so a deck served from such a path (or a static build's
+  `/export` URL, which is just a slide) ran in print mode: still effects, no
+  animations. Exports are now recognized from the router only.
 
 ### Changes
 
@@ -35,13 +39,14 @@
   to the others. It is also a link now. `url` is optional: without it the code points
   to the deck (`seoMeta.ogUrl`, or where it is served, `--base` and `routerMode`
   applied), or with `slide` to a slide. New `ecc` prop. `api` still selects a service,
-  with a new `{size}` placeholder.
+  with a new `{size}` placeholder. Text too long for a QR code shows no code and a
+  console warning, rather than taking the whole component with it.
 - **Light mode reaches everything on the page.** The light palette used to be set on
   content slides and the theme's own chrome only, so anything drawn outside
   `.slidev-layout`, such as a deck's or addon's `global-top.vue` and Slidev's presenter
   and overview pages, kept the dark colors in light mode. It is now set on `<body>`,
   and dark layouts (`slide-dark`) and their chrome (`chrome-on-dark`) get the dark
-  values back. Slides look the same: the 78 example slides export pixel-identical in
+  values back, a deck's own overrides on `:root` included. Slides look the same: the 78 example slides export pixel-identical in
   light mode, and dark mode is untouched. The "No notes for this slide" text in the
   presenter and overview views is now readable in light mode.
 
