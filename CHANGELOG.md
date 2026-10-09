@@ -44,10 +44,11 @@
   text color utilities (`text-red-500`), component link colors and button styles were
   replaced by the light-mode rules; they now win as in dark mode. Dark layouts in light
   mode keep their own text color (and `--cover-text`), as in dark mode.
-- **Code blocks and images were capped by the browser window** (`60vh` / `70vh`), so the
-  cut-off moved with the window size and exports had none; they now cap at 60% / 70% of
-  the slide (`--code-max-height`, `--image-max-height`). A narrow window also changed
-  slide padding; that rule is gone.
+- **Code blocks and images were capped by the browser window** (`60vh` / `70vh`): the
+  cap only hit small windows (never fullscreen or exports, where the slide is scaled up),
+  so a deck looked different by window size. There is no cap now unless you set
+  `--code-max-height` / `--image-max-height`. A narrow window also changed slide padding;
+  that rule is gone.
 - **Theme styles leaked into Slidev's own UI** (a purple nav icon, gradient headings in
   presenter notes); heading, text, link, list, table and quote styles now apply in
   slides only.

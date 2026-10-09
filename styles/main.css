@@ -217,7 +217,7 @@
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  max-height: var(--image-max-height, 386px); /* 70% of the slide, not of the window */
+  max-height: var(--image-max-height, none); /* not vh: see --code-max-height in layout-fix.css */
   width: auto;
   height: auto;
   object-fit: contain;
