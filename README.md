@@ -100,7 +100,19 @@ Right content
 Full-width footer
 ```
 
-`quote`: the quote text paragraphs, then a last paragraph as the attribution (`**— Name**`).
+`quote`: write the quote as a `>` blockquote and the attribution as the paragraph after it. The quote marks wrap the blockquote:
+
+```md
+---
+layout: quote
+---
+
+> The best way to predict the future is to invent it.
+
+**— Alan Kay, 1971**
+```
+
+Without a blockquote, a heading (`# "…"`) is the quote; otherwise the paragraphs before the last are the quote and the last is the attribution, and a single paragraph is a quote without one.
 
 ### Compatibility Aliases
 
@@ -161,9 +173,9 @@ Click a stage to jump to the matching slide (or give `stageMap: [3, 7, 12]`).
 | `.macos-traffic-lights` / `.macos-traffic-light` | Window dots |
 | `.table-compact`, `.table-dense`, `.table-auto`, `.table-square` | Table variants (on the table or a wrapper) |
 
-## Progress Bar & Page Number
+## Progress Bar, Page Number & Footer
 
-Set deck-wide options in the headmatter; a slide's own `progressBar` / `pageNumber` overrides it for that slide.
+Set deck-wide options in the headmatter; a slide's own `progressBar` / `pageNumber` / `footer` overrides it for that slide.
 
 ```yaml
 ---
@@ -176,8 +188,29 @@ pageNumber: false             # hide the page number (default: shown, except on 
 # Exports only (PDF / PNG / ?print); the presentation is unchanged
 progressBarInExport: false
 pageNumberInExport: false
+footerInExport: false
 ---
 ```
+
+The **footer line** shows the talk's details at the bottom left of content slides; the page number stays at the bottom right, and a long line ends in "…" before it. Like the page number, it is hidden on title slides and section dividers. It is off unless `footer` is set:
+
+```yaml
+---
+title: CUDA Memory Optimization
+author: Jane Doe
+footer: true                  # "title · author"
+# footer: "Any text"          # or your own text
+# footer:                     # or the parts you want, shown in the order written
+#   event: GTC 2026
+#   title: true               # true: the deck's title / author; or your own text
+#   date: 2026-10-09          # quote "2026.10": YAML reads it as a number
+#   team: GPU Team            # any other key is a part too
+#   logo: /logo.svg           # from public/, before the text
+#   separator: " | "          # default " · "
+---
+```
+
+A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true`, a string or an object shows that, so a slide can have a footer even when the deck has none (`footer: "Appendix"`). A slide's text keeps the deck's logo. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
 
 ## Customization
 
@@ -211,6 +244,7 @@ Every value below defaults to the theme's look.
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
+| Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage` (where a `<Footnote>` goes then) |
 | Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size` |
 
 ### Components

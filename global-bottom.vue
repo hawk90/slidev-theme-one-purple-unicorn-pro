@@ -4,6 +4,12 @@
     <div class="progress-fill" :style="{ width: progress + '%' }" />
   </div>
 
+  <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
+  <div v-if="footerText || footerLogo" class="slide-footer" :class="{ 'chrome-on-dark': onDark }">
+    <img v-if="footerLogo" :src="footerLogo" alt="" class="slide-footer-logo" />
+    <span v-if="footerText" class="slide-footer-text">{{ footerText }}</span>
+  </div>
+
   <!-- Page Indicator -->
   <div v-if="showPageNumber" class="slide-indicator" :class="{ 'chrome-on-dark': onDark }">
     {{ currentPage }} / {{ total }}
@@ -12,7 +18,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useNav } from '@slidev/client'
+import { resolveAssetUrl, useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 
@@ -64,6 +70,56 @@ const showBar = computed(() => {
   return true // always
 })
 
+// footer: true → "title · author"; a string → that text; or an object whose
+// entries show in the order written: title / author (true = the deck's, or
+// your text), any other part (event: …, date: …, team: …), plus logo (from
+// public/) and separator (default " · "). A slide's own `footer` (false, true,
+// a string or an object) replaces the deck's for that slide, so a slide can
+// also turn it on. Hidden where the page number is (cover, intro, end,
+// section). Not to be confused with <Footnote>.
+type FooterConfig = Record<string, unknown>
+const FOOTER_OPTIONS = new Set(['logo', 'separator'])
+
+const deckFooter = computed(() => headmatter.value.footer)
+const footerConfig = computed<FooterConfig | null>(() => {
+  // The first slide's frontmatter is the headmatter: its `footer` is the deck's
+  const own = currentPage.value > 1 ? frontmatter.value.footer : undefined
+  const val = own === undefined ? deckFooter.value : own
+  if (isOff(val) || val == null) return null
+  if (val === true || val === 'true') return { title: true, author: true }
+  if (typeof val === 'string') return { text: val }
+  if (typeof val === 'object') return val as FooterConfig
+  return { text: String(val) }
+})
+
+const showFooter = computed(() =>
+  !!footerConfig.value && !isHidden.value && !hiddenInExport('footerInExport'))
+
+// A part's value as text: `date: 2026-10-09` comes from YAML as a date
+const partText = (v: unknown) => v instanceof Date ? v.toISOString().slice(0, 10) : String(v)
+
+const footerText = computed(() => {
+  const c = footerConfig.value
+  if (!showFooter.value || !c) return ''
+  if ('text' in c) return partText(c.text)
+  const parts = Object.entries(c)
+    .filter(([key]) => !FOOTER_OPTIONS.has(key))
+    .map(([key, v]) => {
+      if (v === true && (key === 'title' || key === 'author')) v = headmatter.value[key]
+      return v === false || v === true || v == null || v === '' ? '' : partText(v)
+    })
+  const sep = c.separator ?? (deckFooter.value as FooterConfig | undefined)?.separator ?? ' · '
+  return parts.filter(Boolean).join(String(sep))
+})
+
+// A slide's text-only footer keeps the deck's logo
+const footerLogo = computed(() => {
+  if (!showFooter.value) return ''
+  const deck = deckFooter.value
+  const logo = footerConfig.value?.logo ?? (deck && typeof deck === 'object' ? (deck as FooterConfig).logo : undefined)
+  return typeof logo === 'string' ? resolveAssetUrl(logo) : ''
+})
+
 const progress = computed(() => {
   let page = currentPage.value
   let count = total.value
@@ -75,6 +131,21 @@ const progress = computed(() => {
   return count > 1 ? ((page - 1) / (count - 1)) * 100 : 0
 })
 </script>
+
+<style>
+/* A Footnote sits where the footer line is: move it up while the line shows
+   (the footer comes before the slides in the DOM, play and print alike;
+   Footnote reads --footnote-bottom) */
+.slide-footer ~ * {
+  --footnote-bottom: var(--footnote-bottom-with-footer, 3.25rem);
+}
+
+/* …and above a stage indicator at the bottom (stagePosition: bottom), which
+   sits over the footer line */
+:is(#slide-content, .print-slide-container):has(> .stage-pos-bottom) > * {
+  --footnote-bottom: var(--footnote-bottom-with-stage, 4.25rem);
+}
+</style>
 
 <style scoped>
 /* Theme variables: --progress-height, --progress-track, --progress-color,
@@ -110,5 +181,37 @@ const progress = computed(() => {
   z-index: 10;
   pointer-events: none;
   transition: opacity var(--transition-fast, 150ms ease);
+}
+
+/* Theme variables: --footer-size, --footer-color, --footer-left, --footer-bottom,
+   --footer-logo-height */
+.slide-footer {
+  position: fixed;
+  left: var(--footer-left, 2rem);
+  bottom: var(--footer-bottom, 1.5rem);
+  max-width: 70%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--footer-size, 0.75rem);
+  color: var(--footer-color, var(--text-muted, #5c6370));
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* A long line ends in "…" rather than running into the page number */
+.slide-footer-text {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slide-footer-logo {
+  flex: none;
+  height: var(--footer-logo-height, 1rem);
+  width: auto;
 }
 </style>
