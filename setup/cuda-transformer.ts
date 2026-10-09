@@ -29,12 +29,6 @@ const cudaTokens: TokenDef[] = [
     pattern: /\b(threadIdx|blockIdx|blockDim|gridDim|warpSize)\b/g,
     color: '#ff6188',
   },
-  // --- CUDA built-in member access (threadIdx.x, blockDim.y, etc.) ---
-  // Only match .x/.y/.z/.w when preceded by a CUDA built-in variable name
-  {
-    pattern: /\b(threadIdx|blockIdx|blockDim|gridDim)\.(x|y|z|w)\b/g,
-    color: '#ff6188',
-  },
   // --- Synchronization & warp intrinsics ---
   {
     pattern: /\b(__syncthreads|__syncwarp|__threadfence|__threadfence_block|__threadfence_system|__ballot_sync|__all_sync|__any_sync|__shfl_sync|__shfl_up_sync|__shfl_down_sync|__shfl_xor_sync)\b/g,
@@ -162,53 +156,65 @@ function processSpan(span: Element) {
   span.children = newChildren
 }
 
-// Extract text from a HAST node
-function getNodeText(node: Node): string {
-  if (node.type === 'text') return node.value || ''
-  if ('children' in node) return node.children.map(getNodeText).join('')
-  return ''
-}
+const LAUNCH_STYLE = 'color:#ff6188;font-weight:bold;'
+const KERNEL_STYLE = 'color:#a9dc76;font-weight:bold;'
 
-// Collect all span elements in a node tree
-function collectSpans(node: Node, result: Element[] = []): Element[] {
-  if (node.type === 'element' && node.tagName === 'span') {
-    result.push(node)
-  }
-  if ('children' in node) {
-    for (const child of node.children) {
-      collectSpans(child, result)
+// A kernel launch: name, optional template arguments, <<<config>>>
+const LAUNCH = /\b([A-Za-z_]\w*)\s*(?:<[^<>;]*>\s*)?(<<<)[^;]*?(>>>)/g
+
+// The text nodes of a line, in order, with their parent and offset in the line
+function textNodes(node: Node, out: { parent: Element, index: number, start: number }[] = [], pos = { at: 0 }, parent?: Element) {
+  if (!('children' in node)) return out
+  node.children.forEach((child, index) => {
+    if (child.type === 'text' && parent) {
+      out.push({ parent, index, start: pos.at })
+      pos.at += child.value.length
     }
-  }
-  return result
+    else if (child.type === 'element') {
+      textNodes(child, out, pos, child)
+    }
+  })
+  return out
 }
 
-// Cross-span: mark kernel function names and <<< >>> launch syntax
+// Cross-span: style the kernel name and the <<< >>> of each launch. Shiki
+// splits them unpredictably (`<<` + `<`, or `<float><<<` in one span), so
+// ranges are found on the line's text and the text nodes split to fit.
 function markKernelLaunch(codeNode: Element) {
-  const lines = codeNode.children.filter((c): c is Element => c.type === 'element')
+  for (const line of codeNode.children) {
+    if (line.type !== 'element') continue
+    const nodes = textNodes(line)
+    const text = nodes.map(n => (n.parent.children[n.index] as { value: string }).value).join('')
+    if (!text.includes('<<<')) continue
 
-  for (const line of lines) {
-    const spans = collectSpans(line)
+    const ranges: { start: number, end: number, style: string }[] = []
+    for (const m of text.matchAll(LAUNCH)) {
+      const at = m.index!
+      ranges.push({ start: at, end: at + m[1].length, style: KERNEL_STYLE })
+      const open = at + m[0].indexOf('<<<', m[1].length)
+      ranges.push({ start: open, end: open + 3, style: LAUNCH_STYLE })
+      const close = at + m[0].length - 3
+      ranges.push({ start: close, end: close + 3, style: LAUNCH_STYLE })
+    }
+    if (!ranges.length) continue
 
-    for (let i = 0; i < spans.length; i++) {
-      const text = getNodeText(spans[i])
-
-      // Mark <<< and >>> spans (shiki splits <<< into << + <)
-      if (text.match(/^<{2,3}$/) || text.match(/^>{2,3}$/)) {
-        spans[i].properties = spans[i].properties || {}
-        spans[i].properties.style = 'color:#ff6188;font-weight:bold;'
+    // Split each text node at the range edges, last node first so indexes hold
+    for (const n of [...nodes].reverse()) {
+      const value = (n.parent.children[n.index] as { value: string }).value
+      const end = n.start + value.length
+      const cuts = ranges.filter(r => r.start < end && r.end > n.start)
+      if (!cuts.length) continue
+      const pieces: Content[] = []
+      let at = n.start
+      for (const r of cuts) {
+        const a = Math.max(r.start, n.start)
+        const b = Math.min(r.end, end)
+        if (a > at) pieces.push({ type: 'text', value: text.slice(at, a) })
+        pieces.push({ type: 'element', tagName: 'span', properties: { style: r.style }, children: [{ type: 'text', value: text.slice(a, b) }] })
+        at = b
       }
-
-      // Mark kernel function name (span before <<<)
-      if (i < spans.length - 1) {
-        const nextText = getNodeText(spans[i + 1])
-        if (nextText.match(/^<{2,3}/)) {
-          const funcMatch = text.match(/\b([a-zA-Z_]\w*)\s*$/)
-          if (funcMatch) {
-            spans[i].properties = spans[i].properties || {}
-            spans[i].properties.style = 'color:#a9dc76;font-weight:bold;'
-          }
-        }
-      }
+      if (at < end) pieces.push({ type: 'text', value: text.slice(at, end) })
+      n.parent.children.splice(n.index, 1, ...pieces)
     }
   }
 }

@@ -4,7 +4,7 @@ export function parsePageList(value: unknown, max = Number.POSITIVE_INFINITY): S
   const pages = new Set<number>()
   const items = Array.isArray(value) ? value : String(value ?? '').split(',')
   for (const item of items) {
-    const [start, end = start] = String(item).split('-').map(s => Number.parseInt(s.trim(), 10))
+    const [start, end = start] = String(item).split(/[-–]/).map(s => Number.parseInt(s.trim(), 10))
     if (Number.isNaN(start) || Number.isNaN(end)) continue
     const last = Math.min(Math.max(start, end), max)
     for (let n = Math.max(Math.min(start, end), 1); n <= last; n++) pages.add(n)
