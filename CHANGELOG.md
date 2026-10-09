@@ -21,6 +21,10 @@
 - **Offline toast in exports.** With `pwa` on, Slidev's "Caching for offline…" toast
   appeared in every exported slide (and the OG image) over the page number; it is now
   hidden in exports.
+- **Korean line breaks.** Browsers break Hangul between any two syllables, so words
+  were split across lines ("드라이버" / "와", "맛보기입" / "니다", "(제" / "안)"). Slide text now
+  wraps between words (`word-break: keep-all`); a token longer than the line, such as a
+  URL, still wraps.
 
 ### Changes
 
