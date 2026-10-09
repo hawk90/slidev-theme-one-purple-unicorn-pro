@@ -31,7 +31,9 @@ const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 // Deck-wide options come from the headmatter, read from `configs` (it keeps
 // the headmatter even when the first slide is hidden, and Slidev's title
 // fallback); a slide's own frontmatter overrides progressBar for that slide.
-const headmatter = configs as Record<string, unknown>
+// `configs` carries Slidev's defaults too: a deck without a title (and no
+// heading on its first slide) has title "Slidev", which is not the talk's
+const headmatter: Record<string, unknown> = { ...configs, title: configs.title === 'Slidev' ? undefined : configs.title }
 const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
 
 // progressBar:
