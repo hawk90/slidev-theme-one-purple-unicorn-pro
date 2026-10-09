@@ -4,7 +4,7 @@
       v-for="(item, i) in items"
       :key="`tl-${i}`"
       class="tl-item"
-      :class="{ 'tl-active': i === active }"
+      :class="{ 'tl-active': i === Number(active) }"
     >
       <div class="tl-marker">
         <div class="tl-dot" :style="item.color ? { '--tl-dot-color': item.color, '--tl-active-color': item.color } : undefined" />
@@ -33,7 +33,7 @@ import { richText } from '../utils/rich-text'
 
 defineProps({
   items: { type: Array as () => TimelineItem[], required: true },
-  active: { type: Number, default: -1 },
+  active: { type: [Number, String], default: -1 },
 })
 </script>
 

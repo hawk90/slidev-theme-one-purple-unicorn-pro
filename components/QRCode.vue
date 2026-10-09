@@ -74,7 +74,10 @@ const imageSrc = computed(() => {
   return props.api.replace('{data}', encodeURIComponent(target.value)).replace('{size}', String(px))
 })
 
-const level = computed<Ecc>(() => (['L', 'M', 'Q', 'H'].includes(props.ecc) ? props.ecc : 'M') as Ecc)
+const level = computed<Ecc>(() => {
+  const e = String(props.ecc).toUpperCase()
+  return (['L', 'M', 'Q', 'H'].includes(e) ? e : 'M') as Ecc
+})
 // Encoded once per text and level; the SVG scales without blurring. Text past
 // a QR code's capacity (about 2.9 KB) shows no code rather than breaking the slide
 const matrix = computed(() => {

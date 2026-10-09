@@ -6,7 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted, watch } from 'vue'
+import { onSlideEnter } from '@slidev/client'
 
 const props = defineProps({
   minutes: { type: Number, default: 5 },
@@ -16,7 +17,9 @@ const props = defineProps({
   showZero: { type: Boolean, default: true },
 })
 
-const remaining = ref(props.minutes * 60)
+// Whole seconds, never negative (0.5 → 30 s; -1 → 0)
+const total = () => Math.max(0, Math.round(Number(props.minutes) * 60) || 0)
+const remaining = ref(total())
 let timer: ReturnType<typeof setInterval> | null = null
 
 const formatted = computed(() => {
@@ -37,9 +40,17 @@ function stop() {
   if (timer) { clearInterval(timer); timer = null }
 }
 
-onMounted(() => {
-  if (props.autoStart) start()
+// Start when the slide is first shown, not when it mounts: Slidev mounts
+// every slide shortly after load, so a timer on slide 20 would already be
+// running. Once started it keeps running, like a real timer.
+let started = false
+onSlideEnter(() => {
+  if (started || !props.autoStart) return
+  started = true
+  start()
 })
+
+watch(() => props.minutes, () => { remaining.value = total() })
 
 onUnmounted(() => stop())
 

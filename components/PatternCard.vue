@@ -1,10 +1,9 @@
 <template>
   <div class="pattern-card">
-    <template v-for="s in list" :key="s.key">
+    <template v-for="(s, i) in shown" :key="s.key">
       <div
-        v-if="textOf(s) || slots[s.key]"
         class="pattern-section"
-        :class="`pattern-${s.key}`"
+        :class="[`pattern-${s.key}`, { 'pattern-last': i === shown.length - 1 }]"
         :style="s.color ? { '--pattern-color': s.color } : undefined"
       >
         <div class="pattern-icon">{{ s.icon }}</div>
@@ -50,6 +49,8 @@ const SECTIONS: Section[] = [
 const list = computed(() => props.sections ?? SECTIONS)
 
 const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.key] as string ?? ''
+// Sections with content; the last one has no bottom rule
+const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
 </script>
 
 <style scoped>
@@ -70,7 +71,7 @@ const textOf = (s: Section) => s.text ?? (props as Record<string, unknown>)[s.ke
   background: color-mix(in srgb, var(--pattern-color) 6%, transparent);
 }
 
-.pattern-section:last-of-type {
+.pattern-last {
   border-bottom: none;
 }
 
