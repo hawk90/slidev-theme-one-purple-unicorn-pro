@@ -5,7 +5,7 @@
       <!-- The talk's details from the headmatter (utils/talk-info.ts) -->
       <div v-if="info" class="cover-info">
         <div v-if="info.people.length" class="cover-people">
-          <span v-for="p in info.people" :key="p.name" class="cover-person">
+          <span v-for="(p, i) in info.people" :key="i" class="cover-person">
             <span class="cover-name">{{ p.name }}</span>
             <span v-if="p.affiliation" class="cover-person-affiliation">{{ p.affiliation }}</span>
           </span>
