@@ -114,7 +114,7 @@
 /* Light mode: a white band is invisible on light cards; tint it instead.
    :where() keeps this below the color presets in specificity. */
 :where(html:not(.dark)) .anim-shimmer {
-  --_sh-color: var(--shimmer-color, rgba(198, 120, 221, 0.16));
+  --_sh-color: var(--shimmer-color, color-mix(in srgb, var(--_root-primary-400) 16%, transparent));
 }
 
 /* Light band shared by .anim-shimmer and .hover-shine: --band-width / --band-color */
@@ -370,7 +370,7 @@
 }
 .hover-lift:hover {
   transform: translateY(calc(-1 * var(--hover-lift, 4px)));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 8px rgba(198, 120, 221, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 8px color-mix(in srgb, var(--_root-primary-400) 10%, transparent);
 }
 
 /* Scale — gentle grow */
@@ -457,7 +457,7 @@
   overflow: hidden;
 }
 :where(html:not(.dark)) .hover-shine {
-  --band-color: var(--hover-shine-color, rgba(198, 120, 221, 0.18));
+  --band-color: var(--hover-shine-color, color-mix(in srgb, var(--_root-primary-400) 18%, transparent));
 }
 .hover-shine {
   --band-width: var(--hover-shine-width, clamp(60px, 35%, 180px));

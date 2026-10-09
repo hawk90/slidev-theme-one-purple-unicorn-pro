@@ -62,9 +62,9 @@
   --info: var(--one-dark-blue);
 
   /* Gradients - Unicorn style with One Dark colors */
-  --gradient-primary: linear-gradient(135deg, var(--one-dark-purple), var(--one-dark-blue));
+  --gradient-primary: linear-gradient(135deg, var(--one-dark-purple), var(--secondary-400));
   --gradient-subtle: linear-gradient(135deg, #3e4452, #2e323b);
-  --gradient-vibrant: linear-gradient(135deg, #61afef, #c678dd, #e06c75);
+  --gradient-vibrant: linear-gradient(135deg, var(--secondary-400), var(--primary-400), var(--one-dark-red));
 
   /* Shadows */
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);

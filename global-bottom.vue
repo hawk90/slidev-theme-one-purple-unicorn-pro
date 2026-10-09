@@ -166,7 +166,7 @@ const progress = computed(() => {
   background: var(--progress-color, var(--gradient-primary, linear-gradient(90deg, #61afef, #c678dd)));
   border-radius: 0 2px 2px 0;
   transition: width 300ms ease;
-  box-shadow: var(--progress-glow, 0 0 8px rgba(198, 120, 221, 0.4));
+  box-shadow: var(--progress-glow, 0 0 8px color-mix(in srgb, var(--_root-primary-400, #c678dd) 40%, transparent));
 }
 
 .slide-indicator {
