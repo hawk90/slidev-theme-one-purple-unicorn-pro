@@ -20,7 +20,7 @@ import { resolveAssetUrl } from '@slidev/client'
 import ScaledIframe from './ScaledIframe.vue'
 
 const props = defineProps({
-  src: { type: String, required: true },
+  src: { type: String, default: '' },
   type: { type: String, default: 'image' },
   side: { type: String, default: 'left' },
   backgroundSize: { type: String, default: 'cover' },
@@ -31,7 +31,7 @@ const props = defineProps({
 })
 
 const mediaStyle = computed(() => {
-  if (props.type === 'image') {
+  if (props.type === 'image' && props.src) {
     return {
       // Resolved against the deck's base path so `--base` builds work
       backgroundImage: `url(${JSON.stringify(resolveAssetUrl(props.src))})`,

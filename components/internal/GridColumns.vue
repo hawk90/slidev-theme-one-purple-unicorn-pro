@@ -22,7 +22,7 @@ import { computed } from 'vue'
 
 const props = defineProps({
   count: { type: Number, default: 2 },
-  widths: { type: Array as () => string[], default: () => [] },
+  widths: { type: Array as () => (string | number)[], default: () => [] },
   divider: { type: Boolean, default: false },
   labels: { type: Array as () => string[], default: () => [] },
   labelColors: { type: Array as () => string[], default: () => [] },
@@ -35,7 +35,11 @@ const slotNames = computed(() => {
 })
 
 const gridStyle = computed(() => {
-  const w = slotNames.value.map((_, i) => props.widths[i] || '1fr')
+  // A bare number is a share of the row (2 → 2fr); anything else is a CSS length
+  const w = slotNames.value.map((_, i) => {
+    const v = String(props.widths[i] ?? '').trim()
+    return !v ? '1fr' : /^\d*\.?\d+$/.test(v) ? `${v}fr` : v
+  })
   const cols = props.divider
     ? w.join(' 1px ')
     : w.join(' ')

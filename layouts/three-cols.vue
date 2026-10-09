@@ -17,9 +17,9 @@
 import ColumnsLayout from '../components/internal/ColumnsLayout.vue'
 
 defineProps({
-  leftWidth: { type: String, default: '1fr' },
-  centerWidth: { type: String, default: '1fr' },
-  rightWidth: { type: String, default: '1fr' },
+  leftWidth: { type: [String, Number], default: '1fr' },
+  centerWidth: { type: [String, Number], default: '1fr' },
+  rightWidth: { type: [String, Number], default: '1fr' },
   divider: { type: Boolean, default: false },
   leftLabel: { type: String, default: '' },
   centerLabel: { type: String, default: '' },
