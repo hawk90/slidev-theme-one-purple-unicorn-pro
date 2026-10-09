@@ -569,3 +569,8 @@
 .print-no-after::after {
   content: none !important;
 }
+/* Slidev's offline (`pwa`) toast is mounted in exports too and never clears
+   there, so it would sit over the page number in every exported slide */
+.print-mode .slidev-pwa-indicator {
+  display: none !important;
+}

@@ -13,7 +13,7 @@ import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradien
 import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
 import { canRedraw } from './print-canvas'
-import { isPrintMode } from './print-mode'
+import { isPrintMode, trackPrintRoute } from './print-mode'
 
 const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
@@ -145,7 +145,8 @@ function start() {
   schedule()
 }
 
-export function setupPrintExport(router?: { afterEach: (hook: () => void) => unknown }) {
+export function setupPrintExport(router?: Parameters<typeof trackPrintRoute>[0] & { afterEach: (hook: () => void) => unknown }) {
+  if (router) trackPrintRoute(router)
   const sync = () => {
     const on = isPrintMode()
     document.documentElement.classList.toggle('print-mode', on)

@@ -14,6 +14,13 @@
   and as a text box in opaque black at the same spot, which showed behind the picture on
   dark slides. PowerPoint text has no gradients, so in this export it is now plain,
   editable text in the gradient's first color. PDF and PNG exports are unchanged.
+- **Browser export page in hash and memory router mode.** With `routerMode: hash` or
+  `memory`, the export page (`/#/export`, or `/export` reached inside the app) wasn't
+  recognized as an export: no still effects, no PDF-viewer redraws, `Countdown` shown.
+  Print mode now asks the router, as Slidev's own `isPrintMode` does.
+- **Offline toast in exports.** With `pwa` on, Slidev's "Caching for offline…" toast
+  appeared in every exported slide (and the OG image) over the page number; it is now
+  hidden in exports.
 
 ## 3.0.4
 
