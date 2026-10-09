@@ -126,6 +126,24 @@ int main() {
 
 ---
 
+# Code Blocks
+
+```ts [src/kernel.ts] {1|2-3|all}{lines:true}
+export function saxpy(a: number, x: number[], y: number[]) {
+  return x.map((xi, i) => a * xi + y[i]) // one value per element, long lines wrap instead of scrolling
+}
+```
+
+```bash [zsh]
+  ~/cuda  main ❯ nvcc -O3 saxpy.cu -o saxpy
+  ~/cuda  main ❯ ./saxpy
+Max error: 0.000000
+```
+
+Title bar, line numbers, focus per click, shell output and Nerd Font icons: see the README's *Code Blocks*.
+
+---
+
 # Math Support (KaTeX)
 
 Inline math: $E = mc^2$, complexity $O(n \log n)$, sum $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$

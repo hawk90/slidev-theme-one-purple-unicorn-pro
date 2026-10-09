@@ -4,6 +4,15 @@
 
 ### Features
 
+- **Code blocks.** A titled block (```` ```ts [file.ts] ````) and `::code-group` tabs
+  get a window title bar with macOS dots, joined to the code (names line up; no
+  file-type icon slot). Line numbers read `12 │ code` with a gutter for three digits.
+  Line focus (`{2-3}`, `{1|2-3|all}`) dims the other lines to 0.45, or, with
+  `code-focus-tint` / `themeConfig.codeFocus: tint`, tints the focused lines and dims
+  nothing. Shell blocks with prompt lines (`$`, `%`, `❯`, `➜`) show output muted.
+  Nerd Font icons render (the symbols-only font is bundled, loaded on demand). Long
+  lines wrap under their code instead of scrolling: a slide's code never shows a
+  scrollbar.
 - **Brand colors from `themeConfig`.** `primary` derives the brand scale, glows,
   progress bar, cover gradients and light-mode shades (deepened to 4.5:1 on white);
   `secondary` sets the gradient partner (default: picked from `primary`); `accents`
@@ -26,6 +35,8 @@
 
 ### Fixes
 
+- **Code lines were centered on centered layouts** (cover, center…); they start at the
+  left now.
 - **`quote` lost its closing mark** when the quote was a heading (`# "…"`) or a single
   paragraph with no attribution, and a lone paragraph was styled as an attribution.
 - **A `<Footnote>` overlapped a bottom stage indicator** (`stagePosition: bottom`); it now
