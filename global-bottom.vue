@@ -18,19 +18,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { resolveAssetUrl, useNav } from '@slidev/client'
+import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
-import { footerParts, isOff, isOn } from './utils/talk-info'
+import { footerParts, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
 
-const { currentPage, total, currentLayout, currentSlideRoute, slides, isPrintMode } = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
-// Deck-wide options come from the headmatter (first slide's frontmatter);
-// a slide's own frontmatter overrides progressBar for that slide.
-const headmatter = computed(() => slides.value[0]?.meta?.slide?.frontmatter ?? {})
+// Deck-wide options come from the headmatter, read from `configs` (it keeps
+// the headmatter even when the first slide is hidden, and Slidev's title
+// fallback); a slide's own frontmatter overrides progressBar for that slide.
+const headmatter = configs as Record<string, unknown>
 const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
 
 // progressBar:
@@ -38,7 +39,7 @@ const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontma
 //   "content"          → only where page number is shown (hides on cover/section/intro/end)
 //   false              → completely off
 const progressMode = computed(() => {
-  const val = frontmatter.value.progressBar ?? headmatter.value.progressBar
+  const val = frontmatter.value.progressBar ?? headmatter.progressBar
   if (isOff(val)) return 'off'
   if (val === 'content') return 'content'
   return 'always'
@@ -48,17 +49,17 @@ const progressMode = computed(() => {
 // progressBarSkipMode:
 //   "hide" (default) → only hide the bar on those pages
 //   "exclude"        → also leave them out of the progress calculation
-const skipPages = computed(() => parsePageList(headmatter.value.progressBarSkip, total.value))
-const excludeSkipped = computed(() => headmatter.value.progressBarSkipMode === 'exclude')
+const skipPages = computed(() => parsePageList(headmatter.progressBarSkip, total.value))
+const excludeSkipped = computed(() => headmatter.progressBarSkipMode === 'exclude')
 
 // Export / print (PDF, PNG): progressBarInExport / pageNumberInExport (headmatter)
 // turn each one off in exports only; the presentation itself is unchanged.
-const hiddenInExport = (key: string) => isPrintMode.value && isOff(headmatter.value[key])
+const hiddenInExport = (key: string) => isPrintMode.value && isOff(headmatter[key])
 
 // pageNumber: false hides the page number (headmatter for the deck, or a slide)
 const showPageNumber = computed(() => {
   if (isHidden.value) return false
-  if (isOff(frontmatter.value.pageNumber ?? headmatter.value.pageNumber)) return false
+  if (isOff(frontmatter.value.pageNumber ?? headmatter.pageNumber)) return false
   return !hiddenInExport('pageNumberInExport')
 })
 
@@ -78,11 +79,11 @@ const showBar = computed(() => {
 // number is (cover, intro, end, section). Not to be confused with <Footnote>.
 const footer = computed(() => {
   if (isHidden.value || hiddenInExport('footerInExport')) return null
-  const deck = headmatter.value.footer
+  const deck = headmatter.footer
   // The first slide's frontmatter is the headmatter: its `footer` is the deck's
-  const own = currentPage.value > 1 ? frontmatter.value.footer : undefined
+  const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.footer
   const value = own === undefined ? deck : isOn(own) && Array.isArray(deck) ? deck : own
-  const parts = footerParts(value, headmatter.value)
+  const parts = footerParts(value, headmatter)
   return parts && (parts.text || parts.logo) ? parts : null
 })
 
