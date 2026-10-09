@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- **Monaco code blocks (`{monaco}`, `{monaco-run}`) never showed their editor.** The
+  code theme was named "One Purple Unicorn", and Monaco rejects theme names with
+  spaces ("Illegal theme name!"), so the editor failed to start; it is now
+  `one-purple-unicorn`. The editor box was also light in light mode under this
+  theme's dark token colors, and its lines were centered on cover/center layouts;
+  it now has the dark code background and left-aligned lines.
+
 ## 3.0.5
 
 ### Fixes
