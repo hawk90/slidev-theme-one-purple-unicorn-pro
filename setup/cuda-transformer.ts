@@ -1,6 +1,7 @@
 // CUDA Syntax Transformer for Shiki
-// Adds CUDA-specific highlighting on top of C++ base colors
-// CUDA patterns are unique enough to apply to all code blocks safely
+// Adds CUDA-specific highlighting on top of C++ base colors. It runs on every
+// language (CUDA-Python decks use numba's cuda.threadIdx…), but not inside
+// comments and strings (a "cudaMalloc failed" message stays a string).
 
 import type { ShikiTransformer } from 'shiki'
 
@@ -93,8 +94,12 @@ const cudaTokens: TokenDef[] = [
   },
 ]
 
+// Comments and strings in the theme (setup/themes/one-purple-unicorn.json)
+const QUIET = /color:\s*#(5c6370|98c379)\b/i
+const isQuiet = (el: Element) => QUIET.test(String(el.properties?.style ?? ''))
+
 function processSpan(span: Element) {
-  if (span.tagName !== 'span' || !span.children) return
+  if (span.tagName !== 'span' || !span.children || isQuiet(span)) return
 
   const newChildren: Content[] = []
 
@@ -159,19 +164,23 @@ function processSpan(span: Element) {
 const LAUNCH_STYLE = 'color:#ff6188;font-weight:bold;'
 const KERNEL_STYLE = 'color:#a9dc76;font-weight:bold;'
 
-// A kernel launch: name, optional template arguments, <<<config>>>
-const LAUNCH = /\b([A-Za-z_]\w*)\s*(?:<[^<>;]*>\s*)?(<<<)[^;]*?(>>>)/g
+// A kernel launch: name, optional template arguments (one level of nesting:
+// foo<std::vector<int>>), <<<config>>>
+const LAUNCH = /\b([A-Za-z_]\w*)\s*(?:<(?:[^<>;]|<[^<>;]*>)*>\s*)?(<<<)[^;]*?(>>>)/g
 
-// The text nodes of a line, in order, with their parent and offset in the line
-function textNodes(node: Node, out: { parent: Element, index: number, start: number }[] = [], pos = { at: 0 }, parent?: Element) {
+interface TextNode { parent: Element, index: number, start: number, quiet: boolean }
+
+// The text nodes of a line, in order, with their parent, offset in the line,
+// and whether they are in a comment or string
+function textNodes(node: Node, out: TextNode[] = [], pos = { at: 0 }, parent?: Element, quiet = false) {
   if (!('children' in node)) return out
   node.children.forEach((child, index) => {
     if (child.type === 'text' && parent) {
-      out.push({ parent, index, start: pos.at })
+      out.push({ parent, index, start: pos.at, quiet })
       pos.at += child.value.length
     }
     else if (child.type === 'element') {
-      textNodes(child, out, pos, child)
+      textNodes(child, out, pos, child, quiet || isQuiet(child))
     }
   })
   return out
@@ -188,8 +197,10 @@ function markKernelLaunch(codeNode: Element) {
     if (!text.includes('<<<')) continue
 
     const ranges: { start: number, end: number, style: string }[] = []
+    const quietAt = (i: number) => nodes.some(n => n.quiet && i >= n.start && i < n.start + (n.parent.children[n.index] as { value: string }).value.length)
     for (const m of text.matchAll(LAUNCH)) {
       const at = m.index!
+      if (quietAt(at)) continue // in a comment or string
       ranges.push({ start: at, end: at + m[1].length, style: KERNEL_STYLE })
       const open = at + m[0].indexOf('<<<', m[1].length)
       ranges.push({ start: open, end: open + 3, style: LAUNCH_STYLE })
@@ -223,6 +234,7 @@ export function cudaTransformer(): ShikiTransformer {
   return {
     name: 'cuda-highlighter',
     pre(node) {
+      if (!this.source.includes('<<<')) return // no launch to mark
       const code = node.children.find((c): c is Element => c.type === 'element' && c.tagName === 'code')
       if (code) {
         markKernelLaunch(code)

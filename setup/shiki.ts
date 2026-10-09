@@ -10,6 +10,9 @@ export default defineShikiSetup(() => ({
   // the grammar is still compiling (C++ is heavy on the JS regex engine), and
   // on a busy machine they came out in one color, in dev and in exports.
   tokenizeTimeLimit: 0,
+  // A line this long (minified code, base64) is left uncolored: tokenizing it
+  // can take seconds per line
+  tokenizeMaxLineLength: 2000,
   transformers: [
     cudaTransformer(),
     terminalTransformer(),
