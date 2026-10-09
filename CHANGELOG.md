@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- **Image paths in `image`, `full-image` and `full-split`.** A root path such as
+  `image: /bg.png` ignored the deck's base, so it 404'd in a build with `--base /sub/`
+  (GitHub Pages and other subpath hosting); it now resolves like Slidev's own layouts.
+  In `full-image` and `full-split` a path with spaces or parentheses (`/my bg (1).png`)
+  left the background empty; the URL is now quoted.
+
 ## 3.0.4
 
 ### Fixes

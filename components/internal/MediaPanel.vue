@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { resolveAssetUrl } from '@slidev/client'
 import ScaledIframe from './ScaledIframe.vue'
 
 const props = defineProps({
@@ -32,7 +33,8 @@ const props = defineProps({
 const mediaStyle = computed(() => {
   if (props.type === 'image') {
     return {
-      backgroundImage: `url(${JSON.stringify(props.src)})`,
+      // Resolved against the deck's base path so `--base` builds work
+      backgroundImage: `url(${JSON.stringify(resolveAssetUrl(props.src))})`,
       backgroundSize: props.backgroundSize,
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
