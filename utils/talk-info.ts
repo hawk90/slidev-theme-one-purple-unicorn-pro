@@ -14,11 +14,11 @@ type Info = Record<string, unknown>
 export interface Person { name: string, affiliation?: string }
 
 export const isOff = (v: unknown) => v === false || v === 'false'
-const isOn = (v: unknown) => v === true || v === 'true'
+export const isOn = (v: unknown) => v === true || v === 'true'
 const isEmpty = (v: unknown) => v == null || v === '' || typeof v === 'boolean'
 
 /** A value as text: `date: 2026-10-09` comes from YAML as a Date */
-export const text = (v: unknown) => isEmpty(v) ? '' : v instanceof Date ? v.toISOString().slice(0, 10) : String(v)
+const text = (v: unknown) => isEmpty(v) ? '' : v instanceof Date ? v.toISOString().slice(0, 10) : String(v)
 
 /** `authors` (a list) or else `author` */
 export function people(info: Info): Person[] {
@@ -43,19 +43,18 @@ export function coverInfo(frontmatter: Info, headmatter: Info, isFirst: boolean)
   for (const k of DETAILS) if (frontmatter[k] !== undefined) info[k] = frontmatter[k]
   if (frontmatter.author !== undefined && frontmatter.authors === undefined) delete info.authors
 
-  const list = people(info)
-  // People with their own affiliations don't get the deck's shared one too
-  const shared = list.some(p => p.affiliation) && frontmatter.affiliation === undefined ? '' : text(info.affiliation)
+  // A cover with its own people doesn't give them the deck's affiliation
+  const ownPeople = !isFirst && (frontmatter.author !== undefined || frontmatter.authors !== undefined)
   const result = {
-    people: list,
-    affiliation: shared,
+    people: people(info),
+    affiliation: ownPeople && frontmatter.affiliation === undefined ? '' : text(info.affiliation),
     parts: [text(info.event), text(info.date)].filter(Boolean),
     logo: text(info.logo),
   }
   return result.people.length || result.affiliation || result.parts.length || result.logo ? result : null
 }
 
-export const FOOTER_PARTS = ['title', 'author', 'event', 'date', 'logo']
+const FOOTER_PARTS = ['title', 'author', 'event', 'date', 'logo']
 
 /**
  * What the footer line shows: `true` → title · author · event · date and the

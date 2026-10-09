@@ -21,7 +21,7 @@ import { computed } from 'vue'
 import { resolveAssetUrl, useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
-import { footerParts, isOff } from './utils/talk-info'
+import { footerParts, isOff, isOn } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, slides, isPrintMode } = useNav()
 
@@ -81,7 +81,7 @@ const footer = computed(() => {
   const deck = headmatter.value.footer
   // The first slide's frontmatter is the headmatter: its `footer` is the deck's
   const own = currentPage.value > 1 ? frontmatter.value.footer : undefined
-  const value = own === undefined ? deck : (own === true || own === 'true') && Array.isArray(deck) ? deck : own
+  const value = own === undefined ? deck : isOn(own) && Array.isArray(deck) ? deck : own
   const parts = footerParts(value, headmatter.value)
   return parts && (parts.text || parts.logo) ? parts : null
 })

@@ -212,7 +212,7 @@ footer: true                  # show them at the bottom left (off by default)
 ---
 ```
 
-- **Cover**: the first slide shows the details that are set; `coverInfo: false` turns them off there. Another `cover` slide shows them only with `coverInfo: true`, and its own `author` / `authors` / `affiliation` / `event` / `date` / `logo` replace the deck's.
+- **Cover**: the first slide shows the details that are set; `coverInfo: false` turns them off there. Another `cover` slide shows them only with `coverInfo: true`, and its own `author` / `authors` / `affiliation` / `event` / `date` / `logo` replace the deck's (a cover with its own people leaves out the deck's `affiliation` unless it sets one).
 - **Footer**: `footer: true` shows title · author · event · date and the logo (those that are set); a list picks them in its order (`logo` and `affiliation` too). The page number stays at the bottom right, and a long line ends in "…" before it. Like the page number, it is hidden on title slides and section dividers.
 - A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true` or a list shows it, so a slide can have a footer even when the deck has none. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
 
