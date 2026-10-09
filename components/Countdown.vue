@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter } from '@slidev/client'
 
 const props = defineProps({
@@ -44,11 +44,18 @@ function stop() {
 // every slide shortly after load, so a timer on slide 20 would already be
 // running. Once started it keeps running, like a real timer.
 let started = false
-onSlideEnter(() => {
+const autoStart = () => {
   if (started || !props.autoStart) return
   started = true
   start()
-})
+}
+try {
+  onSlideEnter(autoStart)
+}
+catch {
+  // Outside a slide (a deck's global layer, nav controls): no slide to enter
+  onMounted(autoStart)
+}
 
 watch(() => props.minutes, () => { remaining.value = total() })
 

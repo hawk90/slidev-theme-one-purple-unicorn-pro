@@ -9,13 +9,15 @@
 //   date: '2026-10-09'
 //   logo: /logo.svg       # from public/
 
+import type { SlideInfo } from '@slidev/types'
+
 type Info = Record<string, unknown>
 
 export interface Person { name: string, affiliation?: string }
 
-/** Whether a slide (route meta.slide) is the deck's first, whose frontmatter is the headmatter */
-export const isHeadmatterSlide = (slide?: { source?: { index?: number }, importChain?: unknown[] }) =>
-  slide?.source?.index === 0 && !slide.importChain?.length
+/** Whether a slide (route meta.slide) is the deck's first, whose frontmatter is
+ *  the headmatter: index is its place in the whole deck, hidden slides included */
+export const isHeadmatterSlide = (slide?: Pick<SlideInfo, 'index'>) => slide?.index === 0
 
 export const isOff = (v: unknown) => v === false || v === 'false'
 export const isOn = (v: unknown) => v === true || v === 'true'
