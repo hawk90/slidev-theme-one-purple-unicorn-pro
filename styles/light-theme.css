@@ -209,12 +209,12 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
 /* ============================================
    Buttons for Light Theme
    ============================================ */
-:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button:not([class]) {
   background: var(--light-bg-tertiary);
   color: var(--light-text-primary);
   border: 1px solid var(--light-border);
 }
 
-:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button:hover {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) button:not([class]):hover {
   background: var(--light-bg-secondary);
 }
