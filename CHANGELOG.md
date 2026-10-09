@@ -2,8 +2,22 @@
 
 ## Unreleased
 
+### Features
+
+- **Footer line.** `footer:` shows the talk's details at the bottom left of content slides:
+  `true` for title · author, a string, or an object whose parts (`event`, `title`,
+  `author`, `date`, any other key) show in the order written, with optional `logo` and
+  `separator`. A slide's own `footer` replaces the deck's (`false` hides it, and a slide
+  can have one when the deck has none); `footerInExport: false` leaves it out of exports.
+  Off unless set.
+- **`quote` takes a `>` blockquote** as the quote, with the attribution after it.
+
 ### Fixes
 
+- **`quote` lost its closing mark** when the quote was a heading (`# "…"`) or a single
+  paragraph with no attribution, and a lone paragraph was styled as an attribution.
+- **A `<Footnote>` overlapped a bottom stage indicator** (`stagePosition: bottom`); it now
+  sits above it (and above the new footer line).
 - **Monaco code blocks (`{monaco}`, `{monaco-run}`) never showed their editor.** The
   code theme was named "One Purple Unicorn", and Monaco rejects theme names with
   spaces ("Illegal theme name!"), so the editor failed to start; it is now
