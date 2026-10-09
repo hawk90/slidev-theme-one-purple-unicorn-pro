@@ -349,25 +349,25 @@ blockquote p:last-child {
 }
 
 .alert-info {
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--alert-info-bg, rgba(59, 130, 246, 0.1));
   border-color: var(--info);
   color: var(--text-primary);
 }
 
 .alert-success {
-  background: rgba(16, 185, 129, 0.1);
+  background: var(--alert-success-bg, rgba(16, 185, 129, 0.1));
   border-color: var(--success);
   color: var(--text-primary);
 }
 
 .alert-warning {
-  background: rgba(245, 158, 11, 0.1);
+  background: var(--alert-warning-bg, rgba(245, 158, 11, 0.1));
   border-color: var(--warning);
   color: var(--text-primary);
 }
 
 .alert-error {
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--alert-error-bg, rgba(239, 68, 68, 0.1));
   border-color: var(--error);
   color: var(--text-primary);
 }

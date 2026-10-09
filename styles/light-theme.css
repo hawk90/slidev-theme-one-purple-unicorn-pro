@@ -62,7 +62,7 @@ html:not(.dark) body {
   --primary-400: var(--light-primary, #9b3fb8);
   --primary-500: var(--light-primary-500, #8e3aa8);
   --primary-600: var(--light-primary-600, #7f3396);
-  --secondary-400: var(--light-blue, #1f6fb2);
+  --secondary-400: var(--light-secondary, #1f6fb2);
 
   --content-h2: var(--primary-400);
   --content-h3: var(--secondary-400);
@@ -197,19 +197,19 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
    Alerts for Light Theme
    ============================================ */
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-info {
-  background: rgba(97, 175, 239, 0.08);
+  background: color-mix(in srgb, var(--_root-one-dark-blue) 8%, transparent);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-success {
-  background: rgba(152, 195, 121, 0.08);
+  background: color-mix(in srgb, var(--_root-one-dark-green) 8%, transparent);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-warning {
-  background: rgba(229, 192, 123, 0.08);
+  background: color-mix(in srgb, var(--_root-one-dark-yellow) 8%, transparent);
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
-  background: rgba(224, 108, 117, 0.08);
+  background: color-mix(in srgb, var(--_root-one-dark-red) 8%, transparent);
 }
 
 /* ============================================

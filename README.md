@@ -295,7 +295,30 @@ One Dark accents with a purple → blue gradient:
 | `--one-dark-cyan` | `#56b6c2` | `#157a87` | `--light-cyan` |
 | `--text-primary` / `--text-muted` | `#c0c6d0` / `#858c98` | `#1a1d23` / `#6b7280` | `--light-text-primary` / `--light-text-muted` |
 
-Light-mode accents are deeper so text stays readable (≥ 4.5:1) on white. To recolor, set the dark-mode tokens and their light counterparts on `:root`:
+Light-mode accents are deeper so text stays readable (≥ 4.5:1) on white.
+
+### Brand colors
+
+Set your brand color in the headmatter and the theme derives the rest:
+
+```yaml
+---
+theme: one-purple-unicorn-pro
+themeConfig:
+  primary: '#0ea5e9'     # quote it: an unquoted # starts a YAML comment
+  secondary: '#a78bfa'   # optional; by default a partner picked from primary
+  accents:               # optional: blue, cyan, green, yellow, red
+    green: '#22c55e'
+---
+```
+
+- **`primary`** colors titles, headings, links, list markers, glows, the progress bar and the cover gradient. It derives the whole `--primary-100`…`--primary-900` scale and the light-mode shades.
+- **`secondary`** is the gradient partner and `h3` color. Left out, it is picked from `primary`: a quarter turn back on the color wheel, a little lighter and softer (blue gets teal, orange gets pink).
+- **`accents`** replace the One Dark accents. Their light-mode shades and, for blue / green / yellow / red, the info / success / warning / error alert tints follow.
+
+Light-mode shades are deepened until they reach 4.5:1 on white. Colors are hex (`#rgb` or `#rrggbb`); anything else is ignored with a console warning. Code highlighting and neutral colors stay as they are.
+
+To set a single token instead, put it and its light counterpart on `:root`:
 
 ```css
 :root {

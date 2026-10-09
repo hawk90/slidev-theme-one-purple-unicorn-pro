@@ -4,6 +4,15 @@
 
 ### Features
 
+- **Brand colors from `themeConfig`.** `primary` derives the brand scale, glows,
+  progress bar, cover gradients and light-mode shades (deepened to 4.5:1 on white);
+  `secondary` sets the gradient partner (default: picked from `primary`); `accents`
+  recolor blue / cyan / green / yellow / red with their light shades and alert tints.
+  Without them, nothing changes.
+- **Gradients and tints follow the color tokens.** The text, unicorn and glass gradients,
+  hover glows, progress glow and light-mode shimmer were fixed purple/blue; they now use
+  `--primary-400` / `--secondary-400`, so a `:root` override reaches them too. In light
+  mode, `--secondary-400` follows `--light-secondary` (no longer `--light-blue`).
 - **Footer line.** `footer:` shows the talk's details at the bottom left of content slides:
   `true` for title · author, a string, or an object whose parts (`event`, `title`,
   `author`, `date`, any other key) show in the order written, with optional `logo` and
