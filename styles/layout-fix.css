@@ -7,8 +7,7 @@
    Uses overflow:clip instead of hidden so box-shadows/glows
    are not clipped (clip only clips content, not visual effects). */
 #slide-content,
-.slidev-page,
-.slide-content {
+.slidev-page {
   overflow: clip;
 }
 
@@ -62,19 +61,15 @@
    ============================================ */
 .slidev-layout pre {
   max-width: 100%;
-  max-height: 60vh;
+  /* In slide pixels (60% of the default 552px-tall slide), not vh: vh follows
+     the browser window, so the cut-off moved with the window and exports
+     (a tall viewport) had none */
+  max-height: var(--code-max-height, 330px);
   overflow: auto;
 }
 
-.slidev-layout .shiki {
-  max-width: 100%;
-  max-height: 60vh;
-  overflow: auto;
-}
-
-/* ============================================
-   Table Container
-   ============================================ */
+/* A table is width: 100% plus its border; these keep it inside its box
+   (both change how the edge renders, so they stay as they are) */
 .slidev-layout table {
   max-width: 100%;
   overflow-x: auto;
@@ -95,12 +90,3 @@ p, li {
   word-wrap: break-word;
 }
 
-
-/* ============================================
-   Responsive Adjustments
-   ============================================ */
-@media (max-width: 768px) {
-  .slidev-layout {
-    padding: 2rem;
-  }
-}

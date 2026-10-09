@@ -128,6 +128,7 @@
 }
 
 html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
+  --slide-bg: var(--dark-bg);
   --bg-secondary: var(--_root-bg-secondary);
   --bg-tertiary: var(--_root-bg-tertiary);
   --key-bg: var(--_root-key-bg);
