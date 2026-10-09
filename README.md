@@ -137,11 +137,13 @@ Code uses Slidev's own syntax; the theme styles it:
 ````
 
 - **Title** (`[file.ts]`, and `::code-group` tabs): a window bar with macOS dots over the code. `--code-title-dots: none` hides the dots; `--code-title-bg`, `--code-title-color`.
-- **Line numbers** (`lineNumbers: true` in the headmatter, or `{lines:true}` / `{lines:false}` on a block, `{startLine:10}`): `12 │ code`. `--code-ln-color`, `--code-ln-rule`.
+- **Line numbers** (`lineNumbers: true` in the headmatter, or `{lines:true}` / `{lines:false}` on a block, `{startLine:10}`): `12 │ code`. `--code-ln-width` (3ch; 4ch for numbers from 1000), `--code-ln-color`, `--code-ln-rule`.
 - **Line focus** (`{2-3}`, or per click `{1|2-3|all}`): the other lines are dimmed (`--code-dim-opacity`, 0.45). `class: code-focus-tint` on a slide (or `themeConfig: { codeFocus: tint }` for the deck) dims nothing and tints the focused lines instead (`--code-focus-bg`).
-- **Shell sessions**: in a `bash` / `sh` / `zsh` / `console` block with prompt lines (`$ cmd`, `% cmd`, or a themed prompt ending in `❯` / `➜`), the other lines are output, shown muted (`--code-output-color`). Use ```` ```bash [zsh] ```` for a terminal window; `tree` output works as a file tree.
-- **Nerd Font icons** (powerline prompts and the like) render everywhere, exports included: the theme bundles the symbols-only Nerd Font (MIT), loaded only on slides that use one.
-- **Long lines wrap** under their code, never a scrollbar. Code blocks have no height cap unless you set `--code-max-height` or Slidev's `{maxHeight:'…'}`; what doesn't fit is then cut off, not scrolled.
+- **Shell sessions**: in a `bash` / `sh` / `shell` / `shellscript` / `zsh` / `fish` / `console` / `shellsession` block with prompt lines (`$ cmd`, `% cmd`, or a themed prompt ending in `❯` / `➜`, starting at the line's start), the other lines are output, shown muted (`--code-output-color`); a command ending in `\` goes on in the next line. Root `#`, `>>>` and `PS>` prompts are not recognized. Use ```` ```bash [zsh] ```` for a terminal window.
+- **Nerd Font icons** (powerline prompts and the like) render in code blocks, exports included: the theme bundles the symbols-only Nerd Font (MIT), fetched only on slides that show one. Not in Monaco or inline code.
+- **Long lines wrap** under their code (a tab-stop hang), never a scrollbar. Code blocks have no height cap unless you set `--code-max-height` (what doesn't fit is cut off) or Slidev's `{maxHeight:'…'}` (it scrolls to the focused lines, with no scrollbar). Magic-move blocks have no line boxes: their long lines wrap to the left edge, without the gutter rule.
+- Lines over 2000 characters (minified code, base64) are left uncolored, which keeps builds fast.
+- The theme's `setup/shiki.ts` adds the CUDA and shell transformers. A deck whose own `setup/shiki.ts` returns `transformers` replaces them (Slidev merges setups key by key); import them from the theme to keep them.
 
 ## Components
 
