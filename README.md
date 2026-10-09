@@ -74,7 +74,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 | `quote`, `statement`, `fact` | Emphasis slides | `padding`, `contentMaxWidth` |
 | `full` | No padding, build your own | |
 | `full-text` | Full-width text, no pinned title | |
-| `full-image` | Background image with overlay | `image`, `overlay`, `position`, `backgroundSize`, `align`, `padding` |
+| `full-image` | Background image with overlay | `image`, `overlay`, `position` (or `backgroundPosition`), `backgroundSize`, `align`, `padding` |
 | `full-split` | Background image with a text panel | `image`, `panelWidth`, `panelSide`, `panelColor`, `backgroundSize`, `backgroundPosition` |
 | `full-dark` | Dark centered slide with a large heading | `padding`, `contentMaxWidth` |
 
@@ -183,7 +183,7 @@ progressBar: content          # always (default) | content | false
 progressBarSkip: 2, 5-6       # pages without the bar (list, ranges, or an array)
 progressBarSkipMode: exclude  # hide (default): only hide the bar
                               # exclude: also leave skipped pages out of the progress
-pageNumber: false             # hide the page number (default: shown, except on title slides)
+pageNumber: false             # hide the page number (default: shown, except on title slides and section dividers)
 
 # Exports only (PDF / PNG / ?print); the presentation is unchanged
 progressBarInExport: false
@@ -245,6 +245,7 @@ Every value below defaults to the theme's look.
 |---|---|
 | Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-title-top`, `--slide-font-size` |
 | Emphasis layouts | `--quote-mark-size`, `--quote-size`, `--statement-size`, `--fact-size`, `--full-text-padding` |
+| Code blocks, images | `--code-max-height` (330px: 60% of the slide; longer code scrolls), `--image-max-height` (386px: 70%) |
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
@@ -273,7 +274,7 @@ Every value below defaults to the theme's look.
 
 | Effect | Variables | Presets |
 |---|---|---|
-| Entrances (`anim-fade-in` / `-up` / `-left` / `-right`, `anim-pop`) | `--anim-duration`, `--anim-distance`, `--anim-delay`, `--pop-scale` | `anim-delay-1` … `-5` |
+| Entrances (`anim-fade-in`, `anim-fade-up`, `anim-fade-left`, `anim-fade-right`, `anim-pop`) | `--anim-duration`, `--anim-distance`, `--anim-delay`, `--pop-scale` | `anim-delay-1` … `-5` |
 | `anim-float`, `anim-cursor` | `--float-distance`, `--float-duration`, `--cursor-color`, `--cursor-duration` | |
 | `anim-border` | `--ab-c1`, `--ab-c2`, `--ab-c3`, `--ab-dim`, `--ab-len`, `--ab-duration` (`s` or `ms`) | colors `-ocean` `-sunset` `-neon` `-ice` `-fire` `-mint` `-gold`; `-slow` `-fast` `-ccw` |
 | `anim-shimmer` | `--shimmer-color`, `--shimmer-width`, `--shimmer-travel`, `--shimmer-duration` | directions `-right` `-down` `-up` `-diag`; colors `-purple` `-blue` `-green` `-warm` `-neon`; `-slow` `-fast` |
@@ -327,8 +328,10 @@ To set a single token instead, put it and its light counterpart on `:root`:
 
 ```css
 :root {
-  --primary-400: #a855f7;   /* dark mode */
-  --light-primary: #7e22ce; /* light mode */
+  --primary-400: #a855f7;     /* dark mode */
+  --light-primary: #7e22ce;   /* light mode */
+  --secondary-400: #2dd4bf;   /* gradient partner, h3 (dark mode) */
+  --light-secondary: #0f766e; /* its light-mode shade */
 }
 ```
 

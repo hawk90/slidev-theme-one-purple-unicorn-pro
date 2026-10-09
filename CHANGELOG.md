@@ -36,6 +36,41 @@
   `one-purple-unicorn`. The editor box was also light in light mode under this
   theme's dark token colors, and its lines were centered on cover/center layouts;
   it now has the dark code background and left-aligned lines.
+- **macOS buttons lost their colors.** In dark mode, and on content slides in light
+  mode, Primary / Destructive / Success / Toolbar all came out as the plain gray
+  button; a plain button on a dark layout in light mode was dark-on-dark. Dark mode now
+  switches the buttons through variables, so the color variants win.
+- **Light mode overrode a slide's own styling.** A background class (`class: bg-red-500`),
+  text color utilities (`text-red-500`), component link colors and button styles were
+  replaced by the light-mode rules; they now win as in dark mode. Dark layouts in light
+  mode keep their own text color (and `--cover-text`), as in dark mode.
+- **Code blocks and images were capped by the browser window** (`60vh` / `70vh`), so the
+  cut-off moved with the window size and exports had none; they now cap at 60% / 70% of
+  the slide (`--code-max-height`, `--image-max-height`). A narrow window also changed
+  slide padding; that rule is gone.
+- **Theme styles leaked into Slidev's own UI** (a purple nav icon, gradient headings in
+  presenter notes); heading, text, link, list, table and quote styles now apply in
+  slides only.
+- **`slidev export --dark`** drew shadows and gradient text with light-mode colors when
+  the color scheme switched after load; the redraws are now undone and redone.
+  `--per-slide` exports now also wait for them.
+- **CUDA highlighting** styled every `<<` / `>>` (e.g. `std::cout << x`, `x >> 2`) as a
+  kernel launch and missed templated launches (`add<float><<<g, b>>>`); only
+  `<<<…>>>` launches are marked now.
+- **Deck options with a hidden first slide.** With `hide: true` on the first slide, the
+  footer, progress bar options and cover details read the next slide; they now read the
+  headmatter, and the footer's title falls back to the first heading like Slidev's.
+- **`layout: image` without `image`** crashed the slide (and dropped it from a PDF).
+- **`two-cols` / `three-cols` widths as numbers** (`leftWidth: 2`) stacked the columns;
+  a number is now a share (`2fr`).
+- **`Countdown`** started when the deck loaded (Slidev mounts all slides), so a timer
+  further in was already running; it now starts when its slide is shown. Fractional or
+  negative `minutes` are rounded to whole seconds and floored at 0.
+- **`Timeline active="1"`**, **`StageProgress`** with `stages` as a string,
+  **`PatternCard`** with a `<div>` in its slot (last rule kept), and **`QRCode ecc="h"`**
+  (lowercase) now work.
+- `full-image` also takes `backgroundPosition` (as `full-split` does); page ranges accept
+  an en dash (`1–3`).
 
 ## 3.0.5
 
