@@ -6,6 +6,11 @@
 // other viewers. Each gradient-text element instead gets a canvas with its text
 // painted in its gradient, laid over the original, which stays in place
 // (invisible) for layout and text search.
+//
+// An editable PPTX export (`--format pptx-editable`) instead turns the canvas
+// into a picture and the original into a text box, painted with its `color`:
+// the title came out twice, the copy in black. PowerPoint text has no
+// gradients, so there the text goes back to a solid color (solidifyGradientText).
 
 import { colorStops, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, textRuns } from './print-canvas'
 
@@ -72,7 +77,8 @@ let paint: HTMLCanvasElement | null = null
 const OVERHANG = 6
 
 export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
-  el.setAttribute(GRADIENT_DONE, '')
+  // The gradient is kept for solidifyGradientText: the element's own is cleared below
+  el.setAttribute(GRADIENT_DONE, s.backgroundImage)
   const box = paddingBox(el)
   const { width: w, height: h, zoom } = box
   const runs = textRuns(el, ps => isTransparent(ps.webkitTextFillColor))
@@ -122,4 +128,32 @@ export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
   el.style.setProperty('background', 'none', 'important')
   el.style.setProperty('-webkit-text-fill-color', 'transparent', 'important')
   el.appendChild(canvas)
+}
+
+// The gradient's first color stop
+function solidColor(image: string) {
+  const args = functionArgs(image)
+  if (/^-?[\d.]+(deg|turn|rad)$/.test(args[0]) || args[0] in SIDES) args.shift()
+  return colorStops(args)[0]?.[1]
+}
+
+// For an editable PPTX export: gradient text, redrawn (the canvases are
+// dropped) or not yet, is painted in its gradient's first color, nested
+// gradient text included
+export function solidifyGradientText(root: Document) {
+  for (const el of root.querySelectorAll<HTMLElement>('*')) {
+    const done = el.closest(`[${GRADIENT_DONE}]`)
+    if (done && done !== el) continue // handled with its redrawn ancestor
+    const s = getComputedStyle(el)
+    const image = el.getAttribute(GRADIENT_DONE) ?? (isGradientText(s) ? s.backgroundImage : '')
+    const color = image && solidColor(image)
+    if (!color) continue
+    for (const canvas of el.querySelectorAll('canvas.print-gradient-text')) canvas.remove()
+    for (const node of [el, ...el.querySelectorAll<HTMLElement>('*')]) {
+      if (!isTransparent(getComputedStyle(node).webkitTextFillColor)) continue
+      node.style.setProperty('background', 'none', 'important')
+      node.style.setProperty('color', color, 'important')
+      node.style.setProperty('-webkit-text-fill-color', color, 'important')
+    }
+  }
 }

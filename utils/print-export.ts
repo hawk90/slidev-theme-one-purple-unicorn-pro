@@ -9,7 +9,7 @@
 // gradient text (print-gradient-text.ts), masked border rings and blurred
 // shadows (print-effects.ts).
 
-import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText } from './print-gradient-text'
+import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText, solidifyGradientText } from './print-gradient-text'
 import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
 import { canRedraw } from './print-canvas'
@@ -63,15 +63,36 @@ function redraw(root: Element | Document) {
     if (job) textShadows.push(job)
     // Document order: an outer gradient element is redrawn with its
     // children's text before the children come up, so they are skipped
-    if (isGradientText(s) && !el.closest(`[${GRADIENT_DONE}]`)) attempt(() => redrawGradientText(el, s))
+    if (isGradientText(s) && !editable && !el.closest(`[${GRADIENT_DONE}]`)) attempt(() => redrawGradientText(el, s))
   }
   redrawTextShadows(textShadows, report)
 }
 
 let started = false
+let editable = false
+
+// `slidev export --format pptx-editable` loads the same ?print page as a PDF
+// export; what tells it apart is the style it adds right before it reads the
+// DOM. The observer runs before that read (a separate call into the page).
+const PPTX_EDITABLE_STYLE = 'animation-play-state: paused !important'
+function watchEditableExport() {
+  new MutationObserver((mutations) => {
+    if (editable) return
+    for (const m of mutations) {
+      for (const n of m.addedNodes) {
+        if (n instanceof HTMLStyleElement && n.textContent?.includes(PPTX_EDITABLE_STYLE)) {
+          editable = true
+          attempt(() => solidifyGradientText(document))
+          return
+        }
+      }
+    }
+  }).observe(document.head, { childList: true })
+}
 
 function start() {
   started = true
+  watchEditableExport()
   // `slidev export` waits for .slidev-slide-loading to be removed before it
   // captures, so hold the capture until the slides have settled and been redrawn
   // (at most HOLD_MS: a font that never loads must not stall the export)

@@ -9,6 +9,11 @@
   (GitHub Pages and other subpath hosting); it now resolves like Slidev's own layouts.
   In `full-image` and `full-split` a path with spaces or parentheses (`/my bg (1).png`)
   left the background empty; the URL is now quoted.
+- **Editable PPTX export (`slidev export --format pptx-editable`, Slidev 52.20+).** Gradient
+  text (titles, subtitles, `.gradient-text`) came out twice: as a picture of the gradient,
+  and as a text box in opaque black at the same spot, which showed behind the picture on
+  dark slides. PowerPoint text has no gradients, so in this export it is now plain,
+  editable text in the gradient's first color. PDF and PNG exports are unchanged.
 
 ## 3.0.4
 
