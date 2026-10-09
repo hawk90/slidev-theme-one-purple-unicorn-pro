@@ -128,8 +128,10 @@ Layout names from 1.x still work as presets of current layouts; frontmatter valu
 | `<Timeline>` | `items` (`[{ title, year, desc, color }]`), `active` |
 | `<ComplexityTable>` | `title`, `rows` (`[{ n, target, algo, complexity, highlight }]`), `showComplexity` |
 | `<Countdown>` | `minutes`, `size` (`sm` `default` `lg` `xl`), `label`, `autoStart`, `showZero` |
-| `<QRCode>` | `url`, `size` (preset or any CSS length), `caption`, `api` (`{data}` is replaced), `src` |
+| `<QRCode>` | `url` (empty: this deck), `slide` (`true`: this slide, or a number), `size` (preset or any CSS length), `caption`, `ecc` (`L` / `M` / `Q` / `H`), `api` (`{data}`, `{size}` are replaced), `src` |
 | `<PresenterNote>` | (slot; shown only in the presenter view) |
+
+`<QRCode>` is generated in the browser, so it works offline and in exports, and the URL is not sent anywhere. It is also a link. Without `url` it points to this deck: `seoMeta.ogUrl` from the headmatter if set (set it, or an exported deck points to the local export server), otherwise the address it is served from, with `--base` and `routerMode` applied. `api` switches back to a QR image service.
 
 Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props supports `$...$` math (KaTeX) and `x^y` superscripts; write `\$` for a literal dollar sign.
 
