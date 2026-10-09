@@ -24,6 +24,14 @@
 
 ### Changes
 
+- **`<QRCode>` works offline.** It used to fetch its image from api.qrserver.com, which
+  needed the network (an offline talk or export showed a broken image) and sent the URL
+  to a third party. It is now generated in the browser as a crisp SVG. The image used
+  to be blurred at most sizes: a fixed 200 px image was stretched to `xl` and scaled
+  to the others. It is also a link now. `url` is optional: without it the code points
+  to the deck (`seoMeta.ogUrl`, or where it is served, `--base` and `routerMode`
+  applied), or with `slide` to a slide. New `ecc` prop. `api` still selects a service,
+  with a new `{size}` placeholder.
 - **Light mode reaches everything on the page.** The light palette used to be set on
   content slides and the theme's own chrome only, so anything drawn outside
   `.slidev-layout`, such as a deck's or addon's `global-top.vue` and Slidev's presenter
