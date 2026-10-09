@@ -41,7 +41,45 @@ function report(e: unknown) {
   if (failures++ < 3) console.warn('[theme] PDF export: an effect is left as CSS:', e)
 }
 
+// What the redraws changed, so a pass can be undone (see watchColorScheme):
+// each attribute's value before the first change, and the nodes added
+const journal = new Map<Element, Map<string, string | null>>()
+const addedNodes: Node[] = []
+
 function redraw(root: Element | Document) {
+  const recorder = new MutationObserver(() => {})
+  recorder.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true })
+  try {
+    redrawEffects(root)
+  }
+  finally {
+    for (const r of recorder.takeRecords()) {
+      if (r.type === 'childList') {
+        addedNodes.push(...r.addedNodes)
+        continue
+      }
+      const el = r.target as Element
+      const attrs = journal.get(el) ?? journal.set(el, new Map()).get(el)!
+      if (!attrs.has(r.attributeName!)) attrs.set(r.attributeName!, r.oldValue)
+    }
+    recorder.disconnect()
+  }
+}
+
+// Put the slides back as they were before any redraw
+function undoRedraws() {
+  for (const n of addedNodes.reverse()) n.parentNode?.removeChild(n)
+  addedNodes.length = 0
+  for (const [el, attrs] of journal) {
+    for (const [name, value] of attrs) {
+      if (value === null) el.removeAttribute(name)
+      else el.setAttribute(name, value)
+    }
+  }
+  journal.clear()
+}
+
+function redrawEffects(root: Element | Document) {
   // Pseudo-elements: gradient ones become real elements, masked rings images
   for (const el of slideElements(root)) {
     if (el.hasAttribute(PSEUDO) || el.closest(`[${GRADIENT_DONE}]`)) continue
@@ -90,17 +128,35 @@ function watchEditableExport() {
   }).observe(document.head, { childList: true })
 }
 
-function start() {
-  started = true
-  watchEditableExport()
-  // `slidev export` waits for .slidev-slide-loading to be removed before it
-  // captures, so hold the capture until the slides have settled and been redrawn
-  // (at most HOLD_MS: a font that never loads must not stall the export)
+// `slidev export` waits for .slidev-slide-loading to be removed before it
+// captures: in the page, or with --per-slide inside the slide's
+// [data-slidev-no] element. Hold the capture until the slides have settled and
+// been redrawn (at most HOLD_MS: a font that never loads must not stall it).
+const holds = new Set<HTMLElement>()
+let holding = false
+function addHold(parent: Element) {
   const hold = document.createElement('div')
   hold.className = 'slidev-slide-loading'
   hold.style.display = 'none'
-  document.body.appendChild(hold)
-  setTimeout(() => hold.remove(), HOLD_MS)
+  parent.appendChild(hold)
+  holds.add(hold)
+}
+function hold() {
+  holding = true
+  addHold(document.body)
+  document.querySelectorAll('[data-slidev-no]').forEach(addHold)
+  setTimeout(release, HOLD_MS)
+}
+function release() {
+  holding = false
+  holds.forEach(h => h.remove())
+  holds.clear()
+}
+
+function start() {
+  started = true
+  watchEditableExport()
+  hold()
 
   // A full pass once the slides have settled, then only what is added later
   // (e.g. another range on the browser export page)
@@ -127,7 +183,7 @@ function start() {
         report(e)
       }
       finally {
-        hold.remove()
+        release()
       }
     }, 300)
   }
@@ -135,7 +191,8 @@ function start() {
     let added = false
     for (const m of mutations) {
       m.addedNodes.forEach((n) => {
-        if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO)) return
+        if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO) || n.matches('.slidev-slide-loading')) return
+        if (holding) [n, ...n.querySelectorAll('[data-slidev-no]')].filter(e => e.matches('[data-slidev-no]')).forEach(addHold)
         pending?.add(n)
         added = true
       })
@@ -143,6 +200,21 @@ function start() {
     if (added) schedule()
   }).observe(document.body, { childList: true, subtree: true })
   schedule()
+
+  // `slidev export --dark` switches the color scheme after the page has
+  // loaded, possibly after a pass: the redraws then hold light-mode colors
+  // (shadows, gradients). Undo them and run a full pass again.
+  let dark = document.documentElement.classList.contains('dark')
+  new MutationObserver(() => {
+    const now = document.documentElement.classList.contains('dark')
+    if (now === dark) return
+    dark = now
+    if (pending === null) return // no pass yet: the first one sees the new scheme
+    hold()
+    undoRedraws()
+    pending = null
+    schedule()
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 }
 
 export function setupPrintExport(router?: Parameters<typeof trackPrintRoute>[0] & { afterEach: (hook: () => void) => unknown }) {

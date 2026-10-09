@@ -89,7 +89,6 @@ const SHADOW_RESOLUTION = 2
 // with σ = B/2, which fades out by 3σ
 const reach = (sh: Shadow) => 1.5 * sh.blur + Math.max(0, sh.spread) + 1
 
-const prepared = new WeakSet<HTMLElement>()
 
 const hasBackground = (s: CSSStyleDeclaration) =>
   s.backgroundImage !== 'none' || !isTransparent(s.backgroundColor)
@@ -102,10 +101,10 @@ function hostFor(el: HTMLElement) {
     host = host.parentElement
   }
   if (!host) return null
-  if (!prepared.has(host)) {
+  // Read from the element, not remembered: an undone pass resets its style
+  if (host.style.isolation !== 'isolate') {
     host.style.isolation = 'isolate' // keep the shadows above the host's background
     if (getComputedStyle(host).position === 'static') host.style.position = 'relative'
-    prepared.add(host)
   }
   // Measured each time: the export page scrolls between passes
   return { host, box: paddingBox(host) }
