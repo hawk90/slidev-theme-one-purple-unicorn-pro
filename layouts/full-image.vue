@@ -3,7 +3,7 @@
     <FullBleed
       :image="image"
       :background-size="backgroundSize"
-      :background-position="position"
+      :background-position="backgroundPosition ?? position"
       :overlay="overlay"
       :align="align"
       :content-padding="padding"
@@ -21,6 +21,8 @@ defineProps({
   backgroundSize: { type: String, default: 'cover' },
   overlay: { type: String, default: 'rgba(0, 0, 0, 0.55)' },
   position: { type: String, default: 'center' },
+  // Same name as in full-split; `position` is kept for existing decks
+  backgroundPosition: { type: String, default: undefined },
   align: { type: String, default: 'center' },
   padding: { type: String, default: '3rem' },
 })
