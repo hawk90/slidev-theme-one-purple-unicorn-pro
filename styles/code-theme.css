@@ -10,6 +10,15 @@
   background: var(--bg-code, #21252b) !important;
 }
 
+/* Monaco blocks (`{monaco}`, `{monaco-run}`) use this theme's dark token
+   colors too. Slidev paints the box and the editor with this variable, light in
+   light mode; set only here, since inline code reads it as well. Code lines
+   start at the left, also on centered layouts (cover, center…). */
+:where(.slidev-layout) .slidev-monaco-container {
+  --slidev-code-background: var(--bg-code, #21252b);
+  text-align: left;
+}
+
 /* Scrollbar styling for code blocks */
 :where(.slidev-layout) .shiki::-webkit-scrollbar { width: 8px; height: 8px; }
 :where(.slidev-layout) .shiki::-webkit-scrollbar-track { background: var(--bg-tertiary, #3e4452); border-radius: 4px; }
