@@ -13,6 +13,10 @@ type Info = Record<string, unknown>
 
 export interface Person { name: string, affiliation?: string }
 
+/** Whether a slide (route meta.slide) is the deck's first, whose frontmatter is the headmatter */
+export const isHeadmatterSlide = (slide?: { source?: { index?: number }, importChain?: unknown[] }) =>
+  slide?.source?.index === 0 && !slide.importChain?.length
+
 export const isOff = (v: unknown) => v === false || v === 'false'
 export const isOn = (v: unknown) => v === true || v === 'true'
 const isEmpty = (v: unknown) => v == null || v === '' || typeof v === 'boolean'

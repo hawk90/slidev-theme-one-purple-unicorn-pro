@@ -20,19 +20,18 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { resolveAssetUrl, useNav, useSlideContext } from '@slidev/client'
+import { configs, resolveAssetUrl, useSlideContext } from '@slidev/client'
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
 import { centeredLayoutProps } from '../utils/layout-props'
-import { coverInfo } from '../utils/talk-info'
+import { coverInfo, isHeadmatterSlide } from '../utils/talk-info'
 
 defineProps(centeredLayoutProps('48rem'))
 
-const { $frontmatter, $page } = useSlideContext()
-const { slides } = useNav()
+const { $frontmatter, $route } = useSlideContext()
 const info = computed(() => coverInfo(
   $frontmatter ?? {}, // a reactive object, not a ref
-  slides.value[0]?.meta?.slide?.frontmatter ?? {},
-  $page.value === 1,
+  configs as Record<string, unknown>, // the headmatter (see global-bottom.vue)
+  isHeadmatterSlide($route?.meta?.slide),
 ))
 </script>
 
