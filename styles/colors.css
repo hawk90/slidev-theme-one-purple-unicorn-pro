@@ -1,10 +1,6 @@
 /* Dark Unicorn Theme - One Dark Pro Color System */
 
-/* The dark palette: the page default, and in light mode (which re-declares
-   these on <body>, light-theme.css) what dark layouts (`slide-dark`) and the
-   chrome over them (`chrome-on-dark`) go back to */
-:root,
-html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
+:root {
   /* Fonts come from the deck's `fonts:` headmatter (defaults in package.json);
      Slidev exposes the mono stack as --slidev-code-font-family */
   --font-mono: var(--slidev-code-font-family, 'JetBrains Mono', monospace);
@@ -89,10 +85,79 @@ html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
   --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #60a5fa);
   --cover-h2-gradient: linear-gradient(135deg, #a78bfa, #60a5fa);
 
-  /* Light-mode only; unset so the dark fallbacks apply again */
-  --_progress-track-default: initial;
-
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
+}
+
+/* Light mode re-declares part of the palette on <body> (light-theme.css).
+   Dark layouts (`slide-dark`) and the chrome over them (`chrome-on-dark`) get
+   the root's values back, a deck's own overrides on :root included: the root
+   keeps a copy of each (--_root-*), which the light palette doesn't touch. */
+:root {
+  --_root-bg-secondary: var(--bg-secondary);
+  --_root-bg-tertiary: var(--bg-tertiary);
+  --_root-key-bg: var(--key-bg);
+  --_root-text-primary: var(--text-primary);
+  --_root-text-bright: var(--text-bright);
+  --_root-text-secondary: var(--text-secondary);
+  --_root-text-muted: var(--text-muted);
+  --_root-border-default: var(--border-default);
+  --_root-shadow-md: var(--shadow-md);
+  --_root-shadow-lg: var(--shadow-lg);
+  --_root-shadow-xl: var(--shadow-xl);
+  --_root-one-dark-blue: var(--one-dark-blue);
+  --_root-one-dark-cyan: var(--one-dark-cyan);
+  --_root-one-dark-green: var(--one-dark-green);
+  --_root-one-dark-yellow: var(--one-dark-yellow);
+  --_root-one-dark-yellow-dark: var(--one-dark-yellow-dark);
+  --_root-one-dark-red: var(--one-dark-red);
+  --_root-one-dark-purple: var(--one-dark-purple);
+  --_root-one-dark-magenta: var(--one-dark-magenta);
+  --_root-primary-300: var(--primary-300);
+  --_root-primary-400: var(--primary-400);
+  --_root-primary-500: var(--primary-500);
+  --_root-primary-600: var(--primary-600);
+  --_root-secondary-400: var(--secondary-400);
+  --_root-content-h2: var(--content-h2);
+  --_root-content-h3: var(--content-h3);
+  --_root-content-h4: var(--content-h4);
+  --_root-content-marker: var(--content-marker);
+  --_root-ink-depth: var(--ink-depth);
+  --_root-ink-mix: var(--ink-mix);
+}
+
+html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
+  --bg-secondary: var(--_root-bg-secondary);
+  --bg-tertiary: var(--_root-bg-tertiary);
+  --key-bg: var(--_root-key-bg);
+  --text-primary: var(--_root-text-primary);
+  --text-bright: var(--_root-text-bright);
+  --text-secondary: var(--_root-text-secondary);
+  --text-muted: var(--_root-text-muted);
+  --border-default: var(--_root-border-default);
+  --shadow-md: var(--_root-shadow-md);
+  --shadow-lg: var(--_root-shadow-lg);
+  --shadow-xl: var(--_root-shadow-xl);
+  --one-dark-blue: var(--_root-one-dark-blue);
+  --one-dark-cyan: var(--_root-one-dark-cyan);
+  --one-dark-green: var(--_root-one-dark-green);
+  --one-dark-yellow: var(--_root-one-dark-yellow);
+  --one-dark-yellow-dark: var(--_root-one-dark-yellow-dark);
+  --one-dark-red: var(--_root-one-dark-red);
+  --one-dark-purple: var(--_root-one-dark-purple);
+  --one-dark-magenta: var(--_root-one-dark-magenta);
+  --primary-300: var(--_root-primary-300);
+  --primary-400: var(--_root-primary-400);
+  --primary-500: var(--_root-primary-500);
+  --primary-600: var(--_root-primary-600);
+  --secondary-400: var(--_root-secondary-400);
+  --content-h2: var(--_root-content-h2);
+  --content-h3: var(--_root-content-h3);
+  --content-h4: var(--_root-content-h4);
+  --content-marker: var(--_root-content-marker);
+  --ink-depth: var(--_root-ink-depth);
+  --ink-mix: var(--_root-ink-mix);
+  /* Light-mode only; unset so the dark fallbacks apply again */
+  --_progress-track-default: initial;
 }

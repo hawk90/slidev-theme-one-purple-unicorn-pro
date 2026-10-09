@@ -8,7 +8,7 @@
     >
       <img v-if="imageSrc" :src="imageSrc" :alt="`QR: ${target}`" class="qrcode-img" />
       <svg
-        v-else
+        v-else-if="matrix"
         class="qrcode-img"
         :viewBox="`0 0 ${matrix.size + 2 * BORDER} ${matrix.size + 2 * BORDER}`"
         role="img"
@@ -61,7 +61,7 @@ const target = computed(() => {
   return mode === 'hash' ? `${root}#/${no}` : `${root}${no}`
 })
 
-const isLink = computed(() => /^https?:\/\//.test(target.value))
+const isLink = computed(() => /^https?:\/\//i.test(target.value))
 
 const presetSize = computed(() => ['sm', 'default', 'lg', 'xl'].includes(props.size))
 const PRESET_PX: Record<string, number> = { sm: 80, default: 120, lg: 180, xl: 240 }
@@ -75,9 +75,18 @@ const imageSrc = computed(() => {
 })
 
 const level = computed<Ecc>(() => (['L', 'M', 'Q', 'H'].includes(props.ecc) ? props.ecc : 'M') as Ecc)
-// Encoded once per text and level; the SVG scales without blurring
-const matrix = computed(() => encodeQr(target.value, level.value))
-const path = computed(() => qrPath(matrix.value, BORDER))
+// Encoded once per text and level; the SVG scales without blurring. Text past
+// a QR code's capacity (about 2.9 KB) shows no code rather than breaking the slide
+const matrix = computed(() => {
+  try {
+    return encodeQr(target.value, level.value)
+  }
+  catch (e) {
+    console.warn('[theme] QRCode:', e)
+    return null
+  }
+})
+const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
 </script>
 
 <style scoped>
