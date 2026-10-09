@@ -22,6 +22,17 @@
   appeared in every exported slide (and the OG image) over the page number; it is now
   hidden in exports.
 
+### Changes
+
+- **Light mode reaches everything on the page.** The light palette used to be set on
+  content slides and the theme's own chrome only, so anything drawn outside
+  `.slidev-layout`, such as a deck's or addon's `global-top.vue` and Slidev's presenter
+  and overview pages, kept the dark colors in light mode. It is now set on `<body>`,
+  and dark layouts (`slide-dark`) and their chrome (`chrome-on-dark`) get the dark
+  values back. Slides look the same: the 78 example slides export pixel-identical in
+  light mode, and dark mode is untouched. The "No notes for this slide" text in the
+  presenter and overview views is now readable in light mode.
+
 ## 3.0.4
 
 ### Fixes

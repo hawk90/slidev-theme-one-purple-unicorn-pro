@@ -22,18 +22,15 @@ html:not(.dark) .slidev-layout {
   color: var(--light-text-primary);
 }
 
-/* Light palette for content slides and the slide chrome around them (stage
-   indicator, page number, progress bar sit outside .slidev-layout).
-   Components and effects read these variables, so they all follow light
-   mode from here. Dark layouts (`slide-dark`, chrome `.chrome-on-dark`) are
-   not matched and keep the dark values from colors.css. Code blocks keep
-   --bg-code. */
-html:not(.dark) :is(
-  .slidev-layout:not(.slide-dark),
-  .stage-progress:not(.chrome-on-dark),
-  .slide-indicator:not(.chrome-on-dark),
-  .progress-bar:not(.chrome-on-dark)
-) {
+/* Light palette, for the whole page: content slides, the slide chrome
+   (stage indicator, page number, progress bar) and anything else a deck or
+   addon draws outside .slidev-layout (global layers). Components and effects
+   read these variables, so they all follow light mode from here. Dark layouts
+   (`slide-dark`) and the chrome over them (`chrome-on-dark`) get the dark
+   values back from colors.css. Code blocks keep --bg-code. On <body>, not the
+   root: variables derived at the root (--error, --gradient-primary, …) keep
+   their dark-mode values, as before. */
+html:not(.dark) body {
   --bg-secondary: var(--light-bg-secondary);
   --bg-tertiary: #eceef2;
   --key-bg: var(--light-key-bg, #eceef2);
