@@ -44,7 +44,7 @@ const info = computed(() => coverInfo(
   align-items: center;
   gap: 0.35rem;
   margin-top: 2.5rem;
-  color: var(--cover-info-color, var(--text-bright));
+  color: var(--cover-info-color, var(--primary-300)); /* names: the brand */
 }
 
 /* A short brand line between the title block and the details */
