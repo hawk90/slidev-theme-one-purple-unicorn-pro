@@ -1638,6 +1638,8 @@ Custom: `style="--glow: #ff6b6b; --glow-intensity: 0.6;"` (any CSS color)
 </div>
 
 ---
+transition: slide-left
+---
 
 # Gradient Text Animation
 
@@ -1653,7 +1655,7 @@ Custom: `style="--gt-c1: #ff6b6b; --gt-c2: #ffa500; ..."`
 
 # Entrance Animations
 
-One-shot entrances; add `anim-delay-1` … `-5` to stagger them.
+One-shot entrances; add `anim-delay-1` … `-5` to stagger them. They start once the slide has arrived: the previous slide sets `transition: slide-left`, and they wait for it to stop. They replay each time you come back.
 
 <div class="anim-fade-in" style="margin-top: 1rem;">
 
