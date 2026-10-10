@@ -353,6 +353,45 @@ Advanced:
 - `protocol`
 
 ---
+layout: three-cols
+leftWidth: 1
+centerWidth: 2
+rightWidth: 1
+divider: true
+leftLabel: Input
+centerLabel: Kernel
+rightLabel: Output
+rightLabelColor: var(--one-dark-yellow)
+---
+
+# Three Columns with Labels
+
+::left::
+
+Host arrays copied to the device:
+- `x`, `y`
+- `n = 1 << 20`
+
+::center::
+
+One thread per element, `centerWidth: 2` makes this column twice as wide:
+
+```cpp
+__global__ void saxpy(int n, float a, float *x, float *y) {
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < n) y[i] = a * x[i] + y[i];
+}
+```
+
+::right::
+
+`y` copied back. Label colors default to blue, green, magenta; `rightLabelColor` sets any CSS color.
+
+::bottom::
+
+`leftWidth` / `centerWidth` / `rightWidth`: a number is a share (`2` = 2fr), anything else a CSS length.
+
+---
 layout: image
 side: left
 image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800
@@ -389,6 +428,34 @@ Same props available:
 - `backgroundSize` (optional)
 
 ---
+layout: iframe
+side: right
+url: https://sli.dev
+scale: 0.6
+title: Slidev documentation
+---
+
+# Iframe Beside Content
+
+A live page next to the content. `scale` shrinks it so more of the page fits.
+
+```yaml
+layout: iframe
+side: right          # left | right | full (default)
+url: https://sli.dev
+scale: 0.6           # > 0, default 1
+title: Slidev documentation  # screen-reader name
+```
+
+Some sites refuse to be embedded (`X-Frame-Options`); those show blank.
+
+---
+layout: iframe
+url: https://sli.dev
+title: Slidev documentation
+---
+
+---
 layout: section
 ---
 
@@ -402,7 +469,7 @@ layout: quote
 
 <div style="position: fixed; top: 1.25rem; left: 1.5rem;"><Badge variant="gray">layout: quote</Badge></div>
 
-The best way to predict the future is to invent it.
+> The best way to predict the future is to invent it.
 
 **— Alan Kay, 1971**
 
