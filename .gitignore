@@ -37,3 +37,4 @@ example/package-lock.json
 *.log
 .cache/
 deck-check/
+regress-out/
