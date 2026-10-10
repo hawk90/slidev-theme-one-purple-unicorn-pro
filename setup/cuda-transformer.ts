@@ -118,7 +118,8 @@ function processSpan(span: Element) {
 
     const text = child.value
     let lastIndex = 0
-    // \w+, so a name inside a longer word (3dim3, mydim3) is not one
+    // \w+, so a name inside a longer word (mydim3, dim3x) is not one. Shiki
+    // splits a number from what follows: in `3dim3`, `dim3` is marked
     for (const m of text.matchAll(/\w+/g)) {
       const style = STYLES.get(m[0])
       if (!style) continue

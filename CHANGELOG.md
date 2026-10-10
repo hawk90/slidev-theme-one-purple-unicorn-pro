@@ -41,7 +41,12 @@
   instead of running 13 patterns over every piece of text (same output).
 - **Shell sessions:** the lines of a `for … done` / `if … fi` / `{ … }` block, a pipe or
   `&&` at the end of a line, and a heredoc were muted as output; they stay commands.
-  In a `$` session, an output line containing ` ❯ ` was taken for a prompt.
+  In a `$` session, an output line containing ` ❯ ` was taken for a prompt. A `<<<`
+  here-string or `$((a << b))` no longer counts as a heredoc, and a quoted string
+  over two lines stays the command.
+- **PDF export: shadows and gradient text near black, red, yellow or green boxes.**
+  `rgb(0, 0, 0)` and other opaque colors whose last channel is 0 were taken for
+  transparent.
 - **`layout: none`:** `--code-max-height`, `--image-max-height`, heading line height,
   and table and code-block spacing now apply there too.
 - **Code lines were centered on centered layouts** (cover, center…); they start at the
