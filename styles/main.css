@@ -110,8 +110,8 @@
 }
 
 /* Code block after heading needs breathing room */
-.slidev-layout h2 + pre,
-.slidev-layout h3 + pre {
+:is(.slidev-layout, .slidev-page) h2 + pre,
+:is(.slidev-layout, .slidev-page) h3 + pre {
   margin-top: 0.4rem;
 }
 
@@ -215,7 +215,7 @@
 /* ============================================
    Images
    ============================================ */
-.slidev-layout img {
+:is(.slidev-layout, .slidev-page) img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
