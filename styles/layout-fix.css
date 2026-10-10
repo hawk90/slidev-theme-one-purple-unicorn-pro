@@ -56,19 +56,6 @@
   max-width: var(--absolute-max-width, calc(100% - 8rem));
 }
 
-/* ============================================
-   Code Block Container
-   ============================================ */
-:is(.slidev-layout, .slidev-page) pre {
-  max-width: 100%;
-  /* No cap by default (--code-max-height sets one; highlighted code is then
-     cut off, see code-theme.css). Not vh: vh follows the browser window, not
-     the scaled slide, so the cut-off only hit small windows and never
-     fullscreen or exports */
-  max-height: var(--code-max-height, none);
-  overflow: auto; /* other <pre> (not Slidev code blocks) */
-}
-
 /* A table is width: 100% plus its border; these keep it inside its box
    (both change how the edge renders, so they stay as they are) */
 :is(.slidev-layout, .slidev-page) table {
