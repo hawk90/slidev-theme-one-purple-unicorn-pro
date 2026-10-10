@@ -1,17 +1,17 @@
 <template>
   <!-- Progress Bar: always or content-only based on frontmatter -->
-  <div v-if="showBar" class="progress-bar" :class="{ 'chrome-on-dark': onDark }">
+  <div v-if="showBar" class="progress-bar">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
   </div>
 
   <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
-  <div v-if="footer" class="slide-footer" :class="{ 'chrome-on-dark': onDark }">
+  <div v-if="footer" class="slide-footer">
     <img v-if="footer.logo" :src="resolveAssetUrl(footer.logo)" alt="" class="slide-footer-logo" />
     <span v-if="footer.text" class="slide-footer-text">{{ footer.text }}</span>
   </div>
 
   <!-- Page Indicator -->
-  <div v-if="showPageNumber" class="slide-indicator" :class="{ 'chrome-on-dark': onDark }">
+  <div v-if="showPageNumber" class="slide-indicator">
     {{ currentPage }} / {{ total }}
   </div>
 </template>
@@ -19,14 +19,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { configs, resolveAssetUrl, useNav } from '@slidev/client'
-import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
+import { NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 import { footerParts, headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
-const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

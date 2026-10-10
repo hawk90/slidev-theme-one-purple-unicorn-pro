@@ -24,7 +24,7 @@
    (stage indicator, page number, progress bar) and anything else a deck or
    addon draws outside .slidev-layout (global layers). Components and effects
    read these variables, so they all follow light mode from here. Dark layouts
-   (`slide-dark`) and the chrome over them (`chrome-on-dark`) get the dark
+   (`slide-dark`) and the chrome over them (styles/colors.css) get the dark
    values back from colors.css. Code blocks keep --bg-code. On <body>, not the
    root: variables derived at the root (--error, --gradient-primary, …) keep
    their dark-mode values, as before. */

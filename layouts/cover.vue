@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout cover slide-title slide-dark slide-bare">
-    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
+    <CenteredSlide :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
       <!-- The talk's details from the headmatter (utils/talk-info.ts) -->
       <div v-if="info" class="cover-info">

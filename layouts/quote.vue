@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout quote slide-dark slide-bare">
-    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
+    <CenteredSlide :padding="padding" :content-max-width="contentMaxWidth">
       <div class="quote-content">
         <span class="quote-mark quote-open" aria-hidden="true">&ldquo;</span>
         <slot />

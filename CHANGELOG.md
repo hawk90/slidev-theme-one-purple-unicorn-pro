@@ -51,6 +51,11 @@
   "exported" with no files (6 of 6 runs on the example deck), and an export could miss
   the redrawn shadows and gradient text. The marker is now in the page from the start
   (the theme's `index.html`) and stays until the slides are there and redrawn.
+- **Slide chrome on a slide with `class: slide-dark`** (progress bar, footer, page number,
+  stage indicator) kept its light-mode colors over the dark slide. The chrome now
+  follows the slide's own `slide-dark` class instead of a list of layout names, so a
+  slide marked dark, or a deck's own dark layout, gets it too. A background class on a
+  dark centered layout (cover, section…) is no longer painted over.
 - **PDF export: shadows and gradient text near black, red, yellow or green boxes.**
   `rgb(0, 0, 0)` and other opaque colors whose last channel is 0 were taken for
   transparent.

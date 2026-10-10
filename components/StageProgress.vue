@@ -2,7 +2,7 @@
   <nav
     v-if="!isHidden && stages.length > 0"
     class="stage-progress"
-    :class="[`stage-pos-${position}`, { 'chrome-on-dark': onDark }]"
+    :class="`stage-pos-${position}`"
     aria-label="Stages"
   >
     <button
@@ -29,12 +29,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-import { DARK_LAYOUTS, TITLE_LAYOUTS } from '../utils/layouts'
+import { TITLE_LAYOUTS } from '../utils/layouts'
 
 const { currentLayout, currentSlideRoute, go, slides } = useNav()
 
 const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
-const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
 const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}

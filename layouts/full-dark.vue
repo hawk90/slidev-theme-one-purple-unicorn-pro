@@ -1,7 +1,7 @@
 <template>
   <!-- Kept for backward compatibility: dark centered slide with large heading -->
   <div class="slidev-layout full-dark slide-dark slide-bare">
-    <CenteredSlide dark :padding="padding" :content-max-width="contentMaxWidth">
+    <CenteredSlide :padding="padding" :content-max-width="contentMaxWidth">
       <slot />
     </CenteredSlide>
   </div>
