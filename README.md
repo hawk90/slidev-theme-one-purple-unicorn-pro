@@ -18,7 +18,7 @@ A Slidev theme with purple → blue gradients and One Dark colors, built for tec
 npm install slidev-theme-one-purple-unicorn-pro
 ```
 
-Requires Slidev 52 or later (Node 20.12+; Slidev 53 needs Node 22.12+).
+Requires Slidev 53 or later (Node 22.12+).
 
 ## Usage
 

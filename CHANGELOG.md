@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Changes
+
+- **Requires Slidev 53+** (Node 22.12+), up from 52. On Slidev 52.0 the theme already
+  failed to compile `ComplexityTable` and `Timeline`, and Slidev before 52.9 replaces
+  the bundled languages when a setup passes `langs`, which the `cuda` fences need.
+  The demo and the consumer decks run on 53.
+
 ### Features
 
 - **Code blocks.** A titled block (```` ```ts [file.ts] ````) and `::code-group` tabs
