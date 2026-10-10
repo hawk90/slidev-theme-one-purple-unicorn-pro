@@ -17,8 +17,21 @@ const SHELLS = new Set(['bash', 'sh', 'shell', 'shellscript', 'zsh', 'fish', 'co
 // `$ cmd`, zsh's `% cmd`, or a themed prompt ending in ❯ / ➜ (starship,
 // powerlevel10k, oh-my-zsh: `~/app  main ❯ cmd`). A prompt starts at the
 // line's start: indented `  ➜  Local: …` (Vite) or ` ❯ a.test.ts` (Vitest)
-// is output. Not recognized: root `#` (a comment), `>>>`, `PS C:\>`.
-const PROMPT = /^[$%❯➜](\s|$)|^\S.*\s[❯➜](\s|$)/
+// is output. A block whose first prompt is `$ ` or `% ` has only those, so
+// output such as `built ❯ done` there is output. Not recognized: root `#`
+// (a comment), `>>>`, `PS C:\>`.
+const PLAIN = /^[$%❯➜](\s|$)/
+const THEMED = /^[$%❯➜](\s|$)|^\S.*\s[❯➜](\s|$)/
+// A command goes on in the next line after a trailing `\`, `|`, `&&`, `||`,
+// or inside `for … do … done`, `if … fi`, `case … esac`, `{ … }` and
+// heredocs (`<<EOF` … `EOF`); the shell shows `> ` there (PS2)
+const CONTINUES = /(\\|\||&&|\|\||\{|\()\s*$/
+// Keywords where a command starts (not in `git log --grep=for`), after
+// quoted strings and comments are dropped
+const OPENS = /(?:^|[;&|(]|\b(?:do|then|else))\s*(?:if|for|while|until|case)\b|\{$/g
+const CLOSES = /(?:^|[;&|])\s*(?:fi|done|esac|\})(?=[\s;&|)]|$)/g
+const bare = (body: string) => body.replace(/(["'])(?:\\.|(?!\1)[^\\])*\1/g, '""').replace(/(^|\s)#.*$/, '').trim()
+const HEREDOC = /<<-?\s*(['"]?)(\w+)\1/
 
 const textOf = (node: Node): string =>
   node.type === 'text' ? node.value : 'children' in node ? node.children.map(textOf).join('') : ''
@@ -32,12 +45,33 @@ export function terminalTransformer(): ShikiTransformer {
       if (!code) return
       const lines = code.children.filter((c): c is Element => c.type === 'element')
       const texts = lines.map(textOf)
-      if (!texts.some(t => PROMPT.test(t))) return
-      // A command ending in `\` goes on in the next line (still the command)
+      const first = texts.find(t => THEMED.test(t))
+      if (first === undefined) return
+      const PROMPT = /^[$%](\s|$)/.test(first) ? PLAIN : THEMED
       let command = false
+      let depth = 0 // open for/if/case/{ blocks
+      let heredoc = '' // the end word while in a heredoc
+      let open = false // the last command line goes on
       lines.forEach((line, i) => {
         const text = texts[i]
-        command = PROMPT.test(text) || (command && texts[i - 1].endsWith('\\'))
+        if (heredoc) {
+          // heredoc input, then its end word: part of the command
+          if (text.replace(/^>\s?/, '').trim() === heredoc) heredoc = ''
+          command = true
+        }
+        else if (PROMPT.test(text) || (command && (open || depth > 0))) {
+          const prompt = text.match(PROMPT)
+          if (prompt) depth = 0
+          const raw = prompt ? text.slice(prompt[0].length) : text.replace(/^>\s?/, '')
+          const body = bare(raw)
+          depth = Math.max(0, depth + (body.match(OPENS)?.length ?? 0) - (body.match(CLOSES)?.length ?? 0))
+          heredoc = raw.match(HEREDOC)?.[2] ?? ''
+          open = CONTINUES.test(body)
+          command = true
+        }
+        else {
+          command = false
+        }
         if (!command && text.trim()) this.addClassToHast(line, 'line-output')
       })
     },
