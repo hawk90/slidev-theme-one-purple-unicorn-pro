@@ -41,6 +41,7 @@
 
 ### Fixes
 
+- **A ```` ```cuda ```` code block failed the whole slide** (Shiki has no CUDA grammar). `cuda`, `cu` and `cuh` now highlight as C++, with the CUDA names colored (#42). The theme declares `shiki` as a dependency (`^4.4.3`, as Slidev).
 - **Code blocks without a title had 4px corners** (Slidev's `--slidev-code-radius`,
   applied with `!important`) instead of the theme's 0.75rem, unlike titled blocks.
 - **The column layouts' `::bottom::` slot sat on the footer line** when `footer` was on;
