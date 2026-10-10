@@ -71,6 +71,29 @@ This is a regular paragraph with **bold text**, *italic text*, and `inline code`
 
 ---
 
+# 한국어 타이포그래피
+
+한글은 기본 글꼴인 **Noto Sans KR**로 표시되고, 줄은 단어 사이에서만 바뀝니다 (`word-break: keep-all`).
+
+<div class="grid grid-cols-2 gap-6 mt-6">
+<div class="card">
+
+**테마 기본값 (keep-all)**
+
+GPU 메모리 계층을 이해하면 커널의 성능 병목을 정확하게 찾아낼 수 있습니다. 공유 메모리와 레지스터를 적절히 활용하는 것이 최적화의 핵심입니다.
+
+</div>
+<div class="card" style="word-break: normal">
+
+**브라우저 기본값 (normal)**
+
+GPU 메모리 계층을 이해하면 커널의 성능 병목을 정확하게 찾아낼 수 있습니다. 공유 메모리와 레지스터를 적절히 활용하는 것이 최적화의 핵심입니다.
+
+</div>
+</div>
+
+---
+
 # Lists
 
 - First item in an unordered list
