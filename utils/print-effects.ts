@@ -89,7 +89,6 @@ const SHADOW_RESOLUTION = 2
 // with σ = B/2, which fades out by 3σ
 const reach = (sh: Shadow) => 1.5 * sh.blur + Math.max(0, sh.spread) + 1
 
-
 const hasBackground = (s: CSSStyleDeclaration) =>
   s.backgroundImage !== 'none' || !isTransparent(s.backgroundColor)
 

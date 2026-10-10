@@ -23,14 +23,14 @@ import { computed } from 'vue'
 import { configs, resolveAssetUrl, useSlideContext } from '@slidev/client'
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
 import { centeredLayoutProps } from '../utils/layout-props'
-import { coverInfo } from '../utils/talk-info'
+import { coverInfo, headmatterOf } from '../utils/talk-info'
 
 defineProps(centeredLayoutProps('48rem'))
 
 const { $frontmatter, $page } = useSlideContext()
 const info = computed(() => coverInfo(
   $frontmatter ?? {}, // a reactive object, not a ref
-  configs as Record<string, unknown>, // the headmatter (see global-bottom.vue)
+  headmatterOf(configs),
   $page.value === 1, // the first slide shown (a hidden headmatter slide doesn't count)
 ))
 </script>

@@ -192,7 +192,10 @@ function start() {
     for (const m of mutations) {
       m.addedNodes.forEach((n) => {
         if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO) || n.matches('.slidev-slide-loading')) return
-        if (holding) [n, ...n.querySelectorAll('[data-slidev-no]')].filter(e => e.matches('[data-slidev-no]')).forEach(addHold)
+        if (holding) {
+          if (n.matches('[data-slidev-no]')) addHold(n)
+          n.querySelectorAll('[data-slidev-no]').forEach(addHold)
+        }
         pending?.add(n)
         added = true
       })

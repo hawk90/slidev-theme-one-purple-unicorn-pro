@@ -12,7 +12,7 @@ type Root = Parameters<NonNullable<ShikiTransformer['root']>>[0]
 type Node = Root | Root['children'][number]
 
 interface TokenDef {
-  pattern: RegExp
+  words: string
   color: string
   bold?: boolean
   italic?: boolean
@@ -21,78 +21,85 @@ interface TokenDef {
 const cudaTokens: TokenDef[] = [
   // --- CUDA execution qualifiers ---
   {
-    pattern: /\b(__global__|__device__|__host__|__shared__|__constant__|__managed__|__restrict__|__noinline__|__forceinline__|__launch_bounds__)\b/g,
+    words: '__global__ __device__ __host__ __shared__ __constant__ __managed__ __restrict__ __noinline__ __forceinline__ __launch_bounds__',
     color: '#ff6188',
     bold: true,
   },
   // --- CUDA built-in variables ---
   {
-    pattern: /\b(threadIdx|blockIdx|blockDim|gridDim|warpSize)\b/g,
+    words: 'threadIdx blockIdx blockDim gridDim warpSize',
     color: '#ff6188',
   },
   // --- Synchronization & warp intrinsics ---
   {
-    pattern: /\b(__syncthreads|__syncwarp|__threadfence|__threadfence_block|__threadfence_system|__ballot_sync|__all_sync|__any_sync|__shfl_sync|__shfl_up_sync|__shfl_down_sync|__shfl_xor_sync)\b/g,
+    words: '__syncthreads __syncwarp __threadfence __threadfence_block __threadfence_system __ballot_sync __all_sync __any_sync __shfl_sync __shfl_up_sync __shfl_down_sync __shfl_xor_sync',
     color: '#78dce8',
   },
   // --- Atomic operations ---
   {
-    pattern: /\b(atomicAdd|atomicSub|atomicExch|atomicMin|atomicMax|atomicInc|atomicDec|atomicCAS|atomicAnd|atomicOr|atomicXor)\b/g,
+    words: 'atomicAdd atomicSub atomicExch atomicMin atomicMax atomicInc atomicDec atomicCAS atomicAnd atomicOr atomicXor',
     color: '#78dce8',
   },
   // --- CUDA Runtime API ---
   {
-    pattern: /\b(cudaMalloc|cudaMallocHost|cudaMallocManaged|cudaMallocPitch|cudaMalloc3D|cudaFree|cudaFreeHost|cudaMemcpy|cudaMemcpyAsync|cudaMemcpy2D|cudaMemcpyToSymbol|cudaMemcpyFromSymbol|cudaMemset|cudaMemsetAsync|cudaMemGetInfo|cudaMemPrefetchAsync|cudaMemAdvise)\b/g,
+    words: 'cudaMalloc cudaMallocHost cudaMallocManaged cudaMallocPitch cudaMalloc3D cudaFree cudaFreeHost cudaMemcpy cudaMemcpyAsync cudaMemcpy2D cudaMemcpyToSymbol cudaMemcpyFromSymbol cudaMemset cudaMemsetAsync cudaMemGetInfo cudaMemPrefetchAsync cudaMemAdvise',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Device API ---
   {
-    pattern: /\b(cudaGetDevice|cudaSetDevice|cudaGetDeviceCount|cudaGetDeviceProperties|cudaDeviceGetAttribute|cudaDeviceSynchronize|cudaDeviceReset|cudaDeviceCanAccessPeer|cudaDeviceEnablePeerAccess|cudaDeviceGetLimit|cudaDeviceSetLimit|cudaDeviceGetCacheConfig|cudaDeviceSetCacheConfig)\b/g,
+    words: 'cudaGetDevice cudaSetDevice cudaGetDeviceCount cudaGetDeviceProperties cudaDeviceGetAttribute cudaDeviceSynchronize cudaDeviceReset cudaDeviceCanAccessPeer cudaDeviceEnablePeerAccess cudaDeviceGetLimit cudaDeviceSetLimit cudaDeviceGetCacheConfig cudaDeviceSetCacheConfig',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Stream/Event API ---
   {
-    pattern: /\b(cudaStreamCreate|cudaStreamCreateWithFlags|cudaStreamCreateWithPriority|cudaStreamDestroy|cudaStreamSynchronize|cudaStreamWaitEvent|cudaStreamQuery|cudaEventCreate|cudaEventCreateWithFlags|cudaEventDestroy|cudaEventRecord|cudaEventSynchronize|cudaEventElapsedTime|cudaEventQuery)\b/g,
+    words: 'cudaStreamCreate cudaStreamCreateWithFlags cudaStreamCreateWithPriority cudaStreamDestroy cudaStreamSynchronize cudaStreamWaitEvent cudaStreamQuery cudaEventCreate cudaEventCreateWithFlags cudaEventDestroy cudaEventRecord cudaEventSynchronize cudaEventElapsedTime cudaEventQuery',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Error API ---
   {
-    pattern: /\b(cudaGetLastError|cudaPeekAtLastError|cudaGetErrorString|cudaGetErrorName|cudaSuccess)\b/g,
+    words: 'cudaGetLastError cudaPeekAtLastError cudaGetErrorString cudaGetErrorName cudaSuccess',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Occupancy/Launch API ---
   {
-    pattern: /\b(cudaOccupancyMaxActiveBlocksPerMultiprocessor|cudaOccupancyMaxPotentialBlockSize|cudaFuncGetAttributes|cudaFuncSetAttribute|cudaFuncSetCacheConfig|cudaLaunchKernel|cudaLaunchCooperativeKernel|cudaHostAlloc|cudaHostRegister|cudaHostUnregister|cudaHostGetDevicePointer)\b/g,
+    words: 'cudaOccupancyMaxActiveBlocksPerMultiprocessor cudaOccupancyMaxPotentialBlockSize cudaFuncGetAttributes cudaFuncSetAttribute cudaFuncSetCacheConfig cudaLaunchKernel cudaLaunchCooperativeKernel cudaHostAlloc cudaHostRegister cudaHostUnregister cudaHostGetDevicePointer',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Graph API ---
   {
-    pattern: /\b(cudaGraphCreate|cudaGraphDestroy|cudaGraphLaunch|cudaGraphInstantiate|cudaGraphExecDestroy|cudaGraphAddKernelNode|cudaGraphAddMemcpyNode|cudaGraphAddMemsetNode)\b/g,
+    words: 'cudaGraphCreate cudaGraphDestroy cudaGraphLaunch cudaGraphInstantiate cudaGraphExecDestroy cudaGraphAddKernelNode cudaGraphAddMemcpyNode cudaGraphAddMemsetNode',
     color: '#78dce8',
     bold: true,
   },
   // --- CUDA Types ---
   {
-    pattern: /\b(dim3|cudaError_t|cudaStream_t|cudaEvent_t|cudaDeviceProp|cudaMemcpyKind|cudaFuncAttributes|cudaGraph_t|cudaGraphExec_t|cudaPointerAttributes|cudaChannelFormatDesc|cudaPitchedPtr|cudaExtent)\b/g,
+    words: 'dim3 cudaError_t cudaStream_t cudaEvent_t cudaDeviceProp cudaMemcpyKind cudaFuncAttributes cudaGraph_t cudaGraphExec_t cudaPointerAttributes cudaChannelFormatDesc cudaPitchedPtr cudaExtent',
     color: '#a9dc76',
   },
   // --- CUDA Enum Constants ---
   {
-    pattern: /\b(cudaMemcpyHostToDevice|cudaMemcpyDeviceToHost|cudaMemcpyDeviceToDevice|cudaMemcpyHostToHost|cudaMemcpyDefault|cudaErrorMemoryAllocation|cudaErrorInvalidValue|cudaErrorInvalidDevice|cudaStreamDefault|cudaStreamNonBlocking|cudaEventDefault|cudaEventBlockingSync|cudaEventDisableTiming|cudaHostAllocDefault|cudaHostAllocPortable|cudaHostAllocMapped|cudaMemAttachGlobal|cudaMemAttachHost|cudaFuncCachePreferNone|cudaFuncCachePreferShared|cudaFuncCachePreferL1|cudaFuncCachePreferEqual)\b/g,
+    words: 'cudaMemcpyHostToDevice cudaMemcpyDeviceToHost cudaMemcpyDeviceToDevice cudaMemcpyHostToHost cudaMemcpyDefault cudaErrorMemoryAllocation cudaErrorInvalidValue cudaErrorInvalidDevice cudaStreamDefault cudaStreamNonBlocking cudaEventDefault cudaEventBlockingSync cudaEventDisableTiming cudaHostAllocDefault cudaHostAllocPortable cudaHostAllocMapped cudaMemAttachGlobal cudaMemAttachHost cudaFuncCachePreferNone cudaFuncCachePreferShared cudaFuncCachePreferL1 cudaFuncCachePreferEqual',
     color: '#fc9867',
   },
   // --- CUDA Math Intrinsics ---
   {
-    pattern: /\b(__float2half|__half2float|__float2int_rn|__int2float_rn|__float_as_int|__int_as_float|__fmaf_rn|__fmul_rn|__fadd_rn|__fdiv_rn|__fsqrt_rn|__expf|__logf|__log2f|__sinf|__cosf|__tanf|__powf|rsqrtf|fmaf|__saturatef|__clz|__ffs|__popc|__brev|__ldg|__ldca|__ldcs)\b/g,
+    words: '__float2half __half2float __float2int_rn __int2float_rn __float_as_int __int_as_float __fmaf_rn __fmul_rn __fadd_rn __fdiv_rn __fsqrt_rn __expf __logf __log2f __sinf __cosf __tanf __powf rsqrtf fmaf __saturatef __clz __ffs __popc __brev __ldg __ldca __ldcs',
     color: '#78dce8',
     italic: true,
   },
 ]
+
+// Each name with its style: one lookup per word, not 13 regexes per text
+const STYLES = new Map<string, string>()
+for (const { words, color, bold, italic } of cudaTokens) {
+  const style = `color:${color};${bold ? 'font-weight:bold;' : ''}${italic ? 'font-style:italic;' : ''}`
+  for (const word of words.split(' ')) STYLES.set(word, style)
+}
 
 // Comments and strings in the theme (setup/themes/one-purple-unicorn.json)
 const QUIET = /color:\s*#(5c6370|98c379)\b/i
@@ -110,52 +117,17 @@ function processSpan(span: Element) {
     }
 
     const text = child.value
-    const matches: { start: number; end: number; token: TokenDef }[] = []
-
-    for (const token of cudaTokens) {
-      token.pattern.lastIndex = 0
-      let m
-      while ((m = token.pattern.exec(text)) !== null) {
-        matches.push({ start: m.index, end: m.index + m[0].length, token })
-      }
-    }
-
-    matches.sort((a, b) => a.start - b.start)
-
-    // Remove overlapping (keep first match)
-    const filtered: typeof matches = []
-    let lastEnd = 0
-    for (const m of matches) {
-      if (m.start >= lastEnd) {
-        filtered.push(m)
-        lastEnd = m.end
-      }
-    }
-
-    if (filtered.length === 0) {
-      newChildren.push(child)
-      continue
-    }
-
     let lastIndex = 0
-    for (const m of filtered) {
-      if (m.start > lastIndex) {
-        newChildren.push({ type: 'text', value: text.slice(lastIndex, m.start) })
-      }
-      let style = `color:${m.token.color};`
-      if (m.token.bold) style += 'font-weight:bold;'
-      if (m.token.italic) style += 'font-style:italic;'
-      newChildren.push({
-        type: 'element',
-        tagName: 'span',
-        properties: { style },
-        children: [{ type: 'text', value: text.slice(m.start, m.end) }],
-      })
-      lastIndex = m.end
+    // \w+, so a name inside a longer word (3dim3, mydim3) is not one
+    for (const m of text.matchAll(/\w+/g)) {
+      const style = STYLES.get(m[0])
+      if (!style) continue
+      if (m.index > lastIndex) newChildren.push({ type: 'text', value: text.slice(lastIndex, m.index) })
+      newChildren.push({ type: 'element', tagName: 'span', properties: { style }, children: [{ type: 'text', value: m[0] }] })
+      lastIndex = m.index + m[0].length
     }
-    if (lastIndex < text.length) {
-      newChildren.push({ type: 'text', value: text.slice(lastIndex) })
-    }
+    if (lastIndex === 0) newChildren.push(child)
+    else if (lastIndex < text.length) newChildren.push({ type: 'text', value: text.slice(lastIndex) })
   }
 
   span.children = newChildren
@@ -168,7 +140,7 @@ const KERNEL_STYLE = 'color:#a9dc76;font-weight:bold;'
 // foo<std::vector<int>>), <<<config>>>
 const LAUNCH = /\b([A-Za-z_]\w*)\s*(?:<(?:[^<>;]|<[^<>;]*>)*>\s*)?(<<<)[^;]*?(>>>)/g
 
-interface TextNode { parent: Element, index: number, start: number, quiet: boolean }
+interface TextNode { parent: Element, index: number, start: number, value: string, quiet: boolean }
 
 // The text nodes of a line, in order, with their parent, offset in the line,
 // and whether they are in a comment or string
@@ -176,7 +148,7 @@ function textNodes(node: Node, out: TextNode[] = [], pos = { at: 0 }, parent?: E
   if (!('children' in node)) return out
   node.children.forEach((child, index) => {
     if (child.type === 'text' && parent) {
-      out.push({ parent, index, start: pos.at, quiet })
+      out.push({ parent, index, start: pos.at, value: child.value, quiet })
       pos.at += child.value.length
     }
     else if (child.type === 'element') {
@@ -193,11 +165,11 @@ function markKernelLaunch(codeNode: Element) {
   for (const line of codeNode.children) {
     if (line.type !== 'element') continue
     const nodes = textNodes(line)
-    const text = nodes.map(n => (n.parent.children[n.index] as { value: string }).value).join('')
+    const text = nodes.map(n => n.value).join('')
     if (!text.includes('<<<')) continue
 
     const ranges: { start: number, end: number, style: string }[] = []
-    const quietAt = (i: number) => nodes.some(n => n.quiet && i >= n.start && i < n.start + (n.parent.children[n.index] as { value: string }).value.length)
+    const quietAt = (i: number) => nodes.some(n => n.quiet && i >= n.start && i < n.start + n.value.length)
     for (const m of text.matchAll(LAUNCH)) {
       const at = m.index!
       if (quietAt(at)) continue // in a comment or string
@@ -211,8 +183,7 @@ function markKernelLaunch(codeNode: Element) {
 
     // Split each text node at the range edges, last node first so indexes hold
     for (const n of [...nodes].reverse()) {
-      const value = (n.parent.children[n.index] as { value: string }).value
-      const end = n.start + value.length
+      const end = n.start + n.value.length
       const cuts = ranges.filter(r => r.start < end && r.end > n.start)
       if (!cuts.length) continue
       const pieces: Content[] = []
