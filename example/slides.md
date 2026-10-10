@@ -1691,27 +1691,27 @@ One-shot entrances; add `anim-delay-1` … `-5` to stagger them.
 
 Each effect has `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), or set its `--*-duration` variable. `anim-border-ccw` turns the border light the other way.
 
-<div style="display:grid;grid-template-columns:7rem repeat(4,1fr);gap:0.75rem;align-items:center;align-content:start;font-size:0.85rem;margin-top:1rem">
+<div style="display:grid;grid-template-columns:7rem repeat(4,1fr);gap:0.75rem;align-items:center;align-content:start;font-size:0.7rem;margin-top:1rem">
 <div></div><div style="text-align:center">slow</div><div style="text-align:center">default</div><div style="text-align:center">fast</div><div style="text-align:center">reverse</div>
 <div><strong>Border</strong></div>
-<div class="card anim-border anim-border-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-border anim-border-slow" style="text-align:center;padding:0.5rem"><code>anim-border-slow</code></div>
 <div class="card anim-border" style="text-align:center;padding:0.5rem"><code>anim-border</code></div>
-<div class="card anim-border anim-border-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
-<div class="card anim-border anim-border-ccw" style="text-align:center;padding:0.5rem"><code>-ccw</code></div>
+<div class="card anim-border anim-border-fast" style="text-align:center;padding:0.5rem"><code>anim-border-fast</code></div>
+<div class="card anim-border anim-border-ccw" style="text-align:center;padding:0.5rem"><code>anim-border-ccw</code></div>
 <div><strong>Shimmer</strong></div>
-<div class="card anim-shimmer anim-shimmer-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-shimmer anim-shimmer-slow" style="text-align:center;padding:0.5rem"><code>anim-shimmer-slow</code></div>
 <div class="card anim-shimmer" style="text-align:center;padding:0.5rem"><code>anim-shimmer</code></div>
-<div class="card anim-shimmer anim-shimmer-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
+<div class="card anim-shimmer anim-shimmer-fast" style="text-align:center;padding:0.5rem"><code>anim-shimmer-fast</code></div>
 <div></div>
 <div><strong>Glow</strong></div>
-<div class="card anim-glow anim-glow-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-glow anim-glow-slow" style="text-align:center;padding:0.5rem"><code>anim-glow-slow</code></div>
 <div class="card anim-glow" style="text-align:center;padding:0.5rem"><code>anim-glow</code></div>
-<div class="card anim-glow anim-glow-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
+<div class="card anim-glow anim-glow-fast" style="text-align:center;padding:0.5rem"><code>anim-glow-fast</code></div>
 <div></div>
 <div><strong>Gradient text</strong></div>
-<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-slow" style="font-size:1.4rem;font-weight:800">Aa</span> <code>-slow</code></div>
+<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-slow" style="font-size:1.4rem;font-weight:800">Aa</span> <code>anim-gradient-text-slow</code></div>
 <div style="text-align:center"><span class="anim-gradient-text" style="font-size:1.4rem;font-weight:800">Aa</span> <code>anim-gradient-text</code></div>
-<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-fast" style="font-size:1.4rem;font-weight:800">Aa</span> <code>-fast</code></div>
+<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-fast" style="font-size:1.4rem;font-weight:800">Aa</span> <code>anim-gradient-text-fast</code></div>
 <div></div>
 </div>
 
@@ -1915,6 +1915,90 @@ transition: fade
 # Transition: fade
 
 This slide sets `transition: fade`. Slidev plays a slide's transition between it and the next slide (reversed going back): press → and the next slide crossfades in.
+
+---
+layout: section
+---
+
+# Customization
+
+Brand colors, color modes, fonts, and CSS variables
+
+---
+
+# Brand Colors
+
+Set one color in the headmatter; the theme derives the scale, the gradient partner and the light-mode shades.
+
+```yaml
+themeConfig:
+  primary: '#0ea5e9'     # quote it: an unquoted # starts a YAML comment
+  secondary: '#a78bfa'   # optional; picked from primary when left out
+  accents:               # optional: blue, cyan, green, yellow, red
+    green: '#22c55e'
+```
+
+This deck sets none, so these are the theme's defaults, as the current mode resolves them (light mode deepens 300–600, the text shades, for white):
+
+<div style="display:flex;gap:0.35rem;margin-top:0.5rem;font-size:0.65rem;text-align:center">
+<div v-for="t in ['primary-100','primary-300','primary-400','primary-500','primary-600','primary-700','primary-800','primary-900','secondary-400']" :key="t" style="flex:1">
+<div :style="{ background: `var(--${t})`, height: '2.2rem', borderRadius: '0.4rem', border: '1px solid var(--border-default)' }" />
+<code>{{ t }}</code>
+</div>
+</div>
+
+<div style="display:flex;gap:0.35rem;margin-top:0.5rem;font-size:0.65rem;text-align:center">
+<div v-for="t in ['blue','cyan','green','yellow','red','magenta']" :key="t" style="flex:1">
+<div :style="{ background: `var(--one-dark-${t})`, height: '1.6rem', borderRadius: '0.4rem' }" />
+<code>{{ t }}</code>
+</div>
+</div>
+
+---
+
+# Color Modes & Fonts
+
+```yaml
+colorSchema: auto        # auto (default: follows the system / toggle) | light | dark
+fonts:
+  sans: Pretendard       # web font names only (Slidev loads them from Google Fonts)
+  mono: D2Coding
+  weights: '400,700'     # the theme loads 400 only by default
+```
+
+- Title and emphasis layouts (`cover`, `section`, `quote`, `statement`, `fact`, `full-image`, …) and code blocks stay dark in both modes
+- `class: slide-dark` keeps any other slide dark too
+- Defaults: Noto Sans KR / Inter (sans), Noto Serif KR (serif), JetBrains Mono / Fira Code (mono)
+
+---
+
+# CSS Variables
+
+Every size and color has a variable: set it inline on one element, or on `:root` in your deck's `styles/index.css`.
+
+<div class="grid grid-cols-2 gap-6 mt-2" style="--grid-padding-x: 0">
+<div class="card">
+
+Default card (hover it)
+
+</div>
+<div class="card" style="--card-radius: 0; --card-hover-lift: 12px">
+
+`--card-radius: 0; --card-hover-lift: 12px` (hover it)
+
+</div>
+</div>
+
+```css
+/* styles/index.css in your deck */
+:root {
+  --hover-lift: 8px;
+  --table-radius: 0;
+  --code-dim-opacity: 0.3;
+}
+```
+
+The README's *Customization* section lists them per slide part, component and effect.
 
 ---
 
