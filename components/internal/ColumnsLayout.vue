@@ -46,4 +46,9 @@ defineProps({
 .col-bottom {
   flex-shrink: 0;
 }
+
+/* Above the footer line while it shows (set in global-bottom.vue) */
+.col-bottom {
+  margin-bottom: var(--footer-clearance, 0);
+}
 </style>

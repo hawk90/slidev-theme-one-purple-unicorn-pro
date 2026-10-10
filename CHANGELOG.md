@@ -41,6 +41,8 @@
 
 ### Fixes
 
+- **The column layouts' `::bottom::` slot sat on the footer line** when `footer` was on;
+  it now stays above it, like `<Footnote>`.
 - **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
   `// kernel<<<g, b>>>`); it skips them now. Launches with nested template arguments
   (`foo<std::vector<int>><<<g, b>>>`) are marked. It looks names up in one table

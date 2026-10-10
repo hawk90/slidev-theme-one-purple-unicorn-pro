@@ -103,6 +103,8 @@ const progress = computed(() => {
    Footnote reads --footnote-bottom) */
 .slide-footer ~ * {
   --footnote-bottom: var(--footnote-bottom-with-footer, 3.25rem);
+  /* room the column layouts' bottom slot leaves above the line */
+  --footer-clearance: var(--footer-clearance-with-footer, 1.5rem);
 }
 
 /* …and above a stage indicator at the bottom (stagePosition: bottom), which
