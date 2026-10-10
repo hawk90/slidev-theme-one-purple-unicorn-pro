@@ -236,14 +236,30 @@
 .anim-glow-neon   { --glow: #00f5ff; }
 
 /* ============================================
-   4. Entrances (play once)
-   --anim-duration (0.4s), --anim-distance (0.75rem), --anim-delay (0s)
-   anim-delay-1..5 are presets for --anim-delay; any value works inline.
+   4. Entrances (play once the slide has arrived)
+   --anim-duration (--motion-base, 0.4s), --anim-distance (--motion-distance,
+   0.75rem), --anim-delay (0s). anim-delay-1..5 are presets for --anim-delay;
+   any value works inline.
    ============================================ */
-.anim-fade-in    { animation: fade-in    var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
-.anim-fade-up    { animation: fade-up    var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
-.anim-fade-left  { animation: fade-left  var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
-.anim-fade-right { animation: fade-right var(--anim-duration, 0.4s) ease var(--anim-delay, 0s) both; }
+:root {
+  /* Motion tokens: shared defaults for entrances and other one-shot motion */
+  --motion-base: 0.4s;
+  --motion-ease: ease;
+  --motion-distance: 0.75rem;
+}
+
+.anim-fade-in    { animation: fade-in    var(--anim-duration, var(--motion-base)) var(--motion-ease) var(--anim-delay, 0s) both; }
+.anim-fade-up    { animation: fade-up    var(--anim-duration, var(--motion-base)) var(--motion-ease) var(--anim-delay, 0s) both; }
+.anim-fade-left  { animation: fade-left  var(--anim-duration, var(--motion-base)) var(--motion-ease) var(--anim-delay, 0s) both; }
+.anim-fade-right { animation: fade-right var(--anim-duration, var(--motion-base)) var(--motion-ease) var(--anim-delay, 0s) both; }
+
+/* While the slide is still sliding in, entrances wait at their start
+   (utils/slide-arrival.ts); they start over once it has arrived, so they
+   play on screen each time the slide is reached */
+.slide-arriving :is(.anim-fade-in, .anim-fade-up, .anim-fade-left, .anim-fade-right, .anim-pop) {
+  animation: none;
+  opacity: 0;
+}
 
 /* Presets; animation-delay also applies them to any other animation */
 .anim-delay-1 { --anim-delay: 0.1s; animation-delay: var(--anim-delay); }
@@ -258,17 +274,17 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(var(--anim-distance, 0.75rem)); }
+  from { opacity: 0; transform: translateY(var(--anim-distance, var(--motion-distance))); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-left {
-  from { opacity: 0; transform: translateX(calc(-1 * var(--anim-distance, 0.75rem))); }
+  from { opacity: 0; transform: translateX(calc(-1 * var(--anim-distance, var(--motion-distance)))); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fade-right {
-  from { opacity: 0; transform: translateX(var(--anim-distance, 0.75rem)); }
+  from { opacity: 0; transform: translateX(var(--anim-distance, var(--motion-distance))); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
