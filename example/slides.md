@@ -1269,6 +1269,40 @@ pageNumberInExport: false
 The bar tracks the current page with a gradient fill and glow effect.
 
 ---
+footer: [logo, title, event]
+---
+
+# Footer Options
+
+This slide sets its own `footer: [logo, title, event]`: a list picks the fields, in its order.
+
+```yaml
+footer: true                # headmatter: title · author · event · date, and the logo
+footer: [title, event]      # or a list (logo and affiliation too)
+footerInExport: false       # headmatter: leave it out of PDF / PNG exports
+```
+
+On one slide, `footer: false` hides it and `true` or a list shows it, even when the deck has none. Title slides and section dividers hide it, like the page number.
+
+---
+footer: false
+pageNumber: false
+progressBar: false
+---
+
+# Without Footer, Page Number or Bar
+
+This slide turns all three off in its own frontmatter:
+
+```yaml
+footer: false
+pageNumber: false
+progressBar: false
+```
+
+Useful for a full-screen demo or a slide you record on its own.
+
+---
 
 # Stage Progress Indicator
 
@@ -1277,11 +1311,13 @@ Add `stages` and `currentStage` to frontmatter. **Click any stage** to jump dire
 ```yaml
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 1
+stagePosition: top-right   # top (default) | top-left | top-right
+stageMap: [72, 73, 74, 75] # optional: the page each stage jumps to
 ```
 
 - Green dots = completed, Purple glow = current, Gray = upcoming
 - Click any stage → auto-navigates to that slide
-- No `stageMap` needed — auto-detects matching slides
+- Without `stageMap`, a click jumps to the first slide with the same `stages` and that `currentStage`
 
 ---
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
