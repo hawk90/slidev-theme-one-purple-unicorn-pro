@@ -2,6 +2,7 @@ import { defineShikiSetup } from '@slidev/types'
 import theme from './themes/one-purple-unicorn.json'
 import { cudaTransformer, quietColors } from './cuda-transformer'
 import { terminalTransformer } from './terminal-transformer'
+import { cudaLangs } from './cuda-lang'
 
 export default defineShikiSetup(() => ({
   theme: theme as any,
@@ -13,6 +14,8 @@ export default defineShikiSetup(() => ({
   // A line this long (minified code, base64) is left uncolored: tokenizing it
   // can take seconds per line
   tokenizeMaxLineLength: 2000,
+  // ```cuda / ```cu / ```cuh: C++ (setup/cuda-lang.ts)
+  langs: cudaLangs,
   transformers: [
     cudaTransformer({ quiet: quietColors(theme) }),
     terminalTransformer(),

@@ -1026,7 +1026,7 @@ def fibonacci(n: int) -> list[int]:
 
 # CUDA / C++ Code
 
-```cpp
+```cuda
 __global__ void vectorAdd(float *a, float *b, float *c, int n) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < n) {

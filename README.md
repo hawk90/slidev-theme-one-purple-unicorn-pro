@@ -143,7 +143,8 @@ Code uses Slidev's own syntax; the theme styles it:
 - **Nerd Font icons** (powerline prompts and the like) render in code blocks, exports included: the theme bundles the symbols-only Nerd Font (MIT), fetched only on slides that show one. Not in Monaco or inline code.
 - **Long lines wrap** under their code (a tab-stop hang), never a scrollbar. Code blocks have no height cap unless you set `--code-max-height` (what doesn't fit is cut off) or Slidev's `{maxHeight:'…'}` (it scrolls to the focused lines, with no scrollbar). Magic-move blocks have no line boxes: their long lines wrap to the left edge, without the gutter rule.
 - Lines over 2000 characters (minified code, base64) are left uncolored, which keeps builds fast.
-- The theme's `setup/shiki.ts` adds the CUDA and shell transformers. A deck whose own `setup/shiki.ts` returns `transformers` replaces them (Slidev merges setups key by key); import them from the theme to keep them.
+- **CUDA**: write ```` ```cpp ````, or ```` ```cuda ```` / ```` ```cu ```` / ```` ```cuh ```` as GitHub and Pygments name it; they highlight the same (Shiki has no CUDA grammar, so the theme maps them to C++). CUDA names (`__global__`, `threadIdx`, `<<<…>>>` launches, `cudaMalloc`…) are colored in any language.
+- The theme's `setup/shiki.ts` adds the CUDA and shell transformers and the `cuda` / `cu` / `cuh` names. A deck whose own `setup/shiki.ts` returns `transformers` replaces the transformers (Slidev merges setups key by key); import them from the theme to keep them. The language names stay (Slidev adds up every setup's `langs`).
 
 ## Components
 
