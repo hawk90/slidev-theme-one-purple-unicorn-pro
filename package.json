@@ -71,7 +71,9 @@
   "scripts": {
     "link": "npm link && cd ../.. && npm link slidev-theme-one-purple-unicorn-pro",
     "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro",
-    "check:decks": "node scripts/check-decks.mjs"
+    "check:decks": "node scripts/check-decks.mjs",
+    "regress": "node scripts/regress.mjs",
+    "test": "node --test 'test/*.test.ts'"
   },
   "devDependencies": {
     "pixelmatch": "^7.2.0",
