@@ -21,19 +21,16 @@ import { computed } from 'vue'
 import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { DARK_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
-import { footerParts, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
+import { footerParts, headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 const onDark = computed(() => DARK_LAYOUTS.includes(currentLayout.value))
 
-// Deck-wide options come from the headmatter, read from `configs` (it keeps
-// the headmatter even when the first slide is hidden, and Slidev's title
-// fallback); a slide's own frontmatter overrides progressBar for that slide.
-// `configs` carries Slidev's defaults too: a deck without a title (and no
-// heading on its first slide) has title "Slidev", which is not the talk's
-const headmatter: Record<string, unknown> = { ...configs, title: configs.title === 'Slidev' ? undefined : configs.title }
+// Deck-wide options come from the headmatter (with Slidev's title fallback);
+// a slide's own frontmatter overrides progressBar for that slide
+const headmatter = headmatterOf(configs)
 const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
 
 // progressBar:
