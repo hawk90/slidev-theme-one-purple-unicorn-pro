@@ -6,7 +6,6 @@
 .slidev-layout {
   background: var(--slide-bg, var(--dark-bg, #1a1b26)); /* light mode: light-theme.css */
   color: var(--text-primary);
-  position: relative;
   /* Korean: wrap between words, not inside them (browsers break Hangul at any
      syllable); a word longer than the line (a URL) still wraps */
   word-break: keep-all;

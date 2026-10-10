@@ -39,7 +39,7 @@ title: One Purple Unicorn Pro
 author: Theme Demo            # or authors: [{ name, affiliation }, ...]
 affiliation: Slidev Theme Lab
 event: Slidev Meetup 2026
-date: '2026-10-10'            # quote it: YAML reads 2026.10 as a number
+date: '2026-10-10'            # quote dotted dates like '2026.10': YAML reads them as numbers
 logo: /logo.svg               # from public/
 footer: true                  # or a list: [title, event]
 ---
@@ -123,7 +123,7 @@ Task lists:
 | **Light Mode** | Clean white backgrounds | Supported |
 | **Gradients** | Purple/Indigo/Pink | Built-in |
 | **Code Blocks** | Shiki syntax highlighting | Configured |
-| **Layouts** | 12 layouts included | All new |
+| **Layouts** | 18 layouts | Built-in |
 | **Components** | Cards, Alerts, Buttons | CSS classes |
 
 ---
@@ -148,7 +148,7 @@ layout: section
 
 # Layouts
 
-Content layouts: default, center, columns, image
+Content layouts: default, center, columns, image, iframe
 
 ---
 layout: default
@@ -159,8 +159,8 @@ layout: default
 The basic layout for content slides. Clean and simple.
 
 - Padding and typography are automatically styled
-- **Bold text** stands out in yellow
-- *Italic text* uses the primary accent color
+- **Bold text** stands out (yellow in dark mode)
+- *Italic text* uses an accent color
 - `inline code` has a subtle background
 
 > Blockquotes get a left border accent and background.
@@ -260,7 +260,7 @@ leftLabel: Naive
 rightLabel: Optimized
 ---
 
-# Two Cols with Labels
+# Two Columns with Labels
 
 ::left::
 
@@ -314,7 +314,7 @@ This header spans the full width above both columns.
 
 ::bottom::
 
-*Footer: This bottom slot also spans both columns.*
+*Bottom slot: this also spans both columns.*
 
 ---
 layout: three-cols
@@ -491,7 +491,7 @@ layout: fact
 
 ## DID YOU KNOW?
 
-# 10x
+# 10,000x
 
 The performance gap between $O(n)$ and $O(n^2)$ at $n = 10{,}000$
 
@@ -592,7 +592,7 @@ Cards, Alerts, Gradients, Buttons
 
 ### Default Card
 
-Cards have a hover effect with gradient top border animation. Use the `.card` class on any div.
+Cards lift on hover, with a shadow and a purple border. Use the `.card` class on any div.
 
 </div>
 
@@ -679,11 +679,11 @@ Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
 
 # Gradient Text
 
-<h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
+<h2 class="gradient-text-1">Gradient Text Style 1 (Blue → Purple → Red)</h2>
 
-<h2 class="gradient-text-2" style="-webkit-text-fill-color: transparent;">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
+<h2 class="gradient-text-2">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
 
-<h2 class="gradient-text-3" style="-webkit-text-fill-color: transparent;">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
+<h2 class="gradient-text-3">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
 
 ---
 
@@ -766,8 +766,8 @@ This uses `.gradient-border` class: a gradient painted on the element's own bord
 
 <p class="text-sm">Small text (0.875rem)</p>
 <p>Regular text — default</p>
-<p class="text-lg">Large text (1.25rem)</p>
-<p class="text-xl">Extra large (1.5rem)</p>
+<p class="text-lg">Large text (1.125rem)</p>
+<p class="text-xl">Extra large (1.25rem)</p>
 
 ---
 layout: section
@@ -783,7 +783,7 @@ Badge, Kbd, Footnote, LinkCard, FloatImage
 
 Inline badges: <Badge>Default</Badge> <Badge variant="blue">Blue</Badge> <Badge variant="green">Easy</Badge> <Badge variant="red">Hard</Badge> <Badge variant="yellow">Warning</Badge> <Badge variant="cyan">New</Badge> <Badge variant="gray">Deprecated</Badge>
 
-Keyboard keys: Press <Kbd>Space</Kbd> or <Kbd>→</Kbd> to advance. Use <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>F</Kbd> for fullscreen.
+Keyboard keys: Press <Kbd>Space</Kbd> or <Kbd>→</Kbd> to advance. Press <Kbd>F</Kbd> for fullscreen.
 
 ### Badges in Context
 
@@ -802,7 +802,7 @@ Cite a source in the text<sup>1</sup> and list it in a footnote at the bottom of
 
 ### Link Cards
 
-<LinkCard href="https://arxiv.org/abs/2301.00001" title="Attention Is All You Need" description="Vaswani et al., 2017 — Transformer architecture" icon="📄" />
+<LinkCard href="https://arxiv.org/abs/1706.03762" title="Attention Is All You Need" description="Vaswani et al., 2017 — Transformer architecture" icon="📄" />
 
 <LinkCard href="https://github.com/slidevjs/slidev" title="Slidev on GitHub" description="Presentation slides for developers" icon="🐙" />
 
@@ -1035,7 +1035,7 @@ __global__ void vectorAdd(float *a, float *b, float *c, int n) {
 }
 
 int main() {
-    float *d_a;
+    float *d_a, *d_b, *d_c;
     cudaMalloc(&d_a, sizeof(float) * 1024);
     vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
     cudaDeviceSynchronize();
@@ -1251,11 +1251,11 @@ Progress bar options and stage indicator
 
 # Progress Bar Options
 
-Set deck-wide options in the headmatter. A slide's own `progressBar` overrides it for that slide.
+Set deck-wide options in the headmatter. A slide's own `progressBar`, `pageNumber` or `footer` overrides it for that slide.
 
 ```yaml
 progressBar: always          # all slides (default)
-progressBar: content         # only where the page number shows
+progressBar: content         # not on title slides and section dividers
 progressBar: false           # hidden
 
 progressBarSkip: 2, 5-6      # pages without the bar (list, ranges, or array)
@@ -1459,10 +1459,10 @@ v-click, Transitions, Gradient Borders, Shimmer, Glow, and more
 
 # Animated Gradient Border
 
-A gradient beam rotates along the border path. 8 presets + custom CSS variables.
+A gradient beam rotates along the border path. The default, 7 color presets, and custom CSS variables.
 
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem;">
-  <div class="anim-border" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Purple</div>
+  <div class="anim-border" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Default</div>
   <div class="anim-border anim-border-ocean" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Ocean</div>
   <div class="anim-border anim-border-sunset" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Sunset</div>
   <div class="anim-border anim-border-neon" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Neon</div>
@@ -1499,7 +1499,7 @@ Set the colors directly with CSS variables:
 | `--ab-c3` | Light tail color |
 | `--ab-dim` | Resting border color (optional; defaults to a faint `--ab-c1`) |
 
-Speed: `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
+Speed (one lap of a 600px border): `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
 
 ---
 
@@ -1689,7 +1689,7 @@ One-shot entrances; add `anim-delay-1` … `-5` to stagger them.
 
 # Speed Variants
 
-Each effect has `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), or set its `--*-duration` variable. `anim-border-ccw` turns the border light the other way.
+Border, shimmer, glow and gradient text have `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), or set the `--*-duration` variable. `anim-border-ccw` turns the border light the other way.
 
 <div style="display:grid;grid-template-columns:7rem repeat(4,1fr);gap:0.75rem;align-items:center;align-content:start;font-size:0.7rem;margin-top:1rem">
 <div></div><div style="text-align:center">slow</div><div style="text-align:center">default</div><div style="text-align:center">fast</div><div style="text-align:center">reverse</div>
@@ -1721,7 +1721,7 @@ Each effect has `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), o
 
 <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
   <div class="anim-float" style="font-size: 3rem;">🚀</div>
-  <div style="font-size: 1.5rem; font-family: var(--slidev-theme-font-mono, monospace);">
+  <div style="font-size: 1.5rem; font-family: var(--font-mono);">
     <span style="color: var(--one-dark-green);">$</span> npm install<span class="anim-cursor">|</span>
   </div>
 </div>
@@ -1827,7 +1827,7 @@ Custom: `style="--hover-lift: 8px; --hover-scale: 1.1; --hover-glow: #ff6b6b; --
   </div>
 </div>
 
-Links get a gradient underline on hover automatically: [hover to see]()
+Links get a gradient underline on hover automatically: [hover to see](https://sli.dev)
 
 ---
 
@@ -1868,7 +1868,7 @@ Available transitions:
 | `slide-right` | Slide in from left, out to right |
 | `slide-up` | Slide in from bottom, out to top |
 | `fade` | Simple crossfade |
-| `scale-fade` | Zoom in + fade in / Zoom out + fade out |
+| `scale-fade` | Grows in from 95% / grows to 105% and fades out |
 | `blur-fade` | Blur + fade + scale |
 
 ```yaml
@@ -1885,12 +1885,12 @@ transition: scale-fade
 
 This slide uses `transition: scale-fade`.
 
-The entering slide scales up from 92% with fade, the leaving slide scales up to 108% with fade.
+The entering slide scales up from 95% with fade, the leaving slide scales up to 105% with fade.
 
 All transitions:
 - Respect `prefers-reduced-motion`
 - Disabled automatically in PDF export
-- Use `cubic-bezier(0.4, 0, 0.2, 1)` for smooth easing
+- All but `fade` use `cubic-bezier(0.4, 0, 0.2, 1)` easing
 
 ---
 transition: slide-right
@@ -2028,7 +2028,7 @@ rightLabel: Content
 
 | Name | Key Feature |
 |------|-------------|
-| `<StageProgress>` | Stage indicator (via frontmatter) |
+| Stage indicator | `stages` / `currentStage` frontmatter (no tag) |
 | `<FloatImage>` | Newspaper-style ㄴ-wrap |
 | `<Footnote>` | Bottom footnotes with links |
 | `<Badge>` | Inline colored badges (7 colors) |
@@ -2062,9 +2062,9 @@ rightLabel: Hover & Transition
 |------|-------------|
 | `anim-border` | Rotating gradient border (3 colors) |
 | `anim-shimmer` | Light sweep effect |
-| `anim-glow-*` | Pulsing glow (purple, blue) |
+| `anim-glow-*` | Pulsing glow (purple, blue, green, red, cyan, gold, neon) |
 | `anim-gradient-text` | Flowing rainbow text |
-| `anim-fade-*` | Entrance animations (up, left, right) |
+| `anim-fade-*` | Entrance animations (in, up, left, right) |
 | `anim-pop` | Scale pop entrance |
 | `anim-float` | Gentle floating motion |
 | `anim-cursor` | Terminal blinking cursor |

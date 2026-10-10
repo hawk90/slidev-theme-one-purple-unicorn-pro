@@ -19,7 +19,7 @@
   recolor blue / cyan / green / yellow / red with their light shades and alert tints.
   Without them, nothing changes.
 - **Gradients and tints follow the color tokens.** The text, unicorn and glass gradients,
-  hover glows, progress glow and light-mode shimmer were fixed purple/blue; they now use
+  the hover-lift glow, progress glow and light-mode shimmer were fixed purple/blue; they now use
   `--primary-400` / `--secondary-400`, so a `:root` override reaches them too. In light
   mode, `--secondary-400` follows `--light-secondary` (no longer `--light-blue`).
 - **Talk details on the cover and in a footer line.** Write `author` (or `authors`,

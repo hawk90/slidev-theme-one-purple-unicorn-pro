@@ -97,7 +97,7 @@ Left content
 Right content
 
 ::bottom::
-Full-width footer
+Full-width bottom slot
 ```
 
 `quote`: write the quote as a `>` blockquote and the attribution as the paragraph after it. The quote marks wrap the blockquote:
@@ -224,7 +224,7 @@ author: Jane Doe              # one name (Slidev also puts it in the PDF/PPTX me
 #   - Alex Kim
 affiliation: GPU Team, ACME
 event: GTC 2026
-date: '2026-10-09'            # quote "2026.10": YAML reads it as a number
+date: '2026-10-09'            # quote dotted dates like '2026.10': YAML reads them as numbers
 logo: /logo.svg               # from public/; crop it without padding
 footer: true                  # show them at the bottom left (off by default)
 # footer: [title, event]      # or pick the ones you want, in this order
@@ -328,7 +328,7 @@ Set your brand color in the headmatter and the theme derives the rest:
 
 ```yaml
 ---
-theme: one-purple-unicorn-pro
+theme: slidev-theme-one-purple-unicorn-pro
 themeConfig:
   primary: '#0ea5e9'     # quote it: an unquoted # starts a YAML comment
   secondary: '#a78bfa'   # optional; by default a partner picked from primary
