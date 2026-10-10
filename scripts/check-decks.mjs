@@ -77,6 +77,13 @@ async function capture(browser, port, scheme, range) {
     await page.goto(`http://localhost:${port}/${n}`, { waitUntil: 'load' })
     await page.evaluate(s => document.documentElement.classList.toggle('dark', s === 'dark'), scheme)
     await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important}' })
+    // A slide compiled on first visit is empty for 300 ms, then shows
+    // "Loading slide…" (Slidev's async slide component)
+    await page.waitForFunction((no) => {
+      const slide = document.querySelector(`[data-slidev-no="${no}"]`)
+      return slide && !slide.querySelector('.slidev-slide-loading')
+        && (slide.textContent.trim() || slide.querySelector('img, svg, canvas, video'))
+    }, n, { timeout: 30000 }).catch(() => console.warn(`  slide ${n}: still loading after 30 s`))
     await page.waitForTimeout(700)
     shots[n] = await page.screenshot()
   }
