@@ -626,6 +626,57 @@ Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
 
 ---
 
+# Table Variants
+
+<div class="grid grid-cols-2 gap-x-8">
+<div>
+
+**Default**
+
+| Kernel | Time | Speedup |
+|---|---|---|
+| naive | 4.2 ms | 1.0× |
+| tiled | 1.1 ms | 3.8× |
+| tensor core | 0.3 ms | 14× |
+
+</div>
+<div class="table-compact">
+
+**`.table-compact`**
+
+| Kernel | Time | Speedup |
+|---|---|---|
+| naive | 4.2 ms | 1.0× |
+| tiled | 1.1 ms | 3.8× |
+| tensor core | 0.3 ms | 14× |
+
+</div>
+<div class="table-dense table-auto">
+
+**`.table-dense` + `.table-auto`** (only as wide as the content)
+
+| Kernel | Time | Speedup |
+|---|---|---|
+| naive | 4.2 ms | 1.0× |
+| tiled | 1.1 ms | 3.8× |
+| tensor core | 0.3 ms | 14× |
+
+</div>
+<div class="table-square">
+
+**`.table-square`** (no rounded corners)
+
+| Kernel | Time | Speedup |
+|---|---|---|
+| naive | 4.2 ms | 1.0× |
+| tiled | 1.1 ms | 3.8× |
+| tensor core | 0.3 ms | 14× |
+
+</div>
+</div>
+
+---
+
 # Gradient Text
 
 <h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
@@ -677,6 +728,12 @@ This uses `.gradient-border` class: a gradient painted on the element's own bord
   <button class="btn-macos btn-macos-primary btn-macos-rounded">Rounded</button>
   <button class="btn-macos btn-macos-primary btn-macos-capsule">Capsule</button>
   <button class="btn-macos btn-macos-toolbar">Toolbar</button>
+</div>
+
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-secondary btn-macos-icon" aria-label="Add"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg></button>
+  <button class="btn-macos btn-macos-primary btn-macos-loading">Saving</button>
+  <code>-icon</code> (an inline SVG) and <code>-loading</code> (a spinner; the label stays for width)
 </div>
 
 ### Traffic Lights
