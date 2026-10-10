@@ -114,9 +114,9 @@ layout: quote
 
 Without a blockquote, a heading (`# "…"`) is the quote; otherwise the paragraphs before the last are the quote and the last is the attribution, and a single paragraph is a quote without one.
 
-### Compatibility Aliases
+### Compatibility Aliases (deprecated)
 
-Layout names from 1.x still work as presets of current layouts; frontmatter values override the preset:
+Layout names from 1.x still work as presets of current layouts; frontmatter values override the preset. They are deprecated and will be removed in 4.0: use the equivalent on the right.
 
 | Alias | Equivalent |
 |---|---|
