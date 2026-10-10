@@ -24,14 +24,15 @@ const PLAIN = /^[$%❯➜](\s|$)/
 const THEMED = /^[$%❯➜](\s|$)|^\S.*\s[❯➜](\s|$)/
 // A command goes on in the next line after a trailing `\`, `|`, `&&`, `||`,
 // or inside `for … do … done`, `if … fi`, `case … esac`, `{ … }` and
-// heredocs (`<<EOF` … `EOF`); the shell shows `> ` there (PS2)
+// heredocs (`<<EOF` … `EOF`, not a `<<<` here-string or `$((a << b))`), and
+// in an open quote; the shell shows `> ` there (PS2)
 const CONTINUES = /(\\|\||&&|\|\||\{|\()\s*$/
 // Keywords where a command starts (not in `git log --grep=for`), after
 // quoted strings and comments are dropped
 const OPENS = /(?:^|[;&|(]|\b(?:do|then|else))\s*(?:if|for|while|until|case)\b|\{$/g
 const CLOSES = /(?:^|[;&|])\s*(?:fi|done|esac|\})(?=[\s;&|)]|$)/g
-const bare = (body: string) => body.replace(/(["'])(?:\\.|(?!\1)[^\\])*\1/g, '""').replace(/(^|\s)#.*$/, '').trim()
-const HEREDOC = /<<-?\s*(['"]?)(\w+)\1/
+const bare = (body: string) => body.replace(/(["'])(?:\\.|(?!\1)[^\\])*\1/g, 's').replace(/(^|\s)#.*$/, '').trim()
+const HEREDOC = /(?<!<)<<-?\s*(['"]?)([A-Za-z_]\w*)\1/
 
 const textOf = (node: Node): string =>
   node.type === 'text' ? node.value : 'children' in node ? node.children.map(textOf).join('') : ''
@@ -52,6 +53,7 @@ export function terminalTransformer(): ShikiTransformer {
       let depth = 0 // open for/if/case/{ blocks
       let heredoc = '' // the end word while in a heredoc
       let open = false // the last command line goes on
+      let quote = '' // the quote left open at the end of the last line
       lines.forEach((line, i) => {
         const text = texts[i]
         if (heredoc) {
@@ -59,13 +61,29 @@ export function terminalTransformer(): ShikiTransformer {
           if (text.replace(/^>\s?/, '').trim() === heredoc) heredoc = ''
           command = true
         }
-        else if (PROMPT.test(text) || (command && (open || depth > 0))) {
+        else if (PROMPT.test(text) || (command && (open || depth > 0 || quote))) {
           const prompt = text.match(PROMPT)
-          if (prompt) depth = 0
-          const raw = prompt ? text.slice(prompt[0].length) : text.replace(/^>\s?/, '')
-          const body = bare(raw)
+          if (prompt) {
+            depth = 0
+            quote = ''
+          }
+          let raw = prompt ? text.slice(prompt[0].length) : text.replace(/^>\s?/, '')
+          if (quote) {
+            // the rest of a quoted string: up to its closing quote
+            const end = raw.indexOf(quote)
+            command = true
+            if (end < 0) return
+            raw = raw.slice(end + 1)
+            quote = ''
+          }
+          let body = bare(raw)
+          const left = body.search(/["']/) // a quote that doesn't close on this line
+          if (left >= 0) {
+            quote = body[left]
+            body = body.slice(0, left)
+          }
           depth = Math.max(0, depth + (body.match(OPENS)?.length ?? 0) - (body.match(CLOSES)?.length ?? 0))
-          heredoc = raw.match(HEREDOC)?.[2] ?? ''
+          heredoc = raw.replace(/\$\(\([^)]*\)\)/g, '').match(HEREDOC)?.[2] ?? ''
           open = CONTINUES.test(body)
           command = true
         }

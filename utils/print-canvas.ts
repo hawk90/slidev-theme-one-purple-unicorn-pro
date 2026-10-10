@@ -3,9 +3,10 @@
 
 export const RESOLUTION = 4 // canvas pixels per CSS pixel (text and rings)
 
-// "transparent", rgba(…, 0) or color(… / 0)
+// "transparent", rgba(…, 0) or color(… / 0); not rgb(255, 0, 0), whose last
+// channel is 0 too
 export const isTransparent = (color: string) =>
-  color === 'transparent' || /[,/]\s*0\)$/.test(color)
+  color === 'transparent' || /^rgba\(.*,\s*0\)$/.test(color) || /\/\s*0\)$/.test(color)
 
 // Split a CSS list at top-level commas: "a, f(b, c), d" → ["a", "f(b, c)", "d"]
 export function splitList(value: string) {
