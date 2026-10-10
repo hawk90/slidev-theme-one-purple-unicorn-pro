@@ -20,6 +20,11 @@
    Scoped to slides: Slidev's own UI (the web editor overlays a textarea on a
    highlighted <pre>) must not get slide code styles, or the caret drifts.
    ============================================ */
+/* Slidev sets the code radius with !important from this variable (4px) */
+:is(.slidev-layout, .slidev-page) {
+  --slidev-code-radius: 0.75rem;
+}
+
 :where(.slidev-layout, .slidev-page) pre {
   background: var(--bg-code);
   border: 1px solid var(--border-default);
