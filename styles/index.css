@@ -107,6 +107,65 @@
   font-size: 1.125rem;
 }
 
+/* Title layouts: tables, lists, quotes, links, emphasis */
+/* ============================================
+   Tables
+   ============================================ */
+
+.slidev-layout.slide-title table th {
+  background: var(--one-dark-bg-light);
+  color: var(--one-dark-blue);
+}
+
+.slidev-layout.slide-title table td {
+  border-bottom: 1px solid rgba(171, 178, 191, 0.2);
+  color: var(--text-primary);
+}
+
+.slidev-layout.slide-title table tr:hover {
+  background: rgba(171, 178, 191, 0.05);
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+
+.slidev-layout.slide-title ul li::marker {
+  color: var(--one-dark-cyan);
+}
+
+.slidev-layout.slide-title ol li::marker {
+  color: var(--one-dark-yellow);
+}
+
+/* ============================================
+   Blockquotes
+   ============================================ */
+.slidev-layout.slide-title blockquote {
+  border-left-color: var(--one-dark-magenta);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Links
+   ============================================ */
+.slidev-layout.slide-title a {
+  color: var(--one-dark-cyan);
+}
+
+.slidev-layout.slide-title a:hover {
+  color: var(--one-dark-yellow);
+}
+
+/* ============================================
+   Emphasis
+   ============================================ */
+/* strong color: same as main.css default (--one-dark-yellow), no override needed */
+
+.slidev-layout.slide-title em {
+  color: var(--one-dark-cyan);
+}
+
 /* ========== Global Heading Line Height ========== */
 :is(.slidev-layout, .slidev-page) h1,
 :is(.slidev-layout, .slidev-page) h2,
