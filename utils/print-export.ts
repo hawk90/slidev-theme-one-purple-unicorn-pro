@@ -132,8 +132,11 @@ function watchEditableExport() {
 // captures: in the page, or with --per-slide inside the slide's
 // [data-slidev-no] element. Hold the capture until the slides have settled and
 // been redrawn (at most HOLD_MS: a font that never loads must not stall it).
+// It looks once, right after the page loads, before this code runs: the
+// theme's index.html puts the first hold in the page for that.
 const holds = new Set<HTMLElement>()
 let holding = false
+const pageHold = () => document.getElementById('theme-export-hold')
 function addHold(parent: Element) {
   const hold = document.createElement('div')
   hold.className = 'slidev-slide-loading'
@@ -143,7 +146,9 @@ function addHold(parent: Element) {
 }
 function hold() {
   holding = true
-  addHold(document.body)
+  const first = pageHold()
+  if (first) holds.add(first)
+  else addHold(document.body)
   document.querySelectorAll('[data-slidev-no]').forEach(addHold)
   setTimeout(release, HOLD_MS)
 }
@@ -162,12 +167,19 @@ function start() {
   // (e.g. another range on the browser export page)
   let pending: Set<Element> | null = null
   let timer: number | undefined
+  let waiting = false // for the slides: keep holding
   const schedule = () => {
     clearTimeout(timer)
     timer = window.setTimeout(async () => {
+      waiting = false
       try {
         await document.fonts.ready
         if (!isPrintMode() || !canRedraw()) return
+        if (pending === null && !slidesLoaded()) {
+          waiting = true
+          schedule() // still compiling (Slidev shows nothing, then its own loading)
+          return
+        }
         if (pending === null) {
           pending = new Set()
           redraw(document)
@@ -183,7 +195,7 @@ function start() {
         report(e)
       }
       finally {
-        release()
+        if (!waiting) release()
       }
     }, 300)
   }
@@ -220,12 +232,22 @@ function start() {
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 }
 
+// The slides are on the page with their content: Slidev shows nothing for a
+// slide still compiling, then its own loading placeholder
+function slidesLoaded() {
+  const slides = [...document.querySelectorAll('[data-slidev-no]')]
+  return slides.length > 0
+    && slides.every(slide => [...slide.children].some(c => !holds.has(c as HTMLElement)))
+    && [...document.querySelectorAll<HTMLElement>('.slidev-slide-loading')].every(el => holds.has(el))
+}
+
 export function setupPrintExport(router?: Parameters<typeof trackPrintRoute>[0] & { afterEach: (hook: () => void) => unknown }) {
   if (router) trackPrintRoute(router)
   const sync = () => {
     const on = isPrintMode()
     document.documentElement.classList.toggle('print-mode', on)
     if (on && !started) start()
+    if (!on) pageHold()?.remove()
   }
   sync()
   router?.afterEach(() => setTimeout(sync))

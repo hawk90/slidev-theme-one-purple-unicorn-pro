@@ -1,0 +1,8 @@
+<body>
+  <!-- PDF/PNG export: `slidev export` checks for this right after the page
+       loads, before the theme's code runs, and waits until it is removed
+       (utils/print-export.ts removes it once the slides are redrawn, or at
+       once outside an export; the timer below if that code never runs) -->
+  <div id="theme-export-hold" class="slidev-slide-loading" style="display: none"></div>
+  <script>setTimeout(() => document.getElementById('theme-export-hold')?.remove(), 20000)</script>
+</body>
