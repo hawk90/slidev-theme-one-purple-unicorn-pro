@@ -26,7 +26,6 @@
 }
 
 :where(.slidev-layout, .slidev-page) pre {
-  background: var(--bg-code);
   border: 1px solid var(--border-default);
   border-radius: 0.75rem;
   padding: 0.6rem 0.75rem;

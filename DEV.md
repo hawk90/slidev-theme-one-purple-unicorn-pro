@@ -67,6 +67,10 @@ slidev-theme-one-purple-unicorn-pro/
 ## 검증
 
 변경 전후로 데모 덱 전체를 다크·라이트로 캡처해서 비교하면 의도하지 않은 변경을 잡을 수 있어요. 특히 선택자 우선순위를 바꾸는 리팩터링은 꼭 비교하세요.
+```bash
+npm test                         # 단위 테스트 (node --test)
+npm run regress -- --base main   # 데모 덱: main과 작업 트리 비교, 결과는 regress-out/index.html
+```
 
 배포 전에는 이 테마를 쓰는 실제 덱으로 확인하세요. 덱마다 지금 쓰는 테마와 이 저장소의 테마로 각각 Slidev를 띄워 모든 슬라이드를 캡처하고, 달라진 슬라이드를 diff 이미지와 함께 `./deck-check`에 남겨요. 덱 프로젝트는 건드리지 않아요.
 ```bash
