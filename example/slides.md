@@ -1045,21 +1045,160 @@ int main() {
 
 ---
 
-# Code Blocks
+# Title Bar & Line Numbers
 
-```ts [src/kernel.ts] {1|2-3|all}{lines:true}
-export function saxpy(a: number, x: number[], y: number[]) {
-  return x.map((xi, i) => a * xi + y[i]) // one value per element, long lines wrap instead of scrolling
+A `[name]` after the language draws a window bar; `{lines:true}` numbers the lines (`lineNumbers: true` in the headmatter does it for every block).
+
+````md
+```ts [src/saxpy.ts] {lines:true}
+```
+````
+
+```ts [src/saxpy.ts] {lines:true}
+export function saxpy(a: number, x: Float32Array, y: Float32Array) {
+  for (let i = 0; i < x.length; i++) y[i] = a * x[i] + y[i]
+  return y
 }
 ```
 
-```bash [zsh]
-  ~/cuda  main ❯ nvcc -O3 saxpy.cu -o saxpy
-  ~/cuda  main ❯ ./saxpy
-Max error: 0.000000
+`{startLine:10}` starts the count elsewhere:
+
+```ts [src/main.ts] {lines:true,startLine:10}
+const y = saxpy(2, x, new Float32Array(n))
+console.log(y[0])
 ```
 
-Title bar, line numbers, focus per click, shell output and Nerd Font icons: see the README's *Code Blocks*.
+---
+
+# Line Focus
+
+`{1|2-3|4|all}` moves the focus on each click; the other lines dim.
+
+```cpp [saxpy.cu] {1|2-3|4|all}{lines:true}
+__global__ void saxpy(int n, float a, const float *x, float *y) {
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < n)
+    y[i] = a * x[i] + y[i];
+}
+```
+
+````md
+```cpp [saxpy.cu] {1|2-3|4|all}{lines:true}
+```
+````
+
+`--code-dim-opacity` sets how far the other lines fade (0.45).
+
+---
+class: code-focus-tint
+---
+
+# Line Focus: Tint
+
+`class: code-focus-tint` dims nothing and tints the focused lines instead (`themeConfig: { codeFocus: tint }` for the whole deck).
+
+```cpp [saxpy.cu] {1|2-3|4|all}{lines:true}
+__global__ void saxpy(int n, float a, const float *x, float *y) {
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < n)
+    y[i] = a * x[i] + y[i];
+}
+```
+
+```yaml
+---
+class: code-focus-tint
+---
+```
+
+---
+
+# Shell Sessions
+
+In a shell block, prompt lines (`$`, `%`, or a prompt ending in `❯` / `➜`) are commands and the rest is output, shown muted.
+
+```bash
+$ nvcc -O3 -arch=sm_90 saxpy.cu \
+    -o saxpy
+$ ./saxpy | tail -n 2
+Max error: 0.000000
+Time: 0.31 ms
+$ cat > run.sh <<EOF
+./saxpy --n 1048576
+EOF
+```
+
+`[zsh]` makes it a terminal window; Nerd Font icons in a powerline prompt render (exports too):
+
+```bash [zsh]
+  ~/cuda  main ❯ nvidia-smi --query-gpu=name --format=csv
+name
+NVIDIA H100 80GB HBM3
+```
+
+---
+
+# Long Lines & Max Height
+
+Long lines wrap under their own code, never a scrollbar:
+
+```ts {lines:true}
+const config = { blockSize: 256, gridSize: Math.ceil(n / 256), sharedMemBytes: 48 * 1024, stream: defaultStream, cooperative: false }
+launch(saxpyKernel, config)
+```
+
+`{maxHeight:'…'}` caps the height and scrolls to the focused lines on each click:
+
+```ts {2|6|10}{maxHeight:'5.5rem',lines:true}
+// 1. allocate
+const x = new Float32Array(n)
+const y = new Float32Array(n)
+// 2. fill
+x.fill(1)
+y.fill(2)
+// 3. run
+saxpy(2, x, y)
+// 4. check
+console.assert(y.every(v => v === 4))
+```
+
+---
+
+# Magic Move
+
+`magic-move` animates from one block to the next on each click.
+
+````md magic-move {lines:true}
+```ts
+function saxpy(a, x, y) {
+  for (let i = 0; i < x.length; i++) y[i] = a * x[i] + y[i]
+}
+```
+
+```ts
+function saxpy(a: number, x: Float32Array, y: Float32Array) {
+  for (let i = 0; i < x.length; i++) y[i] = a * x[i] + y[i]
+}
+```
+
+```ts
+function saxpy(a: number, x: Float32Array, y: Float32Array): Float32Array {
+  return y.map((yi, i) => a * x[i] + yi)
+}
+```
+````
+
+`````md
+````md magic-move
+```ts
+function saxpy(a, x, y) { … }
+```
+
+```ts
+function saxpy(a: number, x: Float32Array, y: Float32Array) { … }
+```
+````
+`````
 
 ---
 layout: section
