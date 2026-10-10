@@ -44,6 +44,13 @@
   In a `$` session, an output line containing ` ❯ ` was taken for a prompt. A `<<<`
   here-string or `$((a << b))` no longer counts as a heredoc, and a quoted string
   over two lines stays the command.
+- **`slidev export` wrote no images or pages, or captured before the theme's redraws.**
+  Slidev looks for a loading marker once, right after the page loads, then captures;
+  the theme's marker came later (after its code ran), and was also removed before
+  slides that took a while to compile were on the page. A PNG export then reported
+  "exported" with no files (6 of 6 runs on the example deck), and an export could miss
+  the redrawn shadows and gradient text. The marker is now in the page from the start
+  (the theme's `index.html`) and stays until the slides are there and redrawn.
 - **PDF export: shadows and gradient text near black, red, yellow or green boxes.**
   `rgb(0, 0, 0)` and other opaque colors whose last channel is 0 were taken for
   transparent.

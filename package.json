@@ -38,6 +38,7 @@
     "uno.config.ts",
     "global-top.vue",
     "global-bottom.vue",
+    "index.html",
     "styles.css",
     "README.md",
     "LICENSE",
