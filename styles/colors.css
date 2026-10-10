@@ -92,9 +92,13 @@
 }
 
 /* Light mode re-declares part of the palette on <body> (light-theme.css).
-   Dark layouts (`slide-dark`) and the chrome over them (`chrome-on-dark`) get
-   the root's values back, a deck's own overrides on :root included: the root
-   keeps a copy of each (--_root-*), which the light palette doesn't touch. */
+   Dark layouts (`slide-dark` on the layout root: each dark layout sets it, a
+   slide can too with `class: slide-dark`) and the chrome over them get the
+   root's values back, a deck's own overrides on :root included: the root
+   keeps a copy of each (--_root-*), which the light palette doesn't touch.
+   The chrome (progress bar, footer, page number, stage indicator) sits next
+   to the slides in their container; in play mode the other slides are
+   mounted too, hidden by v-show (display: none). */
 :root {
   --_root-bg-secondary: var(--bg-secondary);
   --_root-bg-tertiary: var(--bg-tertiary);
@@ -128,7 +132,11 @@
   --_root-ink-mix: var(--ink-mix);
 }
 
-html:not(.dark) :is(.slide-dark, .chrome-on-dark) {
+html:not(.dark) :is(
+  .slide-dark,
+  #slide-content:has(> #slideshow > .slidev-page:not([style*="display: none"]) .slidev-layout.slide-dark) > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress),
+  .print-slide-container:has(> .slidev-page .slidev-layout.slide-dark) > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress)
+) {
   --slide-bg: var(--dark-bg);
   --bg-secondary: var(--_root-bg-secondary);
   --bg-tertiary: var(--_root-bg-tertiary);

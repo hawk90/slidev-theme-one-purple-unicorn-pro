@@ -1,5 +1,6 @@
 <template>
-  <div class="centered-slide" :class="{ 'centered-dark': dark }" :style="{ padding }">
+  <!-- The background is the layout root's (--slide-bg; dark layouts: slide-dark) -->
+  <div class="centered-slide" :style="{ padding }">
     <div class="centered-content" :style="{ maxWidth: contentMaxWidth, textAlign: align }">
       <slot />
     </div>
@@ -8,7 +9,6 @@
 
 <script setup lang="ts">
 defineProps({
-  dark: { type: Boolean, default: false },
   padding: { type: String, default: '4rem 6rem' },
   contentMaxWidth: { type: String, default: '52rem' },
   align: { type: String, default: 'center' },
@@ -23,10 +23,6 @@ defineProps({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.centered-dark {
-  background: var(--dark-bg, #1a1b26);
 }
 
 .centered-content {

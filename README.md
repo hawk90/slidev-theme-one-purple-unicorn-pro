@@ -42,7 +42,7 @@ colorSchema: auto   # auto (default, follows the system / toggle) | light | dark
 ---
 ```
 
-Content slides switch between light and dark palettes. These layouts stay dark in both modes: `cover`, `intro`, `section`, `end`, `quote`, `statement`, `fact`, `full-image`, `full-split`, `full-dark`. Code blocks always use the dark code theme.
+Content slides switch between light and dark palettes. These layouts stay dark in both modes: `cover`, `intro`, `section`, `end`, `quote`, `statement`, `fact`, `full-image`, `full-split`, `full-dark`. Any other slide can stay dark too with `class: slide-dark`; the progress bar, footer, page number and stage indicator over it follow. Code blocks always use the dark code theme.
 
 ## Fonts
 
