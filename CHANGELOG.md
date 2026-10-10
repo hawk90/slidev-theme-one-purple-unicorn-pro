@@ -41,6 +41,8 @@
 
 ### Fixes
 
+- **Code blocks without a title had 4px corners** (Slidev's `--slidev-code-radius`,
+  applied with `!important`) instead of the theme's 0.75rem, unlike titled blocks.
 - **The column layouts' `::bottom::` slot sat on the footer line** when `footer` was on;
   it now stays above it, like `<Footnote>`.
 - **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
