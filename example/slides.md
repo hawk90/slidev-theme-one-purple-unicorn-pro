@@ -1542,6 +1542,24 @@ Speed: `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
   `anim-shimmer-purple`
 
   </div>
+  <div class="card anim-shimmer anim-shimmer-blue" style="text-align: center; padding: 0.75rem;">
+
+  **Blue tint**
+  `anim-shimmer-blue`
+
+  </div>
+  <div class="card anim-shimmer anim-shimmer-green" style="text-align: center; padding: 0.75rem;">
+
+  **Green tint**
+  `anim-shimmer-green`
+
+  </div>
+  <div class="card anim-shimmer anim-shimmer-warm" style="text-align: center; padding: 0.75rem;">
+
+  **Warm tint**
+  `anim-shimmer-warm`
+
+  </div>
 </div>
 
 ---
@@ -1631,9 +1649,19 @@ Custom: `style="--glow: #ff6b6b; --glow-intensity: 0.6;"` (any CSS color)
 
 Custom: `style="--gt-c1: #ff6b6b; --gt-c2: #ffa500; ..."`
 
-### Entrance Animations
+---
 
-<div class="anim-fade-up anim-delay-1" style="margin-top: 1rem;">
+# Entrance Animations
+
+One-shot entrances; add `anim-delay-1` … `-5` to stagger them.
+
+<div class="anim-fade-in" style="margin-top: 1rem;">
+
+**Fade In** (no delay) — `anim-fade-in`
+
+</div>
+
+<div class="anim-fade-up anim-delay-1">
 
 **Fade Up** (delay 0.1s) — `anim-fade-up anim-delay-1`
 
@@ -1655,6 +1683,36 @@ Custom: `style="--gt-c1: #ff6b6b; --gt-c2: #ffa500; ..."`
 
 **Scale Pop** (delay 0.4s) — `anim-pop anim-delay-4`
 
+</div>
+
+---
+
+# Speed Variants
+
+Each effect has `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), or set its `--*-duration` variable. `anim-border-ccw` turns the border light the other way.
+
+<div style="display:grid;grid-template-columns:7rem repeat(4,1fr);gap:0.75rem;align-items:center;align-content:start;font-size:0.85rem;margin-top:1rem">
+<div></div><div style="text-align:center">slow</div><div style="text-align:center">default</div><div style="text-align:center">fast</div><div style="text-align:center">reverse</div>
+<div><strong>Border</strong></div>
+<div class="card anim-border anim-border-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-border" style="text-align:center;padding:0.5rem"><code>anim-border</code></div>
+<div class="card anim-border anim-border-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
+<div class="card anim-border anim-border-ccw" style="text-align:center;padding:0.5rem"><code>-ccw</code></div>
+<div><strong>Shimmer</strong></div>
+<div class="card anim-shimmer anim-shimmer-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-shimmer" style="text-align:center;padding:0.5rem"><code>anim-shimmer</code></div>
+<div class="card anim-shimmer anim-shimmer-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
+<div></div>
+<div><strong>Glow</strong></div>
+<div class="card anim-glow anim-glow-slow" style="text-align:center;padding:0.5rem"><code>-slow</code></div>
+<div class="card anim-glow" style="text-align:center;padding:0.5rem"><code>anim-glow</code></div>
+<div class="card anim-glow anim-glow-fast" style="text-align:center;padding:0.5rem"><code>-fast</code></div>
+<div></div>
+<div><strong>Gradient text</strong></div>
+<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-slow" style="font-size:1.4rem;font-weight:800">Aa</span> <code>-slow</code></div>
+<div style="text-align:center"><span class="anim-gradient-text" style="font-size:1.4rem;font-weight:800">Aa</span> <code>anim-gradient-text</code></div>
+<div style="text-align:center"><span class="anim-gradient-text anim-gradient-text-fast" style="font-size:1.4rem;font-weight:800">Aa</span> <code>-fast</code></div>
+<div></div>
 </div>
 
 ---
@@ -1833,6 +1891,30 @@ All transitions:
 - Respect `prefers-reduced-motion`
 - Disabled automatically in PDF export
 - Use `cubic-bezier(0.4, 0, 0.2, 1)` for smooth easing
+
+---
+transition: slide-right
+---
+
+# Transition: slide-right
+
+This slide sets `transition: slide-right`. Slidev plays a slide's transition between it and the next slide (reversed going back): press → and the next slide comes in from the left.
+
+---
+transition: slide-up
+---
+
+# Transition: slide-up
+
+This slide sets `transition: slide-up`. Slidev plays a slide's transition between it and the next slide (reversed going back): press → and the next slide comes in from the bottom.
+
+---
+transition: fade
+---
+
+# Transition: fade
+
+This slide sets `transition: fade`. Slidev plays a slide's transition between it and the next slide (reversed going back): press → and the next slide crossfades in.
 
 ---
 
