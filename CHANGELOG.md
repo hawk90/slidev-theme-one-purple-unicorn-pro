@@ -33,6 +33,12 @@
   A deck whose headmatter already has `author` now shows it on its cover.
 - **`quote` takes a `>` blockquote** as the quote, with the attribution after it.
 
+### Deprecations
+
+- The 1.x layout aliases (`image-left`, `image-right`, `iframe-left`, `iframe-right`,
+  `two-cols-header`, `comparison`, `full-center`) are deprecated and will be removed
+  in 4.0. Use the equivalents in the README's *Compatibility Aliases* table.
+
 ### Fixes
 
 - **CUDA highlighting colored names inside strings and comments** (`"cudaMalloc failed"`,
