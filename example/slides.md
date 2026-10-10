@@ -2,6 +2,11 @@
 theme: ../
 title: One Purple Unicorn Pro
 author: Theme Demo
+affiliation: Slidev Theme Lab
+event: Slidev Meetup 2026
+date: '2026-10-10'
+logo: /logo.svg
+footer: true
 highlighter: shiki
 layout: cover
 ---
@@ -23,12 +28,32 @@ This is the **intro** layout, designed for opening sections of your presentation
 It uses a dark background with gradient text for visual impact.
 
 ---
+
+# Talk Details
+
+Write them once in the headmatter. The first cover shows them under the title, and `footer: true` puts them in the footer line below.
+
+```yaml
+---
+title: One Purple Unicorn Pro
+author: Theme Demo            # or authors: [{ name, affiliation }, ...]
+affiliation: Slidev Theme Lab
+event: Slidev Meetup 2026
+date: '2026-10-10'            # quote it: YAML reads 2026.10 as a number
+logo: /logo.svg               # from public/
+footer: true                  # or a list: [title, event]
+---
+```
+
+Title slides and section dividers hide the footer, like the page number.
+
+---
 layout: section
 ---
 
 # Markdown Basics
 
-Typography, lists, tables, code, and math
+Typography, lists, tables, and math
 
 ---
 
@@ -77,70 +102,6 @@ Task lists:
 | **Code Blocks** | Shiki syntax highlighting | Configured |
 | **Layouts** | 12 layouts included | All new |
 | **Components** | Cards, Alerts, Buttons | CSS classes |
-
----
-
-# Code Highlighting
-
-## JavaScript
-
-```javascript
-const greet = (name) => {
-  console.log(`Hello, ${name}!`);
-  return `Welcome to Slidev`;
-};
-
-export default greet;
-```
-
-## Python
-
-```python
-def fibonacci(n: int) -> list[int]:
-    seq = [0, 1]
-    for i in range(2, n):
-        seq.append(seq[-1] + seq[-2])
-    return seq[:n]
-```
-
----
-
-# CUDA / C++ Code
-
-```cpp
-__global__ void vectorAdd(float *a, float *b, float *c, int n) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < n) {
-        c[idx] = a[idx] + b[idx];
-    }
-}
-
-int main() {
-    float *d_a;
-    cudaMalloc(&d_a, sizeof(float) * 1024);
-    vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
-    cudaDeviceSynchronize();
-    cudaFree(d_a);
-}
-```
-
----
-
-# Code Blocks
-
-```ts [src/kernel.ts] {1|2-3|all}{lines:true}
-export function saxpy(a: number, x: number[], y: number[]) {
-  return x.map((xi, i) => a * xi + y[i]) // one value per element, long lines wrap instead of scrolling
-}
-```
-
-```bash [zsh]
-  ~/cuda  main ❯ nvcc -O3 saxpy.cu -o saxpy
-  ~/cuda  main ❯ ./saxpy
-Max error: 0.000000
-```
-
-Title bar, line numbers, focus per click, shell output and Nerd Font icons: see the README's *Code Blocks*.
 
 ---
 
@@ -529,6 +490,142 @@ panelColor: "rgba(255, 255, 255, 0.92)"
 layout: section
 ---
 
+# CSS Components
+
+Cards, Alerts, Gradients, Buttons
+
+---
+
+# Cards
+
+<div class="card">
+
+### Default Card
+
+Cards have a hover effect with gradient top border animation. Use the `.card` class on any div.
+
+</div>
+
+<div class="gradient-card">
+
+### Gradient Card
+
+Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
+
+</div>
+
+---
+
+# Alert Boxes
+
+<div class="alert alert-info">
+<strong>Info:</strong> This is an informational alert using <code>.alert .alert-info</code>.
+</div>
+
+<div class="alert alert-success">
+<strong>Success:</strong> Operation completed successfully using <code>.alert .alert-success</code>.
+</div>
+
+<div class="alert alert-warning">
+<strong>Warning:</strong> Please review before proceeding using <code>.alert .alert-warning</code>.
+</div>
+
+<div class="alert alert-error">
+<strong>Error:</strong> Something went wrong using <code>.alert .alert-error</code>.
+</div>
+
+---
+
+# Gradient Text
+
+<h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
+
+<h2 class="gradient-text-2" style="-webkit-text-fill-color: transparent;">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
+
+<h2 class="gradient-text-3" style="-webkit-text-fill-color: transparent;">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
+
+---
+
+# Glass Morphism
+
+<div class="glass-gradient" style="margin-bottom: 1rem;">
+
+### Glass Card
+
+This uses `.glass-gradient` class with backdrop blur and transparent gradient background.
+
+Works best on dark backgrounds.
+
+</div>
+
+<div class="gradient-border">
+
+### Gradient Border
+
+This uses `.gradient-border` class: a gradient painted on the element's own border.
+
+</div>
+
+---
+
+# macOS Buttons
+
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary">Primary</button>
+  <button class="btn-macos btn-macos-secondary">Secondary</button>
+  <button class="btn-macos btn-macos-destructive">Destructive</button>
+  <button class="btn-macos btn-macos-success">Success</button>
+</div>
+
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary btn-macos-small">Small</button>
+  <button class="btn-macos btn-macos-primary">Regular</button>
+  <button class="btn-macos btn-macos-primary btn-macos-large">Large</button>
+</div>
+
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary btn-macos-rounded">Rounded</button>
+  <button class="btn-macos btn-macos-primary btn-macos-capsule">Capsule</button>
+  <button class="btn-macos btn-macos-toolbar">Toolbar</button>
+</div>
+
+### Traffic Lights
+
+<div class="macos-traffic-lights">
+  <div class="macos-traffic-light close"></div>
+  <div class="macos-traffic-light minimize"></div>
+  <div class="macos-traffic-light maximize"></div>
+</div>
+
+---
+
+# Segmented Control & Utilities
+
+<div class="btn-macos-group" style="margin-bottom: 1.5rem;">
+  <button class="btn-macos btn-macos-primary">Day</button>
+  <button class="btn-macos">Week</button>
+  <button class="btn-macos">Month</button>
+</div>
+
+### Grid Utilities
+
+<div class="grid grid-cols-3 gap-4">
+  <div class="alert alert-info">Col 1</div>
+  <div class="alert alert-success">Col 2</div>
+  <div class="alert alert-warning">Col 3</div>
+</div>
+
+### Text Sizes
+
+<p class="text-sm">Small text (0.875rem)</p>
+<p>Regular text — default</p>
+<p class="text-lg">Large text (1.25rem)</p>
+<p class="text-xl">Extra large (1.5rem)</p>
+
+---
+layout: section
+---
+
 # Inline Components
 
 Badge, Kbd, Footnote, LinkCard, FloatImage
@@ -620,7 +717,7 @@ layout: section
 
 # Content Components
 
-StoryBox, PatternCard, Timeline, ComplexityTable, Countdown, QR Code
+StoryBox, PatternCard, Timeline, ComplexityTable
 
 ---
 
@@ -744,6 +841,86 @@ Pass custom rows to tailor for specific problem domains.
     { n: '$V \\le 10^6$', target: '$O(V+E)$', algo: 'BFS / DFS / Topological Sort', complexity: '$O(V+E)$', highlight: false },
   ]"
 />
+
+---
+layout: section
+---
+
+# Code
+
+Highlighting, CUDA, and code block chrome
+
+---
+
+# Code Highlighting
+
+## JavaScript
+
+```javascript
+const greet = (name) => {
+  console.log(`Hello, ${name}!`);
+  return `Welcome to Slidev`;
+};
+
+export default greet;
+```
+
+## Python
+
+```python
+def fibonacci(n: int) -> list[int]:
+    seq = [0, 1]
+    for i in range(2, n):
+        seq.append(seq[-1] + seq[-2])
+    return seq[:n]
+```
+
+---
+
+# CUDA / C++ Code
+
+```cpp
+__global__ void vectorAdd(float *a, float *b, float *c, int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    float *d_a;
+    cudaMalloc(&d_a, sizeof(float) * 1024);
+    vectorAdd<<<256, 4>>>(d_a, d_b, d_c, 1024);
+    cudaDeviceSynchronize();
+    cudaFree(d_a);
+}
+```
+
+---
+
+# Code Blocks
+
+```ts [src/kernel.ts] {1|2-3|all}{lines:true}
+export function saxpy(a: number, x: number[], y: number[]) {
+  return x.map((xi, i) => a * xi + y[i]) // one value per element, long lines wrap instead of scrolling
+}
+```
+
+```bash [zsh]
+  ~/cuda  main ❯ nvcc -O3 saxpy.cu -o saxpy
+  ~/cuda  main ❯ ./saxpy
+Max error: 0.000000
+```
+
+Title bar, line numbers, focus per click, shell output and Nerd Font icons: see the README's *Code Blocks*.
+
+---
+layout: section
+---
+
+# Interactive Components
+
+Countdown and QR Code
 
 ---
 
@@ -904,142 +1081,6 @@ Final stage — **Practice** problems.
 Solve at least 3 problems per pattern. Vary the constraints — different sizes, edge cases, follow-up questions.
 
 </StoryBox>
-
----
-layout: section
----
-
-# CSS Components
-
-Cards, Alerts, Gradients, Buttons
-
----
-
-# Cards
-
-<div class="card">
-
-### Default Card
-
-Cards have a hover effect with gradient top border animation. Use the `.card` class on any div.
-
-</div>
-
-<div class="gradient-card">
-
-### Gradient Card
-
-Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
-
-</div>
-
----
-
-# Alert Boxes
-
-<div class="alert alert-info">
-<strong>Info:</strong> This is an informational alert using <code>.alert .alert-info</code>.
-</div>
-
-<div class="alert alert-success">
-<strong>Success:</strong> Operation completed successfully using <code>.alert .alert-success</code>.
-</div>
-
-<div class="alert alert-warning">
-<strong>Warning:</strong> Please review before proceeding using <code>.alert .alert-warning</code>.
-</div>
-
-<div class="alert alert-error">
-<strong>Error:</strong> Something went wrong using <code>.alert .alert-error</code>.
-</div>
-
----
-
-# Gradient Text
-
-<h2 class="gradient-text-1" style="-webkit-text-fill-color: transparent;">Gradient Text Style 1 (Blue → Purple → Red)</h2>
-
-<h2 class="gradient-text-2" style="-webkit-text-fill-color: transparent;">Gradient Text Style 2 (Green → Cyan → Blue)</h2>
-
-<h2 class="gradient-text-3" style="-webkit-text-fill-color: transparent;">Gradient Text Style 3 (Yellow → Red → Purple)</h2>
-
----
-
-# Glass Morphism
-
-<div class="glass-gradient" style="margin-bottom: 1rem;">
-
-### Glass Card
-
-This uses `.glass-gradient` class with backdrop blur and transparent gradient background.
-
-Works best on dark backgrounds.
-
-</div>
-
-<div class="gradient-border">
-
-### Gradient Border
-
-This uses `.gradient-border` class: a gradient painted on the element's own border.
-
-</div>
-
----
-
-# macOS Buttons
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary">Primary</button>
-  <button class="btn-macos btn-macos-secondary">Secondary</button>
-  <button class="btn-macos btn-macos-destructive">Destructive</button>
-  <button class="btn-macos btn-macos-success">Success</button>
-</div>
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary btn-macos-small">Small</button>
-  <button class="btn-macos btn-macos-primary">Regular</button>
-  <button class="btn-macos btn-macos-primary btn-macos-large">Large</button>
-</div>
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary btn-macos-rounded">Rounded</button>
-  <button class="btn-macos btn-macos-primary btn-macos-capsule">Capsule</button>
-  <button class="btn-macos btn-macos-toolbar">Toolbar</button>
-</div>
-
-### Traffic Lights
-
-<div class="macos-traffic-lights">
-  <div class="macos-traffic-light close"></div>
-  <div class="macos-traffic-light minimize"></div>
-  <div class="macos-traffic-light maximize"></div>
-</div>
-
----
-
-# Segmented Control & Utilities
-
-<div class="btn-macos-group" style="margin-bottom: 1.5rem;">
-  <button class="btn-macos btn-macos-primary">Day</button>
-  <button class="btn-macos">Week</button>
-  <button class="btn-macos">Month</button>
-</div>
-
-### Grid Utilities
-
-<div class="grid grid-cols-3 gap-4">
-  <div class="alert alert-info">Col 1</div>
-  <div class="alert alert-success">Col 2</div>
-  <div class="alert alert-warning">Col 3</div>
-</div>
-
-### Text Sizes
-
-<p class="text-sm">Small text (0.875rem)</p>
-<p>Regular text — default</p>
-<p class="text-lg">Large text (1.25rem)</p>
-<p class="text-xl">Extra large (1.5rem)</p>
 
 ---
 layout: section
