@@ -101,11 +101,25 @@ for (const { words, color, bold, italic } of cudaTokens) {
   for (const word of words.split(' ')) STYLES.set(word, style)
 }
 
-// Comments and strings in the theme (setup/themes/one-purple-unicorn.json)
-const QUIET = /color:\s*#(5c6370|98c379)\b/i
-const isQuiet = (el: Element) => QUIET.test(String(el.properties?.style ?? ''))
+// Comments and strings are recognized by their color in the Shiki theme
+// (spans carry colors, not scopes): `comment` and `string` in its tokenColors
+interface ThemeLike { tokenColors?: { scope?: string | string[], settings?: { foreground?: string } }[] }
+export function quietColors(theme: ThemeLike) {
+  return (theme.tokenColors ?? [])
+    .filter(t => [t.scope ?? []].flat().some(s => s === 'comment' || s === 'string'))
+    .map(t => t.settings?.foreground)
+    .filter((c): c is string => !!c)
+}
+// The theme's own (setup/themes/one-purple-unicorn.json), when not given
+const THEME_QUIET = ['#5c6370', '#98c379']
 
-function processSpan(span: Element) {
+type IsQuiet = (el: Element) => boolean
+const quietTest = (colors: string[]): IsQuiet => {
+  const re = new RegExp(`color:\\s*(${colors.map(c => c.replace(/[^#\w]/g, '')).join('|')})\\b`, 'i')
+  return (el: Element) => re.test(String(el.properties?.style ?? ''))
+}
+
+function processSpan(span: Element, isQuiet: IsQuiet) {
   if (span.tagName !== 'span' || !span.children || isQuiet(span)) return
 
   const newChildren: Content[] = []
@@ -145,7 +159,7 @@ interface TextNode { parent: Element, index: number, start: number, value: strin
 
 // The text nodes of a line, in order, with their parent, offset in the line,
 // and whether they are in a comment or string
-function textNodes(node: Node, out: TextNode[] = [], pos = { at: 0 }, parent?: Element, quiet = false) {
+function textNodes(node: Node, isQuiet: IsQuiet, out: TextNode[] = [], pos = { at: 0 }, parent?: Element, quiet = false) {
   if (!('children' in node)) return out
   node.children.forEach((child, index) => {
     if (child.type === 'text' && parent) {
@@ -153,7 +167,7 @@ function textNodes(node: Node, out: TextNode[] = [], pos = { at: 0 }, parent?: E
       pos.at += child.value.length
     }
     else if (child.type === 'element') {
-      textNodes(child, out, pos, child, quiet || isQuiet(child))
+      textNodes(child, isQuiet, out, pos, child, quiet || isQuiet(child))
     }
   })
   return out
@@ -162,10 +176,10 @@ function textNodes(node: Node, out: TextNode[] = [], pos = { at: 0 }, parent?: E
 // Cross-span: style the kernel name and the <<< >>> of each launch. Shiki
 // splits them unpredictably (`<<` + `<`, or `<float><<<` in one span), so
 // ranges are found on the line's text and the text nodes split to fit.
-function markKernelLaunch(codeNode: Element) {
+function markKernelLaunch(codeNode: Element, isQuiet: IsQuiet) {
   for (const line of codeNode.children) {
     if (line.type !== 'element') continue
-    const nodes = textNodes(line)
+    const nodes = textNodes(line, isQuiet)
     const text = nodes.map(n => n.value).join('')
     if (!text.includes('<<<')) continue
 
@@ -202,18 +216,21 @@ function markKernelLaunch(codeNode: Element) {
   }
 }
 
-export function cudaTransformer(): ShikiTransformer {
+/** `quiet`: the colors of comments and strings (quietColors(theme)), where
+ *  names are left alone; by default this theme's */
+export function cudaTransformer({ quiet = THEME_QUIET }: { quiet?: string[] } = {}): ShikiTransformer {
+  const isQuiet = quietTest(quiet)
   return {
     name: 'cuda-highlighter',
     pre(node) {
       if (!this.source.includes('<<<')) return // no launch to mark
       const code = node.children.find((c): c is Element => c.type === 'element' && c.tagName === 'code')
       if (code) {
-        markKernelLaunch(code)
+        markKernelLaunch(code, isQuiet)
       }
     },
     span(node) {
-      processSpan(node)
+      processSpan(node, isQuiet)
     },
   }
 }
