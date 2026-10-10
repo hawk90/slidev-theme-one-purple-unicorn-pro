@@ -59,7 +59,7 @@
 /* ============================================
    Code Block Container
    ============================================ */
-.slidev-layout pre {
+:is(.slidev-layout, .slidev-page) pre {
   max-width: 100%;
   /* No cap by default (--code-max-height sets one; highlighted code is then
      cut off, see code-theme.css). Not vh: vh follows the browser window, not
@@ -71,7 +71,7 @@
 
 /* A table is width: 100% plus its border; these keep it inside its box
    (both change how the edge renders, so they stay as they are) */
-.slidev-layout table {
+:is(.slidev-layout, .slidev-page) table {
   max-width: 100%;
   overflow-x: auto;
 }

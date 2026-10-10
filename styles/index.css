@@ -108,11 +108,11 @@
 }
 
 /* ========== Global Heading Line Height ========== */
-.slidev-layout h1,
-.slidev-layout h2,
-.slidev-layout h3,
-.slidev-layout h4,
-.slidev-layout h5,
-.slidev-layout h6 {
+:is(.slidev-layout, .slidev-page) h1,
+:is(.slidev-layout, .slidev-page) h2,
+:is(.slidev-layout, .slidev-page) h3,
+:is(.slidev-layout, .slidev-page) h4,
+:is(.slidev-layout, .slidev-page) h5,
+:is(.slidev-layout, .slidev-page) h6 {
   line-height: 1.3;
 }
