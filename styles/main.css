@@ -27,8 +27,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0 0 0.5rem;  /* Tighter spacing */
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em; /* line height: index.css (1.3, all headings) */
 }
 
 :where(.slidev-layout, .slidev-page) h2 {
@@ -323,4 +322,13 @@ table.table-auto { width: auto; }
   color: var(--text-primary);
 }
 
-
+/* ============================================
+   Separator
+   ============================================ */
+hr {
+  border: none;
+  height: 2px;
+  background: var(--gradient-primary);
+  margin: 1.5rem 0;
+  border-radius: 1px;
+}
