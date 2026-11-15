@@ -221,6 +221,8 @@ On one slide, `pageNumber: skip` hides the number and leaves the slide out of th
 
 **Slide hotkeys**: `hotkey: q` on a slide makes <kbd>q</kbd> jump to it from anywhere (agenda, Q&A, appendix); modifiers work too (`shift+a`). Slidev's own keys (space, arrows, `d`, `o`, `g`, `f`, …) are kept: a hotkey on one of them, a key used twice or a value that isn't a key is reported in the browser console. A deck's own `setup/shortcuts.ts` still works and receives these in `base`.
 
+**Kiosk auto-advance**: `autoAdvance: 8s` in the headmatter steps the deck by itself (each click, then each slide); a slide's own `autoAdvance` sets its wait, and `false` stops there. `autoAdvanceLoop: true` starts over after the last step. A key, click, scroll or touch pauses it until the deck is left alone for `autoAdvanceIdle` (30s). Times read like Slidev's `duration` (`8s`, `1m`, `0:30`, or seconds). It runs in the play view only: not in exports, nor in the presenter view.
+
 ### Talk details: cover and footer
 
 Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:

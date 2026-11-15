@@ -46,6 +46,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { configs, resolveAssetUrl, sharedState, useNav } from '@slidev/client'
 import { durationSeconds, pace, timerElapsed } from './utils/pace'
 import { ribbonOf } from './utils/ribbon'
+import { advanceDelay, startAutoAdvance } from './utils/auto-advance'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
@@ -54,7 +55,8 @@ import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatte
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
 
-const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode, slides } = useNav()
+const nav = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode, isPresenter, slides } = nav
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
@@ -73,8 +75,18 @@ onMounted(() => {
   stopDarkChrome = watchDarkChrome(currentPage)
   if (!isPrintMode.value) stopArrival = watchSlideArrival()
   if (!isPrintMode.value && isOn(headmatter.paceBar)) paceTimer = setInterval(() => { now.value = Date.now() }, 1000)
+  // autoAdvance (headmatter, a slide's own overrides): the play view steps
+  // itself; autoAdvanceLoop: true starts over; input pauses it for
+  // autoAdvanceIdle (30s). Not in exports or the presenter view.
+  const deckDelay = headmatter.autoAdvance
+  const anyAdvance = deckDelay !== undefined || slides.value.some(s => s.meta?.slide?.frontmatter?.autoAdvance !== undefined)
+  if (!isPrintMode.value && !isPresenter.value && anyAdvance) {
+    stopAdvance = startAutoAdvance(nav, () => advanceDelay(frontmatter.value.autoAdvance, deckDelay),
+      isOn(headmatter.autoAdvanceLoop), (durationSeconds(headmatter.autoAdvanceIdle) ?? 30) * 1000)
+  }
 })
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); clearInterval(paceTimer) })
+let stopAdvance = () => {}
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

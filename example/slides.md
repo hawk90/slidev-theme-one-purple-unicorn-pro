@@ -1642,6 +1642,25 @@ hotkey: shift+a    # with modifiers: ctrl, alt, shift, meta
 Slidev's own keys (<Kbd>space</Kbd>, arrows, <Kbd>d</Kbd>, <Kbd>o</Kbd>, <Kbd>g</Kbd>, <Kbd>f</Kbd>…) are kept: a hotkey on one of them, a key used twice or a value that isn't a key is reported in the console. Keys do nothing while typing in a field.
 
 ---
+autoAdvance: 20s
+---
+
+# Kiosk Auto-Advance
+
+This slide moves on by itself after 20 seconds: it has its own `autoAdvance: 20s`. Press a key or click and it waits until you leave it alone for 30 seconds.
+
+```yaml
+autoAdvance: 8s          # headmatter: every slide, clicks included ("8s", "1m", "0:30", or seconds)
+autoAdvanceLoop: true    # after the last step, start over
+autoAdvanceIdle: 1m      # how long input pauses it (default 30s)
+
+autoAdvance: 30s         # a slide: its own wait
+autoAdvance: false       # a slide: stop here
+```
+
+For booth and lobby screens. It runs in the play view only: not in exports, nor in the presenter view.
+
+---
 layout: section
 ---
 

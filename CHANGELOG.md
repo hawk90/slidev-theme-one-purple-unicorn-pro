@@ -25,6 +25,8 @@
   and its text keep 5:1 contrast in both modes (`--on-red`).
 - **Slide hotkeys** (#170): `hotkey: q` on a slide makes that key jump to it; clashes
   with Slidev's keys and repeats are reported in the console.
+- **Kiosk auto-advance** (#144): `autoAdvance: 8s` (deck or slide; `false` stops on a
+  slide), `autoAdvanceLoop`, and a pause on input for `autoAdvanceIdle` (30s).
 
 ## 4.0.0
 
