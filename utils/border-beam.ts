@@ -6,8 +6,8 @@
 // CSS conic rotation stays as the fallback.
 
 import { isPrintMode } from './print-mode'
+import { beamKeyframes, lapDuration } from './beam-path'
 
-const REF_PERIMETER = 600 // px; a box this size takes --ab-duration per lap
 
 const running = new WeakMap<Element, Animation>()
 
@@ -19,27 +19,14 @@ function animate(el: HTMLElement) {
   const bw = el.offsetWidth
   const bh = el.offsetHeight
   if (!bw || !bh) return
-  const perimeter = 2 * (bw + bh)
   // The light's radius stays under the box height (animations.css), or on a
   // short box it reaches the opposite edge at a corner and looks like two
   el.style.setProperty('--_ab-len-max', `${Math.round(0.75 * Math.min(bw, bh))}px`)
-  // Corners as keyframes, each offset proportional to the distance travelled,
-  // so the light moves at one speed along every edge (linear easing)
-  const corners: [number, number, number][] = [
-    [0, 0, 0],
-    [bw, 0, bw],
-    [bw, bh, bw + bh],
-    [0, bh, 2 * bw + bh],
-    [0, 0, perimeter],
-  ]
-  const frames = corners.map(([x, y, d]) => ({ '--ab-x': `${x}px`, '--ab-y': `${y}px`, offset: d / perimeter }))
-  const raw = getComputedStyle(el).getPropertyValue('--ab-duration').trim()
-  const ms = raw.endsWith('ms') ? Number.parseFloat(raw) : Number.parseFloat(raw) * 1000
-  const lapMs = Number.isFinite(ms) && ms > 0 ? ms : 6000
+  // Corners as keyframes at one speed along every edge (beam-path.ts)
   try {
-    const anim = el.animate(frames, {
+    const anim = el.animate(beamKeyframes(bw, bh), {
       pseudoElement: '::before',
-      duration: (lapMs * perimeter) / REF_PERIMETER,
+      duration: lapDuration(getComputedStyle(el).getPropertyValue('--ab-duration'), bw, bh),
       iterations: Number.POSITIVE_INFINITY,
       direction: el.classList.contains('anim-border-ccw') ? 'reverse' : 'normal',
     })

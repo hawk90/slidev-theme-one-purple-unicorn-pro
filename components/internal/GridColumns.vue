@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { gridTemplate } from '../../utils/layout-props'
 
 const props = defineProps({
   count: { type: Number, default: 2 },
@@ -34,17 +35,7 @@ const slotNames = computed(() => {
   return Array.from({ length: props.count }, (_, i) => `col-${i}`)
 })
 
-const gridStyle = computed(() => {
-  // A bare number is a share of the row (2 → 2fr); anything else is a CSS length
-  const w = slotNames.value.map((_, i) => {
-    const v = String(props.widths[i] ?? '').trim()
-    return !v ? '1fr' : /^\d*\.?\d+$/.test(v) ? `${v}fr` : v
-  })
-  const cols = props.divider
-    ? w.join(' 1px ')
-    : w.join(' ')
-  return { gridTemplateColumns: cols }
-})
+const gridStyle = computed(() => ({ gridTemplateColumns: gridTemplate(props.widths, slotNames.value.length, props.divider) }))
 </script>
 
 <style scoped>

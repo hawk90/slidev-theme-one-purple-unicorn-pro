@@ -7,7 +7,9 @@
 //   them and paints a translucent rectangle instead.
 // Both are drawn on canvases instead, which every viewer shows the same.
 
-import { boundsOf, colorStops, cornerRadii, fillRun, functionArgs, isTransparent, noPseudoClass, overlayCanvas, paddingBox, roundRect, splitList, textRuns } from './print-canvas'
+import { boundsOf, colorStops, cornerRadii, fillRun, functionArgs, isTransparent, noPseudoClass, overlayCanvas, paddingBox, roundRect, textRuns } from './print-canvas'
+import type { Shadow } from './print-geometry'
+import { parseShadows, shadowBounds, shadowReach } from './print-geometry'
 
 export const RING_DONE = 'data-print-ring'
 const BOX_SHADOW_DONE = 'data-print-box-shadow'
@@ -66,28 +68,13 @@ export function redrawRing(el: HTMLElement, which: '::before' | '::after', ps: C
 
 // --- Shadows --------------------------------------------------------------
 
-interface Shadow { color: string, x: number, y: number, blur: number, spread: number }
-
-// Computed box-shadow / text-shadow: "rgb(…) 0px 10px 25px 0px, …"
-function parseShadows(value: string, withSpread: boolean): Shadow[] {
-  if (!value || value === 'none') return []
-  return splitList(value).flatMap((item) => {
-    if (/\binset\b/.test(item)) return [] // inner shadows are left to the browser
-    const m = item.match(/^(.*?)\s+(-?[\d.]+)px\s+(-?[\d.]+)px(?:\s+(-?[\d.]+)px)?(?:\s+(-?[\d.]+)px)?$/)
-    if (!m) return []
-    return [{ color: m[1], x: Number(m[2]), y: Number(m[3]), blur: Number(m[4] ?? 0), spread: withSpread ? Number(m[5] ?? 0) : 0 }]
-  })
-}
+// Parsing and extent: print-geometry.ts (parseShadows, shadowReach, shadowBounds)
 
 // Each shadow gets its own canvas, just big enough for it, under the content
 // of its host: the nearest positioned ancestor with a background (a card, the
 // progress bar), else the slide. A shadow under an opaque card would be hidden
 // there anyway, as in CSS. Blur is soft, so a lower resolution is enough.
 const SHADOW_RESOLUTION = 2
-
-// How far a shadow reaches past its shape: a CSS blur radius B is a Gaussian
-// with σ = B/2, which fades out by 3σ
-const reach = (sh: Shadow) => 1.5 * sh.blur + Math.max(0, sh.spread) + 1
 
 const hasBackground = (s: CSSStyleDeclaration) =>
   s.backgroundImage !== 'none' || !isTransparent(s.backgroundColor)
@@ -133,16 +120,6 @@ function withShadow(ctx: CanvasRenderingContext2D, res: number, sh: Shadow, draw
   ctx.fillStyle = '#000'
   draw()
   ctx.restore()
-}
-
-// The host-local area a set of shadows of a w×h shape at (x, y) can reach
-function shadowBounds(shadows: Shadow[], x: number, y: number, w: number, h: number) {
-  return [
-    Math.min(...shadows.map(sh => x + sh.x - reach(sh))),
-    Math.min(...shadows.map(sh => y + sh.y - reach(sh))),
-    Math.max(...shadows.map(sh => x + w + sh.x + reach(sh))),
-    Math.max(...shadows.map(sh => y + h + sh.y + reach(sh))),
-  ] as const
 }
 
 export function redrawBoxShadow(el: HTMLElement, s: CSSStyleDeclaration) {

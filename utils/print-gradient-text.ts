@@ -13,6 +13,7 @@
 // gradients, so there the text goes back to a solid color (solidifyGradientText).
 
 import { boundsOf, colorStops, fillRun, functionArgs, isTransparent, noPseudoClass, overlayCanvas, paddingBox, takeGradientAngle, textRuns } from './print-canvas'
+import { gradientLine } from './print-geometry'
 
 export const GRADIENT_DONE = 'data-print-gradient'
 export const PSEUDO = 'data-print-pseudo'
@@ -44,13 +45,8 @@ export function materializePseudo(el: Element, which: '::before' | '::after', ps
 // length makes the corners hit 0% and 100%)
 function linearGradient(ctx: CanvasRenderingContext2D, image: string, x: number, w: number, h: number) {
   const args = functionArgs(image)
-  const rad = takeGradientAngle(args) * Math.PI / 180
-  const dx = Math.sin(rad)
-  const dy = -Math.cos(rad)
-  const len = Math.abs(w * dx) + Math.abs(h * dy)
-  const cx = x + w / 2
-  const cy = h / 2
-  const g = ctx.createLinearGradient(cx - dx * len / 2, cy - dy * len / 2, cx + dx * len / 2, cy + dy * len / 2)
+  const { x0, y0, x1, y1, len } = gradientLine(takeGradientAngle(args), x, w, h)
+  const g = ctx.createLinearGradient(x0, y0, x1, y1)
   for (const [offset, color] of colorStops(args, len)) g.addColorStop(offset, color)
   return g
 }
