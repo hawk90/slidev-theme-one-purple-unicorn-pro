@@ -50,6 +50,14 @@
 
 ### Fixes
 
+- **Light-mode alerts ignored `--alert-*-bg`** (#68), so a deck's or `themeConfig`
+  accents' alert tint applied in dark mode only.
+- **Two different traffic-light reds, yellows and greens** (#69): code-window title
+  bars and `.macos-traffic-light` both use `--macos-close` / `-minimize` /
+  `-maximize` now.
+- **With `themeConfig.primary`, light-mode content titles lost the palette's
+  gradient** (from the #25 fix): the palette now also sets
+  `--light-cover-h1-gradient`, its own stops with the end deepened to 3:1.
 - **Inline code in a gradient heading was an empty chip** (#19): content titles,
   cover / intro / section titles, `.gradient-text` and `anim-gradient-text`. It is a
   normal chip with visible text now, in exports too.
@@ -180,6 +188,12 @@
   (lowercase) now work.
 - `full-image` also takes `backgroundPosition` (as `full-split` does); page ranges accept
   an en dash (`1–3`).
+
+### Internal
+
+- `var()` fallbacks for tokens `colors.css` always defines are gone (146; many
+  disagreed with the real values, #70), and the gradient-text clip/fill block is one
+  rule in `gradients.css` instead of 7 copies (#71). No visual change.
 
 ## 3.0.5
 
