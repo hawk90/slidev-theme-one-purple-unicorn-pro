@@ -1,7 +1,7 @@
 <template>
   <nav
     v-if="!isHidden && stages.length > 0"
-    class="stage-progress"
+    class="stage-progress slide-chrome"
     :class="`stage-pos-${position}`"
     aria-label="Stages"
   >

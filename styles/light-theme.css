@@ -123,8 +123,8 @@ html:not(.dark) body {
    is checked with :has() (static there, so cheap) */
 html:not(.dark) :is(
   .slide-dark,
-  #slide-content.chrome-dark > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress),
-  .print-slide-container:has(> .slidev-page .slidev-layout.slide-dark) > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress)
+  #slide-content.chrome-dark > .slide-chrome,
+  .print-slide-container:has(> .slidev-page .slidev-layout.slide-dark) > .slide-chrome
 ) {
   --slide-bg: var(--dark-bg);
   --bg-secondary: var(--_root-bg-secondary);

@@ -1,3 +1,9 @@
+// Marker class on every piece of slide chrome next to the slides: the
+// progress bar, footer line, page number (global-bottom.vue) and stage
+// indicator (StageProgress.vue). The light-mode restore (light-theme.css) and
+// the export redraw (print-export.ts) find the chrome by it.
+export const CHROME_CLASS = 'slide-chrome'
+
 // Layouts without the stage indicator (and without the page number, below).
 // Not the `slide-title` class: section has that but keeps the stage indicator
 export const TITLE_LAYOUTS = ['cover', 'intro', 'end']

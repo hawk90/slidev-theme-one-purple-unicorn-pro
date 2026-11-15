@@ -14,13 +14,14 @@ import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
 import { canRedraw, noPseudoClass } from './print-canvas'
 import { isPrintMode, trackPrintRoute } from './print-mode'
+import { CHROME_CLASS } from './layouts'
 import { nextTick } from 'vue'
 import { katexSettled } from './rich-text'
 
 const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
 // Slide content and the theme's slide chrome (global-top / global-bottom)
-const SLIDE = '.slidev-layout, .progress-bar, .slide-footer, .slide-indicator, .stage-progress'
+const SLIDE = `.slidev-layout, .${CHROME_CLASS}`
 
 // Slide elements in `root` (the root itself included)
 function slideElements(root: Element | Document) {

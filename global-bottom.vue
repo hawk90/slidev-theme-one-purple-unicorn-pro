@@ -1,17 +1,17 @@
 <template>
   <!-- Progress Bar: always or content-only based on frontmatter -->
-  <div v-if="showBar" class="progress-bar">
+  <div v-if="showBar" class="progress-bar slide-chrome">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
   </div>
 
   <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
-  <div v-if="footer" class="slide-footer">
+  <div v-if="footer" class="slide-footer slide-chrome">
     <img v-if="footer.logo" :src="resolveAssetUrl(footer.logo)" alt="" class="slide-footer-logo" />
     <span v-if="footer.text" class="slide-footer-text">{{ footer.text }}</span>
   </div>
 
   <!-- Page Indicator -->
-  <div v-if="showPageNumber" class="slide-indicator">
+  <div v-if="showPageNumber" class="slide-indicator slide-chrome">
     {{ currentPage }} / {{ total }}
   </div>
 </template>
