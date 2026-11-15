@@ -577,8 +577,10 @@
 .print-mode .anim-fade-left,
 .print-mode .anim-fade-right {
   animation: none !important;
-  opacity: 1 !important;
-  transform: none !important;
+  /* Not !important: Slidev's .slidev-vclick-hidden (opacity: 0 !important)
+     must still hide a step that hasn't been clicked yet in a click export */
+  opacity: 1;
+  transform: none;
 }
 /* Pseudo-elements redrawn as images in an export */
 .print-no-before::before,

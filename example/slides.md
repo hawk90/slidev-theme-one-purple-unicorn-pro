@@ -1444,6 +1444,12 @@ v-click, Transitions, Gradient Borders, Shimmer, Glow, and more
 
 </v-click>
 
+<div v-click class="anim-pop">
+
+**Step 4:** `v-click` + `anim-pop` pops in instead of fading.
+
+</div>
+
 ---
 
 # v-click on Lists
