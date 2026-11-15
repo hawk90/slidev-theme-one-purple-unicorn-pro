@@ -496,6 +496,16 @@ layout: fact
 The performance gap between $O(n)$ and $O(n^2)$ at $n = 10{,}000$
 
 ---
+layout: full-dark
+---
+
+<div style="position: fixed; top: 1.25rem; left: 1.5rem;"><Badge variant="gray">layout: full-dark</Badge></div>
+
+# Dark in Both Modes
+
+A centered slide with a large heading that stays dark in light mode too, like the title layouts; the page number and progress bar over it turn dark with it. `padding` and `contentMaxWidth` as on `center`.
+
+---
 layout: full
 ---
 
