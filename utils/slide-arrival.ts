@@ -6,9 +6,13 @@
 // start over, and the page fires a `slide-arrived` event.
 // A slide shown without a transition (the first one, `transition: none`)
 // never gets the class and plays as before.
+//
+// Started by global-bottom.vue, which Slidev mounts next to #slideshow in the
+// presentation and the presenter: it watches that element's pages only, and
+// starts again when a route change mounts a new one, so print mode is decided
+// per mount (exports play no transitions and skip it).
 
-import { isPrintMode } from './print-mode'
-import { ENTERING_CLASS as ENTERING } from './slidev-dom'
+import { ENTERING_CLASS as ENTERING, PAGE_CLASS, SLIDESHOW_ID } from './slidev-dom'
 
 function update(page: Element) {
   const entering = [...page.classList].some(c => ENTERING.test(c))
@@ -22,11 +26,16 @@ function update(page: Element) {
   }
 }
 
-export function setupSlideArrival() {
-  if (typeof window === 'undefined' || isPrintMode()) return
-  new MutationObserver((mutations) => {
+export function watchSlideArrival(): () => void {
+  const slideshow = document.getElementById(SLIDESHOW_ID)
+  if (!slideshow) return () => {}
+  const observer = new MutationObserver((mutations) => {
     for (const m of mutations) {
-      if ((m.target as Element).classList?.contains('slidev-page')) update(m.target as Element)
+      const el = m.target as Element
+      // The pages are #slideshow's children; class changes inside them are not ours
+      if (el.parentElement === slideshow && el.classList.contains(PAGE_CLASS)) update(el)
     }
-  }).observe(document.body, { attributes: true, attributeFilter: ['class'], subtree: true })
+  })
+  observer.observe(slideshow, { attributes: true, attributeFilter: ['class'], subtree: true })
+  return () => observer.disconnect()
 }

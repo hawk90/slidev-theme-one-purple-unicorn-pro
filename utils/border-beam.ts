@@ -41,29 +41,49 @@ function animate(el: HTMLElement) {
 export function setupBorderBeams() {
   if (typeof window === 'undefined' || !('animate' in Element.prototype)) return
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  // PDF/PNG export: keep the static CSS ring instead of a light frozen at some
-  // point of its path
-  if (isPrintMode()) return
+  // PDF/PNG export: animate() keeps the static CSS ring there instead of a
+  // light frozen at some point of its path. Asked per element, not once here:
+  // a tab opened on the export page and then sent to the presentation has
+  // the light there
 
   const resize = new ResizeObserver(entries => entries.forEach(e => animate(e.target as HTMLElement)))
-  const watch = (root: ParentNode) =>
-    root.querySelectorAll?.('.anim-border').forEach(el => resize.observe(el))
+  const watched = new WeakSet<Element>()
+  const start = (el: Element) => {
+    if (watched.has(el)) return
+    watched.add(el)
+    resize.observe(el)
+  }
+  const stop = (el: Element) => {
+    if (!watched.delete(el)) return
+    resize.unobserve(el)
+    running.get(el)?.cancel()
+    running.delete(el)
+    el.classList.remove('ab-beam')
+  }
+  const watch = (root: ParentNode) => root.querySelectorAll?.('.anim-border').forEach(start)
 
   watch(document)
   new MutationObserver(mutations => {
     for (const m of mutations) {
+      // `anim-border` added to (or taken off) an element already on the page
+      if (m.type === 'attributes') {
+        const el = m.target as Element
+        if (el.classList.contains('anim-border')) start(el)
+        else stop(el)
+        continue
+      }
       m.addedNodes.forEach((n) => {
         if (!(n instanceof HTMLElement)) return
-        if (n.classList.contains('anim-border')) resize.observe(n)
+        if (n.classList.contains('anim-border')) start(n)
         watch(n)
       })
       m.removedNodes.forEach((n) => {
         if (!(n instanceof HTMLElement)) return
         const els = n.classList.contains('anim-border') ? [n] : [...n.querySelectorAll('.anim-border')]
-        els.forEach((el) => { resize.unobserve(el); running.get(el)?.cancel() })
+        els.forEach(stop)
       })
     }
-  }).observe(document.body, { childList: true, subtree: true })
+  }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] })
 
   // Browser print: show the static ring
   window.matchMedia('print').addEventListener('change', (e) => {

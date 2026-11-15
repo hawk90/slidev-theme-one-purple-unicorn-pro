@@ -22,6 +22,7 @@ import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
+import { watchSlideArrival } from './utils/slide-arrival'
 import { headmatterOf, isHeadmatterSlide, isOff } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
@@ -35,8 +36,14 @@ const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.va
 // #slide-content); the export page's containers are matched in CSS instead,
 // and there it finds no #slide-content and does nothing
 let stopDarkChrome = () => {}
-onMounted(() => { stopDarkChrome = watchDarkChrome(currentPage) })
-onBeforeUnmount(() => stopDarkChrome())
+// Entrances wait for the slide transition (utils/slide-arrival.ts); exports
+// play none
+let stopArrival = () => {}
+onMounted(() => {
+  stopDarkChrome = watchDarkChrome(currentPage)
+  if (!isPrintMode.value) stopArrival = watchSlideArrival()
+})
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide
