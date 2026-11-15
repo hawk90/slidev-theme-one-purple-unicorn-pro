@@ -50,6 +50,17 @@
 
 ### Fixes
 
+- **macOS buttons:** the toolbar button has a faint fill and border at rest (it read
+  as plain text on a slide or in a PDF, #33); the loading spinner shows (it drew in
+  the hidden label's transparent color, #43); secondary and toolbar buttons react to
+  hover and press in dark mode too (#98).
+- **`slide-left` / `-right` / `-up` moved a full slide plus 24px** (#97): the
+  theme's 24px shift was added to Slidev's full-width one. They now move 24px with a
+  fade, as intended, and `slide-down` does the same.
+- **`anim-border` showed two lights on short boxes** (#52): the light's radius is
+  capped at 3/4 of the box height. Direction and speed checked for every preset and
+  `-ccw` (#50).
+- **`<QRCode>` showed the link underline bar on hover** (#101).
 - **Light-mode alerts ignored `--alert-*-bg`** (#68), so a deck's or `themeConfig`
   accents' alert tint applied in dark mode only.
 - **Two different traffic-light reds, yellows and greens** (#69): code-window title
