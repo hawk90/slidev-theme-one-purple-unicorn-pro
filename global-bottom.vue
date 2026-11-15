@@ -16,6 +16,12 @@
     <span v-if="footer.text" class="slide-footer-text">{{ footer.text }}</span>
   </div>
 
+  <!-- aside: a deep-dive slide's rail and corner tag -->
+  <template v-if="asideLabel">
+    <div class="slide-aside-rail slide-chrome" />
+    <div class="slide-aside-tag slide-chrome">{{ asideLabel }}</div>
+  </template>
+
   <!-- Page Indicator -->
   <div v-if="showPageNumber" class="slide-indicator slide-chrome">
     {{ pageText }}
@@ -120,6 +126,15 @@ const footer = computed(() => {
 
 const progress = computed(() => progressPercent(currentPage.value, total.value, skipPages.value, excludeSkipped.value))
 
+// aside: true | "label" marks a deep-dive slide: an accent rail on the left
+// edge and a corner tag ("Deep dive", or the label). Its own frontmatter only;
+// not on title slides and section dividers.
+const asideLabel = computed(() => {
+  const v = frontmatter.value.aside
+  if (isHidden.value || v === undefined || v === null || isOff(v) || v === '') return ''
+  return isOn(v) ? 'Deep dive' : String(v)
+})
+
 // paceBar: true → a marker on the bar for the time used of the deck's
 // `duration` (Slidev's, 30min by default), once the presenter view's timer
 // runs; green on pace, yellow behind, red late (utils/pace.ts). Not in exports.
@@ -142,6 +157,12 @@ const paceMark = computed(() => {
   --footer-clearance: var(--footer-clearance-with-footer, 1.5rem);
 }
 /* (A Footnote also moves up for a bottom stage indicator: StageProgress.vue) */
+
+/* aside: the tag gives the top-left corner to a stage indicator there */
+:is(#slide-content, .print-slide-container):has(> .stage-pos-top-left) > .slide-aside-tag {
+  left: auto;
+  right: 2rem;
+}
 </style>
 
 <style scoped>
@@ -183,6 +204,37 @@ const paceMark = computed(() => {
 .pace-on { --_pace-color: var(--pace-on-color, var(--one-dark-green)); }
 .pace-behind { --_pace-color: var(--pace-behind-color, var(--one-dark-yellow)); }
 .pace-late { --_pace-color: var(--pace-late-color, var(--one-dark-red)); }
+
+/* aside. Theme variables: --aside-color, --aside-rail-width */
+.slide-aside-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--aside-rail-width, 4px);
+  background: var(--aside-color, linear-gradient(180deg, var(--primary-400), var(--primary-600, var(--primary-500))));
+  z-index: 10;
+  pointer-events: none;
+}
+
+.slide-aside-tag {
+  position: fixed;
+  top: 0;
+  left: calc(var(--aside-rail-width, 4px) + 0.5rem);
+  padding: 0.05rem 0.45rem;
+  border-radius: 0 0 4px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-400);
+  background: color-mix(in srgb, var(--primary-400) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary-400) 35%, transparent);
+  border-top: 0;
+  z-index: 10;
+  pointer-events: none;
+}
 
 .slide-indicator {
   position: fixed;

@@ -1566,6 +1566,30 @@ The same sections as a dot rail on the right: `stagePosition: right` with `stage
 The content's right padding grows by the rail's column, as for the stage indicator at `right`.
 
 ---
+aside: true
+---
+
+# Deep-Dive Slides
+
+`aside: true` marks a slide the audience can skip: an accent rail on the left edge and a **Deep dive** tag in the corner.
+
+```yaml
+aside: true              # tag "Deep dive"
+aside: "Under the hood"  # or your own label
+```
+
+Use it for proofs, benchmarks and internals: the room sees at once that the main thread resumes after it.
+
+---
+aside: Under the hood
+class: slide-dark
+---
+
+# Deep Dive on a Dark Slide
+
+`aside: "Under the hood"` gives the tag its own text. Over a dark slide the rail and tag keep the dark palette, like the rest of the chrome.
+
+---
 layout: section
 ---
 

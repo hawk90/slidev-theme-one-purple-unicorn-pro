@@ -17,6 +17,8 @@
 - **Pace marker** (#130): `paceBar: true` puts a tick on the progress bar for the time
   used of the deck's `duration` while the presenter timer runs, green on pace, yellow
   behind, red late.
+- **Deep-dive slides** (#123): `aside: true | "label"` adds an accent rail on the left
+  edge and a corner tag.
 
 ## 4.0.0
 

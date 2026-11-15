@@ -215,6 +215,8 @@ footerInExport: false
 
 On one slide, `pageNumber: skip` hides the number and leaves the slide out of the count, and `pageNumber: hold` shows the last number again without counting the slide (for a build-up split over slides). `appendix: true` on a slide starts the appendix: from there on the pages are A1, A2…, and the total shown before stays the count of the main part.
 
+**Deep-dive slides**: `aside: true` on a slide adds an accent rail on the left edge and a "Deep dive" tag in the top-left corner; `aside: "Label"` sets the tag's text. Not on title slides and section dividers. Variables: `--aside-color` (the rail), `--aside-rail-width`.
+
 ### Talk details: cover and footer
 
 Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:
