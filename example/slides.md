@@ -966,6 +966,36 @@ const timelineItems = [
 
 ---
 
+# Timeline: Entrance and Click Steps
+
+<script setup>
+const steps = [
+  { year: '1945', title: 'Merge Sort', desc: 'John von Neumann' },
+  { year: '1959', title: 'Shell Sort', desc: 'Donald Shell' },
+  { year: '1960', title: 'QuickSort', desc: 'Tony Hoare' },
+  { year: '1964', title: 'Heapsort', desc: 'J. W. J. Williams' },
+]
+</script>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+<div>
+
+`animate`: top to bottom on arrival
+
+<Timeline animate :items="steps" />
+
+</div>
+<div>
+
+`steps`: one item per click
+
+<Timeline steps :items="steps" />
+
+</div>
+</div>
+
+---
+
 # ComplexityTable Component
 
 Default configuration — the classic N-limit quick reference.
