@@ -1,12 +1,17 @@
 /* macOS Style Buttons */
 
 :root {
-  /* macOS System Colors */
-  --macos-blue: #007AFF;
+  /* macOS system colors, deepened so white labels pass WCAG AA (4.5:1):
+     Apple's #007AFF / #FF3B30 / #34C759 give 4.02 / 3.55 / 2.22. Now
+     5.39 / 5.38 (Apple's high-contrast red) / 5.14; set these to the
+     originals for the exact Apple look */
+  --macos-blue: #0064E0;
   --macos-blue-hover: #0051D5;
   --macos-gray: #8E8E93;
-  --macos-red: #FF3B30;
-  --macos-green: #34C759;
+  --macos-red: #D70015;
+  --macos-red-hover: #B5000F;
+  --macos-green: #1E7E34;
+  --macos-green-hover: #196B2C;
 
   /* macOS Button Backgrounds */
   --macos-button-bg: rgba(0, 0, 0, 0.05);
@@ -138,8 +143,8 @@ html.dark,
 }
 
 .btn-macos-destructive:hover {
-  background: #D70015;
-  border-color: #D70015;
+  background: var(--macos-red-hover);
+  border-color: var(--macos-red-hover);
 }
 
 /* ============================================
@@ -152,8 +157,8 @@ html.dark,
 }
 
 .btn-macos-success:hover {
-  background: #2FB34F;
-  border-color: #2FB34F;
+  background: var(--macos-green-hover);
+  border-color: var(--macos-green-hover);
 }
 
 /* ============================================

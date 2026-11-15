@@ -290,7 +290,7 @@ Every value below defaults to the theme's look.
 | Tables, `<ComplexityTable>` | `--table-radius` (or `.table-square`) |
 | `.card` | `--card-radius`, `--card-padding`, `--card-margin`, `--card-hover-lift` |
 | `.alert` | `--alert-padding`, `--alert-margin`, `--alert-radius`, `--alert-border-width` |
-| `.btn-macos` | `--macos-radius`, `--macos-font-size`, `--macos-padding`, `--macos-height` |
+| `.btn-macos` | `--macos-radius`, `--macos-font-size`, `--macos-padding`, `--macos-height`; fills `--macos-blue` / `-blue-hover`, `--macos-red` / `-red-hover`, `--macos-green` / `-green-hover` (deepened from Apple's system colors so white labels pass WCAG AA; set Apple's `#007AFF` / `#FF3B30` / `#34C759` for the exact look) |
 
 ### Animations
 

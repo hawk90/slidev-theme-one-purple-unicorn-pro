@@ -78,7 +78,9 @@
    solid text (also real text in PDF/PPTX exports, which redraw only
    transparent-fill runs). Beats the title layouts' `h1 *` inherit rule. */
 :is(.slidev-layout, .slidev-page) :is(h1, h2, h3, h4, .gradient-text, .gradient-text-1, .gradient-text-2, .gradient-text-3, [class*="anim-gradient-text"]) code:not(pre code) {
-  background: var(--bg-tertiary);
+  /* Dark like body chips (--bg-tertiary gave 4.30:1); light mode's chip
+     rule (light-theme.css) replaces it on light slides */
+  background: var(--bg-code, #21252b);
   -webkit-background-clip: border-box;
   background-clip: border-box;
   -webkit-text-fill-color: currentColor;

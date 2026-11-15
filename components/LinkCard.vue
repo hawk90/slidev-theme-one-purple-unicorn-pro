@@ -83,7 +83,9 @@ defineProps({
 
 .link-arrow {
   font-size: 0.85rem;
-  color: var(--primary-400, #c678dd);
+  /* 300: lighter in dark mode, deeper in light mode (400 was 4.36:1 on the
+     dark card) */
+  color: var(--primary-300, #d98eff);
   flex-shrink: 0;
   transition: transform 0.2s ease, color 0.2s ease;
 }

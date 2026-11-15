@@ -46,8 +46,10 @@
   --key-bg: #4b5263;          /* Kbd / gray badge: one step above cards */
 
   /* Small accent text on its own tint (badges, labels): mix this much of the
-     accent with --ink-mix, i.e. a slightly lighter ink in dark mode */
-  --ink-depth: 80%;
+     accent with --ink-mix, i.e. a slightly lighter ink in dark mode. 70%
+     keeps every accent at 4.5:1 or more on cards and tables (#2e323b;
+     red was 4.22 at 80%) */
+  --ink-depth: 70%;
   --ink-mix: white;
 
   /* Text Colors */
