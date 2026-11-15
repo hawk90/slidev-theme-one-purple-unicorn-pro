@@ -365,3 +365,53 @@
   --code-dim-opacity: 1;
   --code-focus-bg: rgba(255, 255, 255, 0.1);
 }
+
+/* ```prose and ```quote (setup/prose-lang.ts): text stepped line by line
+   with the line-highlight clicks ({1|2-3}). The slide's own type and color,
+   no window; the lines not lit are dimmed further than code
+   (--prose-dim-opacity, 0.3), and fade. ```quote looks like a blockquote.
+   Variables: --prose-size (1.15rem), --prose-dim-opacity */
+:is(.slidev-layout, .slidev-page) .slidev-code-wrapper:has(> pre.slidev-prose) {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code.slidev-prose {
+  background: transparent !important; /* Shiki's inline background, and the code one */
+  border: 0;
+  box-shadow: none;
+  /* Slidev sets these with !important from its variables */
+  --slidev-code-radius: 0;
+  --slidev-code-padding: 0;
+  --slidev-code-font-size: var(--prose-size, 1.15rem);
+  font-family: var(--prose-font, inherit) !important; /* over code's mono (!important) */
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow: visible;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-prose :is(code, .line, .line span) {
+  font-family: inherit !important;
+  color: var(--text-primary) !important;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-prose .line {
+  padding-left: 0; /* no hanging indent: wrapped prose starts at the margin */
+  text-indent: 0;
+  transition: opacity var(--motion-base, 0.4s) var(--motion-ease, ease);
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-prose .slidev-code-dishonored {
+  opacity: var(--prose-dim-opacity, 0.3);
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-prose:has(.slidev-code-dishonored) .line.slidev-code-highlighted {
+  width: auto;
+  margin-left: 0;
+  background: none;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code.slidev-prose-quote {
+  border-left: 3px solid var(--primary-500);
+  --slidev-code-padding: 0.4rem 0 0.4rem 1.5rem;
+  --slidev-code-font-size: var(--prose-size, 1.3rem);
+  font-style: italic;
+}
+html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-code.slidev-prose-quote {
+  border-left-color: var(--one-dark-blue);
+}

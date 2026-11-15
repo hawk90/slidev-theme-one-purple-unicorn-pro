@@ -11,6 +11,9 @@
   exports keep the styles (`html.print-clicks`).
 - **`<ClickTabs>`** (#154): one window with a tab per version (`tabs`, slots `tab1`,
   `tab2`, …); each click moves to the next tab, a click on a tab jumps to it.
+- **Prose line-stepping** (#165): ```` ```quote ```` and ```` ```prose ```` fences are text in
+  the slide's type that step through their lines with code's highlight clicks
+  (```` ```quote {1|2|3|all} ````).
 
 ### Fixes
 

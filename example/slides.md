@@ -1289,6 +1289,23 @@ The panes are the slots `tab1`, `tab2`, …; the window is as tall as the talles
 
 ---
 
+# Stepping Through Prose
+
+A ```` ```quote ```` or ```` ```prose ```` fence takes the line-highlight clicks of code (`{1|2|3|all}`), in the slide's own type.
+
+```quote {1|2|3|all}
+Premature optimization is the root of all evil,
+yet we should not pass up our opportunities
+in that critical 3%.
+```
+
+```prose {none|1|2}
+First, measure: the profiler knows where the time goes.
+Then change one thing, and measure again.
+```
+
+---
+
 # Title Bar & Line Numbers
 
 A `[name]` after the language draws a window bar; `{lines:true}` numbers the lines (`lineNumbers: true` in the headmatter does it for every block).

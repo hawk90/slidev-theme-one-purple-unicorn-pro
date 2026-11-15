@@ -3,6 +3,7 @@ import theme from './themes/one-purple-unicorn.json'
 import { cudaTransformer, quietColors } from './cuda-transformer'
 import { terminalTransformer } from './terminal-transformer'
 import { cudaLangs } from './cuda-lang'
+import { proseLangs, proseTransformer } from './prose-lang'
 
 export default defineShikiSetup(() => ({
   theme: theme as any,
@@ -14,10 +15,12 @@ export default defineShikiSetup(() => ({
   // A line this long (minified code, base64) is left uncolored: tokenizing it
   // can take seconds per line
   tokenizeMaxLineLength: 2000,
-  // ```cuda / ```cu / ```cuh: C++ (setup/cuda-lang.ts)
-  langs: cudaLangs,
+  // ```cuda / ```cu / ```cuh: C++ (setup/cuda-lang.ts); ```prose / ```quote:
+  // text stepped line by line (setup/prose-lang.ts)
+  langs: { ...cudaLangs, ...proseLangs },
   transformers: [
     cudaTransformer({ quiet: quietColors(theme) }),
     terminalTransformer(),
+    proseTransformer(),
   ],
 }))
