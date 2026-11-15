@@ -4,12 +4,74 @@
 
 /* Nerd Font icons in code (zsh/powerline prompts, , , …): the symbols-only
    font is bundled (MIT, fonts/), used for the Private Use Area only, after the
-   deck's code font, and loaded only where such a glyph appears */
+   deck's code font. Split by Nerd Fonts' glyph sets (fonts/nerd/, all 10,610
+   glyphs of the 1.2 MB original), so a slide loads only the pieces its glyphs
+   are in: a powerline prompt fetches 8 KB */
 @font-face {
   font-family: 'Symbols Nerd Font Mono';
-  src: url('../fonts/SymbolsNerdFontMono-Regular.woff2') format('woff2');
+  src: url('../fonts/nerd/powerline.woff2') format('woff2');
   font-display: block;
-  unicode-range: U+E000-F8FF, U+F0000-FFFFD;
+  unicode-range: U+E000-E0FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/fa-ext-weather.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+E200-E3FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/seti.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+E5FA-E6FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/devicons.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+E700-E9FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/codicons.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+EA60-ECFF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/font-awesome.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+ED00-F2FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/logos-octicons.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+F300-F8FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/material-1.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+F0001-F07FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/material-2.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+F0800-F0FFF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/material-3.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+F1000-F17FF;
+}
+@font-face {
+  font-family: 'Symbols Nerd Font Mono';
+  src: url('../fonts/nerd/material-4.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+F1800-FFFFD;
 }
 :is(.slidev-layout, .slidev-page) pre.slidev-code {
   font-family: var(--font-mono) !important;
