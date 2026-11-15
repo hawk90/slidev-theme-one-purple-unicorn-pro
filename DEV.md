@@ -57,6 +57,7 @@ slidev-theme-one-purple-unicorn-pro/
 
 ## 규칙
 
+- **내보내기(print-mode) 규칙**: `html.print-mode`(utils/print-export.ts)에 걸어요. 컴포넌트 전용 규칙은 그 컴포넌트의 scoped 스타일 맨 끝에 `.print-mode .클래스`로(scoped 속성은 마지막 요소에만 붙어요. `:global()`로 감싸면 Vue가 선택자 전체를 `.print-mode`로 바꿔 페이지가 통째로 숨어요), 전역 효과 클래스(`anim-*`, `hover-*`)는 `styles/animations.css`의 내보내기 구역에 둬요. `@media print`는 쓰지 않아요(`slidev export`는 screen 미디어로 렌더링).
 - **레이아웃 역할 클래스**: 레이아웃 루트에 `slide-title`(cover·intro·section·end), `slide-dark`(라이트 모드에서도 어두운 배경), `slide-bare`(본문 공통 스타일 제외)를 붙여요. CSS는 레이아웃 이름 목록 대신 이 클래스로 판단해요. JS 쪽 목록은 `utils/layouts.ts` 하나만 써요.
 - **공용 조각**: 옅은 색 칩은 `.tint-chip`(`--tint`, `--tint-amount`), 열 레이아웃은 `components/internal/ColumnsLayout.vue`, 가운데 정렬 레이아웃 prop은 `utils/layout-props.ts`를 써요.
 - **효과 변수**: 기본값을 요소에 직접 선언하지 말고 `--_이름: var(--공개이름, 기본값)` 형태의 내부 변수로 풀어 쓰세요. 그래야 사용자가 `:root`나 부모 요소에서 값을 바꿀 수 있어요.

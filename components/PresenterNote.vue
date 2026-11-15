@@ -35,9 +35,10 @@
   font-size: 0.75rem;
   margin: 0;
 }
-</style>
 
-<style>
-/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts) */
-.print-mode .presenter-note { display: none !important; }
+/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts);
+   last, so it outranks .show at the same specificity */
+.print-mode .presenter-note {
+  display: none;
+}
 </style>
