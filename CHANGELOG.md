@@ -1,5 +1,36 @@
 # Changelog
 
+## Unreleased (3.6.0)
+
+### Features
+
+- **`<Stat>`** (#57): a figure with its label and change —
+  `<Stat value="$4.2M" label="Revenue" delta="+18%" />`. The delta's sign picks ▲ / ▼,
+  `good="down"` makes a fall green; `count` counts up from 0 once the slide has
+  arrived (again on each visit; exports and reduced motion show the figure); `color`,
+  `size` (`sm` / default / `lg`), `plain` (no card).
+- **One set of color names** (#57): `primary`, `blue`, `cyan`, `green`, `yellow`,
+  `red`, `gray` work in every `color` prop (`Stat`, `StoryBox`, `PatternCard` sections,
+  `Timeline` items) and follow light mode and a `themeConfig` palette; any other value
+  is still a CSS color. `<Badge variant="primary">` joins the Badge names.
+- **Numbers**: `.num` (digits of one width) and `.table-num` around a table (columns
+  after the first right-aligned).
+- **`<Countdown>` controls** (#31): `:auto-start="false"` shows a ▶ start button; click
+  the timer to pause or resume, double-click to reset. Space still moves to the next
+  slide.
+- **`<Timeline>` steps and entrance** (#32): `steps` reveals one item per click and
+  moves the highlight (the steps count in the slide's clicks, like `<v-clicks>`);
+  `animate` fades the items in top to bottom once the slide has arrived. Exports show
+  every item.
+- **`anim-border` options** (#34): ring width `--ab-width` with `-thin` / `-thick`, and
+  `-short` / `-long` for the light; they combine with the colors, `-ccw`, `-slow` and
+  `-fast`. The example deck shows each option side by side.
+
+### Internal
+
+- `utils/slide-motion.ts` (`onSlideArrival`), `utils/number.ts`, `utils/colors.ts`,
+  with tests; `--motion-slow` (1.2s) joins the motion tokens (#57).
+
 ## Unreleased (3.5.0)
 
 ### Fixes
