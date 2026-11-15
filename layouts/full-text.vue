@@ -8,7 +8,7 @@
 .full-text {
   width: 100%;
   height: 100%;
-  padding: var(--full-text-padding, 2rem 3rem) !important;
+  padding: var(--full-text-padding, 2rem 3rem);
   margin: 0;
   overflow: auto;
 }

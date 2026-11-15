@@ -275,7 +275,7 @@
 :is(.slidev-layout, .slidev-page) pre.slidev-code {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  overflow: hidden !important;
+  overflow: hidden;
 }
 :where(.slidev-layout, .slidev-page) .slidev-code-wrapper {
   scrollbar-width: none; /* {maxHeight} scrolls the wrapper: no bar */

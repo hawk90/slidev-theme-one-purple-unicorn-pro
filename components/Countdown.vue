@@ -92,5 +92,5 @@ defineExpose({ start, stop, remaining })
 
 <style>
 /* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts) */
-.print-mode .countdown { display: none !important; }
+.print-mode .countdown { display: none; }
 </style>

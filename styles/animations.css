@@ -557,16 +557,16 @@
 .print-mode .anim-cursor,
 .print-mode .anim-gradient-text,
 .print-mode [class*="anim-gradient-text-"] {
-  animation: none !important;
+  animation: none;
 }
 /* A light band frozen mid-sweep looks like a smudge */
 .print-mode .anim-shimmer::after,
 .print-mode .hover-shine::after {
-  display: none !important;
+  display: none;
 }
 /* Glow: the pulse's bright end, held */
 .print-mode .anim-glow {
-  animation: none !important;
+  animation: none;
   box-shadow:
     0 0 16px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 100%), transparent),
     0 0 36px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 20%), transparent);
@@ -577,7 +577,7 @@
 .print-mode .anim-fade-up,
 .print-mode .anim-fade-left,
 .print-mode .anim-fade-right {
-  animation: none !important;
+  animation: none;
   /* Not !important: Slidev's .slidev-vclick-hidden (opacity: 0 !important)
      must still hide a step that hasn't been clicked yet in a click export */
   opacity: 1;
@@ -591,5 +591,5 @@
 /* Slidev's offline (`pwa`) toast is mounted in exports too and never clears
    there, so it would sit over the page number in every exported slide */
 .print-mode .slidev-pwa-indicator {
-  display: none !important;
+  display: none;
 }

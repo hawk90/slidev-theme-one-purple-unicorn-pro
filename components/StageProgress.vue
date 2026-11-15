@@ -191,7 +191,7 @@ function goToStage(index: number) {
 }
 
 .stage-clickable:focus-visible .stage-label {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .stage-clickable:hover .stage-dot {
@@ -199,7 +199,7 @@ function goToStage(index: number) {
 }
 
 .stage-clickable:hover .stage-label {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 /* Dot */

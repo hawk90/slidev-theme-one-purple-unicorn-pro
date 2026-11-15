@@ -8,7 +8,7 @@
 .full {
   width: 100%;
   height: 100%;
-  padding: 0 !important;
+  padding: 0;
   margin: 0;
   overflow: hidden;
 }
