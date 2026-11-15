@@ -9,4 +9,4 @@
 @import './styles/macos-buttons.css';
 /* Animation/hover utilities load after component styles (e.g. .card) so they win */
 @import './styles/animations.css';
-@import './styles/index.css';
+@import './styles/content.css';

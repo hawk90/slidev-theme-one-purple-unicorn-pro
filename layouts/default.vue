@@ -5,7 +5,7 @@
 </template>
 
 <style scoped>
-/* Padding/typography come from the content-slide rules in styles/index.css */
+/* Padding/typography come from the content-slide rules in styles/content.css */
 .default {
   @apply h-full;
 }

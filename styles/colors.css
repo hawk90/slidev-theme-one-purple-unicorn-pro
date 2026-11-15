@@ -77,7 +77,7 @@
   /* Borders */
   --border-default: rgba(171, 178, 191, 0.15);
 
-  /* Content Layout Colors (used by index.css) */
+  /* Content Layout Colors (used by content.css) */
   --content-h2: var(--primary-400);
   --content-h3: var(--secondary-400);
   --content-h4: var(--primary-300);

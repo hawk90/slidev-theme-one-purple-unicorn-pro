@@ -40,7 +40,7 @@ slidev-theme-one-purple-unicorn-pro/
 ├── styles/
 │   ├── colors.css       # 색 토큰 (다크 기본값)
 │   ├── light-theme.css  # 라이트 모드 팔레트 재정의
-│   ├── index.css        # 본문 슬라이드 공통 스타일 (slide-bare 제외)
+│   ├── content.css      # 본문 슬라이드 공통 스타일 (slide-bare 제외)
 │   ├── main.css         # 타이포그래피, 표, 카드, 알림
 │   ├── animations.css   # anim-* / hover-* (컴포넌트 스타일보다 뒤에 로드)
 │   ├── layout-fix.css   # 넘침 방지, grid/flex/absolute 가드(변수로 조절)
