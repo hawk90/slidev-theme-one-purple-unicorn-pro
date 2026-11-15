@@ -50,6 +50,16 @@
 
 ### Fixes
 
+- **`.glass-gradient` had no blur in built decks** in Chrome and Firefox (#92):
+  `slidev build` kept only the `-webkit-` copy of `backdrop-filter`.
+- **Click exports showed an entrance-animated step before its click** (#93): a
+  `v-click` element with `anim-pop` / `anim-fade-*` / `anim-float` was visible at
+  every step. It now stays hidden until its click; without `v-click` it still prints
+  in its final state.
+- **Effects in the footer line weren't redrawn in PDF exports** (#66), e.g. a footer
+  given gradient text.
+- **A slide with an empty `currentStage` could be taken for the first stage** when
+  clicking the stage indicator (#67).
 - **The footer line ran over pictures and embedded pages** (#41) on `image`,
   `iframe`, `full-image` and `full-split`, which fill the slide to its bottom edge.
   It is hidden there now unless the slide sets its own `footer`. The README also says
