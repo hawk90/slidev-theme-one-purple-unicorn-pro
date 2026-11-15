@@ -72,17 +72,17 @@ const columns = computed(() =>
   margin: 0.75rem 0;
   border-radius: var(--table-radius, 0.75rem);
   overflow: hidden;
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
-  background: var(--bg-secondary, #1e2030);
+  border: 1px solid var(--border-default);
+  background: var(--bg-secondary);
 }
 
 .ct-title {
   font-weight: 700;
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
-  --tint: var(--primary-400, #c678dd);
+  --tint: var(--primary-400);
   --tint-amount: 10%;
-  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--border-default);
   letter-spacing: 0.02em;
 }
 
@@ -96,7 +96,7 @@ table {
 }
 
 thead {
-  background: var(--bg-tertiary, rgba(255, 255, 255, 0.03));
+  background: var(--bg-tertiary);
 }
 
 th {
@@ -106,18 +106,18 @@ th {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-primary, #c0c6d0);
-  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-default);
 }
 
 td {
   padding: 0.4rem 0.75rem;
-  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.03));
-  color: var(--text-secondary, #abb2bf);
+  border-top: 1px solid var(--border-default);
+  color: var(--text-secondary);
 }
 
 tbody tr:hover {
-  background: var(--bg-tertiary, rgba(255, 255, 255, 0.02));
+  background: var(--bg-tertiary);
 }
 
 .ct-highlight {
@@ -125,7 +125,7 @@ tbody tr:hover {
 }
 
 .ct-highlight td {
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 .complexity-table :deep(sup) {
@@ -136,23 +136,23 @@ tbody tr:hover {
 .ct-n {
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--one-dark-cyan, #56b6c2);
+  color: var(--one-dark-cyan);
   white-space: nowrap;
 }
 
 .ct-target {
   font-family: var(--font-mono);
-  color: var(--one-dark-yellow, #e5c07b);
+  color: var(--one-dark-yellow);
   white-space: nowrap;
 }
 
 .ct-algo {
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 .ct-complexity {
   font-family: var(--font-mono);
-  color: var(--one-dark-green, #98c379);
+  color: var(--one-dark-green);
   white-space: nowrap;
 }
 

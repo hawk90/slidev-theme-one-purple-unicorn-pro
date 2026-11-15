@@ -55,11 +55,11 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
 
 <style scoped>
 .pattern-card {
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--border-default);
   border-radius: 0.75rem;
   overflow: hidden;
   margin: 0.75rem 0;
-  background: var(--bg-secondary, #1e2030);
+  background: var(--bg-secondary);
 }
 
 .pattern-section {
@@ -67,7 +67,7 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--border-default);
   background: color-mix(in srgb, var(--pattern-color) 6%, transparent);
 }
 
@@ -76,10 +76,10 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
 }
 
 /* Default accent for custom sections; the built-in ones override it */
-.pattern-section { --pattern-color: var(--primary-400, #c678dd); }
-.pattern-signal { --pattern-color: var(--one-dark-red, #e06c75); }
-.pattern-template { --pattern-color: var(--one-dark-blue, #61afef); }
-.pattern-alternatives { --pattern-color: var(--one-dark-yellow, #e5c07b); }
+.pattern-section { --pattern-color: var(--primary-400); }
+.pattern-signal { --pattern-color: var(--one-dark-red); }
+.pattern-template { --pattern-color: var(--one-dark-blue); }
+.pattern-alternatives { --pattern-color: var(--one-dark-yellow); }
 
 .pattern-icon {
   font-size: 0.85rem;
@@ -96,14 +96,14 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
   min-width: 5.5rem;
   flex-shrink: 0;
   margin-top: 0.15rem;
-  color: color-mix(in srgb, var(--pattern-color) var(--ink-depth, 100%), var(--ink-mix, black));
+  color: color-mix(in srgb, var(--pattern-color) var(--ink-depth), var(--ink-mix));
 }
 
 
 .pattern-body {
   font-size: 0.8rem;
   line-height: 1.5;
-  color: var(--text-primary, #abb2bf);
+  color: var(--text-primary);
 }
 
 .pattern-body :deep(code) {

@@ -58,7 +58,7 @@ const gridStyle = computed(() => {
 .grid-divider {
   width: 1px;
   height: 100%;
-  background: var(--border-default, rgba(171, 178, 191, 0.15));
+  background: var(--border-default);
 }
 
 .grid-col {
@@ -78,9 +78,9 @@ const gridStyle = computed(() => {
   --tint: var(--label-color);
 }
 
-.grid-label-0 { --label-color: var(--one-dark-blue, #61afef); }
-.grid-label-1 { --label-color: var(--one-dark-green, #98c379); }
-.grid-label-2 { --label-color: var(--one-dark-magenta, #c678dd); }
+.grid-label-0 { --label-color: var(--one-dark-blue); }
+.grid-label-1 { --label-color: var(--one-dark-green); }
+.grid-label-2 { --label-color: var(--one-dark-magenta); }
 
 
 </style>

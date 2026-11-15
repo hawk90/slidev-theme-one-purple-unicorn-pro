@@ -17,13 +17,13 @@
 .anim-border {
   /* Resolved colors: --ab-c1..3 / --ab-dim may be set here, on a parent or
      on :root; the tail defaults to a faint --ab-c1 */
-  --_c1: var(--ab-c1, var(--one-dark-blue, #61afef));
-  --_c2: var(--ab-c2, var(--one-dark-magenta, #c678dd));
-  --_c3: var(--ab-c3, var(--one-dark-red, #e06c75));
+  --_c1: var(--ab-c1, var(--one-dark-blue));
+  --_c2: var(--ab-c2, var(--one-dark-magenta));
+  --_c3: var(--ab-c3, var(--one-dark-red));
   --_dim: var(--ab-dim, color-mix(in srgb, var(--_c1) 8%, transparent));
 
   position: relative;
-  background: var(--bg-secondary, #1e2030);
+  background: var(--bg-secondary);
   border-radius: 0.75rem;
   padding: 1.5rem;
   z-index: 0;
@@ -89,8 +89,8 @@
 .anim-border-fast { --ab-duration: 3s; }
 
 /* Color presets */
-.anim-border-ocean  { --ab-c1: var(--one-dark-green, #98c379); --ab-c2: var(--one-dark-cyan, #56b6c2); --ab-c3: var(--one-dark-blue, #61afef); }
-.anim-border-sunset { --ab-c1: var(--one-dark-yellow, #e5c07b); --ab-c2: var(--one-dark-red, #e06c75); --ab-c3: var(--one-dark-magenta, #c678dd); }
+.anim-border-ocean  { --ab-c1: var(--one-dark-green); --ab-c2: var(--one-dark-cyan); --ab-c3: var(--one-dark-blue); }
+.anim-border-sunset { --ab-c1: var(--one-dark-yellow); --ab-c2: var(--one-dark-red); --ab-c3: var(--one-dark-magenta); }
 .anim-border-neon   { --ab-c1: #00f5ff; --ab-c2: #ff00e5; --ab-c3: #ffe600; }
 .anim-border-ice    { --ab-c1: #e0f0ff; --ab-c2: #7ec8e3; --ab-c3: #3a86c8; }
 .anim-border-fire   { --ab-c1: #ef4444; --ab-c2: #f97316; --ab-c3: #eab308; }
@@ -193,10 +193,10 @@
 .anim-shimmer-fast { --shimmer-duration: 2s; }
 
 /* Color presets */
-.anim-shimmer-purple { --shimmer-color: color-mix(in srgb, var(--one-dark-magenta, #c678dd) 18%, transparent); }
-.anim-shimmer-blue   { --shimmer-color: color-mix(in srgb, var(--one-dark-blue, #61afef) 18%, transparent); }
-.anim-shimmer-green  { --shimmer-color: color-mix(in srgb, var(--one-dark-green, #98c379) 18%, transparent); }
-.anim-shimmer-warm   { --shimmer-color: color-mix(in srgb, var(--one-dark-yellow, #e5c07b) 18%, transparent); }
+.anim-shimmer-purple { --shimmer-color: color-mix(in srgb, var(--one-dark-magenta) 18%, transparent); }
+.anim-shimmer-blue   { --shimmer-color: color-mix(in srgb, var(--one-dark-blue) 18%, transparent); }
+.anim-shimmer-green  { --shimmer-color: color-mix(in srgb, var(--one-dark-green) 18%, transparent); }
+.anim-shimmer-warm   { --shimmer-color: color-mix(in srgb, var(--one-dark-yellow) 18%, transparent); }
 .anim-shimmer-neon   { --shimmer-color: rgba(0, 245, 255, 0.18); }
 
 /* ============================================
@@ -227,11 +227,11 @@
 .anim-glow-fast { --glow-duration: 1.2s; }
 
 /* Color presets */
-.anim-glow-purple { --glow: var(--one-dark-magenta, #c678dd); }
-.anim-glow-blue   { --glow: var(--one-dark-blue, #61afef); }
-.anim-glow-green  { --glow: var(--one-dark-green, #98c379); }
-.anim-glow-red    { --glow: var(--one-dark-red, #e06c75); }
-.anim-glow-cyan   { --glow: var(--one-dark-cyan, #56b6c2); }
+.anim-glow-purple { --glow: var(--one-dark-magenta); }
+.anim-glow-blue   { --glow: var(--one-dark-blue); }
+.anim-glow-green  { --glow: var(--one-dark-green); }
+.anim-glow-red    { --glow: var(--one-dark-red); }
+.anim-glow-cyan   { --glow: var(--one-dark-cyan); }
 .anim-glow-gold   { --glow: #fbbf24; }
 .anim-glow-neon   { --glow: #00f5ff; }
 
@@ -294,7 +294,7 @@
 .anim-cursor {
   display: inline-block;
   animation: blink var(--cursor-duration, 1s) step-end infinite;
-  color: var(--cursor-color, var(--primary-400, #c678dd));
+  color: var(--cursor-color, var(--primary-400));
   font-weight: 100;
 }
 
@@ -308,11 +308,11 @@
 .anim-gradient-text {
   /* Resolved values: --gt-c1..5 / --gt-period may be set here, on a parent
      or on :root */
-  --_gt1: var(--gt-c1, var(--one-dark-blue, #61afef));
-  --_gt2: var(--gt-c2, var(--one-dark-magenta, #c678dd));
-  --_gt3: var(--gt-c3, var(--one-dark-red, #e06c75));
-  --_gt4: var(--gt-c4, var(--one-dark-yellow, #e5c07b));
-  --_gt5: var(--gt-c5, var(--one-dark-green, #98c379));
+  --_gt1: var(--gt-c1, var(--one-dark-blue));
+  --_gt2: var(--gt-c2, var(--one-dark-magenta));
+  --_gt3: var(--gt-c3, var(--one-dark-red));
+  --_gt4: var(--gt-c4, var(--one-dark-yellow));
+  --_gt5: var(--gt-c5, var(--one-dark-green));
   --_gt-period: var(--gt-period, 16em);
 
   background: linear-gradient(90deg,
@@ -410,12 +410,12 @@
 .hover-glow, .hover-glow-blue, .hover-glow-green {
   transition: box-shadow var(--hover-duration, 0.3s) ease;
 }
-.hover-glow-blue  { --hover-glow: var(--one-dark-blue, #61afef); }
-.hover-glow-green { --hover-glow: var(--one-dark-green, #98c379); }
+.hover-glow-blue  { --hover-glow: var(--one-dark-blue); }
+.hover-glow-green { --hover-glow: var(--one-dark-green); }
 :is(.hover-glow, .hover-glow-blue, .hover-glow-green):hover {
   box-shadow:
-    0 0 16px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta, #c678dd)) 40%, transparent),
-    0 0 32px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta, #c678dd)) 12%, transparent);
+    0 0 16px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta)) 40%, transparent),
+    0 0 32px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta)) 12%, transparent);
 }
 
 /* Border reveal — gradient border fades in */
@@ -429,7 +429,7 @@
   inset: 0;
   border: 2px solid transparent;
   border-radius: inherit;
-  background: linear-gradient(135deg, var(--hover-border-c1, var(--one-dark-blue, #61afef)), var(--hover-border-c2, var(--one-dark-magenta, #c678dd))) border-box;
+  background: linear-gradient(135deg, var(--hover-border-c1, var(--one-dark-blue)), var(--hover-border-c2, var(--one-dark-magenta))) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -451,8 +451,8 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg,
-    color-mix(in srgb, var(--hover-gradient-c1, var(--one-dark-blue, #61afef)) 14%, transparent),
-    color-mix(in srgb, var(--hover-gradient-c2, var(--one-dark-magenta, #c678dd)) 14%, transparent));
+    color-mix(in srgb, var(--hover-gradient-c1, var(--one-dark-blue)) 14%, transparent),
+    color-mix(in srgb, var(--hover-gradient-c2, var(--one-dark-magenta)) 14%, transparent));
   border-radius: inherit;
   opacity: 0;
   transition: opacity var(--hover-duration, 0.3s) ease;

@@ -80,7 +80,7 @@ html:not(.dark) body {
    layouts keep the dark-mode chip so it is not pastel-on-white */
 html:not(.dark) .slidev-layout.slide-dark :not(pre) > code {
   /* The code-block background: --bg-tertiary (#3e4452) gave 4.30:1 */
-  background: var(--bg-code, #21252b);
+  background: var(--bg-code);
   color: var(--primary-300);
 }
 

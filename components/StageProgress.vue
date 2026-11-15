@@ -198,7 +198,7 @@ function goToStage(index: number) {
 }
 
 .stage-clickable:focus-visible {
-  outline: 1px solid var(--stage-active-color, var(--primary-400, #c678dd));
+  outline: 1px solid var(--stage-active-color, var(--primary-400));
   outline-offset: 2px;
   border-radius: 3px;
 }
@@ -222,14 +222,14 @@ function goToStage(index: number) {
   height: var(--stage-dot-size, 6px);
   border-radius: 50%;
   flex-shrink: 0;
-  transition: all var(--transition-base, 200ms ease);
+  transition: all var(--transition-base);
 }
 
 .stage-label {
   font-size: var(--stage-font-size, 0.6rem);
   letter-spacing: 0.03em;
   white-space: nowrap;
-  transition: all var(--transition-base, 200ms ease);
+  transition: all var(--transition-base);
 }
 
 .stage-connector {
@@ -237,53 +237,53 @@ function goToStage(index: number) {
   width: 1.5rem;
   height: 1px;
   margin: 0 0.25rem;
-  transition: background var(--transition-base, 200ms ease);
+  transition: background var(--transition-base);
 }
 
 /* States */
 .stage-done .stage-dot {
-  background: var(--stage-done-color, var(--one-dark-green, #98c379));
+  background: var(--stage-done-color, var(--one-dark-green));
 }
 
 .stage-done .stage-label {
-  color: var(--stage-done-color, var(--one-dark-green, #98c379));
+  color: var(--stage-done-color, var(--one-dark-green));
   opacity: 0.7;
 }
 
 .stage-done .stage-connector {
-  background: var(--stage-done-color, var(--one-dark-green, #98c379));
+  background: var(--stage-done-color, var(--one-dark-green));
   opacity: 0.4;
 }
 
 .stage-active .stage-dot {
-  background: var(--stage-active-color, var(--primary-400, #c678dd));
-  box-shadow: 0 0 6px var(--stage-active-color, var(--primary-400, #c678dd));
+  background: var(--stage-active-color, var(--primary-400));
+  box-shadow: 0 0 6px var(--stage-active-color, var(--primary-400));
   width: calc(var(--stage-dot-size, 6px) * 1.33);
   height: calc(var(--stage-dot-size, 6px) * 1.33);
 }
 
 .stage-active .stage-label {
-  color: var(--stage-active-color, var(--primary-400, #c678dd));
+  color: var(--stage-active-color, var(--primary-400));
   font-weight: 600;
   font-size: calc(var(--stage-font-size, 0.6rem) * 1.08);
 }
 
 .stage-active .stage-connector {
-  background: var(--border-default, rgba(255, 255, 255, 0.1));
+  background: var(--border-default);
 }
 
 .stage-upcoming .stage-dot {
-  background: var(--stage-upcoming-color, var(--text-muted, #5c6370));
+  background: var(--stage-upcoming-color, var(--text-muted));
   opacity: 0.6;
 }
 
 .stage-upcoming .stage-label {
-  color: var(--stage-upcoming-color, var(--text-muted, #5c6370));
+  color: var(--stage-upcoming-color, var(--text-muted));
   opacity: 0.6;
 }
 
 .stage-upcoming .stage-connector {
-  background: var(--stage-upcoming-color, var(--text-muted, #5c6370));
+  background: var(--stage-upcoming-color, var(--text-muted));
   opacity: 0.2;
 }
 </style>

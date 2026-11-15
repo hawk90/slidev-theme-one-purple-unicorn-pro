@@ -23,14 +23,14 @@ defineProps(centeredLayoutProps('48rem'))
 
 .fact :deep(p) {
   font-size: 1.1rem;
-  color: var(--text-secondary, #abb2bf);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
 .fact :deep(h2) {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;

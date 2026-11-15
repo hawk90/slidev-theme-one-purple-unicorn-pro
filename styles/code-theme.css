@@ -80,7 +80,7 @@
 :is(.slidev-layout, .slidev-page) :is(h1, h2, h3, h4, .gradient-text, .gradient-text-1, .gradient-text-2, .gradient-text-3, [class*="anim-gradient-text"]) code:not(pre code) {
   /* Dark like body chips (--bg-tertiary gave 4.30:1); light mode's chip
      rule (light-theme.css) replaces it on light slides */
-  background: var(--bg-code, #21252b);
+  background: var(--bg-code);
   -webkit-background-clip: border-box;
   background-clip: border-box;
   -webkit-text-fill-color: currentColor;
@@ -105,7 +105,7 @@
 :where(.slidev-layout, .slidev-page) pre,
 :where(.slidev-layout, .slidev-page) .shiki,
 :where(.slidev-layout, .slidev-page) .slidev-code {
-  background: var(--bg-code, #21252b) !important;
+  background: var(--bg-code) !important;
 }
 
 /* Monaco blocks (`{monaco}`, `{monaco-run}`) use this theme's dark token
@@ -113,7 +113,7 @@
    light mode; set only here, since inline code reads it as well. Code lines
    start at the left, also on centered layouts (cover, center…). */
 :where(.slidev-layout, .slidev-page) .slidev-monaco-container {
-  --slidev-code-background: var(--bg-code, #21252b);
+  --slidev-code-background: var(--bg-code);
   text-align: left;
 }
 
@@ -132,7 +132,7 @@
   border-radius: 0.75rem;
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  background: var(--bg-code, #21252b);
+  background: var(--bg-code);
 }
 :where(.slidev-layout, .slidev-page) :is(.slidev-code-block-title, .slidev-code-group-tabs) {
   background: var(--code-title-bg, #1b1e23);

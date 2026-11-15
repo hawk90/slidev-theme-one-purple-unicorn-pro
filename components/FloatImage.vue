@@ -47,13 +47,13 @@ defineProps({
   height: auto;
   display: block;
   object-fit: cover;
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
-  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.3));
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-md);
 }
 
 .float-caption {
   font-size: 0.65rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   text-align: center;
   margin-top: 0.3rem;
   font-style: italic;

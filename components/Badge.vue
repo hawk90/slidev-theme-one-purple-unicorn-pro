@@ -25,14 +25,14 @@ defineProps({
 
 .badge {
   /* default variant; others override */
-  --badge-color: var(--primary-400, #c678dd);
+  --badge-color: var(--primary-400);
 }
 
-.badge-blue    { --badge-color: var(--one-dark-blue, #61afef); }
-.badge-green   { --badge-color: var(--one-dark-green, #98c379); }
-.badge-red     { --badge-color: var(--one-dark-red, #e06c75); }
-.badge-yellow  { --badge-color: var(--one-dark-yellow, #e5c07b); }
-.badge-cyan    { --badge-color: var(--one-dark-cyan, #56b6c2); }
+.badge-blue    { --badge-color: var(--one-dark-blue); }
+.badge-green   { --badge-color: var(--one-dark-green); }
+.badge-red     { --badge-color: var(--one-dark-red); }
+.badge-yellow  { --badge-color: var(--one-dark-yellow); }
+.badge-cyan    { --badge-color: var(--one-dark-cyan); }
 
 .badge {
   --tint: var(--badge-color);
@@ -42,7 +42,7 @@ defineProps({
 
 /* Same treatment as <Kbd>: neutral fill with readable text */
 .badge-gray {
-  background: var(--key-bg, #4b5263);
-  color: var(--text-bright, #e6e6e6);
+  background: var(--key-bg);
+  color: var(--text-bright);
 }
 </style>

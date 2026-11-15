@@ -69,7 +69,7 @@ defineProps(centeredLayoutProps('48rem'))
   font-size: var(--quote-size, 1.4rem);
   line-height: 1.6;
   font-style: italic;
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 /* The attribution: the last paragraph after a blockquote or heading quote,
@@ -78,7 +78,7 @@ defineProps(centeredLayoutProps('48rem'))
 .quote-content :deep(p:last-of-type:not(:only-of-type):not(blockquote p)) {
   font-size: 0.9rem;
   font-style: normal;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   margin-top: 1.5rem;
 }
 
@@ -92,6 +92,6 @@ defineProps(centeredLayoutProps('48rem'))
 }
 
 .quote-content :deep(strong) {
-  color: var(--primary-400, #c678dd);
+  color: var(--primary-400);
 }
 </style>

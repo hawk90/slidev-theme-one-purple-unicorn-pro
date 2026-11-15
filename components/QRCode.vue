@@ -141,7 +141,7 @@ const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
   border-radius: 0.5rem;
   background: white;
   padding: 0.5rem;
-  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.3));
+  box-shadow: var(--shadow-md);
   /* Hard module edges: blurred seams make a code hard to scan */
   image-rendering: pixelated;
 }
@@ -154,7 +154,7 @@ const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
   text-align: center;
   font-size: 0.65rem;
   line-height: 1.3;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   background: transparent;
   border: 2px dashed currentColor;
   box-shadow: none;
@@ -170,7 +170,7 @@ svg.qrcode-img path {
 
 .qrcode-caption {
   font-size: 0.7rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   text-align: center;
 }
 

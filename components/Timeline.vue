@@ -65,15 +65,15 @@ defineProps({
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--tl-dot-color, var(--text-muted, #5c6370));
+  background: var(--tl-dot-color, var(--text-muted));
   flex-shrink: 0;
   margin-top: 0.3rem;
   transition: all 0.2s ease;
 }
 
 .tl-active .tl-dot {
-  background: var(--tl-active-color, var(--primary-400, #c678dd));
-  box-shadow: 0 0 6px var(--tl-active-color, var(--primary-400, #c678dd));
+  background: var(--tl-active-color, var(--primary-400));
+  box-shadow: 0 0 6px var(--tl-active-color, var(--primary-400));
   width: 10px;
   height: 10px;
 }
@@ -81,7 +81,7 @@ defineProps({
 .tl-line {
   width: 2px;
   flex: 1;
-  background: var(--tl-line-color, var(--border-default, rgba(255, 255, 255, 0.1)));
+  background: var(--tl-line-color, var(--border-default));
   margin: 0.25rem 0;
 }
 
@@ -92,19 +92,19 @@ defineProps({
 .tl-year {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--tl-year-color, var(--primary-400, #c678dd));
+  color: var(--tl-year-color, var(--primary-400));
   font-weight: 600;
 }
 
 .tl-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 .tl-desc {
   font-size: 0.75rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
   margin-top: 0.15rem;
 }
 </style>

@@ -19,11 +19,11 @@
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   background: color-mix(in srgb, var(--primary-400) 6%, transparent);
-  border: 1px dashed var(--primary-700, #5c3d8f);
+  border: 1px dashed var(--primary-700);
   border-radius: 0.5rem;
   margin: 0.5rem 0;
   font-size: 0.75rem;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
 }
 
 .pn-icon {

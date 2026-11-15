@@ -76,12 +76,12 @@ defineExpose({ start, stop, remaining })
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   font-size: var(--countdown-size, 1.5rem);
-  color: var(--countdown-color, var(--primary-400, #c678dd));
+  color: var(--countdown-color, var(--primary-400));
 }
 
 .countdown-label {
   font-size: 0.75em;
-  color: var(--text-muted, #5c6370);
+  color: var(--text-muted);
 }
 
 /* Sizes (presets for --countdown-size; any size works via the variable) */

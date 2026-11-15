@@ -4,7 +4,7 @@
    Base Layout
    ============================================ */
 .slidev-layout {
-  background: var(--slide-bg, var(--dark-bg, #1a1b26)); /* light mode: light-theme.css */
+  background: var(--slide-bg, var(--dark-bg)); /* light mode: light-theme.css */
   color: var(--text-primary);
   /* Korean: wrap between words, not inside them (browsers break Hangul at any
      syllable); a word longer than the line (a URL) still wraps */
@@ -286,7 +286,7 @@ table.table-auto { width: auto; }
    StoryBox year and ComplexityTable title. */
 .tint-chip {
   background: color-mix(in srgb, var(--tint) var(--tint-amount, 15%), transparent);
-  color: color-mix(in srgb, var(--tint) var(--ink-depth, 100%), var(--ink-mix, black));
+  color: color-mix(in srgb, var(--tint) var(--ink-depth), var(--ink-mix));
 }
 
 /* Alert Boxes */

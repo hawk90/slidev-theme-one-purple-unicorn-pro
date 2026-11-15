@@ -25,8 +25,8 @@ defineProps({
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: var(--bg-secondary, #1e2030);
-  border: 1px solid color-mix(in srgb, var(--text-primary, #c0c6d0) 22%, transparent);
+  background: var(--bg-secondary);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 22%, transparent);
   border-radius: 0.75rem;
   text-decoration: none;
   color: inherit;
@@ -39,7 +39,7 @@ defineProps({
 }
 
 .link-card:hover {
-  border-color: var(--primary-600, #a652b8);
+  border-color: var(--primary-600);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -65,7 +65,7 @@ defineProps({
 .link-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-bright, #e6e6e6);
+  color: var(--text-bright);
 }
 
 .link-card-compact .link-title {
@@ -74,7 +74,7 @@ defineProps({
 
 .link-desc {
   font-size: 0.7rem;
-  color: var(--text-secondary, #939aa3);
+  color: var(--text-secondary);
   margin-top: 0.15rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,7 +85,7 @@ defineProps({
   font-size: 0.85rem;
   /* 300: lighter in dark mode, deeper in light mode (400 was 4.36:1 on the
      dark card) */
-  color: var(--primary-300, #d98eff);
+  color: var(--primary-300);
   flex-shrink: 0;
   transition: transform 0.2s ease, color 0.2s ease;
 }

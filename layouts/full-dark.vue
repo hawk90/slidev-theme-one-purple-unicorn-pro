@@ -16,7 +16,7 @@ defineProps(centeredLayoutProps('52rem', '3rem'))
 
 <style scoped>
 .full-dark {
-  color: var(--dark-fg-bright, #dce0e8);
+  color: var(--dark-fg-bright);
 }
 
 .full-dark :deep(h1) {
@@ -29,6 +29,6 @@ defineProps(centeredLayoutProps('52rem', '3rem'))
 .full-dark :deep(p) {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: var(--text-secondary, #abb2bf);
+  color: var(--text-secondary);
 }
 </style>

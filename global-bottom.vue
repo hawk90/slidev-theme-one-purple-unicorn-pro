@@ -140,7 +140,7 @@ const progress = computed(() => {
 
 .progress-fill {
   height: 100%;
-  background: var(--progress-color, var(--gradient-primary, linear-gradient(90deg, #61afef, #c678dd)));
+  background: var(--progress-color, var(--gradient-primary));
   border-radius: 0 2px 2px 0;
   transition: width 300ms ease;
   box-shadow: var(--progress-glow, 0 0 8px color-mix(in srgb, var(--_root-primary-400, #c678dd) 40%, transparent));
@@ -152,12 +152,12 @@ const progress = computed(() => {
   bottom: var(--page-number-bottom, 1.5rem);
   font-family: var(--font-mono);
   font-size: var(--page-number-size, 0.75rem);
-  color: var(--page-number-color, var(--text-muted, #5c6370));
+  color: var(--page-number-color, var(--text-muted));
   letter-spacing: 0.05em;
   opacity: 0.7;
   z-index: 10;
   pointer-events: none;
-  transition: opacity var(--transition-fast, 150ms ease);
+  transition: opacity var(--transition-fast);
 }
 
 /* Theme variables: --footer-size, --footer-color, --footer-left, --footer-bottom,
@@ -171,7 +171,7 @@ const progress = computed(() => {
   align-items: center;
   gap: 0.5rem;
   font-size: var(--footer-size, 0.75rem);
-  color: var(--footer-color, var(--text-muted, #5c6370));
+  color: var(--footer-color, var(--text-muted));
   letter-spacing: 0.02em;
   opacity: 0.7;
   z-index: 10;

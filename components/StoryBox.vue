@@ -46,11 +46,11 @@ const iconMap: Record<string, string> = {
   font-size: 0.8rem;
 }
 
-.story-history { --story-color: var(--one-dark-magenta, #c678dd); }
-.story-insight { --story-color: var(--one-dark-yellow, #e5c07b); }
-.story-warning { --story-color: var(--one-dark-red, #e06c75); }
-.story-tip { --story-color: var(--one-dark-green, #98c379); }
-.story-person { --story-color: var(--one-dark-blue, #61afef); }
+.story-history { --story-color: var(--one-dark-magenta); }
+.story-insight { --story-color: var(--one-dark-yellow); }
+.story-warning { --story-color: var(--one-dark-red); }
+.story-tip { --story-color: var(--one-dark-green); }
+.story-person { --story-color: var(--one-dark-blue); }
 
 .story-header {
   display: flex;
@@ -66,7 +66,7 @@ const iconMap: Record<string, string> = {
 .story-title {
   font-weight: 700;
   font-size: 0.8rem;
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 .story-year {
@@ -81,7 +81,7 @@ const iconMap: Record<string, string> = {
 
 
 .story-body {
-  color: var(--text-secondary, #abb2bf);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -91,12 +91,12 @@ const iconMap: Record<string, string> = {
 }
 
 .story-body :deep(strong) {
-  color: var(--text-primary, #dce0e8);
+  color: var(--text-primary);
 }
 
 .story-source {
   font-size: 0.7rem;
-  color: var(--text-secondary, #939aa3);
+  color: var(--text-secondary);
   font-style: italic;
   margin-top: 0.4rem;
 }

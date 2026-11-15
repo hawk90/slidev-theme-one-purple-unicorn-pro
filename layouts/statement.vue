@@ -23,7 +23,7 @@ defineProps(centeredLayoutProps('52rem'))
 .statement :deep(p) {
   font-size: 1.15rem;
   line-height: 1.6;
-  color: var(--text-secondary, #abb2bf);
+  color: var(--text-secondary);
   margin-top: 1rem;
 }
 </style>
