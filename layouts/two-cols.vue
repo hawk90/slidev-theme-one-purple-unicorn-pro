@@ -15,14 +15,7 @@
 
 <script setup lang="ts">
 import ColumnsLayout from '../components/internal/ColumnsLayout.vue'
+import { columnLayoutProps } from '../utils/layout-props'
 
-defineProps({
-  leftWidth: { type: [String, Number], default: '1fr' },
-  rightWidth: { type: [String, Number], default: '1fr' },
-  divider: { type: Boolean, default: false },
-  leftLabel: { type: String, default: '' },
-  rightLabel: { type: String, default: '' },
-  leftLabelColor: { type: String, default: '' },
-  rightLabelColor: { type: String, default: '' },
-})
+defineProps(columnLayoutProps(['left', 'right']))
 </script>
