@@ -115,8 +115,11 @@ html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
   color: var(--light-text-secondary);
 }
 
+/* Bold needs a color of its own, as in dark mode (yellow): the body font
+   loads at 400 only, so the synthetic bold barely shows. The primary's dark
+   shade (#7f3396 by default, 7.5:1 on white); em has the dark yellow */
 :where(html:not(.dark) .slidev-layout:not(.slide-dark)) strong {
-  color: var(--light-text-primary);
+  color: var(--primary-600);
 }
 
 :where(html:not(.dark) .slidev-layout:not(.slide-dark)) em {
