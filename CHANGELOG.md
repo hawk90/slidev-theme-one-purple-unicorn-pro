@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased (3.2.0)
+## 3.2.0
 
 ### Performance
 
@@ -52,7 +52,7 @@
   blocks to stop scrolling, so those slides no longer differ run to run (#113);
   `.gitignore` also ignores symlinked `node_modules` (#112).
 
-## 3.1.0 (not yet released)
+## 3.1.0
 
 ### Changes
 
