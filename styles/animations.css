@@ -36,7 +36,8 @@
      same element, e.g. .card or .anim-shimmer, does not clip it */
   inset: 0;
   border-radius: inherit;
-  padding: 2px;
+  /* The ring is this padding (print-effects.ts reads it as the width) */
+  padding: var(--ab-width, 2px);
   background: conic-gradient(
     from var(--border-angle),
     var(--_c1) 0%,
@@ -85,9 +86,15 @@
   to { --border-angle: -360deg; }
 }
 
+/* Options, combinable: direction, speed (one lap of a 600px border), ring
+   width, light length (still at most 3/4 of the box height) */
 .anim-border-ccw::before { animation-name: border-rotate-ccw; }
 .anim-border-slow { --ab-duration: 10s; }
 .anim-border-fast { --ab-duration: 3s; }
+.anim-border-thin  { --ab-width: 1px; }
+.anim-border-thick { --ab-width: 4px; }
+.anim-border-short { --ab-len: 45px; }
+.anim-border-long  { --ab-len: 140px; }
 
 /* Color presets */
 .anim-border-ocean  { --ab-c1: var(--one-dark-green); --ab-c2: var(--one-dark-cyan); --ab-c3: var(--one-dark-blue); }

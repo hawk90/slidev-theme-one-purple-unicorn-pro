@@ -1507,20 +1507,70 @@ v-click, Transitions, Gradient Borders, Shimmer, Glow, and more
 
 # Animated Gradient Border
 
-A gradient beam rotates along the border path. The default, 7 color presets, and custom CSS variables.
+A light runs along the border at a constant speed. The default and 7 color presets:
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem;">
-  <div class="anim-border" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Default</div>
-  <div class="anim-border anim-border-ocean" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Ocean</div>
-  <div class="anim-border anim-border-sunset" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Sunset</div>
-  <div class="anim-border anim-border-neon" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Neon</div>
-  <div class="anim-border anim-border-fire" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Fire</div>
-  <div class="anim-border anim-border-ice" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Ice</div>
-  <div class="anim-border anim-border-mint" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Mint</div>
-  <div class="anim-border anim-border-gold" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Gold</div>
+<div class="ab-demo" style="grid-template-columns: repeat(4, 1fr);">
+  <div class="anim-border"><b>Default</b><code>anim-border</code></div>
+  <div class="anim-border anim-border-ocean"><b>Ocean</b><code>-ocean</code></div>
+  <div class="anim-border anim-border-sunset"><b>Sunset</b><code>-sunset</code></div>
+  <div class="anim-border anim-border-neon"><b>Neon</b><code>-neon</code></div>
+  <div class="anim-border anim-border-fire"><b>Fire</b><code>-fire</code></div>
+  <div class="anim-border anim-border-ice"><b>Ice</b><code>-ice</code></div>
+  <div class="anim-border anim-border-mint"><b>Mint</b><code>-mint</code></div>
+  <div class="anim-border anim-border-gold"><b>Gold</b><code>-gold</code></div>
 </div>
 
-Direction: `anim-border-ccw` / Speed (one lap of a 600px border): `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
+<style>
+.ab-demo { display: grid; gap: 1rem; }
+.ab-demo .anim-border { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-height: 6.5rem; padding: 0.75rem; }
+.ab-demo b { font-size: 0.9rem; }
+.ab-demo code { font-size: 0.7rem; }
+</style>
+
+---
+
+# Animated Border — Direction and Speed
+
+One lap of a 600px border takes 6s by default. The options combine with the colors and with each other.
+
+<div class="ab-demo" style="grid-template-columns: repeat(3, 1fr);">
+  <div class="anim-border"><b>Clockwise</b><code>default</code></div>
+  <div class="anim-border anim-border-ccw"><b>Counter-clockwise</b><code>-ccw</code></div>
+  <div class="anim-border anim-border-ccw anim-border-fast anim-border-sunset"><b>Combined</b><code>-ccw -fast -sunset</code></div>
+  <div class="anim-border anim-border-slow"><b>Slow · 10s</b><code>-slow</code></div>
+  <div class="anim-border"><b>Default · 6s</b><code>default</code></div>
+  <div class="anim-border anim-border-fast"><b>Fast · 3s</b><code>-fast</code></div>
+</div>
+
+<style>
+.ab-demo { display: grid; gap: 1rem; }
+.ab-demo .anim-border { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-height: 6.5rem; padding: 0.75rem; }
+.ab-demo b { font-size: 0.9rem; }
+.ab-demo code { font-size: 0.7rem; }
+</style>
+
+---
+
+# Animated Border — Width and Length
+
+The ring is 2px by default; the light is 90px long, at most 3/4 of the box height.
+
+<div class="ab-demo" style="grid-template-columns: repeat(3, 1fr);">
+  <div class="anim-border anim-border-thin"><b>Thin · 1px</b><code>-thin</code></div>
+  <div class="anim-border"><b>Default · 2px</b><code>default</code></div>
+  <div class="anim-border anim-border-thick"><b>Thick · 4px</b><code>-thick</code></div>
+  <div class="anim-border anim-border-short ab-tall"><b>Short · 45px</b><code>-short</code></div>
+  <div class="anim-border ab-tall"><b>Default · 90px</b><code>default</code></div>
+  <div class="anim-border anim-border-long ab-tall"><b>Long · 140px</b><code>-long</code></div>
+</div>
+
+<style>
+.ab-demo { display: grid; gap: 1rem; }
+.ab-demo .anim-border { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-height: 5rem; padding: 0.75rem; }
+.ab-demo .ab-tall { min-height: 12rem; }
+.ab-demo b { font-size: 0.9rem; }
+.ab-demo code { font-size: 0.7rem; }
+</style>
 
 ---
 
@@ -1546,6 +1596,7 @@ Set the colors directly with CSS variables:
 | `--ab-c2` | Light middle color |
 | `--ab-c3` | Light tail color |
 | `--ab-dim` | Resting border color (optional; defaults to a faint `--ab-c1`) |
+| `--ab-width` · `--ab-len` · `--ab-duration` | Ring width · light length · one lap of a 600px border |
 
 ---
 

@@ -300,7 +300,7 @@ Every value below defaults to the theme's look.
 |---|---|---|
 | Entrances (`anim-fade-in`, `anim-fade-up`, `anim-fade-left`, `anim-fade-right`, `anim-pop`) | `--anim-duration`, `--anim-distance`, `--anim-delay`, `--pop-scale` | `anim-delay-1` … `-5` |
 | `anim-float`, `anim-cursor` | `--float-distance`, `--float-duration`, `--cursor-color`, `--cursor-duration` | |
-| `anim-border` | `--ab-c1`, `--ab-c2`, `--ab-c3`, `--ab-dim`, `--ab-len`, `--ab-duration` (`s` or `ms`) | colors `-ocean` `-sunset` `-neon` `-ice` `-fire` `-mint` `-gold`; `-slow` `-fast` `-ccw` |
+| `anim-border` | `--ab-c1`, `--ab-c2`, `--ab-c3`, `--ab-dim` (resting border), `--ab-len` (light length), `--ab-width` (ring width, 2px), `--ab-duration` (`s` or `ms`) | colors `-ocean` `-sunset` `-neon` `-ice` `-fire` `-mint` `-gold`; direction `-ccw`; speed `-slow` `-fast`; width `-thin` `-thick`; length `-short` `-long` (combinable) |
 | `anim-shimmer` | `--shimmer-color`, `--shimmer-width`, `--shimmer-travel`, `--shimmer-duration` | directions `-right` `-down` `-up` `-diag`; colors `-purple` `-blue` `-green` `-warm` `-neon`; `-slow` `-fast` |
 | `anim-glow` | `--glow` (any color), `--glow-intensity`, `--glow-duration` | colors `-purple` `-blue` `-green` `-red` `-cyan` `-gold` `-neon`; `-slow` `-fast` |
 | `anim-gradient-text` | `--gt-c1` … `--gt-c5`, `--gt-period`, `--gt-duration` | `-ocean` `-sunset` `-fire` `-neon`; `-slow` `-fast` |
