@@ -202,20 +202,22 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
 /* ============================================
    Alerts for Light Theme
    ============================================ */
+/* A deck's or the palette's --alert-*-bg wins in light mode too; without it,
+   an 8% tint of the One Dark accent */
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-info {
-  background: color-mix(in srgb, var(--_root-one-dark-blue) 8%, transparent);
+  background: var(--alert-info-bg, color-mix(in srgb, var(--_root-one-dark-blue) 8%, transparent));
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-success {
-  background: color-mix(in srgb, var(--_root-one-dark-green) 8%, transparent);
+  background: var(--alert-success-bg, color-mix(in srgb, var(--_root-one-dark-green) 8%, transparent));
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-warning {
-  background: color-mix(in srgb, var(--_root-one-dark-yellow) 8%, transparent);
+  background: var(--alert-warning-bg, color-mix(in srgb, var(--_root-one-dark-yellow) 8%, transparent));
 }
 
 html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
-  background: color-mix(in srgb, var(--_root-one-dark-red) 8%, transparent);
+  background: var(--alert-error-bg, color-mix(in srgb, var(--_root-one-dark-red) 8%, transparent));
 }
 
 /* ============================================
