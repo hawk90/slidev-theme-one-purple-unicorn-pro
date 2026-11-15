@@ -72,6 +72,20 @@
   border: 1px solid var(--border-default);
 }
 
+/* Inside gradient text (headings, .gradient-text, anim-gradient-text) the
+   glyphs inherit a transparent fill, and the chip's own background hides the
+   gradient behind them: the code was an empty chip. Keep it a plain chip with
+   solid text (also real text in PDF/PPTX exports, which redraw only
+   transparent-fill runs). Beats the title layouts' `h1 *` inherit rule. */
+:is(.slidev-layout, .slidev-page) :is(h1, h2, h3, h4, .gradient-text, .gradient-text-1, .gradient-text-2, .gradient-text-3, [class*="anim-gradient-text"]) code:not(pre code) {
+  background: var(--bg-tertiary);
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--primary-300);
+  font-size: 0.8em;
+}
+
 /* ============================================
    Code Block Size
    ============================================ */
