@@ -123,12 +123,13 @@
   line-height: 1.2;  /* Tight line height for code */
 }
 
-/* Inline code chip. :is(), so it outranks Slidev's own .slidev-layout
-   :not(pre) > code (it used to lose: the chip was Slidev's). The size,
-   corners (--slidev-code-radius) and padding stay Slidev's, as before; the
-   dark fill is the code background, like the heading chips. Light mode:
-   light-theme.css */
-:is(.slidev-layout, .slidev-page) :not(pre) > code {
+/* Inline code chip. One class more than Slidev's own .slidev-layout
+   :not(pre) > code (0,1,2), so it wins whatever order the CSS loads in (it
+   used to lose: the chip was Slidev's). The heading chips (code-theme.css)
+   and light mode (light-theme.css) stay above it. The size, corners
+   (--slidev-code-radius) and padding stay Slidev's, as before; the dark fill
+   is the code background, like the heading chips. */
+:is(.slidev-layout.slidev-layout, .slidev-page.slidev-page) :not(pre) > code {
   /* When a chip wraps, give each line its own padding and corners */
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
