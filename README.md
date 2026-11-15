@@ -223,6 +223,22 @@ On one slide, `pageNumber: skip` hides the number and leaves the slide out of th
 
 **Kiosk auto-advance**: `autoAdvance: 8s` in the headmatter steps the deck by itself (each click, then each slide); a slide's own `autoAdvance` sets its wait, and `false` stops there. `autoAdvanceLoop: true` starts over after the last step. A key, click, scroll or touch pauses it until the deck is left alone for `autoAdvanceIdle` (30s). Times read like Slidev's `duration` (`8s`, `1m`, `0:30`, or seconds). It runs in the play view only: not in exports, nor in the presenter view.
 
+### Slide backgrounds
+
+The title and centered layouts (`cover`, `intro`, `section`, `end`, `center`, `fact`, `statement`, `quote`, `full-dark`) and plain content slides take a background of their own:
+
+```yaml
+---
+background: /photo.jpg          # an image (public/ or a URL), a CSS color, or a CSS gradient
+backgroundOpacity: 0.6          # 0–1 or "60%": the background only
+backgroundFilter: blur(4px)     # any CSS filter, on the background only (the text stays sharp)
+backgroundScrim: 0.7            # images get a scrim in the slide's own color (0.55); false turns it off
+bg: mesh                        # a generated pattern: mesh | aurora | grain | dots | grid
+---
+```
+
+`bg` draws in the accent colors (so `themeConfig.primary` changes it) and follows light mode; it can sit over a `background`. Variables: `--bg-pattern-strength` (1), `--bg-pattern-a` / `-b` / `-c` (the colors). The media layouts keep their own `image`.
+
 ### Talk details: cover and footer
 
 Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:

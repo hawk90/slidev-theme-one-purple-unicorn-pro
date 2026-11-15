@@ -589,6 +589,70 @@ panelColor: "rgba(255, 255, 255, 0.92)"
 </ul>
 
 ---
+bg: mesh
+---
+
+# Slide Backgrounds
+
+Title, section and centered layouts, and plain content slides, take a background of their own. This slide has `bg: mesh`.
+
+```yaml
+background: /photo.jpg             # an image (public/ or a URL), a color, or a CSS gradient
+backgroundOpacity: 0.6             # 0–1 or "60%": the background only
+backgroundFilter: blur(4px) grayscale(1)   # the background only: text stays sharp
+backgroundScrim: false             # images get a scrim in the slide's color; false, or a strength
+bg: mesh                           # generated from the accent: mesh | aurora | grain | dots | grid
+```
+
+---
+
+# Generated Patterns
+
+<div class="grid grid-cols-5 gap-3 mt-6">
+  <div v-for="p in ['mesh', 'aurora', 'grain', 'dots', 'grid']" :key="p" class="bg-swatch">
+    <div class="slide-bg-pattern" :class="`slide-bg-${p}`" />
+    <code>bg: {{ p }}</code>
+  </div>
+</div>
+
+They draw in the accent colors (`themeConfig.primary` changes them) and follow light mode. Strength and colors: `--bg-pattern-strength`, `--bg-pattern-a` / `-b` / `-c`.
+
+<style>
+.bg-swatch { position: relative; isolation: isolate; height: 9rem; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 0.6rem; }
+.bg-swatch .slide-bg-pattern { position: absolute; inset: 0; z-index: -1; }
+</style>
+
+---
+layout: section
+background: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200
+---
+
+# Section on an Image
+
+`background:` with a photo; the scrim keeps the title readable
+
+---
+layout: statement
+background: linear-gradient(135deg, #2a1a4a, #0e2a3a)
+bg: aurora
+---
+
+# A gradient, an aurora
+
+`background:` takes any CSS gradient, and `bg:` draws over it.
+
+---
+layout: center
+background: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
+backgroundFilter: blur(6px) saturate(0.6)
+backgroundScrim: 0.7
+---
+
+# Filtered and Dimmed
+
+`backgroundFilter: blur(6px) saturate(0.6)` blurs the photo, not the text; `backgroundScrim: 0.7` dims it more.
+
+---
 layout: section
 ---
 

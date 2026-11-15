@@ -27,6 +27,11 @@
   with Slidev's keys and repeats are reported in the console.
 - **Kiosk auto-advance** (#144): `autoAdvance: 8s` (deck or slide; `false` stops on a
   slide), `autoAdvanceLoop`, and a pause on input for `autoAdvanceIdle` (30s).
+- **Slide backgrounds** (#122): the title and centered layouts and plain content slides
+  take `background` (image, color or gradient), `backgroundOpacity`,
+  `backgroundFilter` (on the background only) and an automatic scrim over images
+  (`backgroundScrim`); `bg: mesh | aurora | grain | dots | grid` draws a pattern from
+  the accent colors.
 
 ## 4.0.0
 
