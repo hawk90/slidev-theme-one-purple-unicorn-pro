@@ -30,10 +30,12 @@ const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = us
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
-// Chrome over a dark layout takes the dark palette (utils/dark-chrome.ts);
-// play mode only: an export's slides each carry their own chrome
+// Chrome over a dark layout takes the dark palette (utils/dark-chrome.ts):
+// in play mode and in `slidev export`'s per-slide pages (?print, the same
+// #slide-content); the export page's containers are matched in CSS instead,
+// and there it finds no #slide-content and does nothing
 let stopDarkChrome = () => {}
-onMounted(() => { if (!isPrintMode.value) stopDarkChrome = watchDarkChrome(currentPage) })
+onMounted(() => { stopDarkChrome = watchDarkChrome(currentPage) })
 onBeforeUnmount(() => stopDarkChrome())
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
