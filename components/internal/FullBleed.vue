@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { resolveAssetUrl } from '@slidev/client'
+import { backgroundImageStyle } from '../../utils/media'
 
 const props = defineProps({
   image: { type: String, default: '' },
@@ -29,16 +30,8 @@ const props = defineProps({
   contentPadding: { type: String, default: '3rem' },
 })
 
-const bgStyle = computed(() => {
-  if (!props.image) return {}
-  return {
-    // Quoted so spaces and parentheses in the path don't break the CSS; resolved so `--base` builds work
-    backgroundImage: `url(${JSON.stringify(resolveAssetUrl(props.image))})`,
-    backgroundSize: props.backgroundSize,
-    backgroundPosition: props.backgroundPosition,
-    backgroundRepeat: 'no-repeat',
-  }
-})
+const bgStyle = computed(() =>
+  backgroundImageStyle(props.image && resolveAssetUrl(props.image), props.backgroundSize, props.backgroundPosition))
 
 const panelStyle = computed(() => ({
   width: props.panelWidth,

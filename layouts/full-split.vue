@@ -17,12 +17,14 @@
 <script setup lang="ts">
 import FullBleed from '../components/internal/FullBleed.vue'
 
+// Unset ones fall through to FullBleed's defaults (cover, center, 45%, left,
+// the dark panel), so they are stated once
 defineProps({
   image: { type: String, default: '' },
-  backgroundSize: { type: String, default: 'cover' },
-  backgroundPosition: { type: String, default: 'center' },
-  panelWidth: { type: String, default: '45%' },
-  panelSide: { type: String, default: 'left' },
-  panelColor: { type: String, default: 'rgba(26, 27, 46, 0.92)' },
+  backgroundSize: { type: String, default: undefined },
+  backgroundPosition: { type: String, default: undefined },
+  panelWidth: { type: String, default: undefined },
+  panelSide: { type: String, default: undefined },
+  panelColor: { type: String, default: undefined },
 })
 </script>
