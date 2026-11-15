@@ -300,7 +300,7 @@
 }
 /* The hang is for the line itself: twoslash wraps tokens in inline blocks,
    which would inherit the negative indent */
-:is(.slidev-layout, .slidev-page) pre.slidev-code .line * {
+:is(.slidev-layout, .slidev-page) pre.slidev-code.twoslash .line * {
   text-indent: 0;
 }
 

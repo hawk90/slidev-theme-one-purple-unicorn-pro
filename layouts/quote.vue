@@ -1,7 +1,7 @@
 <template>
   <div class="slidev-layout quote slide-dark slide-bare">
     <CenteredSlide :padding="padding" :content-max-width="contentMaxWidth">
-      <div class="quote-content">
+      <div ref="box" class="quote-content">
         <span class="quote-mark quote-open" aria-hidden="true">&ldquo;</span>
         <slot />
       </div>
@@ -10,10 +10,28 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, onUpdated, ref } from 'vue'
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
 import { centeredLayoutProps } from '../utils/layout-props'
 
 defineProps(centeredLayoutProps('48rem'))
+
+// The element the closing mark goes on (.quote-text): the last `>`
+// blockquote, else the last heading (`# "…"`), else the paragraph before the
+// last (the attribution), or the only paragraph. Picked here once per render
+// instead of by a :has() chain repeated in three rules.
+const box = ref<HTMLElement>()
+function markQuote() {
+  const el = box.value
+  if (!el) return
+  const kids = [...el.children].filter(k => !k.classList.contains('quote-mark'))
+  const last = (sel: string) => kids.filter(k => k.matches(sel)).at(-1)
+  const ps = kids.filter(k => k.tagName === 'P')
+  const target = last('blockquote') ?? last('h1, h2') ?? (ps.length === 1 ? ps[0] : ps.at(-2))
+  for (const k of kids) k.classList.toggle('quote-text', k === target)
+}
+onMounted(markQuote)
+onUpdated(markQuote)
 </script>
 
 <style scoped>
@@ -28,10 +46,7 @@ defineProps(centeredLayoutProps('48rem'))
 }
 
 .quote-mark,
-.quote-content:has(> blockquote) :deep(blockquote:last-of-type)::after,
-.quote-content:not(:has(> blockquote)):has(> :is(h1, h2)) :deep(:is(h1, h2):last-of-type)::after,
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:nth-last-of-type(2))::after,
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:only-of-type)::after {
+.quote-content :deep(.quote-text)::after {
   font-size: var(--quote-mark-size, 5rem);
   line-height: 1;
   font-family: Georgia, 'Noto Serif KR', serif;
@@ -49,17 +64,11 @@ defineProps(centeredLayoutProps('48rem'))
   top: -0.35em;
 }
 
-.quote-content:has(> blockquote) :deep(blockquote:last-of-type),
-.quote-content:not(:has(> blockquote)):has(> :is(h1, h2)) :deep(:is(h1, h2):last-of-type),
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:nth-last-of-type(2)),
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:only-of-type) {
+.quote-content :deep(.quote-text) {
   position: relative;
 }
 
-.quote-content:has(> blockquote) :deep(blockquote:last-of-type)::after,
-.quote-content:not(:has(> blockquote)):has(> :is(h1, h2)) :deep(:is(h1, h2):last-of-type)::after,
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:nth-last-of-type(2))::after,
-.quote-content:not(:has(> :is(blockquote, h1, h2))) :deep(p:only-of-type)::after {
+.quote-content :deep(.quote-text)::after {
   content: '\201D';
   right: calc(var(--quote-mark-size, 5rem) * -0.55);
   bottom: -0.75em;
