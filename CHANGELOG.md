@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased (3.4.0)
+
+### Features
+
+- **`<Countdown size>` takes any CSS length** (`size="2.5rem"`), as `<QRCode>` does,
+  besides the presets (#74).
+
+### Internal
+
+- Duplicated code in one place: `columnLayoutProps()` for the column layouts (#76), a
+  shared background-image style for the media layouts (#75), the glow peak and the
+  entrance list in `animations.css` (#73), the print-redraw helpers (#77), restated
+  CSS rules (#78: `.box-shell`, `.tint-pill`, `--dot-glow`, transitions, Shiki HAST
+  helpers), and `scripts/lib/shots.mjs` for `check-decks` / `regress` (#65).
+- A test keeps the light-mode variable lists in sync (#72).
+- The inline-code chip outranks Slidev's rule by specificity, not load order (#94
+  follow-up).
+
 ## Unreleased (3.3.0)
 
 ### Changes
