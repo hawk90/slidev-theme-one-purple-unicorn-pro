@@ -444,7 +444,7 @@ layout: iframe
 side: right          # left | right | full (default)
 url: https://sli.dev
 scale: 0.6           # > 0, default 1
-iframeTitle: Slidev documentation  # screen-reader name
+iframeTitle: Slidev docs  # screen-reader name
 ```
 
 Some sites refuse to be embedded (`X-Frame-Options`); those show blank.
