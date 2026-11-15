@@ -50,6 +50,19 @@
 
 ### Fixes
 
+- **Inline code in a gradient heading was an empty chip** (#19): content titles,
+  cover / intro / section titles, `.gradient-text` and `anim-gradient-text`. It is a
+  normal chip with visible text now, in exports too.
+- **Light mode: the end of a long content title faded** (#25): the title gradient's
+  last stop (`#60a5fa`, 2.54:1 on white) is `#3b82f6` (3.68:1) on light content
+  slides.
+- **Light mode: bold was hard to tell from body text** (#39). It takes the primary's
+  dark shade (`--primary-600`, 7.5:1 on white), as dark mode marks it in yellow.
+- **Text under WCAG AA** (#45): macOS button fills are deeper (`--macos-blue`
+  `#0064E0`, `--macos-red` `#D70015`, `--macos-green` `#1E7E34`; set Apple's
+  originals back through the variables), inline code on dark layouts in light mode
+  uses the code background, dark-mode tint chips (badges, column labels) are a
+  little lighter (`--ink-depth: 70%`), and the LinkCard arrow uses `--primary-300`.
 - **`.glass-gradient` had no blur in built decks** in Chrome and Firefox (#92):
   `slidev build` kept only the `-webkit-` copy of `backdrop-filter`.
 - **Click exports showed an entrance-animated step before its click** (#93): a
