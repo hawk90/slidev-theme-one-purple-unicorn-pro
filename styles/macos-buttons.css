@@ -31,6 +31,21 @@
   --macos-dark-button-bg: rgba(255, 255, 255, 0.1);
   --macos-dark-button-bg-hover: rgba(255, 255, 255, 0.15);
   --macos-dark-button-border: rgba(255, 255, 255, 0.2);
+
+  /* Secondary and toolbar buttons: light values here, dark ones below */
+  --_secondary-bg: linear-gradient(180deg, #FAFAFA 0%, #E5E5E7 100%);
+  --_secondary-bg-hover: linear-gradient(180deg, #F5F5F5 0%, #E0E0E2 100%);
+  --_secondary-bg-active: linear-gradient(180deg, #E0E0E2 0%, #D5D5D7 100%);
+  --_secondary-border: #C6C6C8;
+  --_secondary-fg: #000000;
+  /* Toolbar: a faint fill and border at rest, as current macOS toolbars
+     (it read as plain text on a slide or in a PDF); label 5.5:1 */
+  --_toolbar-bg: rgba(0, 0, 0, 0.04);
+  --_toolbar-bg-hover: rgba(0, 0, 0, 0.08);
+  --_toolbar-bg-active: rgba(0, 0, 0, 0.12);
+  --_toolbar-border: rgba(0, 0, 0, 0.1);
+  --_toolbar-fg: #636366;
+  --_toolbar-fg-hover: var(--light-text-primary);
 }
 
 /* Dark mode, and dark layouts in light mode: the base button switches by
@@ -42,6 +57,18 @@ html.dark,
   --macos-button-bg-active: rgba(255, 255, 255, 0.2);
   --macos-button-border: var(--macos-dark-button-border);
   --macos-button-text: rgba(255, 255, 255, 0.85);
+
+  --_secondary-bg: linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 100%);
+  --_secondary-bg-hover: linear-gradient(180deg, #444446 0%, #363638 100%);
+  --_secondary-bg-active: linear-gradient(180deg, #2C2C2E 0%, #232325 100%);
+  --_secondary-border: #545456;
+  --_secondary-fg: #FFFFFF;
+  --_toolbar-bg: rgba(255, 255, 255, 0.06);
+  --_toolbar-bg-hover: rgba(255, 255, 255, 0.12);
+  --_toolbar-bg-active: rgba(255, 255, 255, 0.18);
+  --_toolbar-border: rgba(255, 255, 255, 0.12);
+  --_toolbar-fg: #AEAEB2;
+  --_toolbar-fg-hover: #FFFFFF;
 }
 
 /* ============================================
@@ -67,7 +94,7 @@ html.dark,
   background: var(--macos-button-bg);
   border: 1px solid var(--macos-button-border);
   border-radius: var(--macos-radius, 6px);
-  color: var(--macos-button-text);
+  color: var(--btn-fg, var(--macos-button-text));
 
   /* Behavior */
   cursor: default;
@@ -99,9 +126,9 @@ html.dark,
    Primary Button (Blue)
    ============================================ */
 .btn-macos-primary {
+  --btn-fg: white;
   background: var(--macos-blue);
   border-color: var(--macos-blue);
-  color: white;
   font-weight: 500;
 }
 
@@ -118,34 +145,29 @@ html.dark,
 /* ============================================
    Secondary Button (Gray)
    ============================================ */
+/* Colors from variables (light / dark above), so :hover and :active also
+   apply in dark mode: a dark-mode selector used to outrank them */
 .btn-macos-secondary {
-  background: linear-gradient(180deg, #FAFAFA 0%, #E5E5E7 100%);
-  border: 1px solid #C6C6C8;
-  color: #000000;
+  --btn-fg: var(--_secondary-fg);
+  background: var(--_secondary-bg);
+  border: 1px solid var(--_secondary-border);
 }
 
 .btn-macos-secondary:hover {
-  background: linear-gradient(180deg, #F5F5F5 0%, #E0E0E2 100%);
+  background: var(--_secondary-bg-hover);
 }
 
 .btn-macos-secondary:active {
-  background: linear-gradient(180deg, #E0E0E2 0%, #D5D5D7 100%);
-}
-
-/* Dark mode secondary */
-:is(html.dark, .slide-dark) .btn-macos-secondary {
-  background: linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 100%);
-  border: 1px solid #545456;
-  color: #FFFFFF;
+  background: var(--_secondary-bg-active);
 }
 
 /* ============================================
    Destructive Button (Red)
    ============================================ */
 .btn-macos-destructive {
+  --btn-fg: white;
   background: var(--macos-red);
   border-color: var(--macos-red);
-  color: white;
 }
 
 .btn-macos-destructive:hover {
@@ -157,9 +179,9 @@ html.dark,
    Success Button (Green)
    ============================================ */
 .btn-macos-success {
+  --btn-fg: white;
   background: var(--macos-green);
   border-color: var(--macos-green);
-  color: white;
 }
 
 .btn-macos-success:hover {
@@ -171,22 +193,21 @@ html.dark,
    macOS Toolbar Button
    ============================================ */
 .btn-macos-toolbar {
-  background: transparent;
-  border: none;
+  --btn-fg: var(--_toolbar-fg);
+  background: var(--_toolbar-bg);
+  border: 1px solid var(--_toolbar-border);
   padding: 4px 8px;
   height: 24px;
   border-radius: 4px;
-  color: var(--macos-gray);
 }
 
 .btn-macos-toolbar:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--light-text-primary);
+  --btn-fg: var(--_toolbar-fg-hover);
+  background: var(--_toolbar-bg-hover);
 }
 
-:is(html.dark, .slide-dark) .btn-macos-toolbar:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+.btn-macos-toolbar:active {
+  background: var(--_toolbar-bg-active);
 }
 
 /* ============================================
@@ -261,6 +282,7 @@ html.dark,
 /* ============================================
    Loading State
    ============================================ */
+/* The label hides; the spinner draws in the variant's label color */
 .btn-macos-loading {
   color: transparent;
   pointer-events: none;
@@ -277,7 +299,7 @@ html.dark,
   margin-top: -8px;
   border: 2px solid transparent;
   border-radius: 50%;
-  border-top-color: currentColor;
+  border-top-color: var(--btn-fg, var(--macos-button-text));
   animation: macos-spin 0.6s linear infinite;
 }
 
