@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { configs, resolveAssetUrl, useNav } from '@slidev/client'
-import { NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
+import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 import { footerParts, headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
 
@@ -74,12 +74,16 @@ const showBar = computed(() => {
 // a list picks them in its order ([title, event]). A slide's own `footer`
 // (false, true, a list) replaces the deck's for that slide, so a slide can
 // also turn it on; `true` there keeps the deck's list. Hidden where the page
-// number is (cover, intro, end, section). Not to be confused with <Footnote>.
+// number is (cover, intro, end, section), and by default on media layouts
+// (image, iframe, full-image, full-split), whose picture or page reaches the
+// bottom edge: there only the slide's own `footer` shows it. Not to be
+// confused with <Footnote>.
 const footer = computed(() => {
   if (isHidden.value || hiddenInExport('footerInExport')) return null
   const deck = headmatter.footer
   // The first slide's frontmatter is the headmatter: its `footer` is the deck's
   const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.footer
+  if (own === undefined && MEDIA_LAYOUTS.includes(currentLayout.value)) return null
   const value = own === undefined ? deck : isOn(own) && Array.isArray(deck) ? deck : own
   const parts = footerParts(value, headmatter)
   return parts && (parts.text || parts.logo) ? parts : null
