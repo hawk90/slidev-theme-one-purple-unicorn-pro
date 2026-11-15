@@ -5,7 +5,7 @@
     :style="{ width }"
   >
     <img
-      :src="src"
+      :src="resolveAssetUrl(src)"
       :alt="alt"
       :style="{ borderRadius: rounded ? '0.5rem' : '0' }"
     />
@@ -14,6 +14,9 @@
 </template>
 
 <script setup lang="ts">
+import { resolveAssetUrl } from '@slidev/client'
+
+// resolveAssetUrl: a /public path keeps working under `slidev build --base`
 defineProps({
   src: { type: String, required: true },
   alt: { type: String, default: '' },
