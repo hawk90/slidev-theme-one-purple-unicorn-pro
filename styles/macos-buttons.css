@@ -13,6 +13,12 @@
   --macos-green: #1E7E34;
   --macos-green-hover: #196B2C;
 
+  /* Window traffic lights: .macos-traffic-light and the code window's title
+     bar (code-theme.css) */
+  --macos-close: #ff5f57;
+  --macos-minimize: #febc2e;
+  --macos-maximize: #28c840;
+
   /* macOS Button Backgrounds */
   --macos-button-bg: rgba(0, 0, 0, 0.05);
   --macos-button-bg-hover: rgba(0, 0, 0, 0.08);
@@ -312,15 +318,15 @@ html.dark,
 }
 
 .macos-traffic-light.close {
-  background: #FF5F57;
+  background: var(--macos-close);
 }
 
 .macos-traffic-light.minimize {
-  background: #FFBD2E;
+  background: var(--macos-minimize);
 }
 
 .macos-traffic-light.maximize {
-  background: #28CA42;
+  background: var(--macos-maximize);
 }
 
 /* Symbols on hover */

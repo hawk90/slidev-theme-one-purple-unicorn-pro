@@ -188,9 +188,9 @@
   height: 0.6rem;
   margin-right: 0.5rem;
   background:
-    radial-gradient(circle at 0.3rem 50%, #ff5f57 0.28rem, transparent 0.3rem),
-    radial-gradient(circle at 1.25rem 50%, #febc2e 0.28rem, transparent 0.3rem),
-    radial-gradient(circle at 2.2rem 50%, #28c840 0.28rem, transparent 0.3rem);
+    radial-gradient(circle at 0.3rem 50%, var(--macos-close) 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 1.25rem 50%, var(--macos-minimize) 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 2.2rem 50%, var(--macos-maximize) 0.28rem, transparent 0.3rem);
 }
 /* The code inside the window: no frame of its own (Slidev's radius is !important) */
 :where(.slidev-layout, .slidev-page) :is(.slidev-code-wrapper:has(> .slidev-code-block-title), .slidev-code-group) pre.slidev-code {
