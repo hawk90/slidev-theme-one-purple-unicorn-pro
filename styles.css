@@ -1,14 +1,17 @@
 /* Slidev Theme - One Purple Unicorn Pro */
-/* Main entry point - imports all theme styles */
+/* Main entry point - imports all theme styles. Order decides only between
+   rules of equal weight; the places where it does are marked. */
 @import './styles/colors.css';
 @import './styles/gradients.css';
 @import './styles/main.css';
 @import './styles/blocks.css';
 @import './styles/layout-fix.css';
+/* Order: after main, blocks and gradients. Its :where() rules weigh the same
+   as the dark rules they replace and win by coming later */
 @import './styles/light-theme.css';
 @import './styles/code-theme.css';
 @import './styles/macos-buttons.css';
-/* Animation/hover utilities load after component styles (e.g. .card) so they win */
+/* Order: animation/hover utilities load after component styles (e.g. .card) so they win */
 @import './styles/animations.css';
 @import './styles/content.css';
 @import './styles/print.css';

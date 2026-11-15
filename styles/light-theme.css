@@ -14,6 +14,12 @@
   --light-border-light: #f3f4f6;
 }
 
+/* Weight of the rules below. Each one is wrapped in :where(), so it weighs
+   what the dark rule it replaces weighs (main.css elements, blocks.css and
+   gradients.css classes) and wins only by loading later (styles.css): a
+   component's scoped style or a utility class on the element still beats it,
+   as in dark mode. Inline code is the exception (see there). */
+
 /* ============================================
    Light Layout Base - content slides default to white
    ============================================ */
@@ -182,19 +188,19 @@ html:not(.dark) .slidev-layout:not(.slide-dark) {
   --cover-h1-gradient: var(--light-cover-h1-gradient, linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #3b82f6));
 }
 
-html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h2 {
+:where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) h2 {
   color: var(--one-dark-blue);
 }
 
-html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h3 {
+:where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) h3 {
   color: var(--one-dark-magenta);
 }
 
-html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h4 {
+:where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) h4 {
   color: var(--light-text-secondary);
 }
 
-html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
+:where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) li::marker {
   color: var(--one-dark-blue);
 }
 
@@ -216,6 +222,8 @@ html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
 /* ============================================
    Inline Code
    ============================================ */
+/* The one element rule kept at full weight: it has to beat the dark chip
+   (code-theme.css, two classes over Slidev's own) */
 html:not(.dark) .slidev-layout:not(.slide-dark) :not(pre) > code {
   background: var(--light-bg-tertiary);
   color: var(--one-dark-blue);
@@ -243,33 +251,32 @@ html:not(.dark) .slidev-layout:not(.slide-dark) :not(pre) > code {
 /* ============================================
    Tables for Light Theme
    ============================================ */
-/* :where() keeps these low so component tables (e.g. ComplexityTable column colors) win */
-html:not(.dark) :where(.slidev-layout:not(.slide-dark)) table {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) table {
   background: var(--light-bg-secondary);
   border: 1px solid var(--light-border);
 }
 
-html:not(.dark) :where(.slidev-layout:not(.slide-dark)) thead {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) thead {
   background: var(--light-bg-tertiary);
 }
 
-html:not(.dark) :where(.slidev-layout:not(.slide-dark)) th {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) th {
   border-bottom: 2px solid var(--light-border);
 }
 
-html:not(.dark) :where(.slidev-layout:not(.slide-dark)) td {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) td {
   color: var(--light-text-secondary);
   border-bottom: 1px solid var(--light-border-light);
 }
 
-html:not(.dark) :where(.slidev-layout:not(.slide-dark)) tbody tr:hover {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) tbody tr:hover {
   background: var(--light-bg-tertiary);
 }
 
 /* ============================================
    Blockquotes for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) blockquote {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) blockquote {
   border-left: 3px solid var(--one-dark-blue);
   background: var(--light-bg-secondary);
   color: var(--light-text-muted);
@@ -278,7 +285,7 @@ html:not(.dark) .slidev-layout:not(.slide-dark) blockquote {
 /* ============================================
    Containers for Light Theme
    ============================================ */
-html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) .glass-gradient {
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid var(--light-border);
 }
@@ -288,19 +295,19 @@ html:not(.dark) .slidev-layout:not(.slide-dark) .glass-gradient {
    ============================================ */
 /* A deck's or the palette's --alert-*-bg wins in light mode too; without it,
    an 8% tint of the One Dark accent */
-html:not(.dark) .slidev-layout:not(.slide-dark) .alert-info {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) .alert-info {
   background: var(--alert-info-bg, color-mix(in srgb, var(--_root-one-dark-blue) 8%, transparent));
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) .alert-success {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) .alert-success {
   background: var(--alert-success-bg, color-mix(in srgb, var(--_root-one-dark-green) 8%, transparent));
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) .alert-warning {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) .alert-warning {
   background: var(--alert-warning-bg, color-mix(in srgb, var(--_root-one-dark-yellow) 8%, transparent));
 }
 
-html:not(.dark) .slidev-layout:not(.slide-dark) .alert-error {
+:where(html:not(.dark) .slidev-layout:not(.slide-dark)) .alert-error {
   background: var(--alert-error-bg, color-mix(in srgb, var(--_root-one-dark-red) 8%, transparent));
 }
 

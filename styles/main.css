@@ -153,7 +153,8 @@
 /* ============================================
    Images
    ============================================ */
-:is(.slidev-layout, .slidev-page) img {
+/* :where(): a utility class on the image (w-40, mx-0, ...) still wins */
+:where(.slidev-layout, .slidev-page) img {
   display: block;
   margin: 0 auto;
   max-width: 100%;

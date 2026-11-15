@@ -116,8 +116,10 @@ tbody tr:hover {
   background: var(--bg-tertiary);
 }
 
-.ct-highlight {
-  background: color-mix(in srgb, var(--primary-400) 8%, transparent) !important;
+/* Also while hovered (tbody tr:hover is the heavier rule) */
+.ct-highlight,
+tbody tr.ct-highlight:hover {
+  background: color-mix(in srgb, var(--primary-400) 8%, transparent);
 }
 
 .ct-highlight td {
