@@ -125,7 +125,7 @@ function color(value: unknown, key: string) {
 const ACCENTS = ['blue', 'cyan', 'green', 'yellow', 'red'] as const
 const ALERT_OF: Partial<Record<typeof ACCENTS[number], string>> = { blue: 'info', green: 'success', yellow: 'warning', red: 'error' }
 
-interface PaletteConfig {
+export interface PaletteConfig {
   primary?: string
   secondary?: string
   accents?: Partial<Record<typeof ACCENTS[number], string>>
