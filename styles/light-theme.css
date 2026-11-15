@@ -88,6 +88,13 @@ html:not(.dark) .slidev-layout.slide-dark :not(pre) > code {
    ============================================ */
 /* Content slides get heading/marker colors from styles/index.css;
    bare layouts (center, image, full-text, ...) get them here */
+/* The content-slide title's gradient ends in #60a5fa, 2.54:1 on white (under
+   3:1 for large text): end it on #3b82f6 (3.68:1) instead. Title layouts stay
+   dark in both modes and keep the original */
+html:not(.dark) .slidev-layout:not(.slide-dark) {
+  --cover-h1-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #3b82f6);
+}
+
 html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) h2 {
   color: var(--one-dark-blue);
 }
