@@ -79,12 +79,20 @@ slidev-theme-one-purple-unicorn-pro/
 ```bash
 npm test                         # 단위 테스트 (node --test)
 npm run regress -- --base main   # 데모 덱: main과 작업 트리 비교, 결과는 regress-out/index.html
+npm run regress -- --base main --engine dev --clicks   # 클릭 단계마다도 비교 ("4.2" = 4번 슬라이드의 두 번째 클릭)
 ```
+
+regress는 슬라이드를 번호로 짝지어요. 슬라이드를 추가한 브랜치에서는 그 뒤가 전부 밀려서 달라 보이니, 그럴 때는 `--range`로 앞부분만 보거나 아래 `check:decks`로 main의 데모 덱을 두 테마로 비교하세요.
 
 배포 전에는 이 테마를 쓰는 실제 덱으로 확인하세요. 덱마다 지금 쓰는 테마와 이 저장소의 테마로 각각 Slidev를 띄워 모든 슬라이드를 캡처하고, 달라진 슬라이드를 diff 이미지와 함께 `./deck-check`에 남겨요. 덱 프로젝트는 건드리지 않아요.
 ```bash
 npm run check:decks -- ../career_slide/slides.md --mode both
-# --pages 1-20, --current <theme>(테마를 CLI로 지정하는 덱), --out <dir>, --threshold <pixels>
+# --pages 1-20, --current <theme>(테마를 CLI로 지정하는 덱), --out <dir>, --threshold <pixels>, --clicks(클릭 단계마다)
+```
+
+npm에 올라가는 모습 그대로도 확인하세요. 패키지를 묶어 새 덱에 설치하고, `slidev build --base /sub/`로 하위 경로에 빌드한 뒤 모든 슬라이드를 열어서 404, 페이지 오류, `/sub/` 밖에서 불러오는 이미지·배경을 찾아요. `package.json`의 `files`에서 빠진 파일도 여기서 걸려요.
+```bash
+npm run check:pack               # --keep: 임시 디렉터리를 남겨요
 ```
 
 ## 배포

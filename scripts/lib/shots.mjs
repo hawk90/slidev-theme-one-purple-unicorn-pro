@@ -49,9 +49,11 @@ const FREEZE = '*,*::before,*::after{animation:none!important;transition:none!im
  * (Slidev shows nothing, then "Loading slide…" for a slide compiled on first
  * visit), with content, images loaded, fonts ready; code blocks with
  * {maxHeight} shown from the top (Slidev scrolls them at a varying moment).
+ * `clicks` opens it at that click (Slidev's ?clicks=).
  */
-export async function prepareSlide(page, port, n, { scheme, embedded = false, settleMs = 300, onSlow } = {}) {
-  await page.goto(`http://localhost:${port}/${n}${embedded ? '?embedded=true' : ''}`, { waitUntil: 'networkidle' })
+export async function prepareSlide(page, port, n, { scheme, embedded = false, clicks = 0, settleMs = 300, onSlow } = {}) {
+  const query = [embedded && 'embedded=true', clicks && `clicks=${clicks}`].filter(Boolean).join('&')
+  await page.goto(`http://localhost:${port}/${n}${query ? `?${query}` : ''}`, { waitUntil: 'networkidle' })
     .catch(() => page.waitForLoadState('load'))
   await page.evaluate(s => document.documentElement.classList.toggle('dark', s === 'dark'), scheme)
   await page.addStyleTag({ content: FREEZE })
@@ -78,4 +80,20 @@ export function diffPng(a, b, { threshold = 0.05 } = {}) {
   const D = new PNG({ width: A.width, height: A.height })
   const px = pixelmatch(A.data, B.data, D.data, A.width, A.height, { threshold, diffMask: false, alpha: 0.2 })
   return { px, diff: PNG.sync.write(D) }
+}
+
+/** How many clicks the open slide has (after prepareSlide) */
+export const clicksTotal = page => page.evaluate(() => window.__slidev__?.nav?.clicksTotal ?? 0)
+
+/**
+ * Every state of slide `n` to capture: [key, picture] pairs, the slide as it
+ * opens first ("n"), then each click ("n.1", "n.2"…) when `withClicks`.
+ * `shoot(clicks)` prepares and captures one state and returns the picture.
+ */
+export async function slideStates(page, n, withClicks, shoot) {
+  const out = [[String(n), await shoot(0)]]
+  if (!withClicks) return out
+  const total = await clicksTotal(page)
+  for (let k = 1; k <= total; k++) out.push([`${n}.${k}`, await shoot(k)])
+  return out
 }

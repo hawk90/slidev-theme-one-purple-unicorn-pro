@@ -3,6 +3,7 @@
 //
 //   npm run regress -- [--base main] [--mode dark|light|both] [--engine export|dev]
 //                      [--range 1-20] [--threshold 200] [--out regress-out] [--fresh]
+//                      [--clicks]  (dev engine: every click state too, "4.2" = slide 4 at click 2)
 //
 // Exits 1 when a slide changed; the report is regress-out/index.html.
 //
@@ -21,7 +22,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { createRequire } from 'node:module'
-import { diffPng, prepareSlide, slideCount, startDevServer } from './lib/shots.mjs'
+import { diffPng, prepareSlide, slideCount, slideStates, startDevServer } from './lib/shots.mjs'
 
 const repo = process.env.REGRESS_REPO || process.cwd()
 const require = createRequire(path.join(repo, 'package.json'))
@@ -44,6 +45,8 @@ const exportWait = opt('wait', '3000')
 const outDir = path.resolve(opt('out', path.join(repo, 'regress-out')))
 const work = path.join(process.env.REGRESS_TMP || os.tmpdir(), 'slidev-regress')
 const schemes = mode === 'both' ? ['light', 'dark'] : [mode]
+const withClicks = flag('clicks')
+if (withClicks && engine !== 'dev') { console.error('--clicks needs --engine dev'); process.exit(2) }
 
 const git = (...a) => execFileSync('git', a, { cwd: repo, encoding: 'utf8' }).trim()
 const t0 = Date.now()
@@ -107,7 +110,9 @@ const fromWorktree = dir => {
 }
 
 // ---- 2. capture -----------------------------------------------------------
-const listPngs = d => fs.existsSync(d) ? fs.readdirSync(d).filter(f => /^\d+\.png$/.test(f)) : []
+const listPngs = d => fs.existsSync(d) ? fs.readdirSync(d).filter(f => /^\d+(\.\d+)?\.png$/.test(f)) : []
+// "4.png" < "4.2.png" < "4.10.png" < "5.png"
+const byState = (x, y) => { const [a, b] = [x, y].map(f => f.replace(/\.png$/, '').split('.').map(Number)); return a[0] - b[0] || (a[1] ?? 0) - (b[1] ?? 0) }
 
 // Slides per side: an export that writes some but not all of them failed
 const expected = new Map()
@@ -160,8 +165,11 @@ async function captureDev(deckDir, scheme, dest) {
     const [from, to] = range ? range.split('-').map(Number) : [1, total]
     fs.rmSync(dest, { recursive: true, force: true }); fs.mkdirSync(dest, { recursive: true })
     for (let n = from; n <= Math.min(to || from, total); n++) {
-      await prepareSlide(page, server.port, n, { scheme, embedded: true, onSlow: no => log(`  slide ${no}: still loading`) })
-      await page.locator('#slide-content').screenshot({ path: path.join(dest, `${n}.png`) })
+      const states = await slideStates(page, n, withClicks, async (clicks) => {
+        await prepareSlide(page, server.port, n, { scheme, embedded: true, clicks, onSlow: no => log(`  slide ${no}: still loading`) })
+        return page.locator('#slide-content').screenshot()
+      })
+      for (const [key, png] of states) fs.writeFileSync(path.join(dest, `${key}.png`), png)
     }
     await browser.close()
     return total
@@ -174,9 +182,9 @@ const capture = engine === 'dev' ? captureDev : captureExport
 // ---- 3. compare + report ---------------------------------------------------
 function compare(a, b, scheme) {
   const rows = []
-  const names = [...new Set([...listPngs(a), ...listPngs(b)])].sort((x, y) => parseInt(x) - parseInt(y))
+  const names = [...new Set([...listPngs(a), ...listPngs(b)])].sort(byState)
   for (const f of names) {
-    const n = parseInt(f)
+    const n = f.replace(/\.png$/, '') // "4", or "4.2": slide 4 at click 2
     if (!fs.existsSync(path.join(a, f)) || !fs.existsSync(path.join(b, f))) { rows.push({ n, px: Infinity, note: fs.existsSync(path.join(a, f)) ? 'removed' : 'added' }); continue }
     const { px, diff, note } = diffPng(fs.readFileSync(path.join(a, f)), fs.readFileSync(path.join(b, f)))
     if (px > threshold) {
@@ -211,7 +219,7 @@ log('prepared working-tree copy')
 fs.rmSync(outDir, { recursive: true, force: true }); fs.mkdirSync(outDir, { recursive: true })
 const results = []
 for (const scheme of schemes) {
-  const cache = path.join(work, 'cache', `${baseSha}-${engine}-${scheme}${range ? '-' + range : ''}`)
+  const cache = path.join(work, 'cache', `${baseSha}-${engine}-${scheme}${range ? '-' + range : ''}${withClicks ? '-clicks' : ''}`)
   if (flag('fresh') || !listPngs(cache).length) {
     if (!baseDeck) {
       baseDeck = prepare(`base-${baseSha.slice(0, 7)}`, fromRef(baseSha), 'base')
@@ -220,11 +228,11 @@ for (const scheme of schemes) {
     log(`${scheme}: base ${await capture(baseDeck, scheme, cache)} slides`)
   }
   else log(`${scheme}: base from cache (${listPngs(cache).length} slides)`)
-  const headShots = path.join(work, `head-${engine}-${scheme}`)
+  const headShots = path.join(work, `head-${engine}-${scheme}${withClicks ? '-clicks' : ''}`)
   log(`${scheme}: head ${await capture(headDeck, scheme, headShots)} slides`)
   const r = compare(cache, headShots, scheme)
   results.push({ scheme, ...r })
-  log(`${scheme}: ${r.total} slides, ${r.changed.length} changed${r.changed.length ? ': ' + r.changed.map(c => `${c.n}${c.note ? ` (${c.note})` : ` (${c.px}px)`}`).join(', ') : ''}`)
+  log(`${scheme}: ${r.total} ${withClicks ? 'states' : 'slides'}, ${r.changed.length} changed${r.changed.length ? ': ' + r.changed.map(c => `${c.n}${c.note ? ` (${c.note})` : ` (${c.px}px)`}`).join(', ') : ''}`)
 }
 fs.writeFileSync(path.join(outDir, 'index.html'), html(results))
 log(`report: ${path.join(outDir, 'index.html')}`)

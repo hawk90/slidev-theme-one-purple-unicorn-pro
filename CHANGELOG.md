@@ -47,6 +47,11 @@
 
 - The chrome and the stage indicator read the slide's frontmatter from `useNav()`'s
   `currentFrontmatter` (Slidev 52.18) (#148).
+- Visual checks (#142): `npm run regress -- --engine dev --clicks` and
+  `check:decks --clicks` capture every click state ("4.2" is slide 4 at click 2);
+  `npm run check:pack` installs the packed tarball into a fresh deck, builds it under
+  `--base /sub/` and opens every slide, failing on a 404, a page error or an asset
+  loaded from outside the sub-path.
 
 ## 4.0.0
 

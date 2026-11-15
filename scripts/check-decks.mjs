@@ -11,6 +11,7 @@
 //            --current <theme>  theme for the baseline when the deck sets it on
 //                               the command line instead of in its headmatter
 //            --out <dir> (default ./deck-check)   --threshold <pixels> (default 200)
+//            --clicks: every click state too (slide 4 at click 2 is "4.2")
 //
 // Nothing in the deck projects is modified.
 
@@ -18,7 +19,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
-import { diffPng, prepareSlide, slideCount, startDevServer } from './lib/shots.mjs'
+import { diffPng, prepareSlide, slideCount, slideStates, startDevServer } from './lib/shots.mjs'
 
 const themeRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -34,6 +35,8 @@ const mode = opt('mode', 'dark')
 const outDir = path.resolve(opt('out', 'deck-check'))
 const threshold = Number(opt('threshold', '200'))
 const currentTheme = opt('current', '')
+const withClicks = args.includes('--clicks')
+if (withClicks) args.splice(args.indexOf('--clicks'), 1)
 const decks = args.filter(a => a.endsWith('.md'))
 if (!decks.length) {
   console.error('usage: check-decks <deck.md> [...] [--pages 1-20] [--mode dark|light|both]')
@@ -51,8 +54,11 @@ async function capture(browser, port, scheme, range) {
   const [from, to] = range ? range.split('-').map(Number) : [1, total]
   const shots = {}
   for (let n = from; n <= Math.min(to || from, total); n++) {
-    await prepareSlide(page, port, n, { scheme, settleMs: 700, onSlow: no => console.warn(`  slide ${no}: still loading after 30 s`) })
-    shots[n] = await page.screenshot()
+    const states = await slideStates(page, n, withClicks, async (clicks) => {
+      await prepareSlide(page, port, n, { scheme, clicks, settleMs: 700, onSlow: no => console.warn(`  slide ${no}: still loading after 30 s`) })
+      return page.screenshot()
+    })
+    for (const [key, png] of states) shots[key] = png
   }
   await page.close()
   return shots
@@ -87,7 +93,7 @@ for (const deckArg of decks) {
         }
       }
       changedTotal += changed.length
-      console.log(`  ${scheme}: ${Object.keys(a).length} slides, ${changed.length} changed${changed.length ? ': ' + changed.join(', ') : ''}`)
+      console.log(`  ${scheme}: ${Object.keys(a).length} ${withClicks ? 'states' : 'slides'}, ${changed.length} changed${changed.length ? ': ' + changed.join(', ') : ''}`)
     }
   }
   catch (e) {
