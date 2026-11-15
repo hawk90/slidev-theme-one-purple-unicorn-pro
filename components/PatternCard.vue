@@ -56,7 +56,7 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
 <style scoped>
 .pattern-card {
   border: 1px solid var(--border-default);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   margin: 0.75rem 0;
   background: var(--bg-secondary);

@@ -27,10 +27,10 @@ defineProps({
   padding: 0.75rem 1rem;
   background: var(--bg-secondary);
   border: 1px solid color-mix(in srgb, var(--text-primary) 22%, transparent);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   margin: 0.5rem 0;
 }
 
@@ -41,7 +41,7 @@ defineProps({
 .link-card:hover {
   border-color: var(--primary-600);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .link-card-compact {
@@ -87,7 +87,7 @@ defineProps({
      dark card) */
   color: var(--primary-300);
   flex-shrink: 0;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition: transform var(--transition-base), color var(--transition-base);
 }
 
 .link-card:hover .link-arrow {

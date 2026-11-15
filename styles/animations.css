@@ -24,7 +24,7 @@
 
   position: relative;
   background: var(--bg-secondary);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   z-index: 0;
 }
@@ -382,7 +382,7 @@
 }
 .hover-lift:hover {
   transform: translateY(calc(-1 * var(--hover-lift, 4px)));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 8px color-mix(in srgb, var(--_root-primary-400) 10%, transparent);
+  box-shadow: var(--shadow-xl), 0 0 8px color-mix(in srgb, var(--_root-primary-400) 10%, transparent);
 }
 
 /* Scale — gentle grow */
@@ -399,7 +399,7 @@
 }
 .hover-tilt:hover {
   transform: perspective(800px) rotateX(var(--hover-tilt-x, 4deg)) rotateY(var(--hover-tilt-y, -6deg)) translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-xl);
 }
 
 /* Glow — colored glow on hover; -blue / -green are color presets */

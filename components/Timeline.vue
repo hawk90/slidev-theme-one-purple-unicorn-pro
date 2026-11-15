@@ -68,7 +68,7 @@ defineProps({
   background: var(--tl-dot-color, var(--text-muted));
   flex-shrink: 0;
   margin-top: 0.3rem;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .tl-active .tl-dot {

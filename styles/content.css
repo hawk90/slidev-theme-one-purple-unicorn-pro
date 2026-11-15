@@ -101,12 +101,12 @@
 }
 
 .slidev-layout.slide-title table td {
-  border-bottom: 1px solid rgba(171, 178, 191, 0.2);
+  border-bottom: 1px solid var(--border-default);
   color: var(--text-primary);
 }
 
 .slidev-layout.slide-title table tr:hover {
-  background: rgba(171, 178, 191, 0.05);
+  background: color-mix(in srgb, var(--border-default) 33%, transparent);
 }
 
 /* ============================================

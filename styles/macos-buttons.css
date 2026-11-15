@@ -99,7 +99,7 @@ html.dark,
   /* Behavior */
   cursor: default;
   user-select: none;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
 }
@@ -335,7 +335,7 @@ html.dark,
   border-radius: 50%;
   border: 0.5px solid rgba(0, 0, 0, 0.15);
   cursor: default;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .macos-traffic-light.close {
@@ -357,7 +357,7 @@ html.dark,
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity var(--transition-base);
 }
 
 .macos-traffic-lights:hover .macos-traffic-light::after {

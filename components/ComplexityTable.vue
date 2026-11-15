@@ -70,7 +70,7 @@ const columns = computed(() =>
 <style scoped>
 .complexity-table {
   margin: 0.75rem 0;
-  border-radius: var(--table-radius, 0.75rem);
+  border-radius: var(--table-radius, var(--radius-lg));
   overflow: hidden;
   border: 1px solid var(--border-default);
   background: var(--bg-secondary);

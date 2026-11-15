@@ -38,7 +38,7 @@ const iconMap: Record<string, string> = {
 
 <style scoped>
 .story-box {
-  border-radius: var(--story-radius, 0.75rem);
+  border-radius: var(--story-radius, var(--radius-lg));
   padding: var(--story-padding, 0.75rem 1rem);
   margin: 0.75rem 0;
   border-left: 3px solid var(--story-color);

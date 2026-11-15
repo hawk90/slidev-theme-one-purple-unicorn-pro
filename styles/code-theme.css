@@ -85,13 +85,13 @@
 /* Slidev sets the code radius with !important from this variable (4px); the
    block's font size from --slidev-code-font-size (a deck may set its own) */
 :is(.slidev-layout, .slidev-page) {
-  --slidev-code-radius: 0.75rem;
+  --slidev-code-radius: var(--radius-lg);
   --slidev-code-font-size: 0.8rem;
 }
 
 :where(.slidev-layout, .slidev-page) pre {
   border: 1px solid var(--border-default);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   padding: 0.6rem 0.75rem;
   margin: 0.5rem 0;
   box-shadow: var(--shadow-lg);
@@ -194,7 +194,7 @@
    --code-title-dots (none hides the dots) */
 :where(.slidev-layout, .slidev-page) :is(.slidev-code-wrapper:has(> .slidev-code-block-title), .slidev-code-group) {
   border: 1px solid var(--_root-border-default, rgba(171, 178, 191, 0.15));
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   background: var(--bg-code);
@@ -296,7 +296,7 @@
   min-height: var(--slidev-code-line-height, 18px); /* an empty line keeps its row (a focus tint has no gap) */
   padding-left: calc(var(--_shift) + var(--_lead) + var(--_indent));
   text-indent: calc(-1 * var(--_indent));
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+  transition: opacity var(--transition-base), background-color var(--transition-base);
 }
 /* The hang is for the line itself: twoslash wraps tokens in inline blocks,
    which would inherit the negative indent */

@@ -149,7 +149,7 @@ const progress = computed(() => {
   height: 100%;
   background: var(--progress-color, var(--gradient-primary));
   border-radius: 0 2px 2px 0;
-  transition: width 300ms ease;
+  transition: width var(--transition-slow);
   box-shadow: var(--progress-glow, 0 0 8px color-mix(in srgb, var(--_root-primary-400, #c678dd) 40%, transparent));
 }
 

@@ -265,7 +265,9 @@ Every value below defaults to the theme's look.
 
 | | Variables |
 |---|---|
+| Shared tokens | `--radius-lg` (0.75rem: cards, tables, code blocks, boxes; the per-component radius variables default to it), `--transition-fast` / `-base` / `-slow` (150 / 250 / 300 ms), `--shadow-md` / `-lg` / `-xl` (lighter in light mode) |
 | Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-title-top`, `--slide-font-size` |
+| Code blocks | `--slidev-code-font-size` (0.8rem; Slidev's variable, now followed by the code inside blocks too) |
 | Emphasis layouts | `--quote-mark-size`, `--quote-size`, `--statement-size`, `--fact-size`, `--full-text-padding` |
 | Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; code that doesn't fit is cut off, never scrolled) |
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |

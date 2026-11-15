@@ -24,7 +24,7 @@
   font-size: inherit;
   text-decoration: none;
   border-bottom: 1px dashed var(--primary-600);
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color var(--transition-base), border-color var(--transition-base);
   pointer-events: auto;
   cursor: pointer;
 }

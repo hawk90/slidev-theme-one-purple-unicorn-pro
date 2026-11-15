@@ -93,6 +93,11 @@
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Corner radius of cards, tables, code blocks and boxes (--card-radius,
+     --table-radius, --story-radius and the code radius default to it) */
+  --radius-lg: 0.75rem;
 }
 
 /* Light mode re-declares part of the palette on <body> (light-theme.css).

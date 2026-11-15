@@ -31,7 +31,7 @@
 html:not(.dark) body {
   --slide-bg: var(--light-bg);
   --bg-secondary: var(--light-bg-secondary);
-  --bg-tertiary: #eceef2;
+  --bg-tertiary: var(--light-bg-tertiary);
   --key-bg: var(--light-key-bg, #eceef2);
 
   --text-primary: var(--light-text-primary);
