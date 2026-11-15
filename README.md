@@ -170,6 +170,10 @@ stagePosition: top     # top | top-left | top-right | bottom | left | right
 
 Click a stage to jump to the first slide with the same `stages` at that `currentStage`. To pick other slides, give `stageMap` with each slide's `routeAlias` (`stageMap: [intro, deep, wrap]`); page numbers work too but go stale when slides move. An entry that points past the end or at a slide of other stages is reported in the console, and the click uses the matching slide instead.
 
+**Automatic sections**: `stages: auto` (in the headmatter for every slide, or on one slide) builds one stage per `layout: section` slide, named by its title; a slide with `chapter: "Name"` starts a section too, and `chapter: false` leaves a section slide out. A click goes to the section's first slide. A slide's own `stages` list still wins, and `stages: false` hides the indicator there. `stagePosition` in the headmatter is the deck's default.
+
+`stageLabels` picks the labels shown inline: `all` (default), `active` (only the current one; the default for more than 6 automatic sections) or `hover` (a dot rail). The others show beside their dot on hover or keyboard focus.
+
 `bottom` sits above the footer line when one shows. `left` / `right` take a column of their own: the content slide's padding on that side grows by `--stage-side-space` (6.5rem), and labels wrap at `--stage-side-label-width` (5.5rem).
 
 ## CSS Classes

@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { stageOf, stagesOf, stageTarget } from '../utils/stages.ts'
+import { autoStageIndex, autoStages, stageLabelMode, stageOf, stagesOf, stageTarget } from '../utils/stages.ts'
 
 describe('stageTarget', () => {
   const S = ['A', 'B']
@@ -53,5 +53,30 @@ describe('stagesOf', () => {
   it('anything else: none', () => {
     assert.deepEqual(stagesOf({ stages: 'A, B' }), [])
     assert.deepEqual(stagesOf({}), [])
+  })
+})
+
+describe('autoStages', () => {
+  const slides = [
+    { no: 1, frontmatter: { layout: 'cover' } },
+    { no: 2, title: 'Basics', frontmatter: { layout: 'section' } },
+    { no: 3, frontmatter: {} },
+    { no: 4, title: 'Ignored', frontmatter: { layout: 'section', chapter: false } },
+    { no: 5, frontmatter: { chapter: 'Deep Dive' } },
+    { no: 6, title: 'From title', frontmatter: { layout: 'section', title: 'Front' } },
+  ]
+  it('section slides and chapter names, in order', () => {
+    assert.deepEqual(autoStages(slides), { stages: ['Basics', 'Deep Dive', 'Front'], starts: [2, 5, 6] })
+  })
+  it('the stage a slide is in', () => {
+    const { starts } = autoStages(slides)
+    assert.deepEqual([1, 2, 3, 4, 5, 6, 9].map(n => autoStageIndex(starts, n)), [-1, 0, 0, 0, 1, 2, 2])
+  })
+  it('label modes', () => {
+    assert.equal(stageLabelMode(undefined, false, 20), 'all')
+    assert.equal(stageLabelMode(undefined, true, 6), 'all')
+    assert.equal(stageLabelMode(undefined, true, 7), 'active')
+    assert.equal(stageLabelMode('hover', false, 2), 'hover')
+    assert.equal(stageLabelMode('bogus', true, 9), 'active')
   })
 })

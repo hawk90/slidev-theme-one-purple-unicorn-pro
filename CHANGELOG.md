@@ -9,6 +9,11 @@
   of the count, `hold` repeats the last number without counting the slide;
   `appendix: true` starts an appendix numbered A1, A2…, with the total frozen at the
   main part.
+- **Automatic sections** (#131): `stages: auto` builds the stage indicator from the
+  deck's `layout: section` slides (or `chapter: "Name"`), deck-wide or per slide; a
+  click goes to the section. `stageLabels: all | active | hover` shows every label,
+  only the current one (the default for more than 6 sections), or a dot rail with names
+  on hover; `stagePosition` can be set in the headmatter.
 
 ## 4.0.0
 

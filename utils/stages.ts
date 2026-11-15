@@ -42,3 +42,46 @@ export function stageOf(fm: Frontmatter): number {
   const n = Number(v)
   return Number.isInteger(n) && n >= 0 ? n : -1
 }
+
+// Automatic stages (`stages: auto`): one stage per section, from the slides
+// themselves. A section starts at a `layout: section` slide (its title names
+// it) or at a slide with `chapter: "Name"` (as slidev-addon-chapters writes
+// it); `chapter: false` leaves a section slide out.
+
+export interface SectionSlide { no: number, title?: string, frontmatter: Frontmatter }
+
+export interface AutoStages { stages: string[], starts: number[] }
+
+export function autoStages(slides: SectionSlide[]): AutoStages {
+  const stages: string[] = []
+  const starts: number[] = []
+  for (const s of slides) {
+    const ch = s.frontmatter.chapter
+    if (ch === false || ch === 'false') continue
+    const named = typeof ch === 'string' && ch.trim() !== '' ? ch.trim() : undefined
+    if (!named && s.frontmatter.layout !== 'section') continue
+    stages.push(named ?? String(s.frontmatter.title ?? s.title ?? `Section ${stages.length + 1}`))
+    starts.push(s.no)
+  }
+  return { stages, starts }
+}
+
+/** The section slide `no` is in: the last start at or before it (-1 before the first) */
+export function autoStageIndex(starts: number[], no: number): number {
+  let index = -1
+  starts.forEach((start, i) => { if (start <= no) index = i })
+  return index
+}
+
+/** Whether `stages` asks for the automatic ones */
+export const isAutoStages = (v: unknown) => v === 'auto'
+
+/**
+ * Which labels show inline (`stageLabels`): all (default), active (only the
+ * current stage's; the others on hover) or hover (a dot rail: labels on hover
+ * only). Automatic stages with more than `crowded` sections default to active.
+ */
+export function stageLabelMode(value: unknown, auto: boolean, count: number, crowded = 6): 'all' | 'active' | 'hover' {
+  if (value === 'all' || value === 'active' || value === 'hover') return value
+  return auto && count > crowded ? 'active' : 'all'
+}

@@ -2,7 +2,7 @@
   <nav
     v-if="!isHidden && stages.length > 0"
     class="stage-progress slide-chrome"
-    :class="`stage-pos-${position}`"
+    :class="[`stage-pos-${position}`, `stage-labels-${labelMode}`]"
     aria-label="Stages"
   >
     <button
@@ -16,11 +16,12 @@
         'stage-upcoming': i > currentIndex,
       }"
       :aria-current="i === currentIndex ? 'step' : undefined"
+      :aria-label="labelMode === 'all' ? undefined : stage"
       @click="onStageClick($event, i)"
       @keydown.space.stop
     >
       <span class="stage-dot" />
-      <span class="stage-label">{{ stage }}</span>
+      <span class="stage-label" :class="{ 'stage-label-pop': labelMode === 'hover' || (labelMode === 'active' && i !== currentIndex) }">{{ stage }}</span>
       <span v-if="i < stages.length - 1" class="stage-connector" />
     </button>
   </nav>
@@ -28,25 +29,45 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useNav } from '@slidev/client'
+import { configs, useNav } from '@slidev/client'
 import { TITLE_LAYOUTS } from '../utils/layouts'
-import { stageOf, stagesOf, stageTarget } from '../utils/stages'
+import { headmatterOf, isOff } from '../utils/frontmatter'
+import { autoStageIndex, autoStages, isAutoStages, stageLabelMode, stageOf, stagesOf, stageTarget } from '../utils/stages'
 
-const { currentLayout, currentSlideRoute, go, slides } = useNav()
+const { currentLayout, currentSlideRoute, currentPage, go, slides } = useNav()
 
 const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
 
+const headmatter = headmatterOf(configs)
 const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}
 )
 
-const stages = computed(() => stagesOf(frontmatter.value))
+// A slide's own `stages` list wins; `stages: auto` (on the slide, or in the
+// headmatter for every slide without its own) builds one stage per section
+// (utils/stages.ts); `stages: false` on a slide turns the deck's off there
+const auto = computed(() => {
+  const own = frontmatter.value.stages
+  if (Array.isArray(own) || isOff(own)) return false
+  return isAutoStages(own) || isAutoStages(headmatter.stages)
+})
+const sections = computed(() => auto.value
+  ? autoStages(slides.value.map(s => ({ no: s.no, title: s.meta?.slide?.title, frontmatter: s.meta?.slide?.frontmatter ?? {} })))
+  : { stages: [], starts: [] })
 
-const currentIndex = computed(() => stageOf(frontmatter.value))
+const stages = computed(() => auto.value ? sections.value.stages : stagesOf(frontmatter.value))
+
+const currentIndex = computed(() => auto.value
+  ? autoStageIndex(sections.value.starts, currentPage.value)
+  : stageOf(frontmatter.value))
 
 const position = computed(() =>
-  (frontmatter.value.stagePosition as string) || 'top'
+  (frontmatter.value.stagePosition as string) || (headmatter.stagePosition as string) || 'top'
 )
+
+// stageLabels: all | active | hover (many automatic stages: active)
+const labelMode = computed(() =>
+  stageLabelMode(frontmatter.value.stageLabels ?? headmatter.stageLabels, auto.value, stages.value.length))
 
 // A mouse click leaves no focus behind, so Space / arrows keep driving the
 // slides; keyboard activation (Enter / Space) keeps focus on the button.
@@ -57,10 +78,16 @@ function onStageClick(event: MouseEvent, index: number) {
 }
 
 function goToStage(index: number) {
+  // Automatic stages: the section's first slide
+  if (auto.value) {
+    const start = sections.value.starts[index]
+    if (start !== undefined) go(start)
+    return
+  }
   // stageMap (page numbers or routeAlias names) if it points at this stage,
   // else the first slide with the same stages at that currentStage
   const { no, warning } = stageTarget(index, stages.value, frontmatter.value.stageMap,
-    slides.value.map(s => ({ no: s.no ?? s.idx + 1, frontmatter: s?.meta?.slide?.frontmatter ?? {} })))
+    slides.value.map(s => ({ no: s.no, frontmatter: s?.meta?.slide?.frontmatter ?? {} })))
   if (warning) console.warn(`[theme] StageProgress: ${warning}`)
   if (no !== undefined) go(no)
 }
@@ -217,6 +244,50 @@ function goToStage(index: number) {
   letter-spacing: 0.03em;
   white-space: nowrap;
   transition: all var(--transition-base);
+}
+
+/* stageLabels: active (only the current label inline) / hover (none inline):
+   the others (.stage-label-pop) show beside their dot on hover or keyboard
+   focus, out of the flow so the row keeps its width. Specificity is above
+   the state rules below, which set the labels' opacity */
+.stage-item .stage-label.stage-label-pop {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: calc(var(--stage-dot-size, 6px) / 2);
+  transform: translateX(-50%);
+  max-width: none;
+  white-space: nowrap;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stage-item:is(:hover, :focus-visible) .stage-label.stage-label-pop {
+  opacity: 1;
+}
+
+/* At the bottom: above the dot; at the sides: beside it */
+.stage-pos-bottom .stage-item .stage-label.stage-label-pop {
+  top: auto;
+  bottom: calc(100% + 0.25rem);
+}
+
+:is(.stage-pos-left, .stage-pos-right) .stage-item .stage-label.stage-label-pop {
+  top: calc(var(--stage-dot-size, 6px) / 2);
+  transform: translateY(-50%);
+}
+
+.stage-pos-left .stage-item .stage-label.stage-label-pop {
+  left: calc(100% + 0.5rem);
+}
+
+.stage-pos-right .stage-item .stage-label.stage-label-pop {
+  left: auto;
+  right: calc(100% + 0.5rem);
 }
 
 .stage-connector {

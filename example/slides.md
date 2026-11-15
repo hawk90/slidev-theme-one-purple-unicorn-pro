@@ -1532,6 +1532,35 @@ Solve at least 3 problems per pattern. Vary the constraints — different sizes,
 </StoryBox>
 
 ---
+stages: auto
+---
+
+# Automatic Sections
+
+`stages: auto` builds the stages from the deck's `layout: section` slides, so no slide lists them. This deck has 11 sections: with more than 6, only the current one is labelled. Hover a dot for its name; click it to go to that section.
+
+```yaml
+stages: auto           # headmatter: every slide (a slide's own stages list wins; stages: false turns it off)
+stageLabels: active    # all | active | hover (a dot rail: names on hover only)
+stagePosition: top     # as for a stages list; in the headmatter it is the deck's default
+```
+
+- A slide with `chapter: "Name"` starts a section too, and `chapter: false` leaves a section slide out.
+- Slides before the first section show every dot upcoming.
+
+---
+stages: auto
+stagePosition: right
+stageLabels: hover
+---
+
+# Section Rail
+
+The same sections as a dot rail on the right: `stagePosition: right` with `stageLabels: hover`. Each dot names its section on hover or keyboard focus.
+
+The content's right padding grows by the rail's column, as for the stage indicator at `right`.
+
+---
 layout: section
 ---
 
