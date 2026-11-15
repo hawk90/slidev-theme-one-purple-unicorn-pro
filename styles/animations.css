@@ -256,6 +256,7 @@
 :root {
   /* Motion tokens: shared defaults for entrances and other one-shot motion */
   --motion-base: 0.4s;
+  --motion-slow: 1.2s; /* longer one-shot motion: <Stat count> */
   --motion-ease: ease;
   --motion-distance: 0.75rem;
 }

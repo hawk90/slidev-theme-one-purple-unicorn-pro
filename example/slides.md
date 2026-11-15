@@ -1020,6 +1020,63 @@ Pass custom rows to tailor for specific problem domains.
 />
 
 ---
+transition: slide-left
+---
+
+# Stat Component
+
+A figure, what it is, and how it changed. The arrow follows the delta's sign; `good="down"` for figures that should fall.
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+  <Stat value="98.5%" label="Uptime" delta="+0.3%" />
+  <Stat value="1,024" label="Kernels launched" delta="0" color="cyan" />
+  <Stat value="42 ms" label="p95 latency" delta="-8 ms" good="down" color="green" />
+</div>
+
+```html
+<Stat value="98.5%" label="Uptime" delta="+0.3%" />
+<Stat value="42 ms" label="p95 latency" delta="-8 ms" good="down" color="green" />
+```
+
+---
+
+# Stat: Count-up, Colors, Sizes
+
+<div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 1rem; align-items: stretch;">
+  <Stat count value="$4.2M" label="Revenue · count" delta="+18%" size="lg" />
+  <Stat count value="12,480" label="Users · count" delta="-2.4%" color="yellow" />
+  <Stat count value="3.75x" label="Speedup · count" color="red" />
+</div>
+
+<div style="display: flex; gap: 2.5rem; margin-top: 1.25rem;">
+  <Stat plain size="sm" value="7" label="primary" />
+  <Stat plain size="sm" value="7" label="blue" color="blue" />
+  <Stat plain size="sm" value="7" label="cyan" color="cyan" />
+  <Stat plain size="sm" value="7" label="green" color="green" />
+  <Stat plain size="sm" value="7" label="yellow" color="yellow" />
+  <Stat plain size="sm" value="7" label="red" color="red" />
+  <Stat plain size="sm" value="7" label="gray" color="gray" />
+</div>
+
+`count` counts up once the slide has arrived (here after the previous slide's `slide-left`), again on each visit; exports show the figure. `size`: `sm` · default · `lg`; `plain` drops the card. The color names are the same for every component's `color`.
+
+---
+
+# Numeric Tables
+
+<div class="table-num">
+
+| Kernel | Time (ms) | Bandwidth (GB/s) | Speedup |
+|---|---|---|---|
+| naive | 12.84 | 186.2 | 1.00x |
+| coalesced | 3.17 | 754.9 | 4.05x |
+| shared memory | 1.09 | 2,196.4 | 11.78x |
+
+</div>
+
+`.table-num` around a table right-aligns the columns after the first, with digits of one width; `.num` does the same for any text.
+
+---
 layout: section
 ---
 

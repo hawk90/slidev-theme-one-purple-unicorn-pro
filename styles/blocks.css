@@ -47,6 +47,18 @@
   color: color-mix(in srgb, var(--tint) var(--ink-depth), var(--ink-mix));
 }
 
+/* Numbers: digits of one width, so figures line up and don't jitter while
+   they change (<Stat>). .table-num on a table (or around a Markdown one):
+   the columns after the first are numbers, right-aligned. */
+.num,
+.table-num :is(td, th):not(:first-child) {
+  font-variant-numeric: tabular-nums;
+}
+
+.table-num :is(td, th):not(:first-child) {
+  text-align: right;
+}
+
 /* Alert Boxes */
 .alert {
   padding: var(--alert-padding, 1rem 1.5rem);

@@ -26,6 +26,8 @@ defineProps({
   --tint: var(--badge-color);
 }
 
+/* The names of the color props (utils/colors.ts); default = primary */
+.badge-primary { --badge-color: var(--primary-400); }
 .badge-blue    { --badge-color: var(--one-dark-blue); }
 .badge-green   { --badge-color: var(--one-dark-green); }
 .badge-red     { --badge-color: var(--one-dark-red); }

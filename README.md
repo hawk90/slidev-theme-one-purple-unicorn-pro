@@ -7,7 +7,7 @@ A Slidev theme with purple → blue gradients and One Dark colors, built for tec
 - **Light & dark modes**: content slides switch palettes; title and emphasis slides stay dark
 - **Korean + English**: Noto Sans KR by default, any font via `fonts:`
 - **Layouts**: title, columns, image/iframe, quote/statement/fact, full-bleed
-- **Components**: badges, keys, footnotes, link cards, story boxes, pattern cards, complexity tables (with KaTeX), timelines, countdown, QR codes
+- **Components**: badges, keys, footnotes, link cards, story boxes, pattern cards, complexity tables (with KaTeX), stats, timelines, countdown, QR codes
 - **Effects**: animated borders, shimmer, glow, gradient text, entrance animations, hover effects
 - **Code**: custom One Dark-based Shiki theme (incl. CUDA/C++ keywords), window title bars, line numbers, line focus, shell sessions, Nerd Font icons; long lines wrap (never a scrollbar)
 - **Customizable**: every size, color and speed has a default and a variable or prop
@@ -159,11 +159,14 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<PatternCard>` | `signal`, `template`, `alternatives`, `sections` (`[{ key, label, icon, color, text }]`); same-named slots for rich content |
 | `<Timeline>` | `items` (`[{ title, year, desc, color }]`), `active` (a static highlight), `steps` (each click reveals the next item and moves the highlight; counts in the slide's clicks), `animate` (items fade in top to bottom when the slide arrives) |
 | `<ComplexityTable>` | `title`, `rows` (`[{ n, target, algo, complexity, highlight }]`), `showComplexity` |
+| `<Stat>` | `value` (as written: `"$4.2M"`, `"98.5%"`, `"1,024"`), `label`, `delta` (`"+12%"`; its sign picks ▲ / ▼), `good` (`up` or `down`: which way is green), `count` (counts up from 0 when the slide arrives; exports show the figure), `color`, `size` (`sm` / default / `lg`), `plain` (no card) |
 | `<Countdown>` | `minutes`, `size` (preset `sm` `default` `lg` `xl`, or any CSS length, as `<QRCode>`), `label`, `autoStart` (`false`: a ▶ start button), `showZero`. Click the timer to pause / resume, double-click to reset |
 | `<QRCode>` | `url` (empty: this deck), `slide` (`true`: this slide, or a number), `size` (preset or any CSS length), `caption`, `ecc` (`L` / `M` / `Q` / `H`), `api` (`{data}`, `{size}` are replaced), `src` |
 | `<PresenterNote>` | (slot; shown only in the presenter view, or on the slide too with `class="show"`) |
 
 `<QRCode>` is generated in the browser, so it works offline and in exports, and the URL is not sent anywhere. It is also a link. Without `url` it points to this deck: `seoMeta.ogUrl` from the headmatter if set, otherwise the address it is served from, with `--base` and `routerMode` applied, but only when that address is public. A dev server, `slidev export` and private addresses (`localhost`, `127.*`, `10.*`, `172.16–31.*`, `192.168.*`, `*.local`) would give the audience a dead link, so there it draws a dashed "No public URL" box instead (nothing in an export) and warns in the console; set `seoMeta.ogUrl` before exporting, and `url` for a deck on an intranet address. A `url` starting with `javascript:`, `data:`, `vbscript:` or `file:` draws no code. `api` switches back to a QR image service.
+
+A `color` prop (`Stat`, `StoryBox`, `PatternCard` sections, `Timeline` items) takes the theme's names — `primary`, `blue`, `cyan`, `green`, `yellow`, `red`, `gray`, which follow light mode and a `themeConfig` palette — or any CSS color. `<Badge variant>` has the same names. For numbers in text and tables: `.num` (digits of one width) and `.table-num` around a table (columns after the first right-aligned).
 
 Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props supports `$...$` math (KaTeX) and `x^y` superscripts; write `\$` for a literal dollar sign.
 
@@ -286,6 +289,7 @@ Every value below defaults to the theme's look.
 | `<StoryBox>` | `--story-color`, `--story-padding`, `--story-radius` |
 | `<PatternCard>` | `--pattern-color` |
 | `<Timeline>` | `--tl-dot-color`, `--tl-active-color`, `--tl-line-color`, `--tl-year-color` |
+| `<Stat>` | `--stat-size`, `--stat-color`, `--stat-count-duration` (`--motion-slow`, 1.2s) |
 | `<Footnote>` | `--footnote-size`, `--footnote-bottom`, `--footnote-left`, `--footnote-right` |
 | `<Countdown>` | `--countdown-size`, `--countdown-color` |
 | `<QRCode>` | `--qrcode-size` |
@@ -307,7 +311,7 @@ Every value below defaults to the theme's look.
 | `hover-lift` / `-scale` / `-tilt` / `-glow` / `-border` / `-gradient` / `-shine` | `--hover-duration`, `--hover-lift`, `--hover-scale`, `--hover-tilt-x`, `--hover-tilt-y`, `--hover-glow`, `--hover-border-c1` / `-c2`, `--hover-gradient-c1` / `-c2`, `--hover-shine-color`, `--hover-shine-width` | `hover-glow-purple` / `-blue` / `-green` / `-red` / `-cyan` / `-gold` / `-neon` (with `hover-glow`, or alone) |
 | Slide transitions (`transition:` frontmatter) | `--slide-transition-duration` | `slide-left` `slide-right` `slide-up` `fade` `scale-fade` `blur-fade` |
 
-Entrances (`anim-fade-*`, `anim-pop`) start once the slide has arrived: while a slide transition is still moving it in they wait, then play, and they replay each time the slide is reached. The defaults come from `--motion-base` (0.4s), `--motion-ease` and `--motion-distance` (0.75rem). The animated border light runs at a constant speed along the border (a small script). All animations respect `prefers-reduced-motion`.
+Entrances (`anim-fade-*`, `anim-pop`) start once the slide has arrived: while a slide transition is still moving it in they wait, then play, and they replay each time the slide is reached. The defaults come from `--motion-base` (0.4s), `--motion-ease` and `--motion-distance` (0.75rem); `--motion-slow` (1.2s) times `<Stat count>`. The animated border light runs at a constant speed along the border (a small script). All animations respect `prefers-reduced-motion`.
 
 **In PDF / PNG exports** each effect is a still picture: a static gradient ring for `anim-border`, a steady glow for `anim-glow`, no shimmer band, entrance animations finished; `Countdown` and `PresenterNote` are left out. Gradient text, border rings and shadows are drawn as images there, because PDF viewers (macOS Preview in particular) draw the CSS versions wrongly; the text stays searchable. To style exports yourself, use the `html.print-mode` class (set for `slidev export`, the export page and browser printing), not `@media print` — `slidev export` renders with screen media.
 

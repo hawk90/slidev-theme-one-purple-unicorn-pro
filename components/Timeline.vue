@@ -12,7 +12,7 @@
       :style="entrance ? { '--anim-delay': `${i * staggerSeconds}s` } : undefined"
     >
       <div class="tl-marker">
-        <div class="tl-dot" :style="item.color ? { '--tl-dot-color': item.color, '--tl-active-color': item.color } : undefined" />
+        <div class="tl-dot" :style="item.color ? { '--tl-dot-color': colorValue(item.color), '--tl-active-color': colorValue(item.color) } : undefined" />
         <div v-if="i < items.length - 1" class="tl-line" :class="{ 'tl-line-pending': i + 1 >= shown }" />
       </div>
       <div class="tl-content">
@@ -39,6 +39,7 @@ let nextId = 0
 import { computed, onUnmounted } from 'vue'
 import { useSlideContext } from '@slidev/client'
 import { richText } from '../utils/rich-text'
+import { colorValue } from '../utils/colors'
 
 const props = defineProps({
   items: { type: Array as () => TimelineItem[], required: true },

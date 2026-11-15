@@ -1,5 +1,5 @@
 <template>
-  <div class="story-box" :class="`story-${variant}`" :style="color ? { '--story-color': color } : undefined">
+  <div class="story-box" :class="`story-${variant}`" :style="color ? { '--story-color': colorValue(color) } : undefined">
     <div class="story-header">
       <span class="story-icon">{{ icon || iconMap[variant] || iconMap.history }}</span>
       <span class="story-title" v-html="richText(title)" />
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { richText } from '../utils/rich-text'
+import { colorValue } from '../utils/colors'
 
 defineProps({
   title: { type: String, default: 'History' },

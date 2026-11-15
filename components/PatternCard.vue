@@ -4,7 +4,7 @@
       <div
         class="pattern-section"
         :class="[`pattern-${s.key}`, { 'pattern-last': i === shown.length - 1 }]"
-        :style="s.color ? { '--pattern-color': s.color } : undefined"
+        :style="s.color ? { '--pattern-color': colorValue(s.color) } : undefined"
       >
         <div class="pattern-icon">{{ s.icon }}</div>
         <div class="pattern-label">{{ s.label }}</div>
@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import { richText } from '../utils/rich-text'
+import { colorValue } from '../utils/colors'
 
 interface Section {
   key: string
