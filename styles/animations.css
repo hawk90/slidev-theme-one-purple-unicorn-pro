@@ -47,10 +47,9 @@
     var(--_c1) 75%,
     var(--_c1) 100%
   );
-  -webkit-mask:
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: border-rotate var(--ab-duration, 6s) linear infinite;
   z-index: -1;
@@ -434,8 +433,7 @@
   border: 2px solid transparent;
   border-radius: inherit;
   background: linear-gradient(135deg, var(--hover-border-c1, var(--one-dark-blue)), var(--hover-border-c2, var(--one-dark-magenta))) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity var(--hover-duration, 0.3s) ease;
