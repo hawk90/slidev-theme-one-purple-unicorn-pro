@@ -30,7 +30,7 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 import { TITLE_LAYOUTS } from '../utils/layouts'
-import { stageOf, stagesOf } from '../utils/stages'
+import { stageOf, stagesOf, stageTarget } from '../utils/stages'
 
 const { currentLayout, currentSlideRoute, go, slides } = useNav()
 
@@ -48,8 +48,6 @@ const position = computed(() =>
   (frontmatter.value.stagePosition as string) || 'top'
 )
 
-const sameStages = (a: string[], b: string[]) => a.length === b.length && a.every((s, i) => s === b[i])
-
 // A mouse click leaves no focus behind, so Space / arrows keep driving the
 // slides; keyboard activation (Enter / Space) keeps focus on the button.
 // Space is stopped here so it activates the button instead of advancing.
@@ -59,23 +57,12 @@ function onStageClick(event: MouseEvent, index: number) {
 }
 
 function goToStage(index: number) {
-  // Explicit stageMap takes priority
-  const map = frontmatter.value.stageMap as number[] | undefined
-  if (map && map[index] !== undefined) {
-    go(map[index])
-    return
-  }
-
-  // Auto-detect: scan slide routes for matching stages + currentStage
-
-  for (const slide of slides.value) {
-    const fm = slide?.meta?.slide?.frontmatter
-    if (!fm) continue
-    if (stageOf(fm) === index && sameStages(stagesOf(fm), stages.value)) {
-      go(slide.no ?? slide.idx + 1)
-      return
-    }
-  }
+  // stageMap (page numbers or routeAlias names) if it points at this stage,
+  // else the first slide with the same stages at that currentStage
+  const { no, warning } = stageTarget(index, stages.value, frontmatter.value.stageMap,
+    slides.value.map(s => ({ no: s.no ?? s.idx + 1, frontmatter: s?.meta?.slide?.frontmatter ?? {} })))
+  if (warning) console.warn(`[theme] StageProgress: ${warning}`)
+  if (no !== undefined) go(no)
 }
 </script>
 

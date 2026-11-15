@@ -1316,16 +1316,17 @@ Add `stages` and `currentStage` to frontmatter. **Click any stage** to jump dire
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 1
 stagePosition: top-right   # top (default) | top-left | top-right | bottom | left | right
-stageMap: [72, 73, 74, 75] # optional: the page each stage jumps to
+stageMap: [concept, impl, opt, practice] # optional: routeAlias (or page) per stage
 ```
 
 - Green dots = completed, Purple glow = current, Gray = upcoming
 - Click any stage → auto-navigates to that slide
-- Without `stageMap`, a click jumps to the first slide with the same `stages` and that `currentStage`
+- Without `stageMap`, a click jumps to the first slide with the same `stages` and that `currentStage` (usually all you need)
 
 ---
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 0
+routeAlias: concept
 ---
 
 # Stage Demo: Concept
@@ -1345,6 +1346,7 @@ Understanding the *why* before the *how* leads to better retention and flexible 
 ---
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 1
+routeAlias: impl
 ---
 
 # Stage Demo: Implementation
@@ -1370,6 +1372,7 @@ def merge_sort(arr):
 ---
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 2
+routeAlias: opt
 ---
 
 # Stage Demo: Optimization
@@ -1390,6 +1393,7 @@ currentStage: 2
 ---
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 3
+routeAlias: practice
 ---
 
 # Stage Demo: Practice

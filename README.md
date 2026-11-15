@@ -177,7 +177,7 @@ stagePosition: top     # top | top-left | top-right | bottom | left | right
 ---
 ```
 
-Click a stage to jump to the matching slide (or give `stageMap: [3, 7, 12]`).
+Click a stage to jump to the first slide with the same `stages` at that `currentStage`. To pick other slides, give `stageMap` with each slide's `routeAlias` (`stageMap: [intro, deep, wrap]`); page numbers work too but go stale when slides move. An entry that points past the end or at a slide of other stages is reported in the console, and the click uses the matching slide instead.
 
 `bottom` sits above the footer line when one shows. `left` / `right` take a column of their own: the content slide's padding on that side grows by `--stage-side-space` (6.5rem), and labels wrap at `--stage-side-label-width` (5.5rem).
 
