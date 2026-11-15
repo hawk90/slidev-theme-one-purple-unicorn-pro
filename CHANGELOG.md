@@ -1,5 +1,40 @@
 # Changelog
 
+## Unreleased (3.5.0)
+
+### Fixes
+
+- **Light-mode exports: the chrome over a dark layout is dark again** (#106
+  regression): the progress bar, footer and page number over a dark layout took the
+  light palette in light-mode PDF/PNG exports.
+- **Border beams after the export page**: a tab opened on the export page and then
+  sent to the presentation had no moving light; an `anim-border` class added to an
+  element already on the slide now gets one too (#89).
+- **Utility classes on images apply** (`w-40`, `mx-0`, ...): the theme's image rule
+  outweighed them (#84).
+
+### Changes
+
+- **Light mode weighs like dark mode** (#84): each light-mode rule weighs what the
+  dark rule it replaces weighs, so a component's own style or a utility class wins in
+  both modes. Visible change: `<ComplexityTable>`'s header line is its own 1px in
+  light mode, as in dark mode (was 2px).
+
+### Internal
+
+- Structure (#62): `applyThemeConfig()` (#90), `outputLines()` out of the terminal
+  transformer (#87), CUDA token data in `cuda-tokens.ts` (#88), global-bottom's logic
+  in tested utils (#83), tests for the pure logic that had none (#86), the light-mode
+  lists side by side with the private variables documented (#82), one `slide-chrome`
+  marker (#79), CSS rules in the files they belong to (`blocks.css`, `print.css`, #85),
+  `styles.css` marks where import order matters (#84).
+- Slidev internals the theme relies on are listed in `utils/slidev-dom.ts` and DEV.md,
+  checked by `npm run check:slidev` after a Slidev upgrade (#81).
+- Export code in three parts (#80): `setupPrintMode()` (print-mode.ts, called first),
+  the capture hold (export-hold.ts), and the redraws (print-export.ts) with named
+  `watchColorScheme()` / `watchEditableExport()`. Slide arrival watches `#slideshow`
+  instead of the whole page (#89).
+
 ## Unreleased (3.4.0)
 
 ### Features
