@@ -57,6 +57,9 @@ slidev-theme-one-purple-unicorn-pro/
 
 ## 규칙
 
+- **Slidev 내부에 기대는 곳**: 공개 API가 아니라서 Slidev를 올리면 `npm run check:slidev`(scripts/check-slidev-internals.mjs)로 아직 있는지 확인해요. JS 쪽 이름은 `utils/slidev-dom.ts` 한 곳에 있어요.
+  - DOM: `#slide-content > #slideshow`, 슬라이드마다 `.slidev-page[data-slidev-no]`(나머지는 v-show로 `display: none`), `.slidev-layout`, 내보내기 페이지의 `.print-slide-container`, 슬라이드 전환의 `*-enter-from/-active`, `slidev export`가 기다리는 `.slidev-slide-loading`
+  - CSS: `.slidev-code-tab[style*="tab-active-text-color"]`(code-theme.css), `.slidev-pwa-indicator`(animations.css), 변수 `--slidev-code-radius`·`--slidev-code-font-size`·`--slidev-transition-duration`
 - **파일을 넘나드는 비공개 변수**: 이름이 `--_`로 시작하면 테마 내부용이에요. 여러 파일이 같이 쓰는 건 다음 둘이에요.
   - `--_root-*` (light-theme.css): 라이트 모드가 바꾸기 전 루트 값의 복사본이에요. 어두운 레이아웃 복원에 쓰이고, 라이트 모드에서도 다크 값을 그대로 써야 하는 곳(animations.css의 반짝임 색, code-theme.css의 코드 창 제목·줄 번호)이 직접 읽어요.
   - `--_progress-track-default` (light-theme.css → global-bottom.vue): 라이트 모드의 진행바 바탕색이에요. 어두운 레이아웃에서는 `initial`로 지워 다크 기본값이 돌아와요.

@@ -8,8 +8,7 @@
 // never gets the class and plays as before.
 
 import { isPrintMode } from './print-mode'
-
-const ENTERING = /-enter-(?:from|active|to)$/
+import { ENTERING_CLASS as ENTERING } from './slidev-dom'
 
 function update(page: Element) {
   const entering = [...page.classList].some(c => ENTERING.test(c))

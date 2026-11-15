@@ -71,6 +71,7 @@
   },
   "scripts": {
     "check:decks": "node scripts/check-decks.mjs",
+    "check:slidev": "node scripts/check-slidev-internals.mjs",
     "regress": "node scripts/regress.mjs",
     "test": "node --test 'test/*.test.ts'"
   },

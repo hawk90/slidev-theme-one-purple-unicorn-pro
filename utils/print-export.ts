@@ -15,13 +15,14 @@ import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJo
 import { canRedraw, noPseudoClass } from './print-canvas'
 import { isPrintMode, trackPrintRoute } from './print-mode'
 import { CHROME_CLASS } from './layouts'
+import { LAYOUT_CLASS, LOADING_CLASS, SLIDE_NO_ATTR } from './slidev-dom'
 import { nextTick } from 'vue'
 import { katexSettled } from './rich-text'
 
 const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
 // Slide content and the theme's slide chrome (global-top / global-bottom)
-const SLIDE = `.slidev-layout, .${CHROME_CLASS}`
+const SLIDE = `.${LAYOUT_CLASS}, .${CHROME_CLASS}`
 
 // Slide elements in `root` (the root itself included)
 function slideElements(root: Element | Document) {
@@ -142,7 +143,7 @@ let holding = false
 const pageHold = () => document.getElementById('theme-export-hold')
 function addHold(parent: Element) {
   const hold = document.createElement('div')
-  hold.className = 'slidev-slide-loading'
+  hold.className = LOADING_CLASS
   hold.style.display = 'none'
   parent.appendChild(hold)
   holds.add(hold)
@@ -152,7 +153,7 @@ function hold() {
   const first = pageHold()
   if (first) holds.add(first)
   else addHold(document.body)
-  document.querySelectorAll('[data-slidev-no]').forEach(addHold)
+  document.querySelectorAll(`[${SLIDE_NO_ATTR}]`).forEach(addHold)
   setTimeout(release, HOLD_MS)
 }
 function release() {
@@ -209,10 +210,10 @@ function start() {
     let added = false
     for (const m of mutations) {
       m.addedNodes.forEach((n) => {
-        if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO) || n.matches('.slidev-slide-loading')) return
+        if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO) || n.matches(`.${LOADING_CLASS}`)) return
         if (holding) {
-          if (n.matches('[data-slidev-no]')) addHold(n)
-          n.querySelectorAll('[data-slidev-no]').forEach(addHold)
+          if (n.matches(`[${SLIDE_NO_ATTR}]`)) addHold(n)
+          n.querySelectorAll(`[${SLIDE_NO_ATTR}]`).forEach(addHold)
         }
         pending?.add(n)
         added = true
@@ -241,10 +242,10 @@ function start() {
 // The slides are on the page with their content: Slidev shows nothing for a
 // slide still compiling, then its own loading placeholder
 function slidesLoaded() {
-  const slides = [...document.querySelectorAll('[data-slidev-no]')]
+  const slides = [...document.querySelectorAll(`[${SLIDE_NO_ATTR}]`)]
   return slides.length > 0
     && slides.every(slide => [...slide.children].some(c => !holds.has(c as HTMLElement)))
-    && [...document.querySelectorAll<HTMLElement>('.slidev-slide-loading')].every(el => holds.has(el))
+    && [...document.querySelectorAll<HTMLElement>(`.${LOADING_CLASS}`)].every(el => holds.has(el))
 }
 
 export function setupPrintExport(router?: Parameters<typeof trackPrintRoute>[0] & { afterEach: (hook: () => void) => unknown }) {

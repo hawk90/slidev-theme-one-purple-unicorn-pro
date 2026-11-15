@@ -12,17 +12,18 @@
 
 import type { Ref } from 'vue'
 import { nextTick, watch } from 'vue'
+import { LAYOUT_CLASS, SLIDE_CONTENT_ID, SLIDESHOW_ID, slideSelector } from './slidev-dom'
 
 export function watchDarkChrome(currentPage: Ref<number>) {
-  const content = document.getElementById('slide-content')
-  const slideshow = content?.querySelector(':scope > #slideshow')
+  const content = document.getElementById(SLIDE_CONTENT_ID)
+  const slideshow = content?.querySelector(`:scope > #${SLIDESHOW_ID}`)
   if (!content || !slideshow) return () => {}
 
   let frame = 0
   const update = () => {
     cancelAnimationFrame(frame)
     frame = requestAnimationFrame(() => {
-      const layout = slideshow.querySelector(`:scope > [data-slidev-no="${currentPage.value}"] .slidev-layout`)
+      const layout = slideshow.querySelector(`:scope > ${slideSelector(currentPage.value)} .${LAYOUT_CLASS}`)
       content.classList.toggle('chrome-dark', !!layout?.classList.contains('slide-dark'))
     })
   }
