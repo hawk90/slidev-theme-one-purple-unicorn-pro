@@ -18,7 +18,7 @@ import { isPrintMode, trackPrintRoute } from './print-mode'
 const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
 // Slide content and the theme's slide chrome (global-top / global-bottom)
-const SLIDE = '.slidev-layout, .progress-bar, .slide-indicator, .stage-progress'
+const SLIDE = '.slidev-layout, .progress-bar, .slide-footer, .slide-indicator, .stage-progress'
 
 // Slide elements in `root` (the root itself included)
 function slideElements(root: Element | Document) {
