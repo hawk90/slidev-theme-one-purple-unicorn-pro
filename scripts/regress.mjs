@@ -173,21 +173,17 @@ async function captureDev(deckDir, scheme, dest) {
       await page.evaluate(s => document.documentElement.classList.toggle('dark', s === 'dark'), scheme)
       // Parts that differ on every run regardless of the theme: an embedded
       // page (live site), a running countdown's digits. Hidden, layout kept.
-      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important} iframe,.countdown-time{visibility:hidden!important}' })
+      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important} iframe,.countdown-time{visibility:hidden!important}' })
       await page.waitForFunction((no) => {
         const s = document.querySelector(`[data-slidev-no="${no}"]`)
         return s && !s.querySelector('.slidev-slide-loading') && [...document.images].every(i => i.complete)
       }, n, { timeout: 30000 }).catch(() => log(`  slide ${n}: still loading`))
       await page.evaluate(() => document.fonts.ready)
       await page.waitForTimeout(300)
-      // A code block with {maxHeight} scrolls to its focused lines: wait until
-      // every scroll position has stopped moving
-      await page.waitForFunction(() => {
-        const now = [...document.querySelectorAll('pre, .slidev-code-wrapper')].map(e => e.scrollTop).join()
-        const same = now === window.__regressScroll
-        window.__regressScroll = now
-        return same
-      }, null, { polling: 250, timeout: 5000 }).catch(() => {})
+      // A code block with {maxHeight} scrolls to its focused lines, at a moment
+      // that varies run to run (Slidev's, not the theme's): show it from the top
+      await page.evaluate(() => document.querySelectorAll('pre, .slidev-code-wrapper').forEach((e) => { e.scrollTop = 0 }))
+      await page.waitForTimeout(100)
       await page.locator('#slide-content').screenshot({ path: path.join(dest, `${n}.png`) })
     }
     await browser.close()
