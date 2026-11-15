@@ -101,3 +101,12 @@ describe('cudaTransformer: comment and string colors from the theme', () => {
     assert.match(html(['#123456']), /color:#78dce8/)
   })
 })
+
+describe('launchRanges (pure)', async () => {
+  const { launchRanges } = await import('../setup/cuda-transformer.ts')
+  const parts = (text: string, quiet?: (i: number) => boolean) => launchRanges(text, quiet).map(r => text.slice(r.start, r.end))
+  it('kernel name, <<< and >>>', () => assert.deepEqual(parts('saxpy<<<g, b>>>(n);'), ['saxpy', '<<<', '>>>']))
+  it('with template arguments', () => assert.deepEqual(parts('k<std::vector<int>><<<1, 32>>>();'), ['k', '<<<', '>>>']))
+  it('two launches on a line', () => assert.equal(parts('a<<<1,1>>>(); b<<<2,2>>>();').length, 6))
+  it('a launch starting in a comment is skipped', () => assert.deepEqual(parts('// k<<<g, b>>>', () => true), []))
+})

@@ -5,91 +5,8 @@
 
 import type { ShikiTransformer } from 'shiki'
 import type { Content, Element, Node } from './hast'
+import { cudaTokens } from './cuda-tokens.ts' // .ts: node --test loads this file directly
 
-interface TokenDef {
-  words: string
-  color: string
-  bold?: boolean
-  italic?: boolean
-}
-
-const cudaTokens: TokenDef[] = [
-  // --- CUDA execution qualifiers ---
-  {
-    words: '__global__ __device__ __host__ __shared__ __constant__ __managed__ __restrict__ __noinline__ __forceinline__ __launch_bounds__',
-    color: '#ff6188',
-    bold: true,
-  },
-  // --- CUDA built-in variables ---
-  {
-    words: 'threadIdx blockIdx blockDim gridDim warpSize',
-    color: '#ff6188',
-  },
-  // --- Synchronization & warp intrinsics ---
-  {
-    words: '__syncthreads __syncwarp __threadfence __threadfence_block __threadfence_system __ballot_sync __all_sync __any_sync __shfl_sync __shfl_up_sync __shfl_down_sync __shfl_xor_sync',
-    color: '#78dce8',
-  },
-  // --- Atomic operations ---
-  {
-    words: 'atomicAdd atomicSub atomicExch atomicMin atomicMax atomicInc atomicDec atomicCAS atomicAnd atomicOr atomicXor',
-    color: '#78dce8',
-  },
-  // --- CUDA Runtime API ---
-  {
-    words: 'cudaMalloc cudaMallocHost cudaMallocManaged cudaMallocPitch cudaMalloc3D cudaFree cudaFreeHost cudaMemcpy cudaMemcpyAsync cudaMemcpy2D cudaMemcpyToSymbol cudaMemcpyFromSymbol cudaMemset cudaMemsetAsync cudaMemGetInfo cudaMemPrefetchAsync cudaMemAdvise',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Device API ---
-  {
-    words: 'cudaGetDevice cudaSetDevice cudaGetDeviceCount cudaGetDeviceProperties cudaDeviceGetAttribute cudaDeviceSynchronize cudaDeviceReset cudaDeviceCanAccessPeer cudaDeviceEnablePeerAccess cudaDeviceGetLimit cudaDeviceSetLimit cudaDeviceGetCacheConfig cudaDeviceSetCacheConfig',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Stream/Event API ---
-  {
-    words: 'cudaStreamCreate cudaStreamCreateWithFlags cudaStreamCreateWithPriority cudaStreamDestroy cudaStreamSynchronize cudaStreamWaitEvent cudaStreamQuery cudaEventCreate cudaEventCreateWithFlags cudaEventDestroy cudaEventRecord cudaEventSynchronize cudaEventElapsedTime cudaEventQuery',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Error API ---
-  {
-    words: 'cudaGetLastError cudaPeekAtLastError cudaGetErrorString cudaGetErrorName cudaSuccess',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Occupancy/Launch API ---
-  {
-    words: 'cudaOccupancyMaxActiveBlocksPerMultiprocessor cudaOccupancyMaxPotentialBlockSize cudaFuncGetAttributes cudaFuncSetAttribute cudaFuncSetCacheConfig cudaLaunchKernel cudaLaunchCooperativeKernel cudaHostAlloc cudaHostRegister cudaHostUnregister cudaHostGetDevicePointer',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Graph API ---
-  {
-    words: 'cudaGraphCreate cudaGraphDestroy cudaGraphLaunch cudaGraphInstantiate cudaGraphExecDestroy cudaGraphAddKernelNode cudaGraphAddMemcpyNode cudaGraphAddMemsetNode',
-    color: '#78dce8',
-    bold: true,
-  },
-  // --- CUDA Types ---
-  {
-    words: 'dim3 cudaError_t cudaStream_t cudaEvent_t cudaDeviceProp cudaMemcpyKind cudaFuncAttributes cudaGraph_t cudaGraphExec_t cudaPointerAttributes cudaChannelFormatDesc cudaPitchedPtr cudaExtent',
-    color: '#a9dc76',
-  },
-  // --- CUDA Enum Constants ---
-  {
-    words: 'cudaMemcpyHostToDevice cudaMemcpyDeviceToHost cudaMemcpyDeviceToDevice cudaMemcpyHostToHost cudaMemcpyDefault cudaErrorMemoryAllocation cudaErrorInvalidValue cudaErrorInvalidDevice cudaStreamDefault cudaStreamNonBlocking cudaEventDefault cudaEventBlockingSync cudaEventDisableTiming cudaHostAllocDefault cudaHostAllocPortable cudaHostAllocMapped cudaMemAttachGlobal cudaMemAttachHost cudaFuncCachePreferNone cudaFuncCachePreferShared cudaFuncCachePreferL1 cudaFuncCachePreferEqual',
-    color: '#fc9867',
-  },
-  // --- CUDA Math Intrinsics ---
-  {
-    words: '__float2half __half2float __float2int_rn __int2float_rn __float_as_int __int_as_float __fmaf_rn __fmul_rn __fadd_rn __fdiv_rn __fsqrt_rn __expf __logf __log2f __sinf __cosf __tanf __powf rsqrtf fmaf __saturatef __clz __ffs __popc __brev __ldg __ldca __ldcs',
-    color: '#78dce8',
-    italic: true,
-  },
-]
-
-// Each name with its style: one lookup per word, not 13 regexes per text
 const STYLES = new Map<string, string>()
 for (const { words, color, bold, italic } of cudaTokens) {
   const style = `color:${color};${bold ? 'font-weight:bold;' : ''}${italic ? 'font-style:italic;' : ''}`
@@ -168,6 +85,45 @@ function textNodes(node: Node, isQuiet: IsQuiet, out: TextNode[] = [], pos = { a
   return out
 }
 
+interface Range { start: number, end: number, style: string }
+
+/** The kernel name and the <<< and >>> of each launch on a line of text,
+ *  skipping launches that start in a comment or string (`quietAt`) */
+export function launchRanges(text: string, quietAt: (i: number) => boolean = () => false): Range[] {
+  const ranges: Range[] = []
+  for (const m of text.matchAll(LAUNCH)) {
+    const at = m.index!
+    if (quietAt(at)) continue
+    ranges.push({ start: at, end: at + m[1].length, style: KERNEL_STYLE })
+    const open = at + m[0].indexOf('<<<', m[1].length)
+    ranges.push({ start: open, end: open + 3, style: LAUNCH_STYLE })
+    const close = at + m[0].length - 3
+    ranges.push({ start: close, end: close + 3, style: LAUNCH_STYLE })
+  }
+  return ranges
+}
+
+// Split each text node at the range edges, wrapping the parts inside a range
+// in a styled span; last node first, so the earlier nodes' indexes hold
+function splitAtRanges(nodes: TextNode[], ranges: Range[], text: string) {
+  for (const n of [...nodes].reverse()) {
+    const end = n.start + n.value.length
+    const cuts = ranges.filter(r => r.start < end && r.end > n.start)
+    if (!cuts.length) continue
+    const pieces: Content[] = []
+    let at = n.start
+    for (const r of cuts) {
+      const a = Math.max(r.start, n.start)
+      const b = Math.min(r.end, end)
+      if (a > at) pieces.push({ type: 'text', value: text.slice(at, a) })
+      pieces.push({ type: 'element', tagName: 'span', properties: { style: r.style }, children: [{ type: 'text', value: text.slice(a, b) }] })
+      at = b
+    }
+    if (at < end) pieces.push({ type: 'text', value: text.slice(at, end) })
+    n.parent.children.splice(n.index, 1, ...pieces)
+  }
+}
+
 // Cross-span: style the kernel name and the <<< >>> of each launch. Shiki
 // splits them unpredictably (`<<` + `<`, or `<float><<<` in one span), so
 // ranges are found on the line's text and the text nodes split to fit.
@@ -177,37 +133,9 @@ function markKernelLaunch(codeNode: Element, isQuiet: IsQuiet) {
     const nodes = textNodes(line, isQuiet)
     const text = nodes.map(n => n.value).join('')
     if (!text.includes('<<<')) continue
-
-    const ranges: { start: number, end: number, style: string }[] = []
     const quietAt = (i: number) => nodes.some(n => n.quiet && i >= n.start && i < n.start + n.value.length)
-    for (const m of text.matchAll(LAUNCH)) {
-      const at = m.index!
-      if (quietAt(at)) continue // in a comment or string
-      ranges.push({ start: at, end: at + m[1].length, style: KERNEL_STYLE })
-      const open = at + m[0].indexOf('<<<', m[1].length)
-      ranges.push({ start: open, end: open + 3, style: LAUNCH_STYLE })
-      const close = at + m[0].length - 3
-      ranges.push({ start: close, end: close + 3, style: LAUNCH_STYLE })
-    }
-    if (!ranges.length) continue
-
-    // Split each text node at the range edges, last node first so indexes hold
-    for (const n of [...nodes].reverse()) {
-      const end = n.start + n.value.length
-      const cuts = ranges.filter(r => r.start < end && r.end > n.start)
-      if (!cuts.length) continue
-      const pieces: Content[] = []
-      let at = n.start
-      for (const r of cuts) {
-        const a = Math.max(r.start, n.start)
-        const b = Math.min(r.end, end)
-        if (a > at) pieces.push({ type: 'text', value: text.slice(at, a) })
-        pieces.push({ type: 'element', tagName: 'span', properties: { style: r.style }, children: [{ type: 'text', value: text.slice(a, b) }] })
-        at = b
-      }
-      if (at < end) pieces.push({ type: 'text', value: text.slice(at, end) })
-      n.parent.children.splice(n.index, 1, ...pieces)
-    }
+    const ranges = launchRanges(text, quietAt)
+    if (ranges.length) splitAtRanges(nodes, ranges, text)
   }
 }
 
