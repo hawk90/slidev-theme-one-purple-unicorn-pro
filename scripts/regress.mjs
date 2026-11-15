@@ -21,11 +21,10 @@ import os from 'node:os'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { createRequire } from 'node:module'
+import { diffPng, prepareSlide, slideCount, startDevServer } from './lib/shots.mjs'
 
 const repo = process.env.REGRESS_REPO || process.cwd()
 const require = createRequire(path.join(repo, 'package.json'))
-const { PNG } = require('pngjs')
-const pixelmatch = require('pixelmatch').default ?? require('pixelmatch')
 
 const args = process.argv.slice(2)
 const opt = (name, fallback) => {
@@ -152,44 +151,22 @@ function run(cmd, a, cwd, logFile) {
 let nextPort = 3650
 async function captureDev(deckDir, scheme, dest) {
   const { chromium } = require('playwright')
-  const port = nextPort++
-  const proc = spawn('npx', ['slidev', 'slides.md', '--port', String(port)], { cwd: deckDir, stdio: 'ignore', detached: true })
+  const server = await startDevServer({ cwd: deckDir, port: nextPort++ })
   try {
-    for (let i = 0; ; i++) {
-      try { if ((await fetch(`http://localhost:${port}`)).ok) break } catch {}
-      if (i > 120) throw new Error('dev server did not start')
-      await new Promise(r => setTimeout(r, 500))
-    }
     const browser = await chromium.launch()
     // same frame as `slidev export` png: 980x552 @2x
     const page = await browser.newPage({ viewport: { width: 980, height: 552 }, deviceScaleFactor: 2, colorScheme: scheme, reducedMotion: 'reduce' })
-    await page.goto(`http://localhost:${port}/1`, { waitUntil: 'load' })
-    await page.waitForFunction(() => window.__slidev__?.nav?.total, null, { timeout: 60000 })
-    const total = await page.evaluate(() => window.__slidev__.nav.total)
+    const total = await slideCount(page, server.port)
     const [from, to] = range ? range.split('-').map(Number) : [1, total]
     fs.rmSync(dest, { recursive: true, force: true }); fs.mkdirSync(dest, { recursive: true })
     for (let n = from; n <= Math.min(to || from, total); n++) {
-      await page.goto(`http://localhost:${port}/${n}?embedded=true`, { waitUntil: 'networkidle' })
-      await page.evaluate(s => document.documentElement.classList.toggle('dark', s === 'dark'), scheme)
-      // Parts that differ on every run regardless of the theme: an embedded
-      // page (live site), a running countdown's digits. Hidden, layout kept.
-      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important} iframe,.countdown-time{visibility:hidden!important}' })
-      await page.waitForFunction((no) => {
-        const s = document.querySelector(`[data-slidev-no="${no}"]`)
-        return s && !s.querySelector('.slidev-slide-loading') && [...document.images].every(i => i.complete)
-      }, n, { timeout: 30000 }).catch(() => log(`  slide ${n}: still loading`))
-      await page.evaluate(() => document.fonts.ready)
-      await page.waitForTimeout(300)
-      // A code block with {maxHeight} scrolls to its focused lines, at a moment
-      // that varies run to run (Slidev's, not the theme's): show it from the top
-      await page.evaluate(() => document.querySelectorAll('pre, .slidev-code-wrapper').forEach((e) => { e.scrollTop = 0 }))
-      await page.waitForTimeout(100)
+      await prepareSlide(page, server.port, n, { scheme, embedded: true, onSlow: no => log(`  slide ${no}: still loading`) })
       await page.locator('#slide-content').screenshot({ path: path.join(dest, `${n}.png`) })
     }
     await browser.close()
     return total
   }
-  finally { try { process.kill(-proc.pid) } catch {} }
+  finally { server.stop() }
 }
 
 const capture = engine === 'dev' ? captureDev : captureExport
@@ -201,16 +178,13 @@ function compare(a, b, scheme) {
   for (const f of names) {
     const n = parseInt(f)
     if (!fs.existsSync(path.join(a, f)) || !fs.existsSync(path.join(b, f))) { rows.push({ n, px: Infinity, note: fs.existsSync(path.join(a, f)) ? 'removed' : 'added' }); continue }
-    const A = PNG.sync.read(fs.readFileSync(path.join(a, f))); const B = PNG.sync.read(fs.readFileSync(path.join(b, f)))
-    if (A.width !== B.width || A.height !== B.height) { rows.push({ n, px: Infinity, note: 'size' }); continue }
-    const D = new PNG({ width: A.width, height: A.height })
-    const px = pixelmatch(A.data, B.data, D.data, A.width, A.height, { threshold: 0.05, diffMask: false, alpha: 0.2 })
+    const { px, diff, note } = diffPng(fs.readFileSync(path.join(a, f)), fs.readFileSync(path.join(b, f)))
     if (px > threshold) {
       const d = path.join(outDir, scheme); fs.mkdirSync(d, { recursive: true })
       fs.copyFileSync(path.join(a, f), path.join(d, `${n}-base.png`))
       fs.copyFileSync(path.join(b, f), path.join(d, `${n}-head.png`))
-      fs.writeFileSync(path.join(d, `${n}-diff.png`), PNG.sync.write(D))
-      rows.push({ n, px })
+      if (diff) fs.writeFileSync(path.join(d, `${n}-diff.png`), diff)
+      rows.push({ n, px, note })
     }
   }
   return { total: names.length, changed: rows }

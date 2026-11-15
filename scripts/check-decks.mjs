@@ -14,13 +14,11 @@
 //
 // Nothing in the deck projects is modified.
 
-import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
-import { PNG } from 'pngjs'
-import pixelmatch from 'pixelmatch'
+import { diffPng, prepareSlide, slideCount, startDevServer } from './lib/shots.mjs'
 
 const themeRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -42,49 +40,18 @@ if (!decks.length) {
   process.exit(1)
 }
 
-const sleep = ms => new Promise(r => setTimeout(r, ms))
 let nextPort = 3600
 
-async function startServer(deck, extra) {
-  const port = nextPort++
-  const cwd = path.dirname(deck)
-  const proc = spawn('npx', ['slidev', path.basename(deck), '--port', String(port), ...extra], {
-    cwd, stdio: ['ignore', 'pipe', 'pipe'], detached: true,
-  })
-  let log = ''
-  proc.stdout.on('data', d => { log += d })
-  proc.stderr.on('data', d => { log += d })
-  for (let i = 0; i < 120; i++) {
-    try {
-      if ((await fetch(`http://localhost:${port}`)).ok) return { port, stop: () => process.kill(-proc.pid) }
-    }
-    catch {}
-    if (proc.exitCode !== null) break
-    await sleep(1000)
-  }
-  try { process.kill(-proc.pid) } catch {}
-  throw new Error(`Slidev did not start for ${deck}\n${log.slice(-1500)}`)
-}
+const startServer = (deck, extra) =>
+  startDevServer({ cwd: path.dirname(deck), file: path.basename(deck), port: nextPort++, args: extra })
 
 async function capture(browser, port, scheme, range) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, colorScheme: scheme, reducedMotion: 'reduce' })
-  await page.goto(`http://localhost:${port}/1`, { waitUntil: 'load' })
-  await page.waitForTimeout(4000)
-  const total = await page.evaluate(() => window.__slidev__?.nav?.total || 1)
+  const total = await slideCount(page, port)
   const [from, to] = range ? range.split('-').map(Number) : [1, total]
   const shots = {}
   for (let n = from; n <= Math.min(to || from, total); n++) {
-    await page.goto(`http://localhost:${port}/${n}`, { waitUntil: 'load' })
-    await page.evaluate(s => document.documentElement.classList.toggle('dark', s === 'dark'), scheme)
-    await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important}' })
-    // A slide compiled on first visit is empty for 300 ms, then shows
-    // "Loading slide…" (Slidev's async slide component)
-    await page.waitForFunction((no) => {
-      const slide = document.querySelector(`[data-slidev-no="${no}"]`)
-      return slide && !slide.querySelector('.slidev-slide-loading')
-        && (slide.textContent.trim() || slide.querySelector('img, svg, canvas, video'))
-    }, n, { timeout: 30000 }).catch(() => console.warn(`  slide ${n}: still loading after 30 s`))
-    await page.waitForTimeout(700)
+    await prepareSlide(page, port, n, { scheme, settleMs: 700, onSlow: no => console.warn(`  slide ${no}: still loading after 30 s`) })
     shots[n] = await page.screenshot()
   }
   await page.close()
@@ -109,16 +76,14 @@ for (const deckArg of decks) {
       const changed = []
       for (const n of Object.keys(a)) {
         if (!b[n]) continue
-        const A = PNG.sync.read(a[n]); const B = PNG.sync.read(b[n])
-        const D = new PNG({ width: A.width, height: A.height })
-        const px = pixelmatch(A.data, B.data, D.data, A.width, A.height, { threshold: 0.05 })
+        const { px, diff, note } = diffPng(a[n], b[n])
         if (px > threshold) {
-          changed.push(`${n} (${px}px)`)
+          changed.push(`${n} (${note ?? `${px}px`})`)
           const dir = path.join(outDir, name, scheme)
           fs.mkdirSync(dir, { recursive: true })
           fs.writeFileSync(path.join(dir, `${n}-current.png`), a[n])
           fs.writeFileSync(path.join(dir, `${n}-local.png`), b[n])
-          fs.writeFileSync(path.join(dir, `${n}-diff.png`), PNG.sync.write(D))
+          if (diff) fs.writeFileSync(path.join(dir, `${n}-diff.png`), diff)
         }
       }
       changedTotal += changed.length
