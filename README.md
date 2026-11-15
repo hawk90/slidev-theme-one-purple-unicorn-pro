@@ -202,6 +202,7 @@ progressBarSkipMode: exclude  # hide (default): only hide the bar
                               # exclude: also leave skipped pages out of the progress
 pageNumber: false             # hide the page number (default: shown, except on title slides and section dividers)
 pageNumberFormat: c of t      # c/t (default, "3 / 12") | c ("3") | c of t ("3 of 12")
+paceBar: true                 # a time marker on the bar (see below)
 
 # Exports only (PDF / PNG / ?print); the presentation is unchanged
 progressBarInExport: false
@@ -209,6 +210,8 @@ pageNumberInExport: false
 footerInExport: false
 ---
 ```
+
+**Pace marker**: with `paceBar: true`, a tick on the progress bar shows the time used of the deck's `duration` (Slidev's option, `30min` by default; `1h15m`, `45:00` work too) once the timer in the presenter view runs. Next to the fill (the slides done) it reads at a glance: green on pace, yellow more than 5% behind, red more than 15% behind. Exports leave it out. Colors: `--pace-on-color`, `--pace-behind-color`, `--pace-late-color`.
 
 On one slide, `pageNumber: skip` hides the number and leaves the slide out of the count, and `pageNumber: hold` shows the last number again without counting the slide (for a build-up split over slides). `appendix: true` on a slide starts the appendix: from there on the pages are A1, A2…, and the total shown before stays the count of the main part.
 
@@ -270,7 +273,7 @@ Every value below defaults to the theme's look.
 | Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; code that doesn't fit is cut off, never scrolled) |
 | Utility guards | `--grid-padding-x` (2rem side padding on `grid` inside slides), `--flex-wrap` (`flex` wraps by default), `--absolute-max-width` |
 | Slide transitions | `--slide-transition-duration` |
-| Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
+| Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom`, `--pace-on-color`, `--pace-behind-color`, `--pace-late-color` |
 | Cover details | `--cover-info-color`, `--cover-info-muted`, `--cover-logo-height` |
 | Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage`, `--footnote-bottom-with-footer-and-stage` (where a `<Footnote>` goes then); `--footer-clearance-with-footer` (room the column layouts' `bottom` slot leaves above the line, 1.5rem) |
 | Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size`; `--stage-bottom-with-footer`, `--stage-side-space`, `--stage-side-label-width` |

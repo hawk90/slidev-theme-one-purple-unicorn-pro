@@ -2,6 +2,12 @@
   <!-- Progress Bar: always or content-only based on frontmatter -->
   <div v-if="showBar" class="progress-bar slide-chrome">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
+    <div
+      v-if="paceMark"
+      class="progress-pace"
+      :class="`pace-${paceMark.state}`"
+      :style="{ left: paceMark.percent + '%' }"
+    />
   </div>
 
   <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
@@ -17,13 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue'
-import { configs, resolveAssetUrl, useNav } from '@slidev/client'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { configs, resolveAssetUrl, sharedState, useNav } from '@slidev/client'
+import { durationSeconds, pace, timerElapsed } from './utils/pace'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
 import { watchSlideArrival } from './utils/slide-arrival'
-import { headmatterOf, isHeadmatterSlide, isOff } from './utils/frontmatter'
+import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
 
@@ -39,11 +46,15 @@ let stopDarkChrome = () => {}
 // Entrances wait for the slide transition (utils/slide-arrival.ts); exports
 // play none
 let stopArrival = () => {}
+// paceBar: true (headmatter) ticks the clock the pace marker reads
+const now = ref(Date.now())
+let paceTimer: ReturnType<typeof setInterval> | undefined
 onMounted(() => {
   stopDarkChrome = watchDarkChrome(currentPage)
   if (!isPrintMode.value) stopArrival = watchSlideArrival()
+  if (!isPrintMode.value && isOn(headmatter.paceBar)) paceTimer = setInterval(() => { now.value = Date.now() }, 1000)
 })
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); clearInterval(paceTimer) })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide
@@ -108,6 +119,17 @@ const footer = computed(() => {
 })
 
 const progress = computed(() => progressPercent(currentPage.value, total.value, skipPages.value, excludeSkipped.value))
+
+// paceBar: true → a marker on the bar for the time used of the deck's
+// `duration` (Slidev's, 30min by default), once the presenter view's timer
+// runs; green on pace, yellow behind, red late (utils/pace.ts). Not in exports.
+const paceDuration = durationSeconds(configs.duration)
+const paceMark = computed(() => {
+  if (isPrintMode.value || !isOn(headmatter.paceBar) || !paceDuration) return null
+  const elapsed = timerElapsed(sharedState.timer, now.value)
+  if (!elapsed) return null
+  return pace(elapsed, paceDuration, progress.value)
+})
 </script>
 
 <style>
@@ -143,6 +165,24 @@ const progress = computed(() => progressPercent(currentPage.value, total.value, 
   transition: width var(--transition-slow);
   box-shadow: var(--progress-glow, 0 0 8px color-mix(in srgb, var(--_root-primary-400, #c678dd) 40%, transparent));
 }
+
+/* The pace marker: a short upright tick on the bar where the time is.
+   Theme variables: --pace-on-color, --pace-behind-color, --pace-late-color */
+.progress-pace {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: calc(var(--progress-height, 3px) + 6px);
+  margin-left: -1.5px;
+  border-radius: 2px 2px 0 0;
+  background: var(--_pace-color);
+  box-shadow: 0 0 6px var(--_pace-color);
+  transition: left 1s linear, background var(--transition-base);
+}
+
+.pace-on { --_pace-color: var(--pace-on-color, var(--one-dark-green)); }
+.pace-behind { --_pace-color: var(--pace-behind-color, var(--one-dark-yellow)); }
+.pace-late { --_pace-color: var(--pace-late-color, var(--one-dark-red)); }
 
 .slide-indicator {
   position: fixed;

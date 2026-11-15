@@ -7,6 +7,8 @@ event: Slidev Meetup 2026
 date: '2026-10-10'
 logo: /logo.svg
 footer: true
+duration: 30min
+paceBar: true
 highlighter: shiki
 layout: cover
 ---
@@ -1369,9 +1371,12 @@ pageNumber: false            # hide the page number
 
 progressBarInExport: false   # PDF / PNG exports only
 pageNumberInExport: false
+
+duration: 30min              # Slidev's talk length (default 30min)
+paceBar: true                # a time marker on the bar while the presenter timer runs
 ```
 
-The bar tracks the current page with a gradient fill and glow effect.
+The bar tracks the current page with a gradient fill and glow effect. This deck sets `paceBar: true`: start the timer in the presenter view and a tick on the bar shows the time used, green on pace, yellow behind, red late.
 
 ---
 footer: [logo, title, event]

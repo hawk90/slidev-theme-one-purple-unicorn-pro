@@ -14,6 +14,9 @@
   click goes to the section. `stageLabels: all | active | hover` shows every label,
   only the current one (the default for more than 6 sections), or a dot rail with names
   on hover; `stagePosition` can be set in the headmatter.
+- **Pace marker** (#130): `paceBar: true` puts a tick on the progress bar for the time
+  used of the deck's `duration` while the presenter timer runs, green on pace, yellow
+  behind, red late.
 
 ## 4.0.0
 
