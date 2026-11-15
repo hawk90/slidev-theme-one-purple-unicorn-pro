@@ -134,6 +134,11 @@ const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
   text-decoration: none !important;
 }
 
+/* …nor the theme's hover underline bar (main.css a::after), as LinkCard */
+.qrcode-box::after {
+  display: none;
+}
+
 .qrcode-img {
   display: block;
   width: var(--qrcode-size, 120px);
