@@ -556,7 +556,7 @@
   }
 }
 
-/* PDF/PNG export and printing: html.print-mode (utils/print-export.ts). A
+/* PDF/PNG export and printing: html.print-mode (utils/print-mode.ts). A
    still picture of each effect; `slidev export` uses screen media, so this
    can't be @media print. */
 .print-mode .anim-border::before,

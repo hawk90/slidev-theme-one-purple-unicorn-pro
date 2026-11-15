@@ -92,7 +92,7 @@ defineExpose({ start, stop, remaining })
 .countdown-lg { --countdown-size: 3rem; }
 .countdown-xl { --countdown-size: 5rem; }
 
-/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts) */
+/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-mode.ts) */
 .print-mode .countdown {
   display: none;
 }

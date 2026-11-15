@@ -36,7 +36,7 @@
   margin: 0;
 }
 
-/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-export.ts);
+/* Not in PDF/PNG exports or printouts (html.print-mode, utils/print-mode.ts);
    last, so it outranks .show at the same specificity */
 .print-mode .presenter-note {
   display: none;

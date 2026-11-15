@@ -1,25 +1,19 @@
-// PDF/PNG export.
-//
-// html.print-mode marks an export (`slidev export`, the browser export page) and
-// browser printing; the CSS print rules (static animations, hidden timers…)
-// hang off it. `slidev export` renders with screen media, so `@media print`
-// alone would miss it.
-//
-// In an export, effects that PDF viewers draw wrongly are redrawn as images:
+// PDF/PNG export: effects that PDF viewers draw wrongly are redrawn as images:
 // gradient text (print-gradient-text.ts), masked border rings and blurred
-// shadows (print-effects.ts).
+// shadows (print-effects.ts). The capture waits for the redraws
+// (export-hold.ts); html.print-mode itself is print-mode.ts.
 
 import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText, solidifyGradientText } from './print-gradient-text'
 import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
 import { canRedraw, noPseudoClass } from './print-canvas'
-import { isPrintMode, trackPrintRoute } from './print-mode'
+import { isPrintMode, onPrintModeChange } from './print-mode'
+import { addHold, hold, isHolding, release, removePageHold, slidesLoaded } from './export-hold'
 import { CHROME_CLASS } from './layouts'
 import { LAYOUT_CLASS, LOADING_CLASS, SLIDE_NO_ATTR } from './slidev-dom'
 import { nextTick } from 'vue'
 import { katexSettled } from './rich-text'
 
-const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
 // Slide content and the theme's slide chrome (global-top / global-bottom)
 const SLIDE = `.${LAYOUT_CLASS}, .${CHROME_CLASS}`
@@ -110,7 +104,6 @@ function redrawEffects(root: Element | Document) {
   redrawTextShadows(textShadows, report)
 }
 
-let started = false
 let editable = false
 
 // `slidev export --format pptx-editable` loads the same ?print page as a PDF
@@ -132,43 +125,26 @@ function watchEditableExport() {
   }).observe(document.head, { childList: true })
 }
 
-// `slidev export` waits for .slidev-slide-loading to be removed before it
-// captures: in the page, or with --per-slide inside the slide's
-// [data-slidev-no] element. Hold the capture until the slides have settled and
-// been redrawn (at most HOLD_MS: a font that never loads must not stall it).
-// It looks once, right after the page loads, before this code runs: the
-// theme's index.html puts the first hold in the page for that.
-const holds = new Set<HTMLElement>()
-let holding = false
-const pageHold = () => document.getElementById('theme-export-hold')
-function addHold(parent: Element) {
-  const hold = document.createElement('div')
-  hold.className = LOADING_CLASS
-  hold.style.display = 'none'
-  parent.appendChild(hold)
-  holds.add(hold)
-}
-function hold() {
-  holding = true
-  const first = pageHold()
-  if (first) holds.add(first)
-  else addHold(document.body)
-  document.querySelectorAll(`[${SLIDE_NO_ATTR}]`).forEach(addHold)
-  setTimeout(release, HOLD_MS)
-}
-function release() {
-  holding = false
-  holds.forEach(h => h.remove())
-  holds.clear()
+// `slidev export --dark` switches the color scheme after the page has
+// loaded, possibly after a pass: the redraws then hold light-mode colors
+// (shadows, gradients). onChange undoes them and runs a full pass again.
+function watchColorScheme(onChange: () => void) {
+  let dark = document.documentElement.classList.contains('dark')
+  new MutationObserver(() => {
+    const now = document.documentElement.classList.contains('dark')
+    if (now === dark) return
+    dark = now
+    onChange()
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 }
 
+// Redraws: a full pass once the slides have settled, then only what is added
+// later (e.g. another range on the browser export page). `pending` is null
+// until the full pass, then the roots added since the last pass.
 function start() {
-  started = true
   watchEditableExport()
   hold()
 
-  // A full pass once the slides have settled, then only what is added later
-  // (e.g. another range on the browser export page)
   let pending: Set<Element> | null = null
   let timer: number | undefined
   let waiting = false // for the slides: keep holding
@@ -206,12 +182,13 @@ function start() {
       }
     }, 300)
   }
+
   new MutationObserver((mutations) => {
     let added = false
     for (const m of mutations) {
       m.addedNodes.forEach((n) => {
         if (!(n instanceof Element) || n.matches(OWN) || n.hasAttribute(PSEUDO) || n.matches(`.${LOADING_CLASS}`)) return
-        if (holding) {
+        if (isHolding()) {
           if (n.matches(`[${SLIDE_NO_ATTR}]`)) addHold(n)
           n.querySelectorAll(`[${SLIDE_NO_ATTR}]`).forEach(addHold)
         }
@@ -223,43 +200,23 @@ function start() {
   }).observe(document.body, { childList: true, subtree: true })
   schedule()
 
-  // `slidev export --dark` switches the color scheme after the page has
-  // loaded, possibly after a pass: the redraws then hold light-mode colors
-  // (shadows, gradients). Undo them and run a full pass again.
-  let dark = document.documentElement.classList.contains('dark')
-  new MutationObserver(() => {
-    const now = document.documentElement.classList.contains('dark')
-    if (now === dark) return
-    dark = now
+  watchColorScheme(() => {
     if (pending === null) return // no pass yet: the first one sees the new scheme
     hold()
     undoRedraws()
     pending = null
     schedule()
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  })
 }
 
-// The slides are on the page with their content: Slidev shows nothing for a
-// slide still compiling, then its own loading placeholder
-function slidesLoaded() {
-  const slides = [...document.querySelectorAll(`[${SLIDE_NO_ATTR}]`)]
-  return slides.length > 0
-    && slides.every(slide => [...slide.children].some(c => !holds.has(c as HTMLElement)))
-    && [...document.querySelectorAll<HTMLElement>(`.${LOADING_CLASS}`)].every(el => holds.has(el))
-}
-
-export function setupPrintExport(router?: Parameters<typeof trackPrintRoute>[0] & { afterEach: (hook: () => void) => unknown }) {
-  if (router) trackPrintRoute(router)
-  const sync = () => {
-    const on = isPrintMode()
-    document.documentElement.classList.toggle('print-mode', on)
-    if (on && !started) start()
-    if (!on) pageHold()?.remove()
-  }
-  sync()
-  router?.afterEach(() => setTimeout(sync))
-
-  // Browser printing of the presentation itself: the CSS print rules only
-  window.addEventListener('beforeprint', () => document.documentElement.classList.add('print-mode'))
-  window.addEventListener('afterprint', sync)
+/** After setupPrintMode (setup/main.ts): starts on the first export page */
+export function setupPrintExport() {
+  let started = false
+  onPrintModeChange((on) => {
+    if (on && !started) {
+      started = true
+      start()
+    }
+    if (!on) removePageHold()
+  })
 }
