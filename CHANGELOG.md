@@ -1,6 +1,58 @@
 # Changelog
 
-## Unreleased
+## Unreleased (3.2.0)
+
+### Performance
+
+- **KaTeX loads only when a component prop has `$…$` math** (#110). It was a 259 KB
+  (78 KB gzip) chunk for every deck using `StoryBox`, `Timeline`, `ComplexityTable` or
+  `PatternCard`. A formula shows as text for a moment until it arrives; exports wait
+  for it.
+- **Iframe slides load their page only when you are on them or next to them** (#107).
+  They loaded at startup and ran hidden all talk (8–10 % of a core for the example's
+  sli.dev page); they stop again once you move on. Exports always load them.
+- **The Nerd Font symbols come in 11 pieces by glyph set** (#109) instead of one
+  1.2 MB file; a slide loads only the pieces its icons are in (a powerline prompt:
+  8 KB). All glyphs are kept.
+- **Entering a dark layout no longer triggers a long style recalc** (#106): the chrome's
+  dark palette is chosen in JS once per navigation instead of by a `:has()` that Chrome
+  re-ran on every slide change (long tasks 263 → 87 ms over 12 dark slides at 4× CPU).
+
+### Features
+
+- **`stageMap` takes `routeAlias` names** (`stageMap: [intro, deep, wrap]`), which
+  survive slides being added or moved; a stale or unknown entry is reported in the
+  console and the click goes to the matching slide (#49).
+- **`hover-glow` colors as for `anim-glow`:** `hover-glow-purple` / `-blue` / `-green` /
+  `-red` / `-cyan` / `-gold` / `-neon`, with `hover-glow` or alone (#30).
+
+### Changes
+
+- `styles/index.css` is now `styles/content.css`: Slidev loaded it a second time on its
+  own (#53).
+- `devEngines` accepts npm 11 and later (was 12), so `npm test` runs with the npm that
+  comes with Node 24. `.npmignore` and the `link` / `unlink` scripts are gone (#55).
+- README: `::code-group` needs `mdc: true` (#46); `PresenterNote class="show"`, column
+  width shares, `--alert-*-bg`, `--footer-clearance-with-footer` and the light shades
+  documented (#55).
+
+### Deprecations
+
+- The UnoCSS colors `primary-purple` / `-indigo` / `-violet` / `-pink`
+  (`text-primary-purple` …) are deprecated and will be removed in 4.0: the theme never
+  used them, and they ignore `themeConfig` colors (#26).
+- `--one-dark-bg`, `--one-dark-fg`, `--one-dark-fg-bright`, `--one-dark-gray` (unused,
+  undocumented, and `-fg` is darker than `-bg`) and the `anim-gt-slow` / `anim-gt-fast`
+  aliases of `anim-gradient-text-slow` / `-fast` are deprecated and will be removed in
+  4.0 (#55).
+
+### Internal
+
+- `regress.mjs` hides iframe content and the countdown digits and waits for code
+  blocks to stop scrolling, so those slides no longer differ run to run (#113);
+  `.gitignore` also ignores symlinked `node_modules` (#112).
+
+## 3.1.0 (not yet released)
 
 ### Changes
 
@@ -47,13 +99,6 @@
   in 4.0. Use the equivalents in the README's *Compatibility Aliases* table.
 - `iframe`'s `title` is deprecated in favor of `iframeTitle` (see Fixes) and will be
   removed in 4.0.
-- The UnoCSS colors `primary-purple` / `-indigo` / `-violet` / `-pink`
-  (`text-primary-purple` …) are deprecated and will be removed in 4.0: the theme never
-  used them, and they ignore `themeConfig` colors (#26).
-- `--one-dark-bg`, `--one-dark-fg`, `--one-dark-fg-bright`, `--one-dark-gray` (unused,
-  undocumented, and `-fg` is darker than `-bg`) and the `anim-gt-slow` / `anim-gt-fast`
-  aliases of `anim-gradient-text-slow` / `-fast` are deprecated and will be removed in
-  4.0 (#55).
 
 ### Fixes
 
