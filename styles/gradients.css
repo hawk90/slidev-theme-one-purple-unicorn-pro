@@ -17,14 +17,29 @@
    Gradient Text
    ============================================ */
 
+/* Every gradient text in the theme: the clip/fill mechanics live here only
+   (utils/print-gradient-text.ts detects exactly this). Each rule picks its
+   gradient with background-image, never the background shorthand, which
+   would reset the clip. A plain list, so each selector keeps its own
+   specificity. Elsewhere: main.css and index.css (headings), animations.css
+   (anim-gradient-text); quote.vue's scoped mark keeps its own copy. */
+:where(.slidev-layout, .slidev-page) h1,
+.slidev-layout:not(.slide-bare) h1,
+.slidev-layout.slide-title h1,
+.slidev-layout.slide-title h2,
 .gradient-text,
 .gradient-text-1,
 .gradient-text-2,
-.gradient-text-3 {
-  background: var(--gradient-text-1);
+.gradient-text-3,
+.anim-gradient-text {
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text,
+.gradient-text-1 {
+  background-image: var(--gradient-text-1);
 }
 
 .gradient-text { font-weight: bold; }

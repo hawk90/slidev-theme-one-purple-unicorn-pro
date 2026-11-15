@@ -22,11 +22,7 @@
   padding: 0;
   font-size: 1.6em;
   font-weight: 700;
-  background: var(--cover-h1-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  background-image: var(--cover-h1-gradient); /* gradient text: gradients.css */
   z-index: 200;
   height: auto;
   max-height: 50px;
@@ -72,11 +68,7 @@
 .slidev-layout.slide-title h1 {
   font-size: 3rem;
   font-weight: 700;
-  background: var(--cover-h1-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  background-image: var(--cover-h1-gradient); /* gradient text: gradients.css */
   margin: 0 0 2rem;
   position: static;
   top: auto;
@@ -94,11 +86,7 @@
 .slidev-layout.slide-title h2 {
   font-size: 1.5rem;
   font-weight: 400;
-  background: var(--cover-h2-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  background-image: var(--cover-h2-gradient); /* gradient text: gradients.css */
   margin: 1rem 0;
 }
 

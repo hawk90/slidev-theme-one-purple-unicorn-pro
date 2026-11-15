@@ -315,16 +315,14 @@
   --_gt5: var(--gt-c5, var(--one-dark-green));
   --_gt-period: var(--gt-period, 16em);
 
-  background: linear-gradient(90deg,
+  /* gradient text: gradients.css */
+  background-image: linear-gradient(90deg,
     var(--_gt1), var(--_gt2), var(--_gt3),
     var(--_gt4), var(--_gt5), var(--_gt1)
   );
   /* One color cycle per --gt-period, so short and long text get the same
      color spacing and speed */
   background-size: var(--_gt-period) 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   animation: gradient-flow var(--gt-duration, 5s) linear infinite;
 }
 
