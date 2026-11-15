@@ -58,7 +58,9 @@
 
 /* Constant-speed light along the border (utils/border-beam.ts adds .ab-beam
    and animates --ab-x/--ab-y). The light has a fixed length (--ab-len), so
-   it looks the same on small and large boxes. Without the script the conic
+   it looks the same on small and large boxes, but at most 3/4 of the box's
+   height (--_ab-len-max, set by the script): longer, it lit the opposite
+   edge at a corner and read as two lights. Without the script the conic
    rotation above is used. */
 @property --ab-x { syntax: '<length>'; initial-value: 0px; inherits: false; }
 @property --ab-y { syntax: '<length>'; initial-value: 0px; inherits: false; }
@@ -67,7 +69,7 @@
   animation: none;
   background:
     radial-gradient(
-      circle var(--ab-len, 90px) at var(--ab-x) var(--ab-y),
+      circle min(var(--ab-len, 90px), var(--_ab-len-max, 9999px)) at var(--ab-x) var(--ab-y),
       var(--_c1) 0%,
       var(--_c2) 35%,
       var(--_c3) 65%,

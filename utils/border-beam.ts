@@ -20,6 +20,9 @@ function animate(el: HTMLElement) {
   const bh = el.offsetHeight
   if (!bw || !bh) return
   const perimeter = 2 * (bw + bh)
+  // The light's radius stays under the box height (animations.css), or on a
+  // short box it reaches the opposite edge at a corner and looks like two
+  el.style.setProperty('--_ab-len-max', `${Math.round(0.75 * Math.min(bw, bh))}px`)
   // Corners as keyframes, each offset proportional to the distance travelled,
   // so the light moves at one speed along every edge (linear easing)
   const corners: [number, number, number][] = [
