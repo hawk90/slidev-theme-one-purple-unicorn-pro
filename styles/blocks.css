@@ -1,0 +1,81 @@
+/* Building blocks used as classes in slides and by the components: .card,
+   .box-shell, .tint-pill / .tint-chip, .alert-*. Loaded right after main.css
+   (styles.css); hover and animation utilities, later, override them. */
+
+/* Cards */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--card-radius, var(--radius-lg));
+  padding: var(--card-padding, 1.5rem);
+  margin: var(--card-margin, 1.5rem 0);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-color var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.card:hover {
+  transform: translateY(calc(-1 * var(--card-hover-lift, 2px)));
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-700);
+}
+
+/* A boxed component's shell (PatternCard, ComplexityTable): border, corners,
+   fill; the component sets its own --box-radius when it has one */
+.box-shell {
+  border: 1px solid var(--border-default);
+  border-radius: var(--box-radius, var(--radius-lg));
+  overflow: hidden;
+  margin: 0.75rem 0;
+  background: var(--bg-secondary);
+}
+
+/* A small rounded mono label (column labels, StoryBox year), with .tint-chip */
+.tint-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 1rem;
+}
+
+/* Tinted chip: a light tint of --tint behind text in --tint (slightly deeper
+   ink in light mode via --ink-depth). Used by Badge, column labels,
+   StoryBox year and ComplexityTable title. */
+.tint-chip {
+  background: color-mix(in srgb, var(--tint) var(--tint-amount, 15%), transparent);
+  color: color-mix(in srgb, var(--tint) var(--ink-depth), var(--ink-mix));
+}
+
+/* Alert Boxes */
+.alert {
+  padding: var(--alert-padding, 1rem 1.5rem);
+  margin: var(--alert-margin, 1.5rem 0);
+  border-radius: var(--alert-radius, 0.5rem);
+  border-left: var(--alert-border-width, 4px) solid;
+}
+
+.alert-info {
+  background: var(--alert-info-bg, rgba(59, 130, 246, 0.1));
+  border-color: var(--info);
+  color: var(--text-primary);
+}
+
+.alert-success {
+  background: var(--alert-success-bg, rgba(16, 185, 129, 0.1));
+  border-color: var(--success);
+  color: var(--text-primary);
+}
+
+.alert-warning {
+  background: var(--alert-warning-bg, rgba(245, 158, 11, 0.1));
+  border-color: var(--warning);
+  color: var(--text-primary);
+}
+
+.alert-error {
+  background: var(--alert-error-bg, rgba(239, 68, 68, 0.1));
+  border-color: var(--error);
+  color: var(--text-primary);
+}
+

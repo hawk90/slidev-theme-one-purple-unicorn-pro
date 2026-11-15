@@ -3,6 +3,7 @@
 @import './styles/colors.css';
 @import './styles/gradients.css';
 @import './styles/main.css';
+@import './styles/blocks.css';
 @import './styles/layout-fix.css';
 @import './styles/light-theme.css';
 @import './styles/code-theme.css';
@@ -10,3 +11,4 @@
 /* Animation/hover utilities load after component styles (e.g. .card) so they win */
 @import './styles/animations.css';
 @import './styles/content.css';
+@import './styles/print.css';

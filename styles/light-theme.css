@@ -214,7 +214,7 @@ html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark) li::marker {
 }
 
 /* ============================================
-   Code Blocks - Dark Theme (One Dark Pro)
+   Inline Code
    ============================================ */
 html:not(.dark) .slidev-layout:not(.slide-dark) :not(pre) > code {
   background: var(--light-bg-tertiary);

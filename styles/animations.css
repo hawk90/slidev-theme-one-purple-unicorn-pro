@@ -583,13 +583,3 @@
   opacity: 1;
   transform: none;
 }
-/* Pseudo-elements redrawn as images in an export */
-.print-no-before::before,
-.print-no-after::after {
-  content: none !important;
-}
-/* Slidev's offline (`pwa`) toast is mounted in exports too and never clears
-   there, so it would sit over the page number in every exported slide */
-.print-mode .slidev-pwa-indicator {
-  display: none;
-}

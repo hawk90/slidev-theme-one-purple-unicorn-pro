@@ -39,11 +39,13 @@ slidev-theme-one-purple-unicorn-pro/
 ├── styles.css           # CSS 엔트리 (import 순서가 우선순위에 영향)
 ├── styles/
 │   ├── colors.css       # 색 토큰 (다크 기본값)
-│   ├── light-theme.css  # 라이트 모드 팔레트 재정의
+│   ├── light-theme.css  # 라이트 모드 팔레트 재정의, 루트 복사본(--_root-*), 어두운 레이아웃 복원
 │   ├── content.css      # 본문 슬라이드 공통 스타일 (slide-bare 제외)
-│   ├── main.css         # 타이포그래피, 표, 카드, 알림
-│   ├── animations.css   # anim-* / hover-* (컴포넌트 스타일보다 뒤에 로드)
+│   ├── main.css         # 타이포그래피, 링크, 목록, 이미지, 표, 인용, 구분선
+│   ├── blocks.css       # .card, .box-shell, .tint-chip/.tint-pill, .alert-*
+│   ├── animations.css   # anim-* / hover-* (컴포넌트 스타일보다 뒤에 로드), 효과의 내보내기 정지 화면
 │   ├── layout-fix.css   # 넘침 방지, grid/flex/absolute 가드(변수로 조절)
+│   ├── print.css        # 내보내기 보조(다시 그린 가상 요소 숨김, PWA 알림), 맨 뒤에 로드
 │   └── ...
 ├── layouts/             # 레이아웃 (옛 이름은 프리셋 별칭)
 ├── components/          # 공개 컴포넌트 (Badge, StoryBox, ...)
