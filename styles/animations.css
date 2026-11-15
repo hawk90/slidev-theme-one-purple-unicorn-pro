@@ -206,6 +206,10 @@
      here, on a parent or on :root */
   --_glow: var(--glow, rgb(var(--glow-color, 198, 120, 221)));
   --_glow-i: var(--glow-intensity, 0.35);
+  /* The pulse's bright end: the keyframe's `to` and the export's still */
+  --_glow-peak:
+    0 0 16px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 100%), transparent),
+    0 0 36px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 20%), transparent);
   animation: glow-pulse var(--glow-duration, 2.5s) ease-in-out infinite alternate;
 }
 
@@ -214,9 +218,7 @@
     box-shadow: 0 0 6px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 30%), transparent);
   }
   to {
-    box-shadow:
-      0 0 16px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 100%), transparent),
-      0 0 36px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 20%), transparent);
+    box-shadow: var(--_glow-peak);
   }
 }
 
@@ -253,8 +255,9 @@
 
 /* While the slide is still sliding in, entrances wait at their start
    (utils/slide-arrival.ts); they start over once it has arrived, so they
-   play on screen each time the slide is reached */
-.slide-arriving :is(.anim-fade-in, .anim-fade-up, .anim-fade-left, .anim-fade-right, .anim-pop) {
+   play on screen each time the slide is reached. Entrances: anim-fade-*
+   and anim-pop (the print rule below matches the same way) */
+.slide-arriving :is([class*="anim-fade-"], .anim-pop) {
   animation: none;
   opacity: 0;
 }
@@ -567,16 +570,10 @@
 /* Glow: the pulse's bright end, held */
 .print-mode .anim-glow {
   animation: none;
-  box-shadow:
-    0 0 16px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 100%), transparent),
-    0 0 36px color-mix(in srgb, var(--_glow) calc(var(--_glow-i) * 20%), transparent);
+  box-shadow: var(--_glow-peak);
 }
-.print-mode .anim-float,
-.print-mode .anim-pop,
-.print-mode .anim-fade-in,
-.print-mode .anim-fade-up,
-.print-mode .anim-fade-left,
-.print-mode .anim-fade-right {
+/* Entrances (as in .slide-arriving above) and float: at rest */
+.print-mode :is([class*="anim-fade-"], .anim-pop, .anim-float) {
   animation: none;
   /* Not !important: Slidev's .slidev-vclick-hidden (opacity: 0 !important)
      must still hide a step that hasn't been clicked yet in a click export */
