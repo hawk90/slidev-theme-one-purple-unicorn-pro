@@ -1,5 +1,31 @@
 # Changelog
 
+## Unreleased (3.3.0)
+
+### Changes
+
+- **Inline code chips follow the theme** (#94): the theme's chip rule used to lose to
+  Slidev's, so dark chips were Slidev's `#1b1b1b`; they use the code background
+  (`#21252b`) now, like chips in headings and on dark layouts. Size, corners and
+  padding are unchanged.
+- **`--slidev-code-font-size` works on code blocks** (#95): the theme's 0.8rem also
+  reached the code inside blocks, so the variable did nothing; it is now the block
+  size, 0.8rem by default.
+- **Spacing between code blocks and headings applies** (#96): the rules targeted
+  `pre`, but Markdown blocks are `.slidev-code-wrapper`.
+- **Shared tokens** (#103): `--radius-lg` (0.75rem) is the corner size the card,
+  table, story and code radii default to; `--transition-slow` (300ms) joins
+  `--transition-fast` / `-base`; hover-lift / hover-scale / LinkCard shadows lighten in
+  light mode. Light mode has one tertiary grey.
+
+### Internal
+
+- `!important` only where it is needed (13 of 24 dropped, #99); declarations with no
+  effect removed (#100); unprefixed `mask` (#102); the quote layout marks its quote
+  element instead of a `:has()` chain repeated three times, and the twoslash line
+  reset is scoped (#104); export-only rules follow one convention, written down in
+  DEV.md (#105).
+
 ## 3.2.0
 
 ### Performance
