@@ -12,7 +12,7 @@
 // the title came out twice, the copy in black. PowerPoint text has no
 // gradients, so there the text goes back to a solid color (solidifyGradientText).
 
-import { colorStops, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, textRuns } from './print-canvas'
+import { boundsOf, colorStops, fillRun, functionArgs, isTransparent, noPseudoClass, overlayCanvas, paddingBox, takeGradientAngle, textRuns } from './print-canvas'
 
 export const GRADIENT_DONE = 'data-print-gradient'
 export const PSEUDO = 'data-print-pseudo'
@@ -36,13 +36,7 @@ export function materializePseudo(el: Element, which: '::before' | '::after', ps
   span.setAttribute(PSEUDO, '')
   if (which === '::before') el.prepend(span)
   else el.append(span)
-  el.classList.add(which === '::before' ? 'print-no-before' : 'print-no-after')
-}
-
-const SIDES: Record<string, number> = {
-  'to top': 0, 'to right': 90, 'to bottom': 180, 'to left': 270,
-  'to top right': 45, 'to right top': 45, 'to bottom right': 135, 'to right bottom': 135,
-  'to bottom left': 225, 'to left bottom': 225, 'to top left': 315, 'to left top': 315,
+  el.classList.add(noPseudoClass(which))
 }
 
 // A canvas gradient matching CSS linear-gradient(...) over a w×h box at (x, 0)
@@ -50,16 +44,7 @@ const SIDES: Record<string, number> = {
 // length makes the corners hit 0% and 100%)
 function linearGradient(ctx: CanvasRenderingContext2D, image: string, x: number, w: number, h: number) {
   const args = functionArgs(image)
-  let angle = 180
-  if (/^-?[\d.]+(deg|turn|rad)$/.test(args[0])) {
-    const v = Number.parseFloat(args[0])
-    angle = args[0].endsWith('turn') ? v * 360 : args[0].endsWith('rad') ? v * 180 / Math.PI : v
-    args.shift()
-  }
-  else if (args[0] in SIDES) {
-    angle = SIDES[args.shift()!]
-  }
-  const rad = angle * Math.PI / 180
+  const rad = takeGradientAngle(args) * Math.PI / 180
   const dx = Math.sin(rad)
   const dy = -Math.cos(rad)
   const len = Math.abs(w * dx) + Math.abs(h * dy)
@@ -86,10 +71,11 @@ export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
 
   // The canvas covers only the text (in the element's coordinates); the
   // gradient is still laid out over the whole element
-  const x = Math.max(-OVERHANG, Math.min(...runs.map(r => (r.left - box.left) / zoom)) - OVERHANG)
-  const y = Math.max(-OVERHANG, Math.min(...runs.map(r => (r.top - box.top) / zoom)) - OVERHANG)
-  const cw = Math.max(...runs.map(r => (r.right - box.left) / zoom)) + OVERHANG - x
-  const ch = Math.max(...runs.map(r => (r.bottom - box.top) / zoom)) + OVERHANG - y
+  const b = boundsOf(runs)
+  const x = Math.max(-OVERHANG, (b.left - box.left) / zoom - OVERHANG)
+  const y = Math.max(-OVERHANG, (b.top - box.top) / zoom - OVERHANG)
+  const cw = (b.right - box.left) / zoom + OVERHANG - x
+  const ch = (b.bottom - box.top) / zoom + OVERHANG - y
   const made = overlayCanvas('print-gradient-text', cw, ch, x, y)
   if (!made) return
   const { canvas, ctx, res } = made
@@ -133,7 +119,7 @@ export function redrawGradientText(el: HTMLElement, s: CSSStyleDeclaration) {
 // The gradient's first color stop
 function solidColor(image: string) {
   const args = functionArgs(image)
-  if (/^-?[\d.]+(deg|turn|rad)$/.test(args[0]) || args[0] in SIDES) args.shift()
+  takeGradientAngle(args)
   return colorStops(args)[0]?.[1]
 }
 

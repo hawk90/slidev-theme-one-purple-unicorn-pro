@@ -7,7 +7,7 @@
 //   them and paints a translucent rectangle instead.
 // Both are drawn on canvases instead, which every viewer shows the same.
 
-import { colorStops, cornerRadii, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, roundRect, splitList, textRuns } from './print-canvas'
+import { boundsOf, colorStops, cornerRadii, fillRun, functionArgs, isTransparent, noPseudoClass, overlayCanvas, paddingBox, roundRect, splitList, textRuns } from './print-canvas'
 
 export const RING_DONE = 'data-print-ring'
 const BOX_SHADOW_DONE = 'data-print-box-shadow'
@@ -60,7 +60,7 @@ export function redrawRing(el: HTMLElement, which: '::before' | '::after', ps: C
   ctx.fill('evenodd')
   canvas.style.zIndex = ps.zIndex
   canvas.style.opacity = ps.opacity
-  el.classList.add(which === '::before' ? 'print-no-before' : 'print-no-after')
+  el.classList.add(noPseudoClass(which))
   el.prepend(canvas)
 }
 
@@ -214,8 +214,9 @@ function drawTextShadow(el: HTMLElement, shadows: Shadow[]) {
   if (!found) return false
   const { host, box } = found
   const local = (vx: number, vy: number) => [(vx - box.left) / box.zoom, (vy - box.top) / box.zoom]
-  const [x, y] = local(Math.min(...runs.map(r => r.left)), Math.min(...runs.map(r => r.top)))
-  const [x2, y2] = local(Math.max(...runs.map(r => r.right)), Math.max(...runs.map(r => r.bottom)))
+  const b = boundsOf(runs)
+  const [x, y] = local(b.left, b.top)
+  const [x2, y2] = local(b.right, b.bottom)
   const made = shadowCanvas(...shadowBounds(shadows, x, y, x2 - x, y2 - y))
   if (!made) return false
   const { canvas, ctx, res } = made

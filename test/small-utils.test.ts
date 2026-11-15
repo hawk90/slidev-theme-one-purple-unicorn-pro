@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { parsePageList } from '../utils/pages.ts'
 import { encodeQr, qrPath } from '../utils/qr.ts'
 import { loadKatex, richText } from '../utils/rich-text.ts'
-import { colorStops, functionArgs, isTransparent, splitList } from '../utils/print-canvas.ts'
+import { boundsOf, colorStops, functionArgs, isTransparent, noPseudoClass, splitList, takeGradientAngle } from '../utils/print-canvas.ts'
 
 describe('parsePageList', () => {
   const list = (v: unknown, max?: number) => [...parsePageList(v, max)]
@@ -56,6 +56,25 @@ describe('richText', () => {
 })
 
 describe('print-canvas parsing', () => {
+  it('takeGradientAngle: angles, sides, default; the stops remain', () => {
+    const args = ['90deg', 'red', 'blue']
+    assert.equal(takeGradientAngle(args), 90)
+    assert.deepEqual(args, ['red', 'blue'])
+    assert.equal(takeGradientAngle(['0.5turn', 'red']), 180)
+    assert.equal(Math.round(takeGradientAngle([`${Math.PI / 2}rad`, 'red'])), 90)
+    assert.equal(takeGradientAngle(['to top right', 'red']), 45)
+    const plain = ['red', 'blue']
+    assert.equal(takeGradientAngle(plain), 180)
+    assert.deepEqual(plain, ['red', 'blue'])
+  })
+  it('boundsOf', () => assert.deepEqual(
+    boundsOf([{ left: 5, top: 2, right: 9, bottom: 4 }, { left: 1, top: 3, right: 7, bottom: 8 }]),
+    { left: 1, top: 2, right: 9, bottom: 8 },
+  ))
+  it('noPseudoClass', () => {
+    assert.equal(noPseudoClass('::before'), 'print-no-before')
+    assert.equal(noPseudoClass('::after'), 'print-no-after')
+  })
   it('splitList at top-level commas', () => assert.deepEqual(splitList('a, f(b, c), d'), ['a', 'f(b, c)', 'd']))
   it('functionArgs', () => assert.deepEqual(functionArgs('linear-gradient(90deg, rgb(1, 2, 3) 10%, blue)'), ['90deg', 'rgb(1, 2, 3) 10%', 'blue']))
   it('colorStops fill missing offsets evenly', () =>

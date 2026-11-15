@@ -186,3 +186,36 @@ export function fillRun(ctx: CanvasRenderingContext2D, run: TextRun, x0: number,
   ctx.fillText(run.text, 0, 0)
   ctx.restore()
 }
+
+// The class that hides a pseudo-element once it is redrawn (animations.css)
+export const noPseudoClass = (which: '::before' | '::after') =>
+  which === '::before' ? 'print-no-before' : 'print-no-after'
+
+// The rectangle around a set of boxes (text runs, in viewport coordinates)
+export function boundsOf(boxes: { left: number, top: number, right: number, bottom: number }[]) {
+  return {
+    left: Math.min(...boxes.map(b => b.left)),
+    top: Math.min(...boxes.map(b => b.top)),
+    right: Math.max(...boxes.map(b => b.right)),
+    bottom: Math.max(...boxes.map(b => b.bottom)),
+  }
+}
+
+const SIDES: Record<string, number> = {
+  'to top': 0, 'to right': 90, 'to bottom': 180, 'to left': 270,
+  'to top right': 45, 'to right top': 45, 'to bottom right': 135, 'to right bottom': 135,
+  'to bottom left': 225, 'to left bottom': 225, 'to top left': 315, 'to left top': 315,
+}
+
+/** A linear-gradient's direction in degrees (180 when unset), taken off the
+ *  front of its arguments so the color stops remain */
+export function takeGradientAngle(args: string[]) {
+  const a = args[0]
+  if (/^-?[\d.]+(deg|turn|rad)$/.test(a)) {
+    args.shift()
+    const v = Number.parseFloat(a)
+    return a.endsWith('turn') ? v * 360 : a.endsWith('rad') ? v * 180 / Math.PI : v
+  }
+  if (a in SIDES) return SIDES[args.shift()!]
+  return 180
+}

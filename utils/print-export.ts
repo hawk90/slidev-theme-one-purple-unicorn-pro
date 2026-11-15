@@ -12,7 +12,7 @@
 import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText, solidifyGradientText } from './print-gradient-text'
 import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
-import { canRedraw } from './print-canvas'
+import { canRedraw, noPseudoClass } from './print-canvas'
 import { isPrintMode, trackPrintRoute } from './print-mode'
 import { nextTick } from 'vue'
 import { katexSettled } from './rich-text'
@@ -86,7 +86,7 @@ function redrawEffects(root: Element | Document) {
   for (const el of slideElements(root)) {
     if (el.hasAttribute(PSEUDO) || el.closest(`[${GRADIENT_DONE}]`)) continue
     for (const which of ['::before', '::after'] as const) {
-      if (el.classList.contains(which === '::before' ? 'print-no-before' : 'print-no-after')) continue
+      if (el.classList.contains(noPseudoClass(which))) continue
       const ps = getComputedStyle(el, which)
       if (ps.content === 'none') continue
       attempt(() => materializePseudo(el, which, ps))
