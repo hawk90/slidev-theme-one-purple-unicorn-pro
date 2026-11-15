@@ -35,6 +35,10 @@
 - **Parallax background** (#145): `parallax: /panorama.jpg` puts one wide image behind
   the slides that drifts with the page; the slides tint it in their own color
   (`parallaxTint`), in exports too.
+- **Motion** (#167): `class="stagger"` brings children (or a list's items) in one after
+  another once the slide has arrived, stopping at the first click; content-only
+  transitions `content-left` / `-right` / `-up` / `-fade` move the content and leave
+  the background still.
 
 ## 4.0.0
 

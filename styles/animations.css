@@ -275,6 +275,45 @@
   opacity: 0;
 }
 
+/* .stagger: its children fade up one after another once the slide has
+   arrived, --stagger-step (0.08s) apart; a list directly inside staggers its
+   items. The first click on the slide shows the rest at once (.stagger-done,
+   utils/stagger.ts); exports show them all. Past the 20th, items come in
+   with the 20th */
+:is(.stagger > :not(ul, ol), .stagger > :is(ul, ol) > li) {
+  animation: fade-up var(--anim-duration, var(--motion-base)) var(--motion-ease)
+    calc(var(--anim-delay, 0s) + var(--_stagger-i, 19) * var(--stagger-step, 0.08s)) both;
+}
+:is(.stagger, .stagger > ul, .stagger > ol) > :first-child { --_stagger-i: 0; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(2) { --_stagger-i: 1; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(3) { --_stagger-i: 2; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(4) { --_stagger-i: 3; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(5) { --_stagger-i: 4; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(6) { --_stagger-i: 5; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(7) { --_stagger-i: 6; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(8) { --_stagger-i: 7; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(9) { --_stagger-i: 8; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(10) { --_stagger-i: 9; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(11) { --_stagger-i: 10; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(12) { --_stagger-i: 11; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(13) { --_stagger-i: 12; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(14) { --_stagger-i: 13; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(15) { --_stagger-i: 14; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(16) { --_stagger-i: 15; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(17) { --_stagger-i: 16; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(18) { --_stagger-i: 17; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(19) { --_stagger-i: 18; }
+:is(.stagger, .stagger > ul, .stagger > ol) > :nth-child(20) { --_stagger-i: 19; }
+
+.slide-arriving :is(.stagger > :not(ul, ol), .stagger > :is(ul, ol) > li) {
+  animation: none;
+  opacity: 0;
+}
+
+.stagger-done :is(.stagger > :not(ul, ol), .stagger > :is(ul, ol) > li) {
+  animation: none;
+}
+
 /* Presets; animation-delay also applies them to any other animation */
 .anim-delay-1 { --anim-delay: 0.1s; animation-delay: var(--anim-delay); }
 .anim-delay-2 { --anim-delay: 0.2s; animation-delay: var(--anim-delay); }
@@ -552,6 +591,41 @@
 .blur-fade-enter-from { opacity: 0; filter: blur(4px); transform: scale(0.97); }
 .blur-fade-leave-to   { opacity: 0; filter: blur(4px); transform: scale(1.03); }
 
+/* Content-only transitions: content-left / -right / -up / -fade. The slide's
+   background stays put and only what is on it moves, so a run of slides
+   reads as one surface. The leaving slide goes on top with a clear
+   background, its content moving out; the arriving one is underneath with
+   its own background, its content moving in. The page itself only carries a
+   transition (on visibility, which doesn't change) so Vue waits for it. */
+.content-left-enter-active, .content-left-leave-active,
+.content-right-enter-active, .content-right-leave-active,
+.content-up-enter-active, .content-up-leave-active,
+.content-fade-enter-active, .content-fade-leave-active {
+  transition: visibility var(--slide-transition-duration, 0.45s);
+}
+:is(.content-left-leave-active, .content-right-leave-active, .content-up-leave-active, .content-fade-leave-active) {
+  z-index: 1;
+}
+:is(.content-left-leave-active, .content-right-leave-active, .content-up-leave-active, .content-fade-leave-active) .slidev-layout {
+  background: transparent;
+}
+:is(.content-left-enter-active, .content-left-leave-active,
+    .content-right-enter-active, .content-right-leave-active,
+    .content-up-enter-active, .content-up-leave-active,
+    .content-fade-enter-active, .content-fade-leave-active) .slidev-layout > * {
+  transition:
+    opacity var(--slide-transition-duration, 0.45s) var(--motion-ease),
+    translate var(--slide-transition-duration, 0.45s) cubic-bezier(0.4, 0, 0.2, 1);
+}
+.content-left-enter-from .slidev-layout > *  { opacity: 0; translate: var(--motion-distance) 0; }
+.content-left-leave-to .slidev-layout > *    { opacity: 0; translate: calc(-1 * var(--motion-distance)) 0; }
+.content-right-enter-from .slidev-layout > * { opacity: 0; translate: calc(-1 * var(--motion-distance)) 0; }
+.content-right-leave-to .slidev-layout > *   { opacity: 0; translate: var(--motion-distance) 0; }
+.content-up-enter-from .slidev-layout > *    { opacity: 0; translate: 0 var(--motion-distance); }
+.content-up-leave-to .slidev-layout > *      { opacity: 0; translate: 0 calc(-1 * var(--motion-distance)); }
+.content-fade-enter-from .slidev-layout > *,
+.content-fade-leave-to .slidev-layout > *    { opacity: 0; }
+
 /* ============================================
    Accessibility & Print Safety
    ============================================ */
@@ -582,8 +656,8 @@
   animation: none;
   box-shadow: var(--_glow-peak);
 }
-/* Entrances (as in .slide-arriving above) and float: at rest */
-.print-mode :is([class*="anim-fade-"], .anim-pop, .anim-float) {
+/* Entrances (as in .slide-arriving above), staggers and float: at rest */
+.print-mode :is([class*="anim-fade-"], .anim-pop, .anim-float, .stagger > :not(ul, ol), .stagger > :is(ul, ol) > li) {
   animation: none;
   /* Not !important: Slidev's .slidev-vclick-hidden (opacity: 0 !important)
      must still hide a step that hasn't been clicked yet in a click export */

@@ -61,6 +61,7 @@ import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
 import { watchSlideArrival } from './utils/slide-arrival'
+import { watchStaggerClicks } from './utils/stagger'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
@@ -78,12 +79,15 @@ let stopDarkChrome = () => {}
 // Entrances wait for the slide transition (utils/slide-arrival.ts); exports
 // play none
 let stopArrival = () => {}
+// .stagger stops at the slide's first click (utils/stagger.ts)
+let stopStagger = () => {}
 // paceBar: true (headmatter) ticks the clock the pace marker reads
 const now = ref(Date.now())
 let paceTimer: ReturnType<typeof setInterval> | undefined
 onMounted(() => {
   stopDarkChrome = watchDarkChrome(currentPage)
   if (!isPrintMode.value) stopArrival = watchSlideArrival()
+  if (!isPrintMode.value) stopStagger = watchStaggerClicks(currentPage, nav.clicks)
   if (!isPrintMode.value && isOn(headmatter.paceBar)) paceTimer = setInterval(() => { now.value = Date.now() }, 1000)
   // autoAdvance (headmatter, a slide's own overrides): the play view steps
   // itself; autoAdvanceLoop: true starts over; input pauses it for
@@ -96,7 +100,7 @@ onMounted(() => {
   }
 })
 let stopAdvance = () => {}
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); clearInterval(paceTimer); stopAdvance() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

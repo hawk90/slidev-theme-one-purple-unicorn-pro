@@ -2095,6 +2095,28 @@ One-shot entrances; add `anim-delay-1` … `-5` to stagger them. They start once
 
 ---
 
+# Staggered Arrival
+
+`class="stagger"` brings its children in one after another once the slide has arrived; a list right inside staggers its items. The first click shows the rest at once, and exports show them all.
+
+<div class="stagger">
+
+- Profile before you optimize
+- Coalesce global memory access
+- Keep the warps busy
+- Hide latency with occupancy
+- Measure again
+
+</div>
+
+<div v-click class="mt-4">
+
+**A click**: whatever hadn't come in yet is already there. Step size: `--stagger-step` (0.08s).
+
+</div>
+
+---
+
 # Speed Variants
 
 Border, shimmer, glow and gradient text have `-slow` and `-fast` presets (e.g. `anim-glow anim-glow-fast`), or set the `--*-duration` variable. `anim-border-ccw` turns the border light the other way.
@@ -2288,6 +2310,7 @@ Available transitions:
 | `fade` | Simple crossfade |
 | `scale-fade` | Grows in from 95% / grows to 105% and fades out |
 | `blur-fade` | Blur + fade + scale |
+| `content-left` / `-right` / `-up` / `-fade` | Only the content moves; the background stays put |
 
 ```yaml
 ---
@@ -2333,6 +2356,20 @@ transition: fade
 # Transition: fade
 
 This slide sets `transition: fade`. Slidev plays a slide's transition between it and the next slide (reversed going back): press → and the next slide crossfades in.
+
+---
+transition: content-left
+---
+
+# Transition: content-left
+
+This slide sets `transition: content-left`: the background stays put and only the content moves, so the next slide seems to change on the same surface. Also `content-right`, `content-up` and `content-fade`.
+
+---
+
+# Same Surface
+
+Only the content moved in; the background, the progress bar and the page number stayed still. Going back plays it in reverse.
 
 ---
 layout: section
@@ -2483,6 +2520,7 @@ rightLabel: Hover & Transition
 | `anim-gradient-text` | Flowing rainbow text |
 | `anim-fade-*` | Entrance animations (in, up, left, right) |
 | `anim-pop` | Scale pop entrance |
+| `stagger` | Children in one after another |
 | `anim-float` | Gentle floating motion |
 | `anim-cursor` | Terminal blinking cursor |
 
