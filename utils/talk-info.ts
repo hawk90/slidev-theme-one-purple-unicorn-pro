@@ -9,25 +9,11 @@
 //   date: '2026-10-09'
 //   logo: /logo.svg       # from public/
 
-import type { SlideInfo } from '@slidev/types'
-
-type Info = Record<string, unknown>
+import type { Info } from './frontmatter.ts'
+import { isOff, isOn } from './frontmatter.ts'
 
 interface Person { name: string, affiliation?: string }
 
-/** Whether a slide (route meta.slide) is the deck's first, whose frontmatter is
- *  the headmatter: index is its place in the whole deck, hidden slides included */
-export const isHeadmatterSlide = (slide?: Pick<SlideInfo, 'index'>) => slide?.index === 0
-
-/** The headmatter, from Slidev's `configs` (it keeps the headmatter even when
- *  the first slide is hidden). `configs` carries Slidev's defaults too: a deck
- *  without a title (and no heading on its first slide) has title "Slidev",
- *  which is not the talk's */
-export const headmatterOf = (configs: Info): Info =>
-  ({ ...configs, title: configs.title === 'Slidev' ? undefined : configs.title })
-
-export const isOff = (v: unknown) => v === false || v === 'false'
-export const isOn = (v: unknown) => v === true || v === 'true'
 const isEmpty = (v: unknown) => v == null || v === '' || typeof v === 'boolean'
 
 /** A value as text: `date: 2026-10-09` comes from YAML as a Date */
@@ -82,3 +68,16 @@ export function footerParts(value: unknown, headmatter: Info) {
   }).filter(Boolean)
   return { text: parts.join(' · '), logo: keys.includes('logo') ? text(headmatter.logo) : '' }
 }
+
+/**
+ * The footer setting for a slide: its own `footer` (false, true or a list)
+ * replaces the deck's, `true` keeping the deck's list; without one, the
+ * deck's, except on media layouts (`media`), where only a slide's own shows it.
+ */
+export function footerSetting(own: unknown, deck: unknown, media = false) {
+  if (own === undefined) return media ? undefined : deck
+  return isOn(own) && Array.isArray(deck) ? deck : own
+}
+
+// The frontmatter helpers lived here before frontmatter.ts
+export { headmatterOf, isHeadmatterSlide, isOff, isOn } from './frontmatter.ts'

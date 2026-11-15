@@ -23,7 +23,8 @@ import { computed } from 'vue'
 import { configs, resolveAssetUrl, useSlideContext } from '@slidev/client'
 import CenteredSlide from '../components/internal/CenteredSlide.vue'
 import { centeredLayoutProps } from '../utils/layout-props'
-import { coverInfo, headmatterOf } from '../utils/talk-info'
+import { headmatterOf } from '../utils/frontmatter'
+import { coverInfo } from '../utils/talk-info'
 
 defineProps(centeredLayoutProps('48rem'))
 

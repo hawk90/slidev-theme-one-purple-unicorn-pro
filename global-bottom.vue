@@ -22,7 +22,9 @@ import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
-import { footerParts, headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
+import { headmatterOf, isHeadmatterSlide, isOff } from './utils/frontmatter'
+import { progressMode as modeOf, progressPercent } from './utils/progress'
+import { footerParts, footerSetting } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
 
@@ -39,16 +41,8 @@ onBeforeUnmount(() => stopDarkChrome())
 const headmatter = headmatterOf(configs)
 const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
 
-// progressBar:
-//   "always" (default) → all slides
-//   "content"          → only where page number is shown (hides on cover/section/intro/end)
-//   false              → completely off
-const progressMode = computed(() => {
-  const val = frontmatter.value.progressBar ?? headmatter.progressBar
-  if (isOff(val)) return 'off'
-  if (val === 'content') return 'content'
-  return 'always'
-})
+// progressBar: always (default) | content | false (utils/progress.ts)
+const progressMode = computed(() => modeOf(frontmatter.value.progressBar ?? headmatter.progressBar))
 
 // progressBarSkip: pages without the bar, e.g. "1, 5, 10-12" or [1, 5, "10-12"]
 // progressBarSkipMode:
@@ -90,22 +84,12 @@ const footer = computed(() => {
   const deck = headmatter.footer
   // The first slide's frontmatter is the headmatter: its `footer` is the deck's
   const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.footer
-  if (own === undefined && MEDIA_LAYOUTS.includes(currentLayout.value)) return null
-  const value = own === undefined ? deck : isOn(own) && Array.isArray(deck) ? deck : own
+  const value = footerSetting(own, deck, MEDIA_LAYOUTS.includes(currentLayout.value))
   const parts = footerParts(value, headmatter)
   return parts && (parts.text || parts.logo) ? parts : null
 })
 
-const progress = computed(() => {
-  let page = currentPage.value
-  let count = total.value
-  if (excludeSkipped.value) {
-    const skipped = [...skipPages.value]
-    page -= skipped.filter(n => n < page).length
-    count -= skipped.length
-  }
-  return count > 1 ? ((page - 1) / (count - 1)) * 100 : 0
-})
+const progress = computed(() => progressPercent(currentPage.value, total.value, skipPages.value, excludeSkipped.value))
 </script>
 
 <style>
@@ -117,18 +101,7 @@ const progress = computed(() => {
   /* room the column layouts' bottom slot leaves above the line */
   --footer-clearance: var(--footer-clearance-with-footer, 1.5rem);
 }
-
-/* …and above a stage indicator at the bottom (stagePosition: bottom), which
-   sits over the footer line */
-:is(#slide-content, .print-slide-container):has(> .stage-pos-bottom) > * {
-  --footnote-bottom: var(--footnote-bottom-with-stage, 4.25rem);
-}
-
-/* …and higher still when that indicator is lifted above the footer line
-   (StageProgress.vue, --stage-bottom-with-footer) */
-:is(#slide-content, .print-slide-container):has(> .slide-footer):has(> .stage-pos-bottom) > * {
-  --footnote-bottom: var(--footnote-bottom-with-footer-and-stage, 5.25rem);
-}
+/* (A Footnote also moves up for a bottom stage indicator: StageProgress.vue) */
 </style>
 
 <style scoped>

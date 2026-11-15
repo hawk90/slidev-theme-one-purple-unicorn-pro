@@ -280,6 +280,16 @@ function goToStage(index: number) {
    slide in an export, under .print-slide-container), so plain CSS can make
    room for it. */
 
+/* A Footnote sits where a bottom indicator is: move it up (it reads
+   --footnote-bottom; the footer line's own move is in global-bottom.vue) */
+:is(#slide-content, .print-slide-container):has(> .stage-pos-bottom) > * {
+  --footnote-bottom: var(--footnote-bottom-with-stage, 4.25rem);
+}
+/* …and higher still when the indicator is lifted above the footer line */
+:is(#slide-content, .print-slide-container):has(> .slide-footer):has(> .stage-pos-bottom) > * {
+  --footnote-bottom: var(--footnote-bottom-with-footer-and-stage, 5.25rem);
+}
+
 /* bottom: above the footer line while it shows (the footer comes first) */
 .slide-footer ~ .stage-pos-bottom {
   bottom: var(--stage-bottom-with-footer, 3.25rem);
