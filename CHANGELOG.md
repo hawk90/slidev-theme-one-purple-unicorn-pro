@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased (4.1.0)
+
+### Features
+
+- **Page-number formats** (#128): `pageNumberFormat: c/t | c | c of t` ("3 / 12", "3",
+  "3 of 12"). On a slide, `pageNumber: skip` hides the number and leaves the slide out
+  of the count, `hold` repeats the last number without counting the slide;
+  `appendix: true` starts an appendix numbered A1, A2…, with the total frozen at the
+  main part.
+
 ## 4.0.0
 
 The 3.3.0–3.6.0 changes, released together with the breaking changes.

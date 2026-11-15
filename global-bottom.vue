@@ -12,7 +12,7 @@
 
   <!-- Page Indicator -->
   <div v-if="showPageNumber" class="slide-indicator slide-chrome">
-    {{ currentPage }} / {{ total }}
+    {{ pageText }}
   </div>
 </template>
 
@@ -20,14 +20,14 @@
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
-import { parsePageList } from './utils/pages'
+import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
 import { watchSlideArrival } from './utils/slide-arrival'
 import { headmatterOf, isHeadmatterSlide, isOff } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
 
-const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
+const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode, slides } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
@@ -64,9 +64,18 @@ const excludeSkipped = computed(() => headmatter.progressBarSkipMode === 'exclud
 // turn each one off in exports only; the presentation itself is unchanged.
 const hiddenInExport = (key: string) => isPrintMode.value && isOff(headmatter[key])
 
+// What each page shows (utils/pages.ts): a slide's `pageNumber: skip` / `hold`
+// and `appendix: true` change the count; `pageNumberFormat` (headmatter) is
+// c/t (default) | c | c of t
+const pages = computed(() => pageLabels(slides.value.map(s => s?.meta?.slide?.frontmatter ?? {})))
+const pageText = computed(() => {
+  const page = pages.value.labels[currentPage.value - 1]
+  return page ? formatPageNumber(page, pages.value.total, headmatter.pageNumberFormat) : `${currentPage.value} / ${total.value}`
+})
+
 // pageNumber: false hides the page number (headmatter for the deck, or a slide)
 const showPageNumber = computed(() => {
-  if (isHidden.value) return false
+  if (isHidden.value || !pageText.value) return false
   if (isOff(frontmatter.value.pageNumber ?? headmatter.pageNumber)) return false
   return !hiddenInExport('pageNumberInExport')
 })

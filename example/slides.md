@@ -1408,6 +1408,24 @@ progressBar: false
 Useful for a full-screen demo or a slide you record on its own.
 
 ---
+pageNumber: hold
+---
+
+# Page Numbers
+
+This slide has `pageNumber: hold`: it shows the previous slide's number and isn't counted.
+
+```yaml
+pageNumberFormat: c of t     # headmatter: c/t (default, "3 / 12") | c ("3") | c of t ("3 of 12")
+
+pageNumber: skip             # a slide: no number, and it isn't counted
+pageNumber: hold             # a slide: the last number again, not counted (a build-up in steps)
+appendix: true               # the first appendix slide: from here on A1, A2…, the total stays
+```
+
+The slide after **Thank You!** starts the appendix: it shows **A1**, and every page before it counts to the frozen total.
+
+---
 
 # Stage Progress Indicator
 
@@ -2263,3 +2281,13 @@ layout: end
 ### Questions?
 
 [GitHub](https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro)
+
+---
+appendix: true
+---
+
+# Appendix: Extra Material
+
+`appendix: true` here starts the appendix: this page is **A1**, and the total on the pages before stays the count of the main part.
+
+Backup slides for questions go here, after the closing slide, without changing the numbers the audience saw.

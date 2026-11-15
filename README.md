@@ -197,6 +197,7 @@ progressBarSkip: 2, 5-6       # pages without the bar (list, ranges, or an array
 progressBarSkipMode: exclude  # hide (default): only hide the bar
                               # exclude: also leave skipped pages out of the progress
 pageNumber: false             # hide the page number (default: shown, except on title slides and section dividers)
+pageNumberFormat: c of t      # c/t (default, "3 / 12") | c ("3") | c of t ("3 of 12")
 
 # Exports only (PDF / PNG / ?print); the presentation is unchanged
 progressBarInExport: false
@@ -204,6 +205,8 @@ pageNumberInExport: false
 footerInExport: false
 ---
 ```
+
+On one slide, `pageNumber: skip` hides the number and leaves the slide out of the count, and `pageNumber: hold` shows the last number again without counting the slide (for a build-up split over slides). `appendix: true` on a slide starts the appendix: from there on the pages are A1, A2…, and the total shown before stays the count of the main part.
 
 ### Talk details: cover and footer
 
