@@ -16,7 +16,7 @@ const block = (src: string, opener: string) => {
 const decls = (body: string) => [...body.matchAll(/^\s*(--[\w-]+)\s*:\s*([^;]+);/gm)].map(m => [m[1], m[2].trim()] as const)
 
 const light = decls(block(css('light-theme.css'), 'html:not(.dark) body {')).map(([k]) => k)
-const colors = css('colors.css')
+const colors = css('light-theme.css') // the copies and the restore sit there too
 const copies = decls(block(colors, '--_root-bg-secondary'))
 const restore = decls(block(colors, '--slide-bg: var(--dark-bg)'))
 

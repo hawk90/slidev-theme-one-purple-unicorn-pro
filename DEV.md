@@ -57,6 +57,9 @@ slidev-theme-one-purple-unicorn-pro/
 
 ## 규칙
 
+- **파일을 넘나드는 비공개 변수**: 이름이 `--_`로 시작하면 테마 내부용이에요. 여러 파일이 같이 쓰는 건 다음 둘이에요.
+  - `--_root-*` (light-theme.css): 라이트 모드가 바꾸기 전 루트 값의 복사본이에요. 어두운 레이아웃 복원에 쓰이고, 라이트 모드에서도 다크 값을 그대로 써야 하는 곳(animations.css의 반짝임 색, code-theme.css의 코드 창 제목·줄 번호)이 직접 읽어요.
+  - `--_progress-track-default` (light-theme.css → global-bottom.vue): 라이트 모드의 진행바 바탕색이에요. 어두운 레이아웃에서는 `initial`로 지워 다크 기본값이 돌아와요.
 - **내보내기(print-mode) 규칙**: `html.print-mode`(utils/print-export.ts)에 걸어요. 컴포넌트 전용 규칙은 그 컴포넌트의 scoped 스타일 맨 끝에 `.print-mode .클래스`로(scoped 속성은 마지막 요소에만 붙어요. `:global()`로 감싸면 Vue가 선택자 전체를 `.print-mode`로 바꿔 페이지가 통째로 숨어요), 전역 효과 클래스(`anim-*`, `hover-*`)는 `styles/animations.css`의 내보내기 구역에 둬요. `@media print`는 쓰지 않아요(`slidev export`는 screen 미디어로 렌더링).
 - **레이아웃 역할 클래스**: 레이아웃 루트에 `slide-title`(cover·intro·section·end), `slide-dark`(라이트 모드에서도 어두운 배경), `slide-bare`(본문 공통 스타일 제외)를 붙여요. CSS는 레이아웃 이름 목록 대신 이 클래스로 판단해요. JS 쪽 목록은 `utils/layouts.ts` 하나만 써요.
 - **공용 조각**: 옅은 색 칩은 `.tint-chip`(`--tint`, `--tint-amount`), 열 레이아웃은 `components/internal/ColumnsLayout.vue`, 가운데 정렬 레이아웃 prop은 `utils/layout-props.ts`를 써요.
