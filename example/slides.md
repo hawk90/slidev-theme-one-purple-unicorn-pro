@@ -2190,7 +2190,6 @@ The README's *Customization* section lists them per slide part, component and ef
 | `image` | Image + content (side: left/right) |
 | `quote`, `statement`, `fact` | PPT-style emphasis |
 | `iframe` | Embed (side: full/left/right) |
-| `image-left`, `comparison`, ... | 1.x names kept as compatibility aliases |
 
 ---
 layout: two-cols

@@ -70,7 +70,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth` (a bare number is a share, `2` → `2fr`; anything else a CSS length), `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
 | `image` | Image beside content | `image`, `side` (`left`/`right`), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
-| `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `iframeTitle` (screen-reader name; the older `title` still works but also renames the slide) |
+| `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `iframeTitle` (screen-reader name) |
 | `quote`, `statement`, `fact` | Emphasis slides | `padding`, `contentMaxWidth` |
 | `full` | No padding, build your own | |
 | `full-text` | Full-width text, no pinned title | |
@@ -113,18 +113,6 @@ layout: quote
 ```
 
 Without a blockquote, a heading (`# "…"`) is the quote; otherwise the paragraphs before the last are the quote and the last is the attribution, and a single paragraph is a quote without one.
-
-### Compatibility Aliases (deprecated)
-
-Layout names from 1.x still work as presets of current layouts; frontmatter values override the preset. They are deprecated and will be removed in 4.0: use the equivalent on the right.
-
-| Alias | Equivalent |
-|---|---|
-| `image-left` / `image-right` | `image` + `side: left` / `right` |
-| `iframe-left` / `iframe-right` | `iframe` + `side: left` / `right` |
-| `two-cols-header` | `two-cols` |
-| `comparison` | `two-cols` + `divider: true`, `leftLabel: Before`, `rightLabel: After` |
-| `full-center` | `center` + `padding: 2rem` |
 
 ## Code Blocks
 

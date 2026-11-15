@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased (4.0.0)
+
+### Breaking changes
+
+What 3.x deprecated is removed (#40). Before upgrading, search the deck for the names
+on the left:
+
+| Removed | Use |
+|---|---|
+| `layout: image-left` / `image-right` | `layout: image` + `side: left` / `right` |
+| `layout: iframe-left` / `iframe-right` | `layout: iframe` + `side: left` / `right` |
+| `layout: two-cols-header` | `layout: two-cols` |
+| `layout: comparison` | `layout: two-cols` + `divider: true`, `leftLabel: Before`, `rightLabel: After` |
+| `layout: full-center` | `layout: center` + `padding: 2rem` |
+| `iframe`'s `title` | `iframeTitle` (`title` names the slide, as on any layout) |
+| UnoCSS `primary-purple` / `-indigo` / `-violet` / `-pink` | the theme's colors, e.g. `text-[var(--primary-400)]` |
+| `--one-dark-bg`, `--one-dark-fg`, `--one-dark-fg-bright`, `--one-dark-gray` | `--bg-secondary`, `--dark-bg`, `--text-bright`, `--text-muted` |
+| `anim-gt-slow` / `anim-gt-fast` | `anim-gradient-text-slow` / `-fast` |
+
+A removed layout name falls back to Slidev's `default` layout (the dev server prints
+`Unknown layout "comparison"`), so the slide still renders, without its image,
+columns or centering.
+
 ## Unreleased (3.6.0)
 
 ### Features

@@ -21,11 +21,9 @@ const props = defineProps({
   // The embedded page's name for screen readers. Not `title`: that is
   // Slidev's slide title (overview, <Toc>), so setting it renamed the slide
   iframeTitle: { type: String, default: undefined },
-  // Deprecated fallback (3.x decks); removed in 4.0 (#40)
-  title: { type: String, default: undefined },
 })
 
-const label = computed(() => props.iframeTitle ?? props.title)
+const label = computed(() => props.iframeTitle)
 </script>
 
 <style scoped>
