@@ -1212,12 +1212,16 @@ Countdown and QR Code
 
 # Countdown Timer
 
+<div style="display: flex; gap: 4rem; align-items: baseline;">
 <Countdown :minutes="5" label="remaining" size="lg" />
+<Countdown :minutes="3" label="Q&A" size="lg" :auto-start="false" />
+</div>
 
-Sizes: `sm`, `default`, `lg`, `xl`. Auto-starts by default.
+Starts when the slide is shown, or with `:auto-start="false"` on ▶. Click the timer to pause or resume, double-click to reset. Sizes: `sm`, `default`, `lg`, `xl`.
 
 ```html
 <Countdown :minutes="5" label="remaining" size="lg" />
+<Countdown :minutes="3" label="Q&A" size="lg" :auto-start="false" />
 ```
 
 ---

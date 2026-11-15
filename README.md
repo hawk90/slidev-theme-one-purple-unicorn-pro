@@ -159,7 +159,7 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<PatternCard>` | `signal`, `template`, `alternatives`, `sections` (`[{ key, label, icon, color, text }]`); same-named slots for rich content |
 | `<Timeline>` | `items` (`[{ title, year, desc, color }]`), `active` |
 | `<ComplexityTable>` | `title`, `rows` (`[{ n, target, algo, complexity, highlight }]`), `showComplexity` |
-| `<Countdown>` | `minutes`, `size` (preset `sm` `default` `lg` `xl`, or any CSS length, as `<QRCode>`), `label`, `autoStart`, `showZero` |
+| `<Countdown>` | `minutes`, `size` (preset `sm` `default` `lg` `xl`, or any CSS length, as `<QRCode>`), `label`, `autoStart` (`false`: a ▶ start button), `showZero`. Click the timer to pause / resume, double-click to reset |
 | `<QRCode>` | `url` (empty: this deck), `slide` (`true`: this slide, or a number), `size` (preset or any CSS length), `caption`, `ecc` (`L` / `M` / `Q` / `H`), `api` (`{data}`, `{size}` are replaced), `src` |
 | `<PresenterNote>` | (slot; shown only in the presenter view, or on the slide too with `class="show"`) |
 
