@@ -70,7 +70,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth`, `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
 | `image` | Image beside content | `image`, `side` (`left`/`right`), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
-| `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `title` (screen-reader name) |
+| `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `iframeTitle` (screen-reader name; the older `title` still works but also renames the slide) |
 | `quote`, `statement`, `fact` | Emphasis slides | `padding`, `contentMaxWidth` |
 | `full` | No padding, build your own | |
 | `full-text` | Full-width text, no pinned title | |

@@ -1,9 +1,9 @@
 <template>
   <div class="slidev-layout iframe-layout slide-bare">
     <div v-if="side === 'full'" class="iframe-full">
-      <ScaledIframe :src="url" :scale="scale" :title="title" />
+      <ScaledIframe :src="url" :scale="scale" :title="label" />
     </div>
-    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale" :title="title">
+    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale" :title="label">
       <slot />
     </MediaPanel>
   </div>
@@ -11,14 +11,21 @@
 
 <script setup lang="ts">
 import MediaPanel from '../components/internal/MediaPanel.vue'
+import { computed } from 'vue'
 import ScaledIframe from '../components/internal/ScaledIframe.vue'
 
-defineProps({
+const props = defineProps({
   url: { type: String, required: true },
   side: { type: String, default: 'full' },
   scale: { type: [Number, String], default: 1 },
+  // The embedded page's name for screen readers. Not `title`: that is
+  // Slidev's slide title (overview, <Toc>), so setting it renamed the slide
+  iframeTitle: { type: String, default: undefined },
+  // Deprecated fallback (3.x decks); removed in 4.0 (#40)
   title: { type: String, default: undefined },
 })
+
+const label = computed(() => props.iframeTitle ?? props.title)
 </script>
 
 <style scoped>

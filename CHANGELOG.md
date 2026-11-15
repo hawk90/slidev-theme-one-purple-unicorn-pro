@@ -45,9 +45,15 @@
 - The 1.x layout aliases (`image-left`, `image-right`, `iframe-left`, `iframe-right`,
   `two-cols-header`, `comparison`, `full-center`) are deprecated and will be removed
   in 4.0. Use the equivalents in the README's *Compatibility Aliases* table.
+- `iframe`'s `title` is deprecated in favor of `iframeTitle` (see Fixes) and will be
+  removed in 4.0.
 
 ### Fixes
 
+- **An `iframe` slide's `title` renamed the slide** (#54). It is Slidev's own slide
+  title too, so the overview, `<Toc>` and the presenter listed the slide by the
+  embedded page's name instead of its heading. The screen-reader name is now
+  `iframeTitle`; `title` still works for it.
 - **Entrance animations played while the slide was still sliding in** after a slide
   transition, so they were over by the time it stopped (#51). They now wait for the
   transition and replay on each visit; without a transition nothing changes. New motion
