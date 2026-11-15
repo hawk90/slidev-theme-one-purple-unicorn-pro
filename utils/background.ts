@@ -49,3 +49,19 @@ export function scrimOf(value: unknown, kind: BackgroundKind | null): number | n
   if (value === true || value === 'true') return 0.55
   return kind === 'image' ? 0.55 : null
 }
+
+/**
+ * Where the parallax image is (0–1) on slide `index`: its place in the run of
+ * consecutive slides showing the same image (`srcs`, one per slide, null where
+ * none), so a deck-wide image travels over the whole deck and a slide-level
+ * one over its few slides. A run of one slide sits in the middle.
+ */
+export function parallaxProgress(srcs: (string | null)[], index: number): number {
+  const src = srcs[index]
+  if (!src) return 0
+  let start = index
+  let end = index
+  while (start > 0 && srcs[start - 1] === src) start--
+  while (end < srcs.length - 1 && srcs[end + 1] === src) end++
+  return end === start ? 0.5 : (index - start) / (end - start)
+}

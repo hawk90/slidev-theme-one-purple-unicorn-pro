@@ -239,6 +239,8 @@ bg: mesh                        # a generated pattern: mesh | aurora | grain | d
 
 `bg` draws in the accent colors (so `themeConfig.primary` changes it) and follows light mode; it can sit over a `background`. Variables: `--bg-pattern-strength` (1), `--bg-pattern-a` / `-b` / `-c` (the colors). The media layouts keep their own `image`.
 
+**Parallax**: `parallax: /panorama.jpg` in the headmatter puts one wide image behind every slide; its horizontal position follows the page, so it drifts a little on each step. Each slide's background turns translucent in its own color (dark layouts tint it dark, light slides light): `parallaxTint` (0.72) is how much of it stays. A slide's own `parallax: false` keeps its opaque background, and a slide's own image shows on that slide only. Exports give each page its own offset. Variables: `--parallax-shift` (20%: how far the image travels over the deck), `--parallax-duration` (0.8s).
+
 ### Talk details: cover and footer
 
 Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:

@@ -653,6 +653,37 @@ backgroundScrim: 0.7
 `backgroundFilter: blur(6px) saturate(0.6)` blurs the photo, not the text; `backgroundScrim: 0.7` dims it more.
 
 ---
+parallax: https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2400
+---
+
+# Parallax Background
+
+One wide image behind the slides, shifting a little on each page. Step forward: the next two slides share it.
+
+```yaml
+parallax: /panorama.jpg   # headmatter: behind every slide
+parallaxTint: 0.72        # how much of each slide's own background stays over it
+```
+
+---
+parallax: https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2400
+layout: center
+---
+
+# It Drifts
+
+The image moves with the page number, slower than the slides: a sense of depth for the whole deck. Light slides tint it light, dark ones dark.
+
+---
+parallax: https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2400
+class: slide-dark
+---
+
+# Over a Dark Slide
+
+A slide's own `parallax:` image shows on that slide (here three in a row), and `parallax: false` keeps a slide's opaque background. Exports give each page its own offset.
+
+---
 layout: section
 ---
 

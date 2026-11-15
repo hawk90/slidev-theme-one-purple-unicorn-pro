@@ -1,4 +1,13 @@
 <template>
+  <!-- parallax: one wide image behind every slide, shifting a little per
+       page; the slides turn translucent over it (styles below) -->
+  <div
+    v-if="parallax"
+    class="deck-parallax"
+    :style="parallax"
+    aria-hidden="true"
+  />
+
   <!-- Progress Bar: always or content-only based on frontmatter -->
   <div v-if="showBar" class="progress-bar slide-chrome">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
@@ -47,6 +56,7 @@ import { configs, resolveAssetUrl, sharedState, useNav } from '@slidev/client'
 import { durationSeconds, pace, timerElapsed } from './utils/pace'
 import { ribbonOf } from './utils/ribbon'
 import { advanceDelay, startAutoAdvance } from './utils/auto-advance'
+import { opacityOf, parallaxProgress } from './utils/background'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
@@ -161,6 +171,32 @@ const asideLabel = computed(() => {
   return isOn(v) ? 'Deep dive' : String(v)
 })
 
+// parallax: /wide.jpg (headmatter): the image sits behind the slides, its
+// position following the page through the slides that show it (the whole
+// deck, or a run of slides with their own), so it drifts on each step.
+// parallaxTint (0.72) is how much of each slide's own background stays over
+// it, which keeps text readable; a slide's own `parallax: false` keeps its
+// opaque background, and its own image shows on that slide only.
+// The image each slide shows (null for none): a slide's own, else the deck's
+const parallaxSrcs = computed(() => slides.value.map((r) => {
+  const slide = r.meta?.slide
+  const own = isHeadmatterSlide(slide) ? undefined : slide?.frontmatter?.parallax
+  if (isOff(own)) return null
+  const src = typeof own === 'string' && own.trim() ? own : headmatter.parallax
+  return typeof src === 'string' && src.trim() ? src.trim() : null
+}))
+const parallax = computed(() => {
+  const index = currentPage.value - 1
+  const src = parallaxSrcs.value[index]
+  if (!src) return null
+  const tint = opacityOf(headmatter.parallaxTint) ?? 0.72
+  return {
+    'backgroundImage': `url("${resolveAssetUrl(src)}")`,
+    '--_parallax-p': parallaxProgress(parallaxSrcs.value, index),
+    '--parallax-tint': `${Math.round(tint * 100)}%`,
+  }
+})
+
 // confidential (headmatter): the corner ribbon, utils/ribbon.ts
 const ribbon = computed(() => ribbonOf(headmatter.confidential, headmatter.confidentialOn,
   frontmatter.value.confidential, currentLayout.value, isHeadmatterSlide(currentSlideRoute.value?.meta?.slide)))
@@ -187,6 +223,35 @@ const paceMark = computed(() => {
   --footer-clearance: var(--footer-clearance-with-footer, 1.5rem);
 }
 /* (A Footnote also moves up for a bottom stage indicator: StageProgress.vue) */
+
+/* parallax: the deck image, behind the slides (it comes first in the DOM).
+   Each slide's background turns translucent in its own color, so dark layouts
+   tint it dark and light slides light (a slide with `parallax: false` has no
+   image under it, so it keeps its own). Theme variables: --parallax-tint (the
+   headmatter's parallaxTint), --parallax-shift (20%: how far it travels over
+   the deck), --parallax-duration */
+.deck-parallax {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* wider than the slide by --parallax-shift, and moved left by that much
+     over the deck: any image drifts, whatever its shape */
+  width: calc(100% + var(--parallax-shift, 20%));
+  left: calc(var(--_parallax-p, 0) * var(--parallax-shift, 20%) * -1);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: left var(--parallax-duration, 0.8s) var(--motion-ease, ease);
+  pointer-events: none;
+}
+
+:is(#slide-content, .print-slide-container):has(> .deck-parallax) {
+  --_parallax-tint: var(--parallax-tint);
+}
+
+:is(#slide-content, .print-slide-container):has(> .deck-parallax) .slidev-layout {
+  background: color-mix(in srgb, var(--slide-bg, var(--dark-bg)) var(--_parallax-tint, 72%), transparent);
+}
 
 /* aside: the tag gives the top-left corner to a stage indicator there */
 :is(#slide-content, .print-slide-container):has(> .stage-pos-top-left) > .slide-aside-tag {

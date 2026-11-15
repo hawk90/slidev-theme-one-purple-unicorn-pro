@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { backgroundKind, opacityOf, patternOf, scrimOf } from '../utils/background.ts'
+import { backgroundKind, opacityOf, parallaxProgress, patternOf, scrimOf } from '../utils/background.ts'
 
 describe('backgroundKind', () => {
   it('colors', () => {
@@ -46,5 +46,12 @@ describe('scrimOf', () => {
     assert.equal(scrimOf(true, 'gradient'), 0.55)
     assert.equal(scrimOf('30%', 'image'), 0.3)
     assert.equal(scrimOf(0.8, 'color'), 0.8)
+  })
+})
+
+describe('parallaxProgress', () => {
+  it('runs of the same image, each 0 → 1', () => {
+    const srcs = ['a', 'a', 'a', null, 'b', 'b', 'c']
+    assert.deepEqual(srcs.map((_, i) => parallaxProgress(srcs, i)), [0, 0.5, 1, 0, 0, 1, 0.5])
   })
 })

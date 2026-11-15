@@ -32,6 +32,9 @@
   `backgroundFilter` (on the background only) and an automatic scrim over images
   (`backgroundScrim`); `bg: mesh | aurora | grain | dots | grid` draws a pattern from
   the accent colors.
+- **Parallax background** (#145): `parallax: /panorama.jpg` puts one wide image behind
+  the slides that drifts with the page; the slides tint it in their own color
+  (`parallaxTint`), in exports too.
 
 ## 4.0.0
 
