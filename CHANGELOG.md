@@ -23,6 +23,8 @@
   position }` in the headmatter draws a red band across a top corner, in exports too;
   `confidentialOn: openers`, and a slide's own `confidential` (false hides it). The red
   and its text keep 5:1 contrast in both modes (`--on-red`).
+- **Slide hotkeys** (#170): `hotkey: q` on a slide makes that key jump to it; clashes
+  with Slidev's keys and repeats are reported in the console.
 
 ## 4.0.0
 

@@ -219,6 +219,8 @@ On one slide, `pageNumber: skip` hides the number and leaves the slide out of th
 
 **Confidential ribbon**: `confidential: true` in the headmatter puts a red "CONFIDENTIAL" band across the top-right corner of every slide, PDF/PNG exports included. A string sets the label (`confidential: 대외비`); an object sets `label`, `company` (a smaller second line) and `position` (`top-right` / `top-left`). `confidentialOn: openers` limits it to cover, intro, section and end slides. A slide's own `confidential` replaces the deck's there: `false` hides it, `true` shows the deck's, anything else its own. Long text shrinks, then ends in "…". A stage indicator or `aside` tag in the same corner moves along the top edge; at `top-left` the band crosses the start of a content slide's title. Variables: `--ribbon-color`, `--ribbon-text-color`, `--ribbon-size`, `--ribbon-font-size`.
 
+**Slide hotkeys**: `hotkey: q` on a slide makes <kbd>q</kbd> jump to it from anywhere (agenda, Q&A, appendix); modifiers work too (`shift+a`). Slidev's own keys (space, arrows, `d`, `o`, `g`, `f`, …) are kept: a hotkey on one of them, a key used twice or a value that isn't a key is reported in the browser console. A deck's own `setup/shortcuts.ts` still works and receives these in `base`.
+
 ### Talk details: cover and footer
 
 Write the talk's details once in the headmatter. The first slide's `cover` shows them under the title, and the footer line can show them on content slides:

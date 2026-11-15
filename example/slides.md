@@ -1627,6 +1627,21 @@ class: slide-dark
 `position: top-left`, a Korean label, and a long company name that shrinks, then ends in "…". Over a dark slide the band takes the dark palette's red with dark text; in light mode it is a deeper red with white text (both above 5:1).
 
 ---
+hotkey: k
+---
+
+# Slide Hotkeys
+
+`hotkey:` on a slide makes a key jump to it from anywhere in the deck. Try it: <Kbd>q</Kbd> goes to **Thank You!**, <Kbd>a</Kbd> to the appendix, <Kbd>k</Kbd> back here.
+
+```yaml
+hotkey: q          # one key
+hotkey: shift+a    # with modifiers: ctrl, alt, shift, meta
+```
+
+Slidev's own keys (<Kbd>space</Kbd>, arrows, <Kbd>d</Kbd>, <Kbd>o</Kbd>, <Kbd>g</Kbd>, <Kbd>f</Kbd>…) are kept: a hotkey on one of them, a key used twice or a value that isn't a key is reported in the console. Keys do nothing while typing in a field.
+
+---
 layout: section
 ---
 
@@ -2369,6 +2384,7 @@ rightLabel: Hover & Transition
 
 ---
 layout: end
+hotkey: q
 ---
 
 # Thank You!
@@ -2379,6 +2395,7 @@ layout: end
 
 ---
 appendix: true
+hotkey: a
 ---
 
 # Appendix: Extra Material
