@@ -58,7 +58,7 @@ export async function prepareSlide(page, port, n, { scheme, embedded = false, se
   await page.waitForFunction((no) => {
     const slide = document.querySelector(`[data-slidev-no="${no}"]`)
     return slide && !slide.querySelector('.slidev-slide-loading')
-      && (slide.textContent.trim() || slide.querySelector('img, svg, canvas, video'))
+      && (slide.textContent.trim() || slide.querySelector('img, svg, canvas, video, iframe'))
       && [...document.images].every(i => i.complete)
   }, n, { timeout: 30000 }).catch(() => onSlow?.(n))
   await page.evaluate(() => document.fonts.ready)
