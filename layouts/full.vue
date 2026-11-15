@@ -5,14 +5,8 @@
 </template>
 
 <style scoped>
-.full {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
-
+/* Size, no padding and overflow come with every .slidev-layout (layout-fix.css)
+   and slide-bare (no content padding) */
 .full :deep(> *) {
   max-width: none;
 }

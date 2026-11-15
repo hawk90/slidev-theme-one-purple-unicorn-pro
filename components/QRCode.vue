@@ -131,7 +131,6 @@ const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
   line-height: 0;
   /* themes and Slidev style links; the code itself must stay untouched */
   border: 0;
-  text-decoration: none;
 }
 
 /* …nor the theme's hover underline bar (main.css a::after), as LinkCard */

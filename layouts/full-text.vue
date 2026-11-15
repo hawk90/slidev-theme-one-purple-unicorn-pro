@@ -6,10 +6,7 @@
 
 <style scoped>
 .full-text {
-  width: 100%;
-  height: 100%;
   padding: var(--full-text-padding, 2rem 3rem);
-  margin: 0;
   overflow: auto;
 }
 
@@ -18,7 +15,6 @@
 }
 
 .full-text :deep(h1) {
-  font-size: 1.75rem;
   margin-bottom: 1rem;
 }
 </style>

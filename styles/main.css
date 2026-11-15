@@ -122,12 +122,10 @@
 
 :where(.slidev-layout, .slidev-page) ul {
   list-style-type: disc;
-  list-style-position: outside;
 }
 
 :where(.slidev-layout, .slidev-page) ol {
   list-style-type: decimal;
-  list-style-position: outside;
 }
 
 :where(.slidev-layout, .slidev-page) li {

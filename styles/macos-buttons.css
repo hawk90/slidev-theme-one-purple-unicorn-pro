@@ -238,8 +238,7 @@ html.dark,
   min-width: 50px;
 }
 
-.btn-macos-regular {
-}
+/* .btn-macos-regular is the default size: nothing to set */
 
 .btn-macos-large {
   font-size: 15px;
