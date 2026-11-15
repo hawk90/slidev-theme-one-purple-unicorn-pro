@@ -2098,9 +2098,9 @@ rightLabel: Hover & Transition
 | Name | Key Feature |
 |------|-------------|
 | `hover-lift/scale/tilt` | Transform-based hover |
-| `hover-glow` (+ `-purple` `-blue` `-green` `-red` `-cyan` `-gold` `-neon`) | Color glow on hover |
+| `hover-glow-*` | Glow on hover (purple, blue, green, red, cyan, gold, neon) |
 | `hover-shine/gradient/border` | Sweep, fill, border reveal |
-| `slide-left/right/up` | Directional slide transitions |
+| `slide-left/right/up/down` | Short directional slides |
 | `fade`, `scale-fade`, `blur-fade` | Fade-based transitions |
 
 ---
