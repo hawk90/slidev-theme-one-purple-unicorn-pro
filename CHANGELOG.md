@@ -2,6 +2,14 @@
 
 ## Unreleased (4.2.0)
 
+### Features
+
+- **Click-step styles** (#127): `dim-prior`, `only-current`, `hl-current` (with colors),
+  `grow-current`, `shrink-prior` style the items already clicked and the one just
+  clicked, on a container or as a click preset (`v-click.dim-prior`,
+  `clickAnimation:`). Exports without clicks show the items plainly; `--with-clicks`
+  exports keep the styles (`html.print-clicks`).
+
 ### Fixes
 
 - **Light mode: titles on bare light layouts** (`center`, `full-text`, …) used the dark

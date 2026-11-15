@@ -24,6 +24,14 @@ export const isPrintMode = () => {
     || 'print' in (route?.query ?? {})
 }
 
+/** An export of every click (`slidev export --with-clicks`: ?print=clicks):
+ *  click-step styles (dim-prior, only-current…) then show per page */
+export const isPrintWithClicks = () => {
+  const route = router?.currentRoute.value
+  return new URLSearchParams(location.search).get('print') === 'clicks'
+    || route?.query?.print === 'clicks'
+}
+
 /** Called with the mode now and on every route change after */
 export function onPrintModeChange(listener: (on: boolean) => void) {
   listeners.push(listener)
@@ -36,6 +44,7 @@ export function setupPrintMode(r?: RouterLike) {
   const sync = () => {
     const on = isPrintMode()
     document.documentElement.classList.toggle('print-mode', on)
+    document.documentElement.classList.toggle('print-clicks', on && isPrintWithClicks())
     listeners.forEach(l => l(on))
   }
   sync()

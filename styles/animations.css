@@ -563,6 +563,67 @@
 .slidev-vclick-hidden.slidev-vclick-anim-blur { filter: blur(6px); }
 
 /* ============================================
+   Click-step styles: how the items already clicked (slidev-vclick-prior)
+   and the one just clicked (slidev-vclick-current) look. On a container
+   (<div class="dim-prior"><v-clicks>…) or as a click preset on an element
+   or a slide (v-click.dim-prior, `clickAnimation: dim-prior`).
+   Variables: --step-dim (0.35), --step-hl (the highlight color),
+   --step-grow (1.06), --step-shrink (0.92)
+   ============================================ */
+:is(.dim-prior .slidev-vclick-prior, .slidev-vclick-prior.slidev-vclick-anim-dim-prior) {
+  opacity: var(--step-dim, 0.35);
+}
+:is(.only-current .slidev-vclick-prior, .slidev-vclick-prior.slidev-vclick-anim-only-current) {
+  display: none;
+}
+:is([class*="hl-current"] .slidev-vclick-current, .slidev-vclick-current[class*="slidev-vclick-anim-hl-current"]) {
+  background: color-mix(in srgb, var(--_step-hl) 14%, transparent);
+  box-shadow: inset 3px 0 var(--_step-hl);
+  border-radius: 4px;
+  transition: background var(--motion-base) var(--motion-ease), box-shadow var(--motion-base) var(--motion-ease);
+}
+/* every item gets the bar's room, so nothing moves when it lights up */
+:is([class*="hl-current"] .slidev-vclick-target, .slidev-vclick-target[class*="slidev-vclick-anim-hl-current"]) {
+  padding-left: 0.5rem;
+}
+:is(.hl-current, .slidev-vclick-anim-hl-current) { --_step-hl: var(--step-hl, var(--primary-400)); }
+:is(.hl-current-blue, .slidev-vclick-anim-hl-current-blue) { --_step-hl: var(--step-hl, var(--one-dark-blue)); }
+:is(.hl-current-green, .slidev-vclick-anim-hl-current-green) { --_step-hl: var(--step-hl, var(--one-dark-green)); }
+:is(.hl-current-yellow, .slidev-vclick-anim-hl-current-yellow) { --_step-hl: var(--step-hl, var(--one-dark-yellow)); }
+:is(.hl-current-red, .slidev-vclick-anim-hl-current-red) { --_step-hl: var(--step-hl, var(--one-dark-red)); }
+:is(.hl-current-cyan, .slidev-vclick-anim-hl-current-cyan) { --_step-hl: var(--step-hl, var(--one-dark-cyan)); }
+:is(.grow-current .slidev-vclick-current, .slidev-vclick-current.slidev-vclick-anim-grow-current) {
+  scale: var(--step-grow, 1.06);
+  transform-origin: left center;
+}
+:is(.shrink-prior .slidev-vclick-prior, .slidev-vclick-prior.slidev-vclick-anim-shrink-prior) {
+  scale: var(--step-shrink, 0.92);
+  transform-origin: left center;
+  opacity: 0.75;
+}
+:is(.dim-prior, .only-current, [class*="hl-current"], .grow-current, .shrink-prior) .slidev-vclick-target,
+.slidev-vclick-target:is(.slidev-vclick-anim-dim-prior, .slidev-vclick-anim-grow-current, .slidev-vclick-anim-shrink-prior) {
+  transition: opacity var(--motion-base) var(--motion-ease), scale var(--motion-base) var(--motion-ease);
+}
+/* An export without clicks shows every item as it is (the last click would
+   dim or hide the rest); `--with-clicks` (html.print-clicks) keeps the
+   styles, one page per click */
+html.print-mode:not(.print-clicks) :is(.dim-prior .slidev-vclick-prior, .slidev-vclick-anim-dim-prior, .shrink-prior .slidev-vclick-prior, .slidev-vclick-anim-shrink-prior) {
+  opacity: 1;
+  scale: none;
+}
+html.print-mode:not(.print-clicks) :is(.only-current .slidev-vclick-prior, .slidev-vclick-prior.slidev-vclick-anim-only-current) {
+  display: revert;
+}
+html.print-mode:not(.print-clicks) :is([class*="hl-current"] .slidev-vclick-current, .slidev-vclick-current[class*="slidev-vclick-anim-hl-current"]) {
+  background: none;
+  box-shadow: none;
+}
+html.print-mode:not(.print-clicks) :is(.grow-current .slidev-vclick-current, .slidev-vclick-current.slidev-vclick-anim-grow-current) {
+  scale: none;
+}
+
+/* ============================================
    Slide Transitions
    Speed: --slide-transition-duration (e.g. on :root)
    ============================================ */

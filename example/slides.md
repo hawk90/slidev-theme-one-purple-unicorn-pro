@@ -1842,6 +1842,65 @@ clickAnimation: rise blur    # a slide (or the headmatter): every click on it; p
 
 ---
 
+# Click-Step Styles
+
+How the items already clicked and the one just clicked look. Click through: the four lists step together.
+
+<div class="grid grid-cols-4 gap-4 mt-4 text-sm">
+<div class="dim-prior">
+
+**`dim-prior`**
+
+<v-clicks at="1">
+
+- Load the tile
+- Sync the block
+- Compute
+
+</v-clicks>
+</div>
+<div class="hl-current">
+
+**`hl-current`**
+
+<v-clicks at="1">
+
+- Load the tile
+- Sync the block
+- Compute
+
+</v-clicks>
+</div>
+<div class="only-current">
+
+**`only-current`**
+
+<v-clicks at="1">
+
+- Load the tile
+- Sync the block
+- Compute
+
+</v-clicks>
+</div>
+<div class="grow-current shrink-prior">
+
+**`grow-current`** + **`shrink-prior`**
+
+<v-clicks at="1">
+
+- Load the tile
+- Sync the block
+- Compute
+
+</v-clicks>
+</div>
+</div>
+
+On a container, or as a click preset: `v-click.dim-prior`, `clickAnimation: hl-current-green`. Colors: `hl-current-blue` / `-green` / `-yellow` / `-red` / `-cyan`. Exports without clicks show every item plainly.
+
+---
+
 # Animated Gradient Border
 
 A light runs along the border at a constant speed. The default and 7 color presets:
@@ -2549,6 +2608,7 @@ rightLabel: Hover & Transition
 | `anim-fade-*` | Entrance animations (in, up, left, right) |
 | `anim-pop` | Scale pop entrance |
 | `stagger` | Children in one after another |
+| `dim-prior`, `hl-current`, … | Click-step styles |
 | `anim-float` | Gentle floating motion |
 | `anim-cursor` | Terminal blinking cursor |
 
