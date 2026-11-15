@@ -191,6 +191,14 @@ html:not(.dark) .slidev-layout:not(.slide-dark) {
   --cover-h1-gradient: var(--light-cover-h1-gradient, linear-gradient(135deg, #8b5cf6, #ec4899, #6366f1, #3b82f6));
 }
 
+/* Bare light layouts (center, full-text, ...) take the same light title
+   gradient; main.css's --gradient-primary resolves at the root, to the dark
+   palette (#c678dd → #61afef: 2.84:1 on white, #174). Weighs what main.css's
+   rule weighs, and comes after it */
+:where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) h1 {
+  background-image: var(--cover-h1-gradient);
+}
+
 :where(html:not(.dark) .slidev-layout.slide-bare:not(.slide-dark)) h2 {
   color: var(--one-dark-blue);
 }

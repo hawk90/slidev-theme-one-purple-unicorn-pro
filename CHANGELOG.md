@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased (4.2.0)
+
+### Fixes
+
+- **Light mode: titles on bare light layouts** (`center`, `full-text`, …) used the dark
+  palette's gradient, 2.84:1 on white; they take the light title gradient (3.68:1 at
+  its lightest) (#174).
+
 ## Unreleased (4.1.0)
 
 ### Features
