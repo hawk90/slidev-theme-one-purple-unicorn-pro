@@ -9,6 +9,8 @@
   clicked, on a container or as a click preset (`v-click.dim-prior`,
   `clickAnimation:`). Exports without clicks show the items plainly; `--with-clicks`
   exports keep the styles (`html.print-clicks`).
+- **`<ClickTabs>`** (#154): one window with a tab per version (`tabs`, slots `tab1`,
+  `tab2`, …); each click moves to the next tab, a click on a tab jumps to it.
 
 ### Fixes
 

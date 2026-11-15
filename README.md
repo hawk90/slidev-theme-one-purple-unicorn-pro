@@ -145,6 +145,7 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<FloatImage>` | `src`, `alt`, `caption`, `position` (`left`/`right`), `width`, `rounded` |
 | `<StoryBox>` | `title`, `variant` (`history` `insight` `warning` `tip` `person`), `year`, `source`, `color`, `icon` |
 | `<PatternCard>` | `signal`, `template`, `alternatives`, `sections` (`[{ key, label, icon, color, text }]`); same-named slots for rich content |
+| `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |
 | `<Timeline>` | `items` (`[{ title, year, desc, color }]`), `active` (a static highlight), `steps` (each click reveals the next item and moves the highlight; counts in the slide's clicks), `animate` (items fade in top to bottom when the slide arrives) |
 | `<ComplexityTable>` | `title`, `rows` (`[{ n, target, algo, complexity, highlight }]`), `showComplexity` |
 | `<Stat>` | `value` (as written: `"$4.2M"`, `"98.5%"`, `"1,024"`), `label`, `delta` (`"+12%"`; its sign picks ▲ / ▼), `good` (`up` or `down`: which way is green), `count` (counts up from 0 when the slide arrives; exports show the figure), `color`, `size` (`sm` / default / `lg`), `plain` (no card) |
@@ -312,6 +313,7 @@ Every value below defaults to the theme's look.
 | `<Kbd>`, gray badge | `--key-bg` (light mode: `--light-key-bg`) |
 | `<StoryBox>` | `--story-color`, `--story-padding`, `--story-radius` |
 | `<PatternCard>` | `--pattern-color` |
+| `<ClickTabs>` | `--click-tabs-active` (the underline), `--click-tabs-pane-padding` |
 | `<Timeline>` | `--tl-dot-color`, `--tl-active-color`, `--tl-line-color`, `--tl-year-color` |
 | `<Stat>` | `--stat-size`, `--stat-color`, `--stat-count-duration` (`--motion-slow`, 1.2s) |
 | `<Footnote>` | `--footnote-size`, `--footnote-bottom`, `--footnote-left`, `--footnote-right` |

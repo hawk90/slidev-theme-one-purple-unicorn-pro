@@ -1239,6 +1239,56 @@ int main() {
 
 ---
 
+# Click Tabs
+
+`<ClickTabs>`: one window, a tab per version; each click moves to the next tab (click a tab to jump).
+
+<ClickTabs :tabs="['v1 naive', 'v2 shared memory', 'v3 tiled']">
+<template #tab1>
+
+```cuda
+__global__ void sum(const float *x, float *out, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) atomicAdd(out, x[i]);
+}
+```
+
+</template>
+<template #tab2>
+
+```cuda
+__global__ void sum(const float *x, float *out, int n) {
+    __shared__ float s[256];
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    s[threadIdx.x] = i < n ? x[i] : 0.0f;
+    __syncthreads();
+    if (threadIdx.x == 0) atomicAdd(out, s[0]);
+}
+```
+
+</template>
+<template #tab3>
+
+```cuda
+__global__ void sum(const float *x, float *out, int n) {
+    __shared__ float s[256];
+    s[threadIdx.x] = x[blockIdx.x * 256 + threadIdx.x];
+    __syncthreads();
+    for (int k = 128; k > 0; k >>= 1) {
+        if (threadIdx.x < k) s[threadIdx.x] += s[threadIdx.x + k];
+        __syncthreads();
+    }
+    if (threadIdx.x == 0) atomicAdd(out, s[0]);
+}
+```
+
+</template>
+</ClickTabs>
+
+The panes are the slots `tab1`, `tab2`, …; the window is as tall as the tallest. `:steps="false"`: no clicks, the tabs switch when clicked.
+
+---
+
 # Title Bar & Line Numbers
 
 A `[name]` after the language draws a window bar; `{lines:true}` numbers the lines (`lineNumbers: true` in the headmatter does it for every block).
