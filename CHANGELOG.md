@@ -50,6 +50,10 @@
 
 ### Fixes
 
+- **`stagePosition: bottom` / `left` / `right` overlapped the slide** (#48). `bottom`
+  sat on the footer line; it now moves above it (a `<Footnote>` moves up further).
+  `left` / `right` were drawn over tables and boxes; the content slide now leaves a
+  column for them (`--stage-side-space`), and their labels wrap.
 - **`<QRCode />` without `url` encoded a local address** (#47): on a dev server
   `http://localhost:3031/`, in an export the temporary export server, both dead links
   for the audience. It now uses `seoMeta.ogUrl`, or the served address only when that

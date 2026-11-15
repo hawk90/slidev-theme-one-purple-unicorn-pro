@@ -141,6 +141,16 @@ function goToStage(index: number) {
   flex-direction: column;
 }
 
+/* Side positions get a column of their own (see the unscoped block below):
+   labels wrap within it instead of running into the content */
+.stage-pos-left .stage-label,
+.stage-pos-right .stage-label {
+  max-width: var(--stage-side-label-width, 5.5rem);
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
 /* Vertical positions: items stack, connectors run vertically */
 .stage-pos-left .stage-connector,
 .stage-pos-right .stage-connector {
@@ -282,5 +292,26 @@ function goToStage(index: number) {
 .stage-upcoming .stage-connector {
   background: var(--stage-upcoming-color, var(--text-muted, #5c6370));
   opacity: 0.2;
+}
+</style>
+
+<style>
+/* The indicator is a sibling of the footer line and of the slide (one per
+   slide in an export, under .print-slide-container), so plain CSS can make
+   room for it. */
+
+/* bottom: above the footer line while it shows (the footer comes first) */
+.slide-footer ~ .stage-pos-bottom {
+  bottom: var(--stage-bottom-with-footer, 3.25rem);
+}
+
+/* left / right: the content slide's padding on that side grows by the
+   indicator's column, so text and tables stay clear of it */
+:is(#slide-content, .print-slide-container):has(> .stage-pos-left) .slidev-layout:not(.slide-bare) {
+  padding-left: calc(var(--slide-padding-x, 30px) + var(--stage-side-space, 6.5rem));
+}
+
+:is(#slide-content, .print-slide-container):has(> .stage-pos-right) .slidev-layout:not(.slide-bare) {
+  padding-right: calc(var(--slide-padding-x, 30px) + var(--stage-side-space, 6.5rem));
 }
 </style>

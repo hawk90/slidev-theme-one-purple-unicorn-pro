@@ -1315,7 +1315,7 @@ Add `stages` and `currentStage` to frontmatter. **Click any stage** to jump dire
 ```yaml
 stages: ["Concept", "Implementation", "Optimization", "Practice"]
 currentStage: 1
-stagePosition: top-right   # top (default) | top-left | top-right
+stagePosition: top-right   # top (default) | top-left | top-right | bottom | left | right
 stageMap: [72, 73, 74, 75] # optional: the page each stage jumps to
 ```
 

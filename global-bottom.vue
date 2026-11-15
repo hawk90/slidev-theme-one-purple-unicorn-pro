@@ -116,6 +116,12 @@ const progress = computed(() => {
 :is(#slide-content, .print-slide-container):has(> .stage-pos-bottom) > * {
   --footnote-bottom: var(--footnote-bottom-with-stage, 4.25rem);
 }
+
+/* …and higher still when that indicator is lifted above the footer line
+   (StageProgress.vue, --stage-bottom-with-footer) */
+:is(#slide-content, .print-slide-container):has(> .slide-footer):has(> .stage-pos-bottom) > * {
+  --footnote-bottom: var(--footnote-bottom-with-footer-and-stage, 5.25rem);
+}
 </style>
 
 <style scoped>

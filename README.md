@@ -179,6 +179,8 @@ stagePosition: top     # top | top-left | top-right | bottom | left | right
 
 Click a stage to jump to the matching slide (or give `stageMap: [3, 7, 12]`).
 
+`bottom` sits above the footer line when one shows. `left` / `right` take a column of their own: the content slide's padding on that side grows by `--stage-side-space` (6.5rem), and labels wrap at `--stage-side-label-width` (5.5rem).
+
 ## CSS Classes
 
 | Class | |
@@ -270,8 +272,8 @@ Every value below defaults to the theme's look.
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
 | Cover details | `--cover-info-color`, `--cover-info-muted`, `--cover-logo-height` |
-| Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage` (where a `<Footnote>` goes then) |
-| Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size` |
+| Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage`, `--footnote-bottom-with-footer-and-stage` (where a `<Footnote>` goes then) |
+| Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size`; `--stage-bottom-with-footer`, `--stage-side-space`, `--stage-side-label-width` |
 
 ### Components
 
