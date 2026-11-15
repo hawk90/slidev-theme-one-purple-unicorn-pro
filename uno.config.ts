@@ -6,6 +6,8 @@ export default {
   },
   theme: {
     colors: {
+      // Deprecated, removed in 4.0 (#26, #40): the theme never used these
+      // (text-primary-purple …), and they don't follow themeConfig colors
       primary: {
         purple: '#8b5cf6',
         indigo: '#6366f1',

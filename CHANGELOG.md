@@ -47,6 +47,9 @@
   in 4.0. Use the equivalents in the README's *Compatibility Aliases* table.
 - `iframe`'s `title` is deprecated in favor of `iframeTitle` (see Fixes) and will be
   removed in 4.0.
+- The UnoCSS colors `primary-purple` / `-indigo` / `-violet` / `-pink`
+  (`text-primary-purple` …) are deprecated and will be removed in 4.0: the theme never
+  used them, and they ignore `themeConfig` colors (#26).
 
 ### Fixes
 
