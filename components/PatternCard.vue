@@ -1,5 +1,5 @@
 <template>
-  <div class="pattern-card">
+  <div class="pattern-card box-shell">
     <template v-for="(s, i) in shown" :key="s.key">
       <div
         class="pattern-section"
@@ -54,14 +54,6 @@ const shown = computed(() => list.value.filter(s => textOf(s) || slots[s.key]))
 </script>
 
 <style scoped>
-.pattern-card {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin: 0.75rem 0;
-  background: var(--bg-secondary);
-}
-
 .pattern-section {
   padding: 0.6rem 1rem;
   display: flex;

@@ -9,9 +9,8 @@
 //   ```
 
 import type { ShikiTransformer } from 'shiki'
-
-type Element = Parameters<NonNullable<ShikiTransformer['span']>>[0]
-type Node = Element | Element['children'][number]
+import type { Element } from './hast'
+import { textOf } from './hast.ts' // .ts: node --test loads this file directly
 
 const SHELLS = new Set(['bash', 'sh', 'shell', 'shellscript', 'zsh', 'fish', 'console', 'shellsession'])
 // `$ cmd`, zsh's `% cmd`, or a themed prompt ending in ❯ / ➜ (starship,
@@ -33,9 +32,6 @@ const OPENS = /(?:^|[;&|(]|\b(?:do|then|else))\s*(?:if|for|while|until|case)\b|\
 const CLOSES = /(?:^|[;&|])\s*(?:fi|done|esac|\})(?=[\s;&|)]|$)/g
 const bare = (body: string) => body.replace(/(["'])(?:\\.|(?!\1)[^\\])*\1/g, 's').replace(/(^|\s)#.*$/, '').trim()
 const HEREDOC = /(?<!<)<<-?\s*(['"]?)([A-Za-z_]\w*)\1/
-
-const textOf = (node: Node): string =>
-  node.type === 'text' ? node.value : 'children' in node ? node.children.map(textOf).join('') : ''
 
 export function terminalTransformer(): ShikiTransformer {
   return {

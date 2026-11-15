@@ -5,7 +5,7 @@
       <div class="grid-col">
         <div
           v-if="labels[i]"
-          class="grid-label tint-chip"
+          class="grid-label tint-chip tint-pill"
           :class="`grid-label-${i}`"
           :style="labelColors[i] ? { '--label-color': labelColors[i] } : undefined"
         >
@@ -66,13 +66,9 @@ const gridStyle = computed(() => {
 }
 
 .grid-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.2rem 0.6rem;
-  border-radius: 1rem;
   width: fit-content;
   margin-bottom: 0.5rem;
   --tint: var(--label-color);

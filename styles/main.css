@@ -276,6 +276,24 @@ table.table-auto { width: auto; }
   border-color: var(--primary-700);
 }
 
+/* A boxed component's shell (PatternCard, ComplexityTable): border, corners,
+   fill; the component sets its own --box-radius when it has one */
+.box-shell {
+  border: 1px solid var(--border-default);
+  border-radius: var(--box-radius, var(--radius-lg));
+  overflow: hidden;
+  margin: 0.75rem 0;
+  background: var(--bg-secondary);
+}
+
+/* A small rounded mono label (column labels, StoryBox year), with .tint-chip */
+.tint-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 1rem;
+}
+
 /* Tinted chip: a light tint of --tint behind text in --tint (slightly deeper
    ink in light mode via --ink-depth). Used by Badge, column labels,
    StoryBox year and ComplexityTable title. */

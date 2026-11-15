@@ -33,14 +33,10 @@
 }
 
 /* ========== Content Heading Sizes ========== */
+/* Margins: main.css's (the h2 after the title gets 0 from `h1 + *` above) */
 .slidev-layout:not(.slide-bare) h2 {
   font-size: 1.3em;
   color: var(--content-h2);
-  margin: 1.2rem 0 0.5rem;
-}
-
-.slidev-layout:not(.slide-bare) h1 + h2 {
-  margin-top: 0;
 }
 
 .slidev-layout:not(.slide-bare) h3 {

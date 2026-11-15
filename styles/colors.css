@@ -98,6 +98,9 @@
   /* Corner radius of cards, tables, code blocks and boxes (--card-radius,
      --table-radius, --story-radius and the code radius default to it) */
   --radius-lg: 0.75rem;
+
+  /* Glow around an active dot (Timeline, StageProgress), before its color */
+  --dot-glow: 0 0 6px;
 }
 
 /* Light mode re-declares part of the palette on <body> (light-theme.css).

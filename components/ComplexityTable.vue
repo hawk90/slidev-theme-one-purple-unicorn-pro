@@ -1,5 +1,5 @@
 <template>
-  <div class="complexity-table">
+  <div class="complexity-table box-shell">
     <div v-if="title" class="ct-title tint-chip">{{ title }}</div>
     <table>
       <thead>
@@ -69,11 +69,7 @@ const columns = computed(() =>
 
 <style scoped>
 .complexity-table {
-  margin: 0.75rem 0;
-  border-radius: var(--table-radius, var(--radius-lg));
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-  background: var(--bg-secondary);
+  --box-radius: var(--table-radius, var(--radius-lg));
 }
 
 .ct-title {

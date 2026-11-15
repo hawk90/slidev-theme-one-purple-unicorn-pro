@@ -4,12 +4,7 @@
 // comments and strings (a "cudaMalloc failed" message stays a string).
 
 import type { ShikiTransformer } from 'shiki'
-
-// HAST node types, taken from Shiki's own hook signatures (no extra dependency)
-type Element = Parameters<NonNullable<ShikiTransformer['span']>>[0]
-type Content = Element['children'][number]
-type Root = Parameters<NonNullable<ShikiTransformer['root']>>[0]
-type Node = Root | Root['children'][number]
+import type { Content, Element, Node } from './hast'
 
 interface TokenDef {
   words: string

@@ -244,7 +244,7 @@ function goToStage(index: number) {
 
 .stage-active .stage-dot {
   background: var(--stage-active-color, var(--primary-400));
-  box-shadow: 0 0 6px var(--stage-active-color, var(--primary-400));
+  box-shadow: var(--dot-glow) var(--stage-active-color, var(--primary-400));
   width: calc(var(--stage-dot-size, 6px) * 1.33);
   height: calc(var(--stage-dot-size, 6px) * 1.33);
 }

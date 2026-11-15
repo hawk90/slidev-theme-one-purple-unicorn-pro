@@ -73,7 +73,7 @@ defineProps({
 
 .tl-active .tl-dot {
   background: var(--tl-active-color, var(--primary-400));
-  box-shadow: 0 0 6px var(--tl-active-color, var(--primary-400));
+  box-shadow: var(--dot-glow) var(--tl-active-color, var(--primary-400));
   width: 10px;
   height: 10px;
 }

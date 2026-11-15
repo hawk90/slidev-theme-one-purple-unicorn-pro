@@ -108,7 +108,7 @@
   /* Resolved values: --shimmer-* may be set here, on a parent or on :root */
   --_sh-color: var(--shimmer-color, rgba(255, 255, 255, 0.14));
   --_sh-travel: var(--shimmer-travel, 1100px);
-  --band-width: var(--shimmer-width, clamp(60px, 35%, 180px));
+  --band-width: var(--shimmer-width, var(--_band-width));
   --band-color: var(--_sh-color);
   position: relative;
   overflow: hidden;
@@ -121,6 +121,11 @@
 }
 
 /* Light band shared by .anim-shimmer and .hover-shine: --band-width / --band-color */
+.anim-shimmer,
+.hover-shine {
+  /* The light band's default width (--shimmer-width / --hover-shine-width) */
+  --_band-width: clamp(60px, 35%, 180px);
+}
 .anim-shimmer::after,
 .hover-shine::after {
   content: '';
@@ -474,7 +479,7 @@
    (not a transition) so leaving does not sweep back. */
 .hover-shine {
   --band-color: var(--hover-shine-color, rgba(255, 255, 255, 0.18));
-  --band-width: var(--hover-shine-width, clamp(60px, 35%, 180px));
+  --band-width: var(--hover-shine-width, var(--_band-width));
   position: relative;
   overflow: hidden;
 }
@@ -504,7 +509,9 @@
 .slide-up-enter-active,
 .slide-up-leave-active,
 .slide-down-enter-active,
-.slide-down-leave-active {
+.slide-down-leave-active,
+.scale-fade-enter-active,
+.scale-fade-leave-active {
   transition: all var(--slide-transition-duration, 0.35s) cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* A short slide with a fade. `translate`, the property Slidev's own
@@ -528,10 +535,6 @@
   opacity: 0;
 }
 
-.scale-fade-enter-active,
-.scale-fade-leave-active {
-  transition: all var(--slide-transition-duration, 0.35s) cubic-bezier(0.4, 0, 0.2, 1);
-}
 .scale-fade-enter-from { opacity: 0; transform: scale(0.95); }
 .scale-fade-leave-to   { opacity: 0; transform: scale(1.05); }
 
