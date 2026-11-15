@@ -17,15 +17,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { configs, resolveAssetUrl, useNav } from '@slidev/client'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { parsePageList } from './utils/pages'
+import { watchDarkChrome } from './utils/dark-chrome'
 import { footerParts, headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/talk-info'
 
 const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode } = useNav()
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
+
+// Chrome over a dark layout takes the dark palette (utils/dark-chrome.ts);
+// play mode only: an export's slides each carry their own chrome
+let stopDarkChrome = () => {}
+onMounted(() => { if (!isPrintMode.value) stopDarkChrome = watchDarkChrome(currentPage) })
+onBeforeUnmount(() => stopDarkChrome())
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

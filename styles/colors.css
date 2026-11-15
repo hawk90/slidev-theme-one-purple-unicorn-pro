@@ -134,9 +134,12 @@
   --_root-ink-mix: var(--ink-mix);
 }
 
+/* Dark layouts, and the chrome over them: in play mode #slide-content gets
+   .chrome-dark from utils/dark-chrome.ts; in an export each slide's container
+   is checked with :has() (static there, so cheap) */
 html:not(.dark) :is(
   .slide-dark,
-  #slide-content:has(> #slideshow > .slidev-page:not([style*="display: none"]) .slidev-layout.slide-dark) > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress),
+  #slide-content.chrome-dark > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress),
   .print-slide-container:has(> .slidev-page .slidev-layout.slide-dark) > :is(.progress-bar, .slide-footer, .slide-indicator, .stage-progress)
 ) {
   --slide-bg: var(--dark-bg);
