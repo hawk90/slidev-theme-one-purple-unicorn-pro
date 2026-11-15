@@ -45,3 +45,14 @@ describe('terminalTransformer', () => {
   for (const [name, code, expected] of MORE)
     it(name, () => assert.equal(marks(code), expected))
 })
+
+describe('outputLines (pure)', async () => {
+  const { outputLines } = await import('../setup/terminal-transformer.ts')
+  it('no prompt: null, the block is left alone', () => assert.equal(outputLines(['echo hi', 'hi']), null))
+  it('prompt lines are commands, the rest output, blanks neither', () =>
+    assert.deepEqual(outputLines(['$ ls', 'a.txt', '', '$ pwd', '/tmp']), [false, true, false, false, true]))
+  it('a trailing backslash continues the command', () =>
+    assert.deepEqual(outputLines(['$ nvcc -O3 \\', '  -o saxpy', 'done']), [false, false, true]))
+  it('a heredoc runs to its end word', () =>
+    assert.deepEqual(outputLines(['$ cat > f <<EOF', 'body', 'EOF', 'out']), [false, false, false, true]))
+})
