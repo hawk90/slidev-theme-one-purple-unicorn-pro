@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased (4.0.0)
+## 4.0.0
+
+The 3.3.0–3.6.0 changes, released together with the breaking changes.
 
 ### Breaking changes
 
@@ -22,8 +24,6 @@ on the left:
 A removed layout name falls back to Slidev's `default` layout (the dev server prints
 `Unknown layout "comparison"`), so the slide still renders, without its image,
 columns or centering.
-
-## Unreleased (3.6.0)
 
 ### Features
 
@@ -49,12 +49,8 @@ columns or centering.
   `-short` / `-long` for the light; they combine with the colors, `-ccw`, `-slow` and
   `-fast`. The example deck shows each option side by side.
 
-### Internal
-
-- `utils/slide-motion.ts` (`onSlideArrival`), `utils/number.ts`, `utils/colors.ts`,
-  with tests; `--motion-slow` (1.2s) joins the motion tokens (#57).
-
-## Unreleased (3.5.0)
+- **`<Countdown size>` takes any CSS length** (`size="2.5rem"`), as `<QRCode>` does,
+  besides the presets (#74).
 
 ### Fixes
 
@@ -74,43 +70,6 @@ columns or centering.
   both modes. Visible change: `<ComplexityTable>`'s header line is its own 1px in
   light mode, as in dark mode (was 2px).
 
-### Internal
-
-- Structure (#62): `applyThemeConfig()` (#90), `outputLines()` out of the terminal
-  transformer (#87), CUDA token data in `cuda-tokens.ts` (#88), global-bottom's logic
-  in tested utils (#83), tests for the pure logic that had none (#86), the light-mode
-  lists side by side with the private variables documented (#82), one `slide-chrome`
-  marker (#79), CSS rules in the files they belong to (`blocks.css`, `print.css`, #85),
-  `styles.css` marks where import order matters (#84).
-- Slidev internals the theme relies on are listed in `utils/slidev-dom.ts` and DEV.md,
-  checked by `npm run check:slidev` after a Slidev upgrade (#81).
-- Export code in three parts (#80): `setupPrintMode()` (print-mode.ts, called first),
-  the capture hold (export-hold.ts), and the redraws (print-export.ts) with named
-  `watchColorScheme()` / `watchEditableExport()`. Slide arrival watches `#slideshow`
-  instead of the whole page (#89).
-
-## Unreleased (3.4.0)
-
-### Features
-
-- **`<Countdown size>` takes any CSS length** (`size="2.5rem"`), as `<QRCode>` does,
-  besides the presets (#74).
-
-### Internal
-
-- Duplicated code in one place: `columnLayoutProps()` for the column layouts (#76), a
-  shared background-image style for the media layouts (#75), the glow peak and the
-  entrance list in `animations.css` (#73), the print-redraw helpers (#77), restated
-  CSS rules (#78: `.box-shell`, `.tint-pill`, `--dot-glow`, transitions, Shiki HAST
-  helpers), and `scripts/lib/shots.mjs` for `check-decks` / `regress` (#65).
-- A test keeps the light-mode variable lists in sync (#72).
-- The inline-code chip outranks Slidev's rule by specificity, not load order (#94
-  follow-up).
-
-## Unreleased (3.3.0)
-
-### Changes
-
 - **Inline code chips follow the theme** (#94): the theme's chip rule used to lose to
   Slidev's, so dark chips were Slidev's `#1b1b1b`; they use the code background
   (`#21252b`) now, like chips in headings and on dark layouts. Size, corners and
@@ -126,6 +85,31 @@ columns or centering.
   light mode. Light mode has one tertiary grey.
 
 ### Internal
+
+- `utils/slide-motion.ts` (`onSlideArrival`), `utils/number.ts`, `utils/colors.ts`,
+  with tests; `--motion-slow` (1.2s) joins the motion tokens (#57).
+
+- Structure (#62): `applyThemeConfig()` (#90), `outputLines()` out of the terminal
+  transformer (#87), CUDA token data in `cuda-tokens.ts` (#88), global-bottom's logic
+  in tested utils (#83), tests for the pure logic that had none (#86), the light-mode
+  lists side by side with the private variables documented (#82), one `slide-chrome`
+  marker (#79), CSS rules in the files they belong to (`blocks.css`, `print.css`, #85),
+  `styles.css` marks where import order matters (#84).
+- Slidev internals the theme relies on are listed in `utils/slidev-dom.ts` and DEV.md,
+  checked by `npm run check:slidev` after a Slidev upgrade (#81).
+- Export code in three parts (#80): `setupPrintMode()` (print-mode.ts, called first),
+  the capture hold (export-hold.ts), and the redraws (print-export.ts) with named
+  `watchColorScheme()` / `watchEditableExport()`. Slide arrival watches `#slideshow`
+  instead of the whole page (#89).
+
+- Duplicated code in one place: `columnLayoutProps()` for the column layouts (#76), a
+  shared background-image style for the media layouts (#75), the glow peak and the
+  entrance list in `animations.css` (#73), the print-redraw helpers (#77), restated
+  CSS rules (#78: `.box-shell`, `.tint-pill`, `--dot-glow`, transitions, Shiki HAST
+  helpers), and `scripts/lib/shots.mjs` for `check-decks` / `regress` (#65).
+- A test keeps the light-mode variable lists in sync (#72).
+- The inline-code chip outranks Slidev's rule by specificity, not load order (#94
+  follow-up).
 
 - `!important` only where it is needed (13 of 24 dropped, #99); declarations with no
   effect removed (#100); unprefixed `mask` (#102); the quote layout marks its quote
