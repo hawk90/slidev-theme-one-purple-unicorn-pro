@@ -67,7 +67,7 @@ import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
 
 const nav = useNav()
-const { currentPage, total, currentLayout, currentSlideRoute, isPrintMode, isPresenter, slides } = nav
+const { currentPage, total, currentLayout, currentSlideRoute, currentFrontmatter, isPrintMode, isPresenter, slides } = nav
 
 const isHidden = computed(() => NO_PAGE_NUMBER_LAYOUTS.includes(currentLayout.value))
 
@@ -105,7 +105,8 @@ onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); clearInt
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide
 const headmatter = headmatterOf(configs)
-const frontmatter = computed(() => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {})
+// The current slide's own frontmatter (useNav's currentFrontmatter, Slidev 52.18)
+const frontmatter = computed(() => currentFrontmatter.value ?? {})
 
 // progressBar: always (default) | content | false (utils/progress.ts)
 const progressMode = computed(() => modeOf(frontmatter.value.progressBar ?? headmatter.progressBar))

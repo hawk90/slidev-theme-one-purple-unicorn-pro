@@ -34,14 +34,13 @@ import { TITLE_LAYOUTS } from '../utils/layouts'
 import { headmatterOf, isOff } from '../utils/frontmatter'
 import { autoStageIndex, autoStages, isAutoStages, stageLabelMode, stageOf, stagesOf, stageTarget } from '../utils/stages'
 
-const { currentLayout, currentSlideRoute, currentPage, go, slides } = useNav()
+const { currentLayout, currentFrontmatter, currentPage, go, slides } = useNav()
 
 const isHidden = computed(() => TITLE_LAYOUTS.includes(currentLayout.value))
 
 const headmatter = headmatterOf(configs)
-const frontmatter = computed(() =>
-  currentSlideRoute.value?.meta?.slide?.frontmatter || {}
-)
+// useNav's currentFrontmatter (Slidev 52.18)
+const frontmatter = computed(() => currentFrontmatter.value || {})
 
 // A slide's own `stages` list wins; `stages: auto` (on the slide, or in the
 // headmatter for every slide without its own) builds one stage per section

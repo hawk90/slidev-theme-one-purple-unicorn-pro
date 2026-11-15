@@ -1814,6 +1814,34 @@ v-click, Transitions, Gradient Borders, Shimmer, Glow, and more
 
 ---
 
+# Click Presets
+
+The theme adds `pop`, `rise` and `blur` to Slidev's click animations. Put them on one element, or on the whole slide with `clickAnimation:`.
+
+<div v-click.pop class="card mt-4">
+
+**`v-click.pop`**: grows in with a little overshoot
+
+</div>
+
+<div v-click.rise class="card mt-3">
+
+**`v-click.rise`**: comes up the theme's entrance distance
+
+</div>
+
+<div v-click.blur class="card mt-3">
+
+**`v-click.blur`**: comes into focus
+
+</div>
+
+```yaml
+clickAnimation: rise blur    # a slide (or the headmatter): every click on it; presets combine
+```
+
+---
+
 # Animated Gradient Border
 
 A light runs along the border at a constant speed. The default and 7 color presets:

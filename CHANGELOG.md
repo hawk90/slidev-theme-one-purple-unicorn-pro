@@ -39,6 +39,14 @@
   another once the slide has arrived, stopping at the first click; content-only
   transitions `content-left` / `-right` / `-up` / `-fade` move the content and leave
   the background still.
+- **v-click presets** (#148): `pop`, `rise` and `blur` join Slidev's click animations
+  (`v-click.pop`, or `clickAnimation: pop` on a slide or the deck), timed by the motion
+  tokens.
+
+### Internal
+
+- The chrome and the stage indicator read the slide's frontmatter from `useNav()`'s
+  `currentFrontmatter` (Slidev 52.18) (#148).
 
 ## 4.0.0
 
