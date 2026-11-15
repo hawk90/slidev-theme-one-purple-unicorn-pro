@@ -30,6 +30,7 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 import { TITLE_LAYOUTS } from '../utils/layouts'
+import { stageOf, stagesOf } from '../utils/stages'
 
 const { currentLayout, currentSlideRoute, go, slides } = useNav()
 
@@ -39,21 +40,13 @@ const frontmatter = computed(() =>
   currentSlideRoute.value?.meta?.slide?.frontmatter || {}
 )
 
-const stages = computed(() => listOf(frontmatter.value.stages))
+const stages = computed(() => stagesOf(frontmatter.value))
 
-const currentIndex = computed(() => {
-  const val = frontmatter.value.currentStage
-  return val !== undefined && val !== '' ? Number(val) : -1
-})
+const currentIndex = computed(() => stageOf(frontmatter.value))
 
 const position = computed(() =>
   (frontmatter.value.stagePosition as string) || 'top'
 )
-
-// `stages` is a list; anything else (a stray string) shows no indicator
-function listOf(v: unknown): string[] {
-  return Array.isArray(v) ? v.map(String) : []
-}
 
 const sameStages = (a: string[], b: string[]) => a.length === b.length && a.every((s, i) => s === b[i])
 
@@ -78,7 +71,7 @@ function goToStage(index: number) {
   for (const slide of slides.value) {
     const fm = slide?.meta?.slide?.frontmatter
     if (!fm) continue
-    if (Number(fm.currentStage) === index && sameStages(listOf(fm.stages), stages.value)) {
+    if (stageOf(fm) === index && sameStages(stagesOf(fm), stages.value)) {
       go(slide.no ?? slide.idx + 1)
       return
     }
