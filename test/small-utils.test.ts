@@ -2,7 +2,7 @@ import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { parsePageList } from '../utils/pages.ts'
 import { encodeQr, qrPath } from '../utils/qr.ts'
-import { richText } from '../utils/rich-text.ts'
+import { loadKatex, richText } from '../utils/rich-text.ts'
 import { colorStops, functionArgs, isTransparent, splitList } from '../utils/print-canvas.ts'
 
 describe('parsePageList', () => {
@@ -45,7 +45,11 @@ describe('encodeQr', () => {
 describe('richText', () => {
   it('escapes HTML', () => assert.equal(richText('<b>&"'), '&lt;b&gt;&amp;&quot;'))
   it('x^2 → superscript', () => assert.equal(richText('O(n^2)'), 'O(n<sup>2</sup>)'))
-  it('$…$ → KaTeX', () => assert.match(richText('cost $O(n^2)$'), /^cost <span class="katex">/))
+  it('$…$ → plain until KaTeX has loaded, then KaTeX', async () => {
+    assert.equal(richText('cost $O(n^2)$'), 'cost O(n<sup>2</sup>)')
+    await loadKatex()
+    assert.match(richText('cost $O(n^2)$'), /^cost <span class="katex">/)
+  })
   it('\\$ is a literal dollar', () => assert.equal(richText('\\$5 and \\$6'), '$5 and $6'))
   it('lone $ stays text', () => assert.equal(richText('$5'), '$5'))
   it('null / numbers', () => { assert.equal(richText(null), ''); assert.equal(richText(3), '3') })

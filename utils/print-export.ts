@@ -14,6 +14,8 @@ import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
 import { canRedraw } from './print-canvas'
 import { isPrintMode, trackPrintRoute } from './print-mode'
+import { nextTick } from 'vue'
+import { katexSettled } from './rich-text'
 
 const HOLD_MS = 15000
 const OWN = 'canvas.print-gradient-text, canvas.print-ring, canvas.print-shadows'
@@ -181,6 +183,9 @@ function start() {
           return
         }
         if (pending === null) {
+          // KaTeX loads on demand (rich-text.ts): let the props' math render
+          await katexSettled()
+          await nextTick()
           pending = new Set()
           redraw(document)
           return
