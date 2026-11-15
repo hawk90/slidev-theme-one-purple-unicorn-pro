@@ -12,6 +12,9 @@
   --one-dark-yellow: #e5c07b;
   --one-dark-yellow-dark: #d19a66;
   --one-dark-red: #e06c75;
+  /* Text on --one-dark-red (the confidential ribbon): dark on the dark palette's
+     red, white on light mode's deeper red; >= 5.3:1 both ways */
+  --on-red: #1a1b26;
   --one-dark-blue: #61afef;
   --one-dark-cyan: #56b6c2;
   --one-dark-purple: #c678dd;

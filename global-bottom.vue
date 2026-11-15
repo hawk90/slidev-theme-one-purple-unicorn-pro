@@ -22,6 +22,19 @@
     <div class="slide-aside-tag slide-chrome">{{ asideLabel }}</div>
   </template>
 
+  <!-- confidential: a red band across a top corner (shown in exports too) -->
+  <div
+    v-if="ribbon"
+    class="slide-ribbon slide-chrome"
+    :class="`ribbon-${ribbon.position}`"
+    :style="{ '--_ribbon-label-scale': ribbon.labelScale, '--_ribbon-company-scale': ribbon.companyScale }"
+  >
+    <div class="slide-ribbon-band">
+      <span class="slide-ribbon-label">{{ ribbon.label }}</span>
+      <span v-if="ribbon.company" class="slide-ribbon-company">{{ ribbon.company }}</span>
+    </div>
+  </div>
+
   <!-- Page Indicator -->
   <div v-if="showPageNumber" class="slide-indicator slide-chrome">
     {{ pageText }}
@@ -32,6 +45,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { configs, resolveAssetUrl, sharedState, useNav } from '@slidev/client'
 import { durationSeconds, pace, timerElapsed } from './utils/pace'
+import { ribbonOf } from './utils/ribbon'
 import { MEDIA_LAYOUTS, NO_PAGE_NUMBER_LAYOUTS } from './utils/layouts'
 import { formatPageNumber, pageLabels, parsePageList } from './utils/pages'
 import { watchDarkChrome } from './utils/dark-chrome'
@@ -135,6 +149,10 @@ const asideLabel = computed(() => {
   return isOn(v) ? 'Deep dive' : String(v)
 })
 
+// confidential (headmatter): the corner ribbon, utils/ribbon.ts
+const ribbon = computed(() => ribbonOf(headmatter.confidential, headmatter.confidentialOn,
+  frontmatter.value.confidential, currentLayout.value, isHeadmatterSlide(currentSlideRoute.value?.meta?.slide)))
+
 // paceBar: true → a marker on the bar for the time used of the deck's
 // `duration` (Slidev's, 30min by default), once the presenter view's timer
 // runs; green on pace, yellow behind, red late (utils/pace.ts). Not in exports.
@@ -160,6 +178,22 @@ const paceMark = computed(() => {
 
 /* aside: the tag gives the top-left corner to a stage indicator there */
 :is(#slide-content, .print-slide-container):has(> .stage-pos-top-left) > .slide-aside-tag {
+  left: auto;
+  right: 2rem;
+}
+
+/* The confidential ribbon keeps its corner: a stage indicator or the aside
+   tag there moves along the top edge, clear of it */
+:is(#slide-content, .print-slide-container):has(> .ribbon-top-right) > .stage-pos-top-right {
+  right: calc(var(--ribbon-size, 9rem) + 0.5rem);
+}
+:is(#slide-content, .print-slide-container):has(> .ribbon-top-left) > .stage-pos-top-left {
+  left: calc(var(--ribbon-size, 9rem) + 0.5rem);
+}
+:is(#slide-content, .print-slide-container):has(> .ribbon-top-left) > .slide-aside-tag {
+  left: calc(var(--ribbon-size, 9rem) + 0.5rem);
+}
+:is(#slide-content, .print-slide-container):has(> .ribbon-top-left):has(> .stage-pos-top-left) > .slide-aside-tag {
   left: auto;
   right: 2rem;
 }
@@ -204,6 +238,68 @@ const paceMark = computed(() => {
 .pace-on { --_pace-color: var(--pace-on-color, var(--one-dark-green)); }
 .pace-behind { --_pace-color: var(--pace-behind-color, var(--one-dark-yellow)); }
 .pace-late { --_pace-color: var(--pace-late-color, var(--one-dark-red)); }
+
+/* confidential ribbon. Theme variables: --ribbon-color, --ribbon-text-color,
+   --ribbon-size (the corner square), --ribbon-font-size */
+.slide-ribbon {
+  position: fixed;
+  top: 0;
+  width: var(--ribbon-size, 9rem);
+  height: var(--ribbon-size, 9rem);
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.ribbon-top-right { right: 0; }
+.ribbon-top-left { left: 0; }
+
+/* The band's center line crosses the corner's diagonal 0.38 of the square in
+   from each edge: about 10rem of band shows, enough for 13 label characters */
+.slide-ribbon-band {
+  position: absolute;
+  top: calc(var(--ribbon-size, 9rem) * 0.38);
+  width: calc(var(--ribbon-size, 9rem) * 1.6);
+  padding: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  background: var(--ribbon-color, var(--one-dark-red));
+  color: var(--ribbon-text-color, var(--on-red));
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+}
+
+.ribbon-top-right .slide-ribbon-band {
+  right: calc(var(--ribbon-size, 9rem) * 0.38);
+  transform: translate(50%, -50%) rotate(45deg);
+}
+
+.ribbon-top-left .slide-ribbon-band {
+  left: calc(var(--ribbon-size, 9rem) * 0.38);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.slide-ribbon-label,
+.slide-ribbon-company {
+  max-width: calc(var(--ribbon-size, 9rem) * 0.95);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slide-ribbon-label {
+  font-size: calc(var(--ribbon-font-size, 0.8rem) * var(--_ribbon-label-scale, 1));
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.slide-ribbon-company {
+  font-size: calc(var(--ribbon-font-size, 0.8rem) * 0.7 * var(--_ribbon-company-scale, 1));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
 
 /* aside. Theme variables: --aside-color, --aside-rail-width */
 .slide-aside-rail {

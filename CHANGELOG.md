@@ -19,6 +19,10 @@
   behind, red late.
 - **Deep-dive slides** (#123): `aside: true | "label"` adds an accent rail on the left
   edge and a corner tag.
+- **Confidential ribbon** (#149): `confidential: true | "label" | { label, company,
+  position }` in the headmatter draws a red band across a top corner, in exports too;
+  `confidentialOn: openers`, and a slide's own `confidential` (false hides it). The red
+  and its text keep 5:1 contrast in both modes (`--on-red`).
 
 ## 4.0.0
 

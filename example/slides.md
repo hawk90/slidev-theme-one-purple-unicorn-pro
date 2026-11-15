@@ -1590,6 +1590,43 @@ class: slide-dark
 `aside: "Under the hood"` gives the tag its own text. Over a dark slide the rail and tag keep the dark palette, like the rest of the chrome.
 
 ---
+confidential:
+  label: CONFIDENTIAL
+  company: ACME Corp
+stages: ["Draft", "Review", "Final"]
+currentStage: 1
+stagePosition: top-right
+---
+
+# Confidential Ribbon
+
+A red band across the corner, in exports too: leaked files are the point. Set it once in the headmatter for the whole deck.
+
+```yaml
+confidential: true                 # "CONFIDENTIAL", top-right
+confidential: 대외비                # any label
+confidential:
+  label: CONFIDENTIAL
+  company: ACME Corp               # a smaller second line
+  position: top-left               # top-right (default) | top-left
+confidentialOn: openers            # all (default) | openers: cover, intro, section, end
+```
+
+On a slide, `confidential: false` hides it and its own value shows it (this slide sets its own). A top-right stage indicator, as here, moves aside.
+
+---
+confidential:
+  label: 대외비
+  company: Slidev Theme Lab · Platform Engineering
+  position: top-left
+class: slide-dark
+---
+
+# Ribbon on a Dark Slide
+
+`position: top-left`, a Korean label, and a long company name that shrinks, then ends in "…". Over a dark slide the band takes the dark palette's red with dark text; in light mode it is a deeper red with white text (both above 5:1).
+
+---
 layout: section
 ---
 

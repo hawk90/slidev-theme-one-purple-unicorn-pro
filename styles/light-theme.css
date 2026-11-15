@@ -61,6 +61,7 @@ html:not(.dark) body {
   --one-dark-yellow: var(--light-yellow, #8a6200);
   --one-dark-yellow-dark: var(--light-orange, #9a5b1e);
   --one-dark-red: var(--light-red, #b8323f);
+  --on-red: #fff;
   --one-dark-purple: var(--light-magenta, #9b3fb8);
   --one-dark-magenta: var(--light-magenta, #9b3fb8);
   --primary-300: var(--light-primary-300, #8a3aa6);
@@ -109,6 +110,7 @@ html:not(.dark) body {
   --_root-one-dark-yellow: var(--one-dark-yellow);
   --_root-one-dark-yellow-dark: var(--one-dark-yellow-dark);
   --_root-one-dark-red: var(--one-dark-red);
+  --_root-on-red: var(--on-red);
   --_root-one-dark-purple: var(--one-dark-purple);
   --_root-one-dark-magenta: var(--one-dark-magenta);
   --_root-primary-300: var(--primary-300);
@@ -150,6 +152,7 @@ html:not(.dark) :is(
   --one-dark-yellow: var(--_root-one-dark-yellow);
   --one-dark-yellow-dark: var(--_root-one-dark-yellow-dark);
   --one-dark-red: var(--_root-one-dark-red);
+  --on-red: var(--_root-on-red);
   --one-dark-purple: var(--_root-one-dark-purple);
   --one-dark-magenta: var(--_root-one-dark-magenta);
   --primary-300: var(--_root-primary-300);
