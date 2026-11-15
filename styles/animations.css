@@ -376,7 +376,7 @@
    --hover-glow (any color), --hover-border-c1/-c2, --hover-gradient-c1/-c2,
    --hover-shine-color
    ============================================ */
-:is(.hover-lift, .hover-scale, .hover-tilt, .hover-glow, .hover-glow-blue, .hover-glow-green, .hover-border, .hover-gradient, .hover-shine) {
+:is(.hover-lift, .hover-scale, .hover-tilt, .hover-glow, [class*="hover-glow-"], .hover-border, .hover-gradient, .hover-shine) {
   cursor: pointer;
 }
 
@@ -407,12 +407,19 @@
 }
 
 /* Glow — colored glow on hover; -blue / -green are color presets */
-.hover-glow, .hover-glow-blue, .hover-glow-green {
+/* Colors as for anim-glow: `hover-glow hover-glow-blue`, or a color class
+   alone (`hover-glow-blue`, as before) */
+.hover-glow, [class*="hover-glow-"] {
   transition: box-shadow var(--hover-duration, 0.3s) ease;
 }
-.hover-glow-blue  { --hover-glow: var(--one-dark-blue); }
-.hover-glow-green { --hover-glow: var(--one-dark-green); }
-:is(.hover-glow, .hover-glow-blue, .hover-glow-green):hover {
+.hover-glow-purple { --hover-glow: var(--one-dark-magenta); }
+.hover-glow-blue   { --hover-glow: var(--one-dark-blue); }
+.hover-glow-green  { --hover-glow: var(--one-dark-green); }
+.hover-glow-red    { --hover-glow: var(--one-dark-red); }
+.hover-glow-cyan   { --hover-glow: var(--one-dark-cyan); }
+.hover-glow-gold   { --hover-glow: #fbbf24; }
+.hover-glow-neon   { --hover-glow: #00f5ff; }
+:is(.hover-glow, [class*="hover-glow-"]):hover {
   box-shadow:
     0 0 16px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta)) 40%, transparent),
     0 0 32px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta)) 12%, transparent);

@@ -1786,29 +1786,39 @@ Combine with any entrance animation for cascading reveals.
   </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-  <div class="card hover-glow" style="text-align: center; border-radius: 0.75rem;">
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
+  <div class="card hover-glow glow-demo" style="text-align: center; border-radius: 0.75rem;">
 
   ### Glow
   `hover-glow`
 
   </div>
-  <div class="card hover-glow-blue" style="text-align: center; border-radius: 0.75rem;">
+  <div class="card hover-glow hover-glow-blue glow-demo" style="text-align: center; border-radius: 0.75rem;">
 
-  ### Blue Glow
+  ### Blue
   `hover-glow-blue`
 
   </div>
-  <div class="card hover-glow-green" style="text-align: center; border-radius: 0.75rem;">
+  <div class="card hover-glow hover-glow-red glow-demo" style="text-align: center; border-radius: 0.75rem;">
 
-  ### Green Glow
-  `hover-glow-green`
+  ### Red
+  `hover-glow-red`
+
+  </div>
+  <div class="card hover-glow hover-glow-gold glow-demo" style="text-align: center; border-radius: 0.75rem;">
+
+  ### Gold
+  `hover-glow-gold`
 
   </div>
 </div>
 
+<style>
+/* Demo only: a faint resting glow, so the colors show without hovering (and in exports) */
+.glow-demo:not(:hover) { box-shadow: 0 0 10px color-mix(in srgb, var(--hover-glow, var(--one-dark-magenta)) 30%, transparent); }
+</style>
 
-Custom: `style="--hover-lift: 8px; --hover-scale: 1.1; --hover-glow: #ff6b6b; --hover-duration: 0.5s"`
+Glow colors as `anim-glow`'s (`hover-glow-red` alone works too); `--hover-glow` takes any color.
 
 ---
 
@@ -2088,7 +2098,7 @@ rightLabel: Hover & Transition
 | Name | Key Feature |
 |------|-------------|
 | `hover-lift/scale/tilt` | Transform-based hover |
-| `hover-glow/glow-blue/glow-green` | Color glow on hover |
+| `hover-glow` (+ `-purple` `-blue` `-green` `-red` `-cyan` `-gold` `-neon`) | Color glow on hover |
 | `hover-shine/gradient/border` | Sweep, fill, border reveal |
 | `slide-left/right/up` | Directional slide transitions |
 | `fade`, `scale-fade`, `blur-fade` | Fade-based transitions |
