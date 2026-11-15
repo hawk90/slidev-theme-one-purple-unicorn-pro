@@ -82,7 +82,7 @@ function rsRemainder(data: Uint8Array, divisor: Uint8Array) {
   return result
 }
 
-export interface QrMatrix {
+interface QrMatrix {
   size: number
   // size*size, row-major; 1 = dark module
   modules: Uint8Array

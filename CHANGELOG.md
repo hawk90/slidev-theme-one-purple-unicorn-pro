@@ -50,6 +50,10 @@
 - The UnoCSS colors `primary-purple` / `-indigo` / `-violet` / `-pink`
   (`text-primary-purple` …) are deprecated and will be removed in 4.0: the theme never
   used them, and they ignore `themeConfig` colors (#26).
+- `--one-dark-bg`, `--one-dark-fg`, `--one-dark-fg-bright`, `--one-dark-gray` (unused,
+  undocumented, and `-fg` is darker than `-bg`) and the `anim-gt-slow` / `anim-gt-fast`
+  aliases of `anim-gradient-text-slow` / `-fast` are deprecated and will be removed in
+  4.0 (#55).
 
 ### Fixes
 

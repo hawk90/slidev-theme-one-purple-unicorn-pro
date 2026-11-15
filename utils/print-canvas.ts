@@ -1,7 +1,7 @@
 // Shared pieces for redrawing slide effects as images in PDF export
 // (see print-export.ts): canvas setup, CSS value parsing, text measurement.
 
-export const RESOLUTION = 4 // canvas pixels per CSS pixel (text and rings)
+const RESOLUTION = 4 // canvas pixels per CSS pixel (text and rings)
 
 // "transparent", rgba(…, 0) or color(… / 0); not rgb(255, 0, 0), whose last
 // channel is 0 too
@@ -107,7 +107,7 @@ export function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w
   ctx.roundRect(x, y, w, h, radii.map(r => Math.max(0, Math.min(r, max))))
 }
 
-export interface TextRun { text: string, parent: Element, left: number, top: number, right: number, bottom: number }
+interface TextRun { text: string, parent: Element, left: number, top: number, right: number, bottom: number }
 
 let range: Range // created on first use (the module also loads outside the browser)
 function charRect(node: Text, i: number) {

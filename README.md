@@ -68,7 +68,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 | `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`; `cover`: the talk's details, see [Talk details](#talk-details-cover-and-footer)) |
 | `default` | Content slide (title pinned at the top) | |
 | `center` | Centered content | `padding`, `contentMaxWidth` |
-| `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth`, `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
+| `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth` (a bare number is a share, `2` → `2fr`; anything else a CSS length), `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
 | `image` | Image beside content | `image`, `side` (`left`/`right`), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
 | `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `iframeTitle` (screen-reader name; the older `title` still works but also renames the slide) |
 | `quote`, `statement`, `fact` | Emphasis slides | `padding`, `contentMaxWidth` |
@@ -161,7 +161,7 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<ComplexityTable>` | `title`, `rows` (`[{ n, target, algo, complexity, highlight }]`), `showComplexity` |
 | `<Countdown>` | `minutes`, `size` (`sm` `default` `lg` `xl`), `label`, `autoStart`, `showZero` |
 | `<QRCode>` | `url` (empty: this deck), `slide` (`true`: this slide, or a number), `size` (preset or any CSS length), `caption`, `ecc` (`L` / `M` / `Q` / `H`), `api` (`{data}`, `{size}` are replaced), `src` |
-| `<PresenterNote>` | (slot; shown only in the presenter view) |
+| `<PresenterNote>` | (slot; shown only in the presenter view, or on the slide too with `class="show"`) |
 
 `<QRCode>` is generated in the browser, so it works offline and in exports, and the URL is not sent anywhere. It is also a link. Without `url` it points to this deck: `seoMeta.ogUrl` from the headmatter if set, otherwise the address it is served from, with `--base` and `routerMode` applied, but only when that address is public. A dev server, `slidev export` and private addresses (`localhost`, `127.*`, `10.*`, `172.16–31.*`, `192.168.*`, `*.local`) would give the audience a dead link, so there it draws a dashed "No public URL" box instead (nothing in an export) and warns in the console; set `seoMeta.ogUrl` before exporting, and `url` for a deck on an intranet address. A `url` starting with `javascript:`, `data:`, `vbscript:` or `file:` draws no code. `api` switches back to a QR image service.
 
@@ -191,7 +191,7 @@ Click a stage to jump to the first slide with the same `stages` at that `current
 | `.gradient-card` | Card with a gradient bar on top |
 | `.gradient-border` | Gradient outline |
 | `.glass-gradient` | Frosted glass card |
-| `.btn-macos` (+ `-primary` `-secondary` `-destructive` `-success`, `-small` `-regular` `-large`, `-rounded` `-capsule`, `-icon`, `-toolbar`, `-loading`), `.btn-macos-group` | macOS-style buttons |
+| `.btn-macos` (+ `-primary` `-secondary` `-destructive` `-success`, `-small` `-regular` `-large`, `-rounded` `-capsule`, `-icon`, `-toolbar`, `-loading`), `.btn-macos-group`; dimmed with `disabled` or `.disabled` | macOS-style buttons |
 | `.macos-traffic-lights` / `.macos-traffic-light` | Window dots |
 | `.table-compact`, `.table-dense`, `.table-auto`, `.table-square` | Table variants (on the table or a wrapper) |
 
@@ -272,7 +272,7 @@ Every value below defaults to the theme's look.
 | Slide transitions | `--slide-transition-duration` |
 | Progress bar / page number | `--progress-height`, `--progress-color`, `--progress-track`, `--progress-glow`, `--page-number-size`, `--page-number-color`, `--page-number-right`, `--page-number-bottom` |
 | Cover details | `--cover-info-color`, `--cover-info-muted`, `--cover-logo-height` |
-| Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage`, `--footnote-bottom-with-footer-and-stage` (where a `<Footnote>` goes then) |
+| Footer line | `--footer-size`, `--footer-color`, `--footer-left`, `--footer-bottom`, `--footer-logo-height`; `--footnote-bottom-with-footer`, `--footnote-bottom-with-stage`, `--footnote-bottom-with-footer-and-stage` (where a `<Footnote>` goes then); `--footer-clearance-with-footer` (room the column layouts' `bottom` slot leaves above the line, 1.5rem) |
 | Stage indicator | `--stage-done-color`, `--stage-active-color`, `--stage-upcoming-color`, `--stage-dot-size`, `--stage-font-size`; `--stage-bottom-with-footer`, `--stage-side-space`, `--stage-side-label-width` |
 
 ### Components
@@ -289,7 +289,7 @@ Every value below defaults to the theme's look.
 | `<QRCode>` | `--qrcode-size` |
 | Tables, `<ComplexityTable>` | `--table-radius` (or `.table-square`) |
 | `.card` | `--card-radius`, `--card-padding`, `--card-margin`, `--card-hover-lift` |
-| `.alert` | `--alert-padding`, `--alert-margin`, `--alert-radius`, `--alert-border-width` |
+| `.alert` | `--alert-padding`, `--alert-margin`, `--alert-radius`, `--alert-border-width`; tints `--alert-info-bg`, `--alert-success-bg`, `--alert-warning-bg`, `--alert-error-bg` (both modes; `themeConfig` accents set them) |
 | `.btn-macos` | `--macos-radius`, `--macos-font-size`, `--macos-padding`, `--macos-height`; fills `--macos-blue` / `-blue-hover`, `--macos-red` / `-red-hover`, `--macos-green` / `-green-hover` (deepened from Apple's system colors so white labels pass WCAG AA; set Apple's `#007AFF` / `#FF3B30` / `#34C759` for the exact look) |
 
 ### Animations
@@ -322,6 +322,8 @@ One Dark accents with a purple → blue gradient:
 | `--one-dark-red` | `#e06c75` | `#b8323f` | `--light-red` |
 | `--one-dark-cyan` | `#56b6c2` | `#157a87` | `--light-cyan` |
 | `--text-primary` / `--text-muted` | `#c0c6d0` / `#858c98` | `#1a1d23` / `#6b7280` | `--light-text-primary` / `--light-text-muted` |
+| `--primary-300` / `-500` / `-600` | `#d98eff` / `#b665cb` / `#a652b8` | `#8a3aa6` / `#8e3aa8` / `#7f3396` | `--light-primary-300` / `-500` / `-600` |
+| `--one-dark-yellow-dark` (italic) | `#d19a66` | `#9a5b1e` | `--light-orange` |
 
 Light-mode accents are deeper so text stays readable (≥ 4.5:1) on white.
 

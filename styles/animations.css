@@ -109,6 +109,8 @@
   /* Resolved values: --shimmer-* may be set here, on a parent or on :root */
   --_sh-color: var(--shimmer-color, rgba(255, 255, 255, 0.14));
   --_sh-travel: var(--shimmer-travel, 1100px);
+  --band-width: var(--shimmer-width, clamp(60px, 35%, 180px));
+  --band-color: var(--_sh-color);
   position: relative;
   overflow: hidden;
 }
@@ -130,11 +132,6 @@
   width: var(--band-width);
   background: linear-gradient(90deg, transparent, var(--band-color) 50%, transparent);
   pointer-events: none;
-}
-
-.anim-shimmer {
-  --band-width: var(--shimmer-width, clamp(60px, 35%, 180px));
-  --band-color: var(--_sh-color);
 }
 
 .anim-shimmer::after {
@@ -334,7 +331,7 @@
 }
 
 /* Speed: --gt-duration (time per color cycle); presets below
-   (anim-gt-slow/-fast kept as aliases) */
+   (anim-gt-slow/-fast: deprecated aliases, removed in 4.0) */
 .anim-gradient-text-slow, .anim-gt-slow { --gt-duration: 10s; }
 .anim-gradient-text-fast, .anim-gt-fast { --gt-duration: 3s; }
 
@@ -476,14 +473,12 @@
    (not a transition) so leaving does not sweep back. */
 .hover-shine {
   --band-color: var(--hover-shine-color, rgba(255, 255, 255, 0.18));
+  --band-width: var(--hover-shine-width, clamp(60px, 35%, 180px));
   position: relative;
   overflow: hidden;
 }
 :where(html:not(.dark)) .hover-shine {
   --band-color: var(--hover-shine-color, color-mix(in srgb, var(--_root-primary-400) 18%, transparent));
-}
-.hover-shine {
-  --band-width: var(--hover-shine-width, clamp(60px, 35%, 180px));
 }
 .hover-shine::after {
   transform: translateX(-100%);

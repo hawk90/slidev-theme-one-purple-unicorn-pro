@@ -4,7 +4,7 @@
 
 ### 요구 사항
 - **Node 24**: `.node-version`에 고정돼 있고, mise·fnm이 자동으로 읽어요.
-- **npm 12**: `npm i -g npm@12`로 맞추세요.
+- **npm 11 이상**: Node 24에 딸린 npm 11이면 돼요.
 - 둘 다 `package.json`의 `devEngines`로 검사해요. 버전이 다르면 npm이 `install`·`ci`·`run`을 멈춰요(`EBADDEVENGINES`). 테마를 설치해서 쓰는 사람에게는 적용되지 않아요.
 
 ### 초기 설정 (최초 1회)

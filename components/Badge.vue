@@ -21,11 +21,9 @@ defineProps({
   letter-spacing: 0.02em;
   white-space: nowrap;
   vertical-align: middle;
-}
-
-.badge {
-  /* default variant; others override */
+  /* default variant; the others below override it */
   --badge-color: var(--primary-400);
+  --tint: var(--badge-color);
 }
 
 .badge-blue    { --badge-color: var(--one-dark-blue); }
@@ -33,12 +31,6 @@ defineProps({
 .badge-red     { --badge-color: var(--one-dark-red); }
 .badge-yellow  { --badge-color: var(--one-dark-yellow); }
 .badge-cyan    { --badge-color: var(--one-dark-cyan); }
-
-.badge {
-  --tint: var(--badge-color);
-}
-
-
 
 /* Same treatment as <Kbd>: neutral fill with readable text */
 .badge-gray {

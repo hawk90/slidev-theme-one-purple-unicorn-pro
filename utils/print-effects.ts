@@ -10,8 +10,8 @@
 import { colorStops, cornerRadii, fillRun, functionArgs, isTransparent, overlayCanvas, paddingBox, roundRect, splitList, textRuns } from './print-canvas'
 
 export const RING_DONE = 'data-print-ring'
-export const BOX_SHADOW_DONE = 'data-print-box-shadow'
-export const TEXT_SHADOW_DONE = 'data-print-text-shadow'
+const BOX_SHADOW_DONE = 'data-print-box-shadow'
+const TEXT_SHADOW_DONE = 'data-print-text-shadow'
 
 // --- Rings ----------------------------------------------------------------
 

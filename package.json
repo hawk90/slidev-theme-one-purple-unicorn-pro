@@ -20,7 +20,7 @@
     },
     "packageManager": {
       "name": "npm",
-      "version": "^12.2.0",
+      "version": ">=11",
       "onFail": "error"
     }
   },
@@ -70,8 +70,6 @@
     "shiki": "^4.4.3"
   },
   "scripts": {
-    "link": "npm link && cd ../.. && npm link slidev-theme-one-purple-unicorn-pro",
-    "unlink": "npm unlink && cd ../.. && npm unlink slidev-theme-one-purple-unicorn-pro",
     "check:decks": "node scripts/check-decks.mjs",
     "regress": "node scripts/regress.mjs",
     "test": "node --test 'test/*.test.ts'"

@@ -13,7 +13,7 @@ import type { SlideInfo } from '@slidev/types'
 
 type Info = Record<string, unknown>
 
-export interface Person { name: string, affiliation?: string }
+interface Person { name: string, affiliation?: string }
 
 /** Whether a slide (route meta.slide) is the deck's first, whose frontmatter is
  *  the headmatter: index is its place in the whole deck, hidden slides included */

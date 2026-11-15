@@ -6,7 +6,9 @@
      icons (prompt glyphs) come last, from the bundled symbols font */
   --font-mono: var(--slidev-code-font-family, 'JetBrains Mono', monospace), 'Symbols Nerd Font Mono';
 
-  /* One Dark Pro Base Colors */
+  /* One Dark Pro Base Colors. --one-dark-bg / -fg / -fg-bright / -gray are
+     unused and deprecated (removed in 4.0; -fg is the darker one): use
+     --bg-secondary, --dark-bg, --text-bright, --text-muted */
   --one-dark-bg: #2e323b;
   --one-dark-bg-light: #3e4452;
   --one-dark-fg: #282c34;
