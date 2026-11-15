@@ -50,6 +50,12 @@
 
 ### Fixes
 
+- **`<QRCode />` without `url` encoded a local address** (#47): on a dev server
+  `http://localhost:3031/`, in an export the temporary export server, both dead links
+  for the audience. It now uses `seoMeta.ogUrl`, or the served address only when that
+  host is public; otherwise it draws a dashed "No public URL" box (nothing in an
+  export) and warns in the console. A `url` with a `javascript:`, `data:`,
+  `vbscript:` or `file:` scheme draws no code.
 - **An `iframe` slide's `title` renamed the slide** (#54). It is Slidev's own slide
   title too, so the overview, `<Toc>` and the presenter listed the slide by the
   embedded page's name instead of its heading. The screen-reader name is now

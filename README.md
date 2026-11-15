@@ -163,7 +163,7 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<QRCode>` | `url` (empty: this deck), `slide` (`true`: this slide, or a number), `size` (preset or any CSS length), `caption`, `ecc` (`L` / `M` / `Q` / `H`), `api` (`{data}`, `{size}` are replaced), `src` |
 | `<PresenterNote>` | (slot; shown only in the presenter view) |
 
-`<QRCode>` is generated in the browser, so it works offline and in exports, and the URL is not sent anywhere. It is also a link. Without `url` it points to this deck: `seoMeta.ogUrl` from the headmatter if set (set it, or an exported deck points to the local export server), otherwise the address it is served from, with `--base` and `routerMode` applied. `api` switches back to a QR image service.
+`<QRCode>` is generated in the browser, so it works offline and in exports, and the URL is not sent anywhere. It is also a link. Without `url` it points to this deck: `seoMeta.ogUrl` from the headmatter if set, otherwise the address it is served from, with `--base` and `routerMode` applied, but only when that address is public. A dev server, `slidev export` and private addresses (`localhost`, `127.*`, `10.*`, `172.16–31.*`, `192.168.*`, `*.local`) would give the audience a dead link, so there it draws a dashed "No public URL" box instead (nothing in an export) and warns in the console; set `seoMeta.ogUrl` before exporting, and `url` for a deck on an intranet address. A `url` starting with `javascript:`, `data:`, `vbscript:` or `file:` draws no code. `api` switches back to a QR image service.
 
 Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props supports `$...$` math (KaTeX) and `x^y` superscripts; write `\$` for a literal dollar sign.
 

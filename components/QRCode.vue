@@ -1,12 +1,17 @@
 <template>
-  <div class="qrcode" :class="presetSize ? `qrcode-${size}` : ''" :style="presetSize ? undefined : { '--qrcode-size': size }">
+  <div
+    v-if="target !== null || imageSrc || !isPrintMode"
+    class="qrcode"
+    :class="presetSize ? `qrcode-${size}` : ''"
+    :style="presetSize ? undefined : { '--qrcode-size': size }"
+  >
     <component
       :is="isLink ? 'a' : 'div'"
       class="qrcode-box"
       v-bind="isLink ? { href: target, target: '_blank', rel: 'noopener' } : {}"
-      :title="target"
+      :title="target ?? undefined"
     >
-      <img v-if="imageSrc" :src="imageSrc" :alt="`QR: ${target}`" class="qrcode-img" />
+      <img v-if="imageSrc" :src="imageSrc" :alt="target ? `QR: ${target}` : 'QR code'" class="qrcode-img" />
       <svg
         v-else-if="matrix"
         class="qrcode-img"
@@ -16,14 +21,23 @@
       >
         <path :d="path" />
       </svg>
+      <!-- No address to give (dev server, export, unsafe url): say so, never a dead code -->
+      <div
+        v-else-if="target === null"
+        class="qrcode-img qrcode-missing"
+        title="Set url, or seoMeta.ogUrl in the headmatter"
+      >
+        No public URL
+      </div>
     </component>
     <div v-if="caption" class="qrcode-caption">{{ caption }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useSlideContext } from '@slidev/client'
+import { computed, watchEffect } from 'vue'
+import { useNav, useSlideContext } from '@slidev/client'
+import { deckUrl, isHttp, isSafeTarget } from '../utils/deck-url'
 import type { Ecc } from '../utils/qr'
 import { encodeQr, qrPath } from '../utils/qr'
 
@@ -48,27 +62,38 @@ const BORDER = 2
 
 const { $page: page, $slidev: slidev } = useSlideContext()
 
-// The deck's public address: `seoMeta.ogUrl` if set, else where it is served
-// (in an export that is the local export server)
-const target = computed(() => {
-  if (props.url) return props.url
-  const og = slidev.configs.seoMeta?.ogUrl
-  const root = og ? og.replace(/\/?$/, '/') : location.origin + import.meta.env.BASE_URL
-  if (props.slide === false) return root
-  const no = props.slide === true ? page.value : props.slide
-  const mode = slidev.configs.routerMode
-  if (mode === 'memory') return root // no per-slide URLs
-  return mode === 'hash' ? `${root}#/${no}` : `${root}${no}`
+const { isPrintMode } = useNav()
+
+// What the code holds: `url`, else the deck's public address (`seoMeta.ogUrl`,
+// else where it is served if that host is public; see utils/deck-url.ts).
+// Null when there is none: a dev server or an export runs on localhost, and a
+// code for it would be a dead link. A javascript:/data: url is refused.
+const target = computed<string | null>(() => {
+  if (props.url) return isSafeTarget(props.url) ? props.url : null
+  return deckUrl({
+    ogUrl: slidev.configs.seoMeta?.ogUrl,
+    origin: location.origin,
+    base: import.meta.env.BASE_URL,
+    routerMode: slidev.configs.routerMode,
+    slide: props.slide === false ? undefined : props.slide === true ? page.value : props.slide,
+  })
 })
 
-const isLink = computed(() => /^https?:\/\//i.test(target.value))
+watchEffect(() => {
+  if (target.value !== null || props.src) return
+  console.warn(props.url
+    ? `[theme] QRCode: refused url "${props.url}" (unsafe scheme)`
+    : '[theme] QRCode: no public address for this deck; set `url` or `seoMeta.ogUrl`')
+})
+
+const isLink = computed(() => target.value !== null && isHttp(target.value))
 
 const presetSize = computed(() => ['sm', 'default', 'lg', 'xl'].includes(props.size))
 const PRESET_PX: Record<string, number> = { sm: 80, default: 120, lg: 180, xl: 240 }
 
 const imageSrc = computed(() => {
   if (props.src) return props.src
-  if (!props.api) return ''
+  if (!props.api || target.value === null) return ''
   // Twice the shown size (480px for custom lengths), so the image is not upscaled
   const px = (PRESET_PX[props.size] ?? 240) * 2
   return props.api.replace('{data}', encodeURIComponent(target.value)).replace('{size}', String(px))
@@ -81,6 +106,7 @@ const level = computed<Ecc>(() => {
 // Encoded once per text and level; the SVG scales without blurring. Text past
 // a QR code's capacity (about 2.9 KB) shows no code rather than breaking the slide
 const matrix = computed(() => {
+  if (target.value === null) return null
   try {
     return encodeQr(target.value, level.value)
   }
@@ -118,6 +144,20 @@ const path = computed(() => (matrix.value ? qrPath(matrix.value, BORDER) : ''))
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.3));
   /* Hard module edges: blurred seams make a code hard to scan */
   image-rendering: pixelated;
+}
+
+.qrcode-missing {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.65rem;
+  line-height: 1.3;
+  color: var(--text-muted, #5c6370);
+  background: transparent;
+  border: 2px dashed currentColor;
+  box-shadow: none;
 }
 
 svg.qrcode-img {

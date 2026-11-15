@@ -1236,6 +1236,10 @@ Generate QR codes from any URL. Sizes: `sm`, `default`, `lg`, `xl`.
 <QRCode url="https://sli.dev" caption="Slidev Docs" size="lg" />
 ```
 
+Without `url`: this deck (`:slide="true"`: this slide), from `seoMeta.ogUrl` or a public address. On a dev server it asks for one:
+
+<QRCode :slide="true" caption="This slide" size="sm" />
+
 </div>
 </div>
 
