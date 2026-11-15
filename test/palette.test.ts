@@ -67,6 +67,20 @@ describe('paletteCss', () => {
     assert.deepEqual(bad, [])
   })
 
+  it('light title gradient: same stops, the end at 3:1 or more on white', () => {
+    const stops = (g: string) => g.match(/#[0-9a-f]{6}/g)!
+    const bad: string[] = []
+    for (let h = 0; h < 360; h += 15) {
+      for (const [s, l] of [[100, 50], [100, 80], [60, 65], [30, 90]]) {
+        const v = vars(paletteCss({ primary: hsl(h, s, l) }))
+        const [dark, light] = [stops(v['--cover-h1-gradient']), stops(v['--light-cover-h1-gradient'])]
+        assert.deepEqual(light.slice(0, 3), dark.slice(0, 3))
+        if (contrastOnWhite(light[3]) < 3) bad.push(`${hsl(h, s, l)} → ${light[3]}`)
+      }
+    }
+    assert.deepEqual(bad, [])
+  })
+
   it('all values are valid hex (gamut mapped)', () => {
     for (const p of ['#00ff00', '#0000ff', '#ff0000', '#ffffff', '#000000']) {
       for (const [k, c] of Object.entries(vars(paletteCss({ primary: p })))) {

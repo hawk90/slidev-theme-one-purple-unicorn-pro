@@ -162,8 +162,19 @@ export function paletteCss(config: PaletteConfig | undefined): string {
     vars['--light-secondary'] = lightShade(S, 'secondary').hex
 
     // Title gradients: the default's stops as turns around brand and partner
-    const end = toHex(step(S, -0.016, 1.18, 9.3))
-    vars['--cover-h1-gradient'] = `linear-gradient(135deg, ${toHex(step(P, -0.088, 1.34, -25.5))}, ${toHex(step(P, -0.038, 1.29, 36.1))}, ${toHex(step(P, -0.108, 1.25, -41.1))}, ${end})`
+    const endStop = step(S, -0.016, 1.18, 9.3)
+    const end = toHex(endStop)
+    const h1Stops = [step(P, -0.088, 1.34, -25.5), step(P, -0.038, 1.29, 36.1), step(P, -0.108, 1.25, -41.1)].map(toHex)
+    vars['--cover-h1-gradient'] = `linear-gradient(135deg, ${h1Stops.join(', ')}, ${end})`
+    // Light content slides (light-theme.css): the same, with the end stop deep
+    // enough for 3:1 on white (large text), as the default's #3b82f6
+    let [eL, eC, eH] = endStop
+    let lightEnd = end
+    while (contrastOnWhite(lightEnd) < 3 && eL > 0.2) {
+      eL -= 0.01
+      lightEnd = toHex([eL, eC, eH])
+    }
+    vars['--light-cover-h1-gradient'] = `linear-gradient(135deg, ${h1Stops.join(', ')}, ${lightEnd})`
     vars['--cover-h2-gradient'] = `linear-gradient(135deg, ${toHex(step(P, 0.015, 0.97, -24.7))}, ${end})`
   }
 
