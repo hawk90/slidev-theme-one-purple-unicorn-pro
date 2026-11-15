@@ -1472,7 +1472,7 @@ A gradient beam rotates along the border path. The default, 7 color presets, and
   <div class="anim-border anim-border-gold" style="text-align: center; padding: 0.5rem; font-size: 0.8rem;">Gold</div>
 </div>
 
-Direction: `anim-border-ccw` / Speed: `anim-border-slow` (10s) / `anim-border-fast` (3s)
+Direction: `anim-border-ccw` / Speed (one lap of a 600px border): `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
 
 ---
 
@@ -1498,8 +1498,6 @@ Set the colors directly with CSS variables:
 | `--ab-c2` | Light middle color |
 | `--ab-c3` | Light tail color |
 | `--ab-dim` | Resting border color (optional; defaults to a faint `--ab-c1`) |
-
-Speed (one lap of a 600px border): `anim-border-slow` (10s) / default (6s) / `anim-border-fast` (3s)
 
 ---
 
