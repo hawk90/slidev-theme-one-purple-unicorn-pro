@@ -2,8 +2,8 @@
   <div
     v-if="target !== null || imageSrc || !isPrintMode"
     class="qrcode"
-    :class="presetSize ? `qrcode-${size}` : ''"
-    :style="presetSize ? undefined : { '--qrcode-size': size }"
+    :class="sized.class"
+    :style="sized.style"
   >
     <component
       :is="isLink ? 'a' : 'div'"
@@ -38,6 +38,7 @@
 import { computed, watchEffect } from 'vue'
 import { useNav, useSlideContext } from '@slidev/client'
 import { deckUrl, isHttp, isSafeTarget } from '../utils/deck-url'
+import { sizeAttrs } from '../utils/size'
 import type { Ecc } from '../utils/qr'
 import { encodeQr, qrPath } from '../utils/qr'
 
@@ -88,7 +89,7 @@ watchEffect(() => {
 
 const isLink = computed(() => target.value !== null && isHttp(target.value))
 
-const presetSize = computed(() => ['sm', 'default', 'lg', 'xl'].includes(props.size))
+const sized = computed(() => sizeAttrs('qrcode', props.size, '--qrcode-size'))
 const PRESET_PX: Record<string, number> = { sm: 80, default: 120, lg: 180, xl: 240 }
 
 const imageSrc = computed(() => {

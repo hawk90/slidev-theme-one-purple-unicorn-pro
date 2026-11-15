@@ -1,5 +1,5 @@
 <template>
-  <div v-if="remaining > 0 || showZero" class="countdown" :class="`countdown-${size}`">
+  <div v-if="remaining > 0 || showZero" class="countdown" :class="sized.class" :style="sized.style">
     <span class="countdown-time">{{ formatted }}</span>
     <span v-if="label" class="countdown-label">{{ label }}</span>
   </div>
@@ -8,11 +8,13 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter } from '@slidev/client'
+import { sizeAttrs } from '../utils/size'
 
 const props = defineProps({
   minutes: { type: Number, default: 5 },
   autoStart: { type: Boolean, default: true },
   label: { type: String, default: '' },
+  // sm | default | lg | xl, or any CSS length (e.g. "2.5rem"), as QRCode
   size: { type: String, default: 'default' },
   showZero: { type: Boolean, default: true },
 })
@@ -20,6 +22,7 @@ const props = defineProps({
 // Whole seconds, never negative (0.5 → 30 s; -1 → 0)
 const total = () => Math.max(0, Math.round(Number(props.minutes) * 60) || 0)
 const remaining = ref(total())
+const sized = computed(() => sizeAttrs('countdown', props.size, '--countdown-size'))
 let timer: ReturnType<typeof setInterval> | null = null
 
 const formatted = computed(() => {
