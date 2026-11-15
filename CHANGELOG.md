@@ -50,6 +50,12 @@
 
 ### Fixes
 
+- **The footer line ran over pictures and embedded pages** (#41) on `image`,
+  `iframe`, `full-image` and `full-split`, which fill the slide to its bottom edge.
+  It is hidden there now unless the slide sets its own `footer`. The README also says
+  how much room the line takes on other slides (#44).
+- **`<FloatImage>` ignored `--base`** (#91): a `/public` path now goes through
+  `resolveAssetUrl`, like the layouts' images.
 - **`stagePosition: bottom` / `left` / `right` overlapped the slide** (#48). `bottom`
   sat on the footer line; it now moves above it (a `<Footnote>` moves up further).
   `left` / `right` were drawn over tables and boxes; the content slide now leaves a
