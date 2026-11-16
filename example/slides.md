@@ -780,6 +780,44 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Layout Utilities
+
+<div class="grid grid-cols-2 gap-8">
+<div>
+
+**`.stack`**: children in one spot; each click replaces the last
+
+<div class="stack mt-3">
+  <div v-click.hide="1" class="card">1. Load a tile into shared memory</div>
+  <div v-click="[1, 2]" class="card">2. Synchronize the block</div>
+  <div v-click="2" class="card">3. Compute from shared memory</div>
+</div>
+
+</div>
+<div class="list-cols-2 list-badges">
+
+**`.list-cols-2` + `.list-badges`**
+
+1. Profile
+2. Find the limiter
+3. Coalesce
+4. Tile
+5. Unroll
+6. Measure again
+
+</div>
+</div>
+
+---
+
+# Stretch
+
+`.stretch` fills the height left on the slide:
+
+<img class="stretch rounded-lg" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board">
+
+---
+
 # Cards
 
 <div class="card">

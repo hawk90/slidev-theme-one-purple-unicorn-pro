@@ -148,3 +148,76 @@
 :where(.slidev-layout, .slidev-page) .markdown-alert > :last-child {
   margin-bottom: 0;
 }
+
+/* Layout utilities (reveal.js-style):
+   .stack    its children on top of each other in one spot (steps of a
+             build-up with v-click, before/after images); as big as the biggest
+   .stretch  fills the height left on the slide (an image, a diagram, a code
+             block); its slide stacks its content in a column for that
+   .list-cols-2 / -3  a list (on it or a wrapper) flowing into columns
+   .list-badges       numbered items in round badges (an ol, on it or a wrapper) */
+:where(.slidev-layout, .slidev-page) .stack {
+  display: grid;
+}
+:where(.slidev-layout, .slidev-page) .stack > * {
+  grid-area: 1 / 1;
+}
+
+.slidev-layout:has(> .stretch) {
+  display: flex;
+  flex-direction: column;
+}
+:where(.slidev-layout, .slidev-page) .stretch {
+  flex: 1 1 auto;
+  min-height: 0;
+  /* above the footer line when one shows (global-bottom.vue sets it) */
+  margin-bottom: var(--footer-clearance, 0px);
+}
+:where(.slidev-layout, .slidev-page) .stretch:is(img, video, svg),
+:where(.slidev-layout, .slidev-page) .stretch > :is(img, video, svg) {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+:where(.slidev-layout, .slidev-page) .stretch > :is(.slidev-code-wrapper, pre) {
+  height: 100%;
+  margin: 0;
+}
+
+:where(.slidev-layout, .slidev-page) :is(ul, ol):is(.list-cols-2, .list-cols-3),
+:where(.slidev-layout, .slidev-page) :is(.list-cols-2, .list-cols-3) > :is(ul, ol) {
+  column-gap: 2.5rem;
+}
+:where(.slidev-layout, .slidev-page) :is(ul.list-cols-2, ol.list-cols-2, .list-cols-2 > ul, .list-cols-2 > ol) { columns: 2; }
+:where(.slidev-layout, .slidev-page) :is(ul.list-cols-3, ol.list-cols-3, .list-cols-3 > ul, .list-cols-3 > ol) { columns: 3; }
+:where(.slidev-layout, .slidev-page) :is(.list-cols-2, .list-cols-3) li {
+  break-inside: avoid;
+}
+
+:where(.slidev-layout, .slidev-page) :is(ol.list-badges, .list-badges ol) {
+  list-style: none;
+  counter-reset: badge;
+  padding-left: 0;
+}
+:where(.slidev-layout, .slidev-page) :is(ol.list-badges, .list-badges ol) > li {
+  counter-increment: badge;
+  position: relative;
+  padding-left: 2.1em;
+  list-style: none;
+}
+:where(.slidev-layout, .slidev-page) :is(ol.list-badges, .list-badges ol) > li::before {
+  content: counter(badge);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  width: 1.5em;
+  height: 1.5em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

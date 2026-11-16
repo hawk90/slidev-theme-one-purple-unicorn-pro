@@ -15,6 +15,8 @@
   play a video (`image: /clip.mp4`, Slidev's `<SlidevVideo>`, `poster` in exports) and
   tile up to three pictures or videos (`imageStack: row | column`); `imageWidth` sets
   the `image` layout's split.
+- **Layout utilities** (#133): `.stack` (children in one spot), `.stretch` (fills the
+  height left), `.list-cols-2` / `-3` and `.list-badges`.
 
 ## Unreleased (4.2.0)
 
