@@ -493,8 +493,8 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
 }
 
 /* "Compiler Explorer ↗" on a code block (`playground:`, utils/playground.ts):
-   bottom right, quiet (a small secondary link, 5.3:1 on the code: AA) until
-   the block is hovered */
+   bottom right, small and quiet until the block is hovered; the code's text
+   color, AA on both modes' code backgrounds (5.5:1 and up) */
 :is(.slidev-layout, .slidev-page) .slidev-code-wrapper:has(> .code-playground) {
   position: relative;
 }
@@ -506,7 +506,7 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
   border-radius: 999px;
   border: 1px solid var(--_root-border-default, rgba(171, 178, 191, 0.25));
   background: color-mix(in srgb, var(--bg-code) 85%, transparent);
-  color: var(--_root-text-secondary, #939aa3);
+  color: var(--_root-text-primary, #c0c6d0);
   font-family: var(--font-mono);
   font-size: 0.6rem;
   text-decoration: none;
