@@ -10,6 +10,8 @@
 - **Charts** (#119): `<Chart>` (bars, lines) and `<Radar>` in SVG with no library, and
   `<EChart>` for anything else (ECharts as an optional peer dependency), all in the
   theme's palette.
+- **`<GoogleForm>`** (#146): a QR code and short link to a Google Form, the form or a
+  published Sheet chart beside it; exports show the code and link.
 
 ## Unreleased (4.3.0)
 

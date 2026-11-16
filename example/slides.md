@@ -1063,6 +1063,16 @@ The slow part was the copy, not the kernel: two days of tuning for 3%.
 `<Radar axes data max>` in SVG; `<EChart option height>` draws any Apache ECharts option in the theme's palette (`npm i -D echarts` in the deck).
 
 ---
+layout: center
+---
+
+# Poll the Room
+
+<GoogleForm url="https://forms.gle/your-form-id" prompt="Which kernel was fastest? Scan and vote." />
+
+`<GoogleForm url embed results prompt>`: a QR code and a short link to a Google Form; `embed` shows the form beside it, `results` a published Sheet chart. Exports show the code and the link instead of the frames.
+
+---
 
 # Cards
 
