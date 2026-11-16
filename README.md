@@ -157,6 +157,8 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<StoryBox>` | `title`, `variant` (`history` `insight` `warning` `tip` `person`), `year`, `source`, `color`, `icon` |
 | `<PatternCard>` | `signal`, `template`, `alternatives`, `sections` (`[{ key, label, icon, color, text }]`); same-named slots for rich content |
 | `<Person>` | `name`, `role`, `affiliation`, `avatar` (else the initials), `links`, `size` (`sm` / `md` / `lg`) |
+| `<Meter>` | `value`, `max` (100), `label`, `showValue` (`true`: the percent, or `value / max unit` with `unit`; a string as is; `false`), `unit`, `color`, `warn` / `danger` (from these values it turns yellow / red), `size` (`sm` / `md` / `lg`), `animate` (fills when the slide arrives) |
+| `<Ghost>` | `text`, `position` (`bottom-right` / `top-right` / `bottom-left` / `top-left` / `center`), `size` (18rem), `color`, `opacity` (0.07): a giant faint glyph behind the content |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |

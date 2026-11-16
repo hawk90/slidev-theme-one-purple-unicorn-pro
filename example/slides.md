@@ -1309,6 +1309,23 @@ A figure, what it is, and how it changed. The arrow follows the delta's sign; `g
 `.table-num` around a table right-aligns the columns after the first, with digits of one width; `.num` does the same for any text.
 
 ---
+
+# Meter and Ghost
+
+<Ghost text="92%" />
+
+<div class="w-140">
+
+<Meter label="SM occupancy" :value="72" animate />
+<Meter label="Memory bandwidth" :value="1840" :max="2039" unit="GB/s" color="cyan" animate />
+<Meter label="Register pressure" :value="230" :max="255" :warn="200" :danger="240" show-value="230 / 255" animate />
+<Meter label="L2 hit rate" :value="38" size="sm" color="green" />
+
+</div>
+
+`<Meter value max label unit color warn danger size animate>`: a bar filled to `value / max`; past `warn` or `danger` it turns yellow or red. `<Ghost text position size color opacity>`: a giant faint glyph behind the content, like the 92% here.
+
+---
 layout: section
 ---
 

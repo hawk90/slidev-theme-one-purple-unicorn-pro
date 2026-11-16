@@ -9,6 +9,8 @@
 - **Speaker and questions** (#117): `layout: speaker` and `<Person>` (avatar or initials,
   name, role, affiliation, links); `end` with `questions: true` adds a QR code to the
   deck and the `contact` links.
+- **`<Meter>` and `<Ghost>`** (#120): a labelled bar with warn / danger thresholds that
+  can fill on arrival, and a giant faint glyph behind the content.
 
 ## Unreleased (4.2.0)
 
