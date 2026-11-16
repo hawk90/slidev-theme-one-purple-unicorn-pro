@@ -60,6 +60,14 @@ async function draw() {
   const styled = (a: unknown) => (Array.isArray(a) ? a.map(x => ({ ...axis, ...x })) : a ? { ...axis, ...(a as object) } : undefined)
   const option: Record<string, unknown> = { ...props.option }
   for (const k of ['xAxis', 'yAxis']) if (option[k]) option[k] = styled(option[k])
+  // series labels (a pie's) in the theme's text, without an outline: ECharts 6
+  // draws them #333 with a white text border, which the global textStyle
+  // doesn't reach; labels inside a shape keep ECharts' own contrast
+  const plain = (s: any) => {
+    const inside = /inside|center/i.test(String(s?.label?.position ?? ''))
+    return { ...s, label: { ...(inside ? {} : { color: p.text }), textBorderWidth: 0, textBorderColor: 'transparent', textShadowBlur: 0, ...s?.label } }
+  }
+  if (option.series) option.series = Array.isArray(option.series) ? option.series.map(plain) : plain(option.series)
   chart.setOption({
     color: p.color,
     textStyle: { color: p.text, fontFamily: p.font, textBorderWidth: 0 },

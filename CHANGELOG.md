@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Security
+
+- **echarts 6.1** (CVE-2026-45249, an XSS in the Lines series tooltip before 6.1.0): the
+  optional `echarts` peer is now `>=6.1.0`. `<EChart>` series labels take the theme's
+  text color and no outline (ECharts 6 drew them `#333` with a white text border).
+
 ### Internal
 
 - **check:decks compares against main** (#180): the baseline is this repo's main checkout
