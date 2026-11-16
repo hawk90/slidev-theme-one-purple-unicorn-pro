@@ -8,6 +8,7 @@ date: '2026-10-10'
 logo: /logo.svg
 footer: true
 bibliography: refs.bib
+structure: true
 duration: 30min
 paceBar: true
 highlighter: shiki
@@ -1177,6 +1178,28 @@ glossary:                  # headmatter (the deck), or a slide (on top)
 ```
 
 The first use on each slide is marked; code, links and titles are left alone.
+
+---
+
+# Deck Structure
+
+`structure: true` in the headmatter reads the deck's sections (`layout: section`, or `chapter:`) at build time:
+
+- **Transitions**: `slide-left` into a new section, `slide-up` within one; a slide's own `transition` wins
+- **Section metadata**: this slide knows it is in **{{ $frontmatter.section }}**: `section` and `sectionNo` in each slide's frontmatter
+- **Continued titles**: the next slide has no title of its own, only `continued: true`
+
+---
+continued: true
+---
+
+The title above was carried over from the slide before, with `(cont.)`; `continued: (계속)` picks another suffix.
+
+```yaml
+structure: true                      # or { transitions: false }
+---
+continued: true                      # this slide: the last title, continued
+```
 
 ---
 

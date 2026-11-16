@@ -20,6 +20,8 @@
   one section per click.
 - **Glossary tooltips** (#162): `glossary:` (deck or slide) marks a term's first use with
   a tooltip; Hangul-aware word boundaries, code and links skipped.
+- **Deck structure** (#163): `structure: true` gives section-aware transitions, section
+  metadata on every slide and `continued:` title carry-over.
 
 ## Unreleased (4.3.0)
 

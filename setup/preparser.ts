@@ -19,6 +19,7 @@ import { blobUrl, dedent, parseSnippet, pickLines, snippetLang } from '../utils/
 import type { BibEntry } from '../utils/bibtex'
 import { parseBibtex } from '../utils/bibtex'
 import { apply, collect } from '../utils/references'
+import { newStructure, structureSlide } from '../utils/structure'
 
 const git = (cwd: string, ...args: string[]) => {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() }
@@ -45,6 +46,7 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
     }
     return repos.get(dir)!
   }
+  let structure = newStructure()
 
   return [{
     name: 'one-purple-unicorn:snippet-ranges',
@@ -99,6 +101,16 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
       const numbered = collect(lines, k => bib.has(k))
       if (!numbered.cites.length && !numbered.labels.size && !lines.some(l => /<References\b/.test(l))) return
       apply(lines, numbered, bib, w => console.warn(`[theme] reference: ${w}`))
+    },
+  }, {
+    // Sections, transitions and continued titles (utils/structure.ts), with
+    // `structure: true` (or `structure: { transitions: false }`)
+    name: 'one-purple-unicorn:structure',
+    transformRawLines() { structure = newStructure() }, // runs before the slides are cut: one parse, one walk
+    transformSlide(content, frontmatter) {
+      const opt = headmatter.structure
+      if (!opt || opt === 'false') return undefined
+      return structureSlide(structure, content, frontmatter, !(typeof opt === 'object' && opt.transitions === false))
     },
   }]
 })
