@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// The README's demo clip, docs/demo.gif: the example deck in Playwright, a
-// tour of a few slides, light first, then dark from the middle (Slidev's `d`).
-// 1280×720, ~13 s, under 5 MB. Needs ffmpeg.
+// The README's demo clip, docs/demo.webp: the example deck in Playwright, a
+// ~30 s tour of its slides, light first, then dark from the middle (Slidev's
+// `d`). 1280×720, 15 fps, full color (an animated WebP: a GIF's 256 colors
+// band the gradients). Needs ffmpeg and img2webp (libwebp).
 //
-//   node scripts/record-demo.mjs
+//   npm run demo
 
 import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
@@ -11,31 +12,40 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
+import pixelmatchModule from 'pixelmatch'
+import { PNG } from 'pngjs'
 import { startDevServer } from './lib/shots.mjs'
 
+const pixelmatch = pixelmatchModule.default ?? pixelmatchModule
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const out = path.join(root, 'docs/demo.gif')
+const out = path.join(root, 'docs/demo.webp')
 const W = 1280
 const H = 720
+const FPS = 15
 
 // [slide title, ms on it, clicks to step through while there]
 const TOUR = [
-  ['One Purple Unicorn Pro', 1600, 0],
-  ['Typography Showcase', 1300, 0],
-  ['CUDA / C++ Code', 1400, 0],
-  ['Infographics: Flow and Pyramid', 1300, 0],
+  ['One Purple Unicorn Pro', 2200, 0],
+  ['Typography Showcase', 1800, 0],
+  ['CUDA / C++ Code', 2000, 0],
+  ['Click Tabs', 2400, 2],
+  ['Infographics: Flow and Pyramid', 2000, 0],
+  ['Meter and Ghost', 1800, 0],
   // dark from here on
-  ['Charts', 1600, 0],
-  ['Agent Transcript', 2200, 3],
-  ['Timeline: Entrance and Click Steps', 1800, 2],
-  ['Story: Before / After and Benchmark', 1500, 0],
+  ['Charts', 2000, 0],
+  ['Charts: Radar and ECharts', 2000, 0],
+  ['Agent Transcript', 3200, 3],
+  ['Image Walkthrough', 3000, 2],
+  ['IDE Chrome', 2000, 0],
+  ['Story: Before / After and Benchmark', 2000, 0],
+  ['Thank You!', 2000, 0],
 ]
-const DARK_AT = 4
+const DARK_AT = 6
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'opu-demo-'))
-const server = await startDevServer({ cwd: path.join(root, 'example'), port: 3970 + Math.floor(Math.random() * 20) })
+const server = await startDevServer({ cwd: path.join(root, 'example'), port: 3970 })
 const browser = await chromium.launch()
-let video
 try {
   // warm-up: compile every slide on the tour once, so the clip has no "Loading slide…"
   const warm = await browser.newPage({ viewport: { width: W, height: H } })
@@ -64,17 +74,36 @@ try {
     for (let c = 0; c < clicks; c++) { await page.keyboard.press('ArrowRight'); await page.waitForTimeout(step) }
   }
   const length = (Date.now() - start) / 1000
-  video = page.video()
+  const video = page.video()
   await context.close()
   const webm = await video.path()
 
-  // keep the tour's last `length` seconds (before it: the page loading); one palette for the clip
-  const filters = `fps=8,scale=${W}:${H}:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle`
+  // the tour's last `length` seconds (before it: the page loading), as frames
+  const frames = path.join(tmp, 'frames')
+  fs.mkdirSync(frames)
+  execFileSync('ffmpeg', ['-loglevel', 'error', '-sseof', `-${length.toFixed(2)}`, '-i', webm, '-vf', `fps=${FPS}`, path.join(frames, 'f%04d.png')])
+  const pngs = fs.readdirSync(frames).filter(f => f.endsWith('.png')).sort().map(f => path.join(frames, f))
+  if (process.env.DEMO_FRAMES) fs.cpSync(frames, process.env.DEMO_FRAMES, { recursive: true }) // to look at the source frames
+  // Every frame a key frame: WebP's deltas count faint changes (a fade's tail)
+  // as unchanged and leave ghosts of the slide before. A deck stands still
+  // most of the time, so a run of frames that barely differ becomes one
+  // frame held that long: the file stays small.
+  const ms = Math.round(1000 / FPS)
+  const runs = [] // [file, duration]
+  let prev = null
+  for (const f of pngs) {
+    const img = PNG.sync.read(fs.readFileSync(f))
+    const same = prev && pixelmatch(prev.data, img.data, null, W, H, { threshold: 0.1 }) < 40
+    if (same) runs.at(-1)[1] += ms
+    else { runs.push([f, ms]); prev = img }
+  }
   fs.mkdirSync(path.dirname(out), { recursive: true })
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-sseof', `-${length.toFixed(2)}`, '-i', webm, '-vf', filters, '-loop', '0', out])
+  const args = ['-loop', '0', '-lossy', '-q', '85', '-m', '4', '-kmin', '0', '-kmax', '1']
+  for (const [f, d] of runs) args.push('-d', String(d), f)
+  execFileSync('img2webp', [...args, '-o', out], { maxBuffer: 1 << 26 })
+  console.log(`[demo] ${pngs.length} frames → ${runs.length} distinct`)
   const mb = fs.statSync(out).size / 1e6
-  console.log(`[demo] ${path.relative(root, out)}: ${length.toFixed(1)} s, ${mb.toFixed(2)} MB`)
-  if (mb > 5) console.warn('[demo] over 5 MB: shorten the tour or lower fps / colors')
+  console.log(`[demo] ${path.relative(root, out)}: ${length.toFixed(1)} s, ${pngs.length} frames, ${mb.toFixed(2)} MB`)
 }
 finally {
   await browser.close()

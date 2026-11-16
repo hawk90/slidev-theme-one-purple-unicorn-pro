@@ -10,6 +10,9 @@
 
 ### Internal
 
+- **A longer, sharper demo** in the README: `docs/demo.webp`, 29 s over 13 slides at 1280×720,
+  15 fps, full color (the GIF was 13 s, 8 fps, 96 colors). `npm run demo` needs ffmpeg and
+  img2webp (libwebp).
 - **Node 26 for development** (`devEngines.runtime: ^26`; decks still need Node 22.12+), Playwright
   1.65, and a fresh lock file.
 - **check:decks compares against main** (#180): the baseline is this repo's main checkout
