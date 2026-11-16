@@ -14,6 +14,9 @@
 - **Prose line-stepping** (#165): ```` ```quote ```` and ```` ```prose ```` fences are text in
   the slide's type that step through their lines with code's highlight clicks
   (```` ```quote {1|2|3|all} ````).
+- **Code windows across slides** (#135): with `transition: view-transition`, each code
+  window moves and resizes into the matching window of the next slide (timed by
+  `magicMoveDuration`).
 
 ### Fixes
 

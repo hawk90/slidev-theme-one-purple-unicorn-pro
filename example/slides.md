@@ -1305,6 +1305,40 @@ Then change one thing, and measure again.
 ```
 
 ---
+transition: view-transition
+---
+
+# Code Across Slides
+
+With `transition: view-transition`, a code window carries over to the next slide: it moves and resizes into the next slide's window while its text crossfades. Press →.
+
+```cuda [kernel.cu]
+__global__ void scale(float *x, float a, int n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < n) x[i] *= a;
+}
+```
+
+---
+
+# Code Across Slides: Grid-Stride
+
+The first window of each slide pairs with the first of the next, the second with the second. Timing: Slidev's `magicMoveDuration` (800 ms).
+
+<div class="mt-12">
+
+```cuda [kernel.cu]
+__global__ void scale(float *x, float a, int n) {
+    for (int i = blockIdx.x * blockDim.x + threadIdx.x;
+         i < n;
+         i += blockDim.x * gridDim.x)
+        x[i] *= a;
+}
+```
+
+</div>
+
+---
 
 # Title Bar & Line Numbers
 

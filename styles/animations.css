@@ -706,6 +706,36 @@ html.print-mode:not(.print-clicks) :is(.grow-current .slidev-vclick-current, .sl
 .content-fade-enter-from .slidev-layout > *,
 .content-fade-leave-to .slidev-layout > *    { opacity: 0; }
 
+/* Code windows morphing between slides (`transition: view-transition`,
+   utils/code-morph.ts): the window moves and resizes, its text crossfades
+   without stretching. Duration: Slidev's magicMoveDuration
+   (--code-morph-duration) */
+[data-code-window] { view-transition-class: code-window; }
+[data-code-window="1"] { view-transition-name: code-window-1; }
+[data-code-window="2"] { view-transition-name: code-window-2; }
+[data-code-window="3"] { view-transition-name: code-window-3; }
+[data-code-window="4"] { view-transition-name: code-window-4; }
+[data-code-window="5"] { view-transition-name: code-window-5; }
+[data-code-window="6"] { view-transition-name: code-window-6; }
+[data-code-window="7"] { view-transition-name: code-window-7; }
+[data-code-window="8"] { view-transition-name: code-window-8; }
+::view-transition-group(*.code-window) {
+  animation-duration: var(--code-morph-duration, 800ms);
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+::view-transition-image-pair(*.code-window) {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+::view-transition-old(*.code-window),
+::view-transition-new(*.code-window) {
+  animation-duration: var(--code-morph-duration, 800ms);
+  width: 100%;
+  height: auto;
+  object-fit: none;
+  object-position: left top;
+}
+
 /* ============================================
    Accessibility & Print Safety
    ============================================ */
