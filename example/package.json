@@ -17,7 +17,7 @@
     }
   },
   "devDependencies": {
-    "echarts": "^5.6.0",
+    "echarts": "^6.1.0",
     "playwright-chromium": "^1.63.0"
   }
 }
