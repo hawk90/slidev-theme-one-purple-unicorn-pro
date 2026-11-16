@@ -22,6 +22,9 @@
   a tooltip; Hangul-aware word boundaries, code and links skipped.
 - **Deck structure** (#163): `structure: true` gives section-aware transitions, section
   metadata on every slide and `continued:` title carry-over.
+- **Live demos with a fallback** (#164): `<LiveDemo>` (status dot, video toggle, scale and
+  crop, a poster in exports) and `<Interactive>` (live in the room, a still in the PDF,
+  optionally a dialog).
 
 ## Unreleased (4.3.0)
 

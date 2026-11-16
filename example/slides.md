@@ -1203,6 +1203,22 @@ continued: true                      # this slide: the last title, continued
 
 ---
 
+# Live Demo, With a Way Out
+
+<div class="grid grid-cols-2 gap-6 items-start">
+
+<LiveDemo src="https://example.com" video="/demo-loop.mp4" poster="/demo-loop.jpg" height="15rem" :scale="0.8" />
+
+<Interactive image="/demo-loop.jpg" alt="The demo, explorable" dialog>
+  <iframe src="https://example.com" title="The demo" />
+</Interactive>
+
+</div>
+
+`<LiveDemo src video poster scale crop timeout>`: the dot shows connecting / live / offline; **video** swaps to the recording (and a page that doesn't load within `timeout` does by itself); exports show `poster`. `<Interactive image dialog>`: live in the room, the still in exports; with `dialog`, a click opens it over the slide.
+
+---
+
 # Cards
 
 <div class="card">
