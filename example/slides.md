@@ -936,6 +936,96 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Story: Error Spotlight
+
+<ErrorSpotlight>
+<template #error>
+
+```text
+CUDA error: an illegal memory
+access was encountered
+```
+
+</template>
+<template #cause>
+
+The last block reads past the end: `n` isn't a multiple of 256.
+
+</template>
+<template #fix>
+
+```cuda
+if (i < n) out[i] = in[i];
+```
+
+</template>
+</ErrorSpotlight>
+
+`<ErrorSpotlight>` with slots `error`, `cause`, `fix` (titles: `errorTitle`, `causeTitle`, `fixTitle`).
+
+---
+
+# Story: Before / After and Benchmark
+
+<BeforeAfter delta="4× faster">
+<template #before>
+
+```cuda
+x[threadIdx.x * 32]
+```
+
+</template>
+<template #after>
+
+```cuda
+x[threadIdx.x]
+```
+
+</template>
+</BeforeAfter>
+
+<Benchmark title="Reduction, 64 M floats" unit="ms" :results="[
+  { label: 'naive', value: 12.8 },
+  { label: 'coalesced', value: 3.2 },
+  { label: 'warp shuffle', value: 1.6 },
+]" />
+
+---
+
+# Story: Issue Card and Lesson
+
+<div class="grid grid-cols-2 gap-6 items-start">
+
+<GithubCard type="pr" repo="hawk90/slidev-theme-one-purple-unicorn-pro" :number="128" state="merged" title="Page-number formats, skip / hold, appendix numbering" author="hawk90" :labels="['enhancement', 'roadmap']" />
+
+<Lesson title="Measure **before** you optimize">
+
+The slow part was the copy, not the kernel: two days of tuning for 3%.
+
+</Lesson>
+
+</div>
+
+`<GithubCard type repo number title state author labels>` (nothing fetched) and `<Lesson title kicker>`.
+
+---
+
+# Story: Verdicts and Pros / Cons
+
+<div class="verdict-table text-sm">
+
+| Approach | Speed | Memory | Effort |
+|---|---|---|---|
+| Naive | <span class="v-bad">slow</span> | <span class="v-good">low</span> | <span class="v-good">none</span> |
+| Shared tiles <span class="v-pick"></span> | <span class="v-good">fast</span> | <span class="v-meh">48 KB</span> | <span class="v-meh">a day</span> |
+| Tensor cores | <span class="v-good">fastest</span> | <span class="v-meh">48 KB</span> | <span class="v-bad">a week</span> |
+
+</div>
+
+<ProsCons :pros="['4× on the hot loop', 'No new dependency']" :cons="['Tied to 256-thread blocks', 'Harder to read']" />
+
+---
+
 # Cards
 
 <div class="card">

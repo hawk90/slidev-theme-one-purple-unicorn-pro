@@ -221,3 +221,26 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
+
+/* Verdict tables: put `.verdict-table` around a comparison table and mark
+   cells with <span class="v-good">, v-meh, v-bad: the cell is tinted and the
+   mark gets an icon (the meaning isn't color alone); a cell with v-pick
+   lights its whole row as the choice */
+:where(.slidev-layout, .slidev-page) .verdict-table :is(td, th):has(> .v-good) { background: color-mix(in srgb, var(--one-dark-green) 12%, transparent); }
+:where(.slidev-layout, .slidev-page) .verdict-table :is(td, th):has(> .v-meh) { background: color-mix(in srgb, var(--one-dark-yellow) 12%, transparent); }
+:where(.slidev-layout, .slidev-page) .verdict-table :is(td, th):has(> .v-bad) { background: color-mix(in srgb, var(--one-dark-red) 12%, transparent); }
+:where(.slidev-layout, .slidev-page) .verdict-table tr:has(.v-pick) :is(td, th) {
+  background: color-mix(in srgb, var(--primary-400) 14%, transparent);
+  font-weight: 700;
+}
+:where(.slidev-layout, .slidev-page) .verdict-table tr:has(.v-pick) :is(td, th):first-child {
+  box-shadow: inset 3px 0 var(--primary-400);
+}
+:where(.slidev-layout, .slidev-page) :is(.v-good, .v-meh, .v-bad, .v-pick)::before {
+  margin-right: 0.35em;
+  font-weight: 700;
+}
+:where(.slidev-layout, .slidev-page) .v-good::before { content: '✓'; color: var(--one-dark-green); }
+:where(.slidev-layout, .slidev-page) .v-meh::before { content: '~'; color: var(--one-dark-yellow); }
+:where(.slidev-layout, .slidev-page) .v-bad::before { content: '✗'; color: var(--one-dark-red); }
+:where(.slidev-layout, .slidev-page) .v-pick::before { content: '★'; color: var(--primary-400); }

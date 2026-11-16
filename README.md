@@ -173,6 +173,12 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<BlockDiagram>` | `blocks` (`[{ id, label, sub, x, y, w, h, color }]`, position and size in % of the stage), `steps` (block ids, or `{ block, caption }`: a focus frame glides to the next on each click, counting in the slide's clicks), `height` (16rem) |
 | `<StackDiagram>` | `layers` (top first: titles, or `{ title, note, color }`), `active` (a title or a 1-based place) |
 | `<DrawOn>` | `duration` (1.5s): draws the strokes of the SVG in its slot once the slide has arrived (exports show them drawn) |
+| `<ErrorSpotlight>` | slots `error`, `cause`, `fix` (Markdown, code); `errorTitle`, `causeTitle`, `fixTitle`: a bug story in three panels |
+| `<BeforeAfter>` | slots `before`, `after`; `beforeLabel`, `afterLabel`, `delta` (under the arrow, e.g. `4× faster`) |
+| `<Benchmark>` | `results` (`[{ label, value }]`, the first is the baseline), `unit`, `lowerIsBetter` (true: times; false: rates), `title`: bars, the winner lit, each result's ratio to the baseline |
+| `<GithubCard>` | `type` (`issue` / `pr`), `repo` (`owner/name`), `number`, `title`, `state` (`open` / `closed` / `merged` / `draft`), `author`, `labels`; nothing is fetched |
+| `<Lesson>` | `title`, `kicker` (`Lesson learned`); its slot is the story |
+| `<ProsCons>` | `pros`, `cons` (lists), `prosTitle`, `consTitle` |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |
@@ -224,6 +230,7 @@ Click a stage to jump to the first slide with the same `stages` at that `current
 | `.stretch` | Fills the height left on the slide (an image, video, diagram or code block), above the footer line |
 | `.list-cols-2`, `.list-cols-3` | A list (the class on it or a wrapper) in columns |
 | `.list-badges` | A numbered list with its numbers in round badges |
+| `.verdict-table` | Around a comparison table: cells with `<span class="v-good">` / `v-meh` / `v-bad` are tinted and marked ✓ ~ ✗; a `v-pick` lights its row ★ |
 
 ## Progress Bar, Page Number & Footer
 
