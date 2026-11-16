@@ -476,3 +476,18 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
   font-style: italic;
   text-indent: 0;
 }
+
+/* The link under a snippet taken from a source file (setup/preparser.ts) */
+:is(.slidev-layout, .slidev-page) .snippet-source {
+  display: block;
+  margin-top: -0.3rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 0;
+}
+:is(.slidev-layout, .slidev-page) .snippet-source:hover {
+  color: var(--primary-400);
+}

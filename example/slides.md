@@ -1363,6 +1363,16 @@ The lines stay in the block (folded ones hidden), so `{5|7}` still counts from `
 
 ---
 
+# Snippets from Source Files
+
+`<<< @/code/reduce.cu[/for \(int k/,/^    }/] {2}` takes lines from a real file by content; `[17-]` by number. The link under each opens those lines in the repository.
+
+<<< @/code/reduce.cu[/for \(int k/,/^    }/] {2}
+
+<<< @/code/reduce.cu[17-]
+
+---
+
 # Title Bar & Line Numbers
 
 A `[name]` after the language draws a window bar; `{lines:true}` numbers the lines (`lineNumbers: true` in the headmatter does it for every block).

@@ -20,6 +20,9 @@
 - **Inline diagnostics and folded preambles** (#136): `// [!code error: …]` / `warning`
   / `info` / `value` at the end of a code line show as an editor's inline
   diagnostics; `// [!code fold: …]` folds the lines above it into one row.
+- **Snippets by line range or content** (#152): `<<< @/code/kernel.cu[9-15]` and
+  `<<< ./reduce.cu[/__global__/,/^}/]`, with a link to those lines on GitHub / GitLab /
+  Bitbucket (a theme `setup/preparser.ts`).
 
 ### Fixes
 
