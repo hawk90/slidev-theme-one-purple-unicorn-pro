@@ -25,6 +25,8 @@
 - **Live demos with a fallback** (#164): `<LiveDemo>` (status dot, video toggle, scale and
   crop, a poster in exports) and `<Interactive>` (live in the room, a still in the PDF,
   optionally a dialog).
+- **IDE-chrome mode** (#168): `ide: true` turns slides into file tabs (clickable
+  navigation) with a status bar for repo, branch, section and page.
 
 ## Unreleased (4.3.0)
 

@@ -1218,6 +1218,46 @@ continued: true                      # this slide: the last title, continued
 `<LiveDemo src video poster scale crop timeout>`: the dot shows connecting / live / offline; **video** swaps to the recording (and a page that doesn't load within `timeout` does by itself); exports show `poster`. `<Interactive image dialog>`: live in the room, the still in exports; with `dialog`, a click opens it over the slide.
 
 ---
+ide:
+  repo: gpu-talks/reduce
+  branch: feat/coalesce
+file: reduce.cu
+---
+
+# IDE Chrome
+
+```cpp
+__global__ void reduce(const float* x, float* out) {
+  __shared__ float s[256];
+  s[threadIdx.x] = x[blockIdx.x * 256 + threadIdx.x];  // coalesced
+  __syncthreads();
+}
+```
+
+`ide: true` in the headmatter dresses every slide as a file in an editor: the tabs are the slides around this one (in its section; a click opens one), the status bar shows the branch, repository, section and page. Here it is on for this slide and the next (`ide:` on a slide); `file: reduce.cu` names a tab.
+
+---
+ide:
+  repo: gpu-talks/reduce
+  branch: feat/coalesce
+---
+
+# IDE Chrome, Options
+
+```yaml
+ide: true                 # or:
+ide:
+  repo: gpu-talks/reduce  # the status bar (default: the deck's title)
+  branch: feat/coalesce   # (main)
+  language: CUDA          # (Markdown)
+---
+file: reduce.cu           # a slide's tab name (default: its title, as a slug)
+ide: false                # off on this slide
+```
+
+It takes the place of the progress bar, footer and page number.
+
+---
 
 # Cards
 

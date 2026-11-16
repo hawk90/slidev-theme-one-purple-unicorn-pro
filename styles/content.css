@@ -154,3 +154,11 @@
 :is(.slidev-layout, .slidev-page) h6 {
   line-height: 1.3;
 }
+
+/* IDE-chrome mode (components/internal/IdeChrome.vue): room for the file tabs
+   (28px) above and the status bar (22px) below */
+html.ide-chrome .slidev-layout:not(.slide-bare) {
+  --slide-title-top: 43px;
+  padding-top: 98px;
+  padding-bottom: 42px;
+}

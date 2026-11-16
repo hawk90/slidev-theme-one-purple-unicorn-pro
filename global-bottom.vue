@@ -9,7 +9,7 @@
   />
 
   <!-- Progress Bar: always or content-only based on frontmatter -->
-  <div v-if="showBar" class="progress-bar slide-chrome">
+  <div v-if="showBar && !ide" class="progress-bar slide-chrome">
     <div class="progress-fill" :style="{ width: progress + '%' }" />
     <div
       v-if="paceMark"
@@ -20,7 +20,7 @@
   </div>
 
   <!-- Footer info line: title · author · event · date (opt-in, `footer:`) -->
-  <div v-if="footer" class="slide-footer slide-chrome">
+  <div v-if="footer && !ide" class="slide-footer slide-chrome">
     <img v-if="footer.logo" :src="resolveAssetUrl(footer.logo)" alt="" class="slide-footer-logo" />
     <span v-if="footer.text" class="slide-footer-text">{{ footer.text }}</span>
   </div>
@@ -47,8 +47,11 @@
   <!-- fit: where this layer sits, to find its slide (utils/autofit.ts) -->
   <span v-if="fitOn" class="fit-marker" :data-page="currentPage" :data-reserve="fitReserve" hidden />
 
+  <!-- ide: true: file tabs and a status bar (it shows the page) -->
+  <IdeChrome v-if="ide" :options="ide" />
+
   <!-- Page Indicator -->
-  <div v-if="showPageNumber" class="slide-indicator slide-chrome">
+  <div v-if="showPageNumber && !ide" class="slide-indicator slide-chrome">
     {{ pageText }}
   </div>
 </template>
@@ -73,6 +76,8 @@ import { fitSlide, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
+import { ideOptions } from './utils/ide'
+import IdeChrome from './components/internal/IdeChrome.vue'
 
 const nav = useNav()
 const { currentPage, total, currentLayout, currentSlideRoute, currentFrontmatter, isPrintMode, isPresenter, slides } = nav
@@ -235,8 +240,19 @@ const parallax = computed(() => {
 // slide's content to fit, once it is shown and its fonts are in; in an
 // export, print-export.ts fits the pages with a .fit-marker (utils/autofit.ts). Not with the slide's own zoom:,
 // nor with slidev-addon-autofit in the deck.
+// ide: true (or { repo, branch, language }) in the headmatter: the IDE chrome
+// replaces the progress bar, footer and page number; a slide's `ide: false`
+// leaves it off there, and `ide: true` on a slide shows it on that slide alone
+const ide = computed(() => {
+  const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.ide
+  if (own !== undefined && isOff(own)) return null
+  // a slide's own `ide: true` (or options) turns it on there alone
+  const value = own === undefined ? headmatter.ide : isOn(own) && headmatter.ide ? headmatter.ide : own
+  return ideOptions(value, String(headmatter.title ?? ''))
+})
+
 // the footer line's room at the bottom (it overlaps the layout's padding)
-const fitReserve = computed(() => footer.value ? 28 : 0)
+const fitReserve = computed(() => ide.value ? 22 : footer.value ? 28 : 0)
 const fitOn = computed(() => {
   const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.fit
   if (frontmatter.value.zoom !== undefined || hasAutofitAddon(headmatter.addons)) return false
