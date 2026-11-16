@@ -6,6 +6,9 @@
 
 - **Callouts** (#116): GitHub alerts (`> [!NOTE]` …) take the `.alert` look with their
   icon and name, left-aligned on centered layouts; `<StickyNote>` and `<SpeechBubble>`.
+- **Speaker and questions** (#117): `layout: speaker` and `<Person>` (avatar or initials,
+  name, role, affiliation, links); `end` with `questions: true` adds a QR code to the
+  deck and the `contact` links.
 
 ## Unreleased (4.2.0)
 

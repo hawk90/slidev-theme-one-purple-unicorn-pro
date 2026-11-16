@@ -50,6 +50,26 @@ footer: true                  # or a list: [title, event]
 Title slides and section dividers hide the footer, like the page number.
 
 ---
+layout: speaker
+speaker:
+  name: Theme Demo
+  role: GPU performance engineer
+  affiliation: Slidev Theme Lab
+  links:
+    - github: hawk90
+    - https://sli.dev
+    - demo@example.com
+---
+
+# About the Speaker
+
+- Writes CUDA kernels by day, slides by night
+- Ten years of profiling memory-bound code
+- Talks: *Coalescing in Practice*, *Shared Memory Without Tears*
+
+`layout: speaker` takes `speaker:` with `name`, `role`, `affiliation`, `avatar` and `links` (on the slide or in the headmatter; else the deck's `author`); without an avatar, the initials. The same card is `<Person>`.
+
+---
 layout: section
 ---
 
@@ -2925,13 +2945,16 @@ rightLabel: Hover & Transition
 ---
 layout: end
 hotkey: q
+questions: true
+contact:
+  - github: hawk90
+  - https://www.npmjs.com/package/slidev-theme-one-purple-unicorn-pro
+  - demo@example.com
 ---
 
 # Thank You!
 
 ### Questions?
-
-[GitHub](https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro)
 
 ---
 appendix: true

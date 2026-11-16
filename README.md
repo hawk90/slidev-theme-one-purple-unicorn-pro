@@ -65,8 +65,9 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 
 | Layout | Use | Options (frontmatter) |
 |---|---|---|
-| `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`; `cover`: the talk's details, see [Talk details](#talk-details-cover-and-footer)) |
+| `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`; `cover`: the talk's details, see [Talk details](#talk-details-cover-and-footer); `end`: `questions: true` adds a QR code to the deck (`qr:` another URL, or `false`; `qrCaption`) and the `contact` links, the slide's or the headmatter's) |
 | `default` | Content slide (title pinned at the top) | |
+| `speaker` | About the speaker: the person (avatar or initials, name, role, affiliation, links) beside the slide's text | `speaker:` with `name`, `role`, `affiliation`, `avatar`, `links` (on the slide or in the headmatter; else the deck's `author`) |
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth` (a bare number is a share, `2` → `2fr`; anything else a CSS length), `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
 | `image` | Image beside content | `image`, `side` (`left`/`right`), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
@@ -132,6 +133,7 @@ Code uses Slidev's own syntax; the theme styles it:
 - **Long lines wrap** under their code (a tab-stop hang), never a scrollbar. Code blocks have no height cap unless you set `--code-max-height` (what doesn't fit is cut off) or Slidev's `{maxHeight:'…'}` (it scrolls to the focused lines, with no scrollbar). Magic-move blocks have no line boxes: their long lines wrap to the left edge, without the gutter rule.
 - Lines over 2000 characters (minified code, base64) are left uncolored, which keeps builds fast.
 - **Mermaid**: diagrams in the theme's colors (nodes in the accent, notes yellow, lines in the text color), following light mode, dark slides and a `themeConfig` palette without redrawing; the classic `dagre` layout. Variables: `--mermaid-node-bg`, `--mermaid-node-border`, `--mermaid-text`, `--mermaid-line`, `--mermaid-cluster-bg`, `--mermaid-note-bg`. A deck's own `setup/mermaid.ts` still applies on top.
+- **Links** (`links`, `contact`): a list of URLs, e-mail addresses, `{ label, url }` or `{ github: name }` (`gitlab`, `x`, `linkedin`, `bluesky`, `mastodon: '@me@host'`, `web`, `email`), each shown with what it is.
 - **GitHub alerts**: Slidev's `> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]` take the `.alert` look (the same `--alert-*` variables) in the palette's colors, with the type's icon and name; left-aligned on centered layouts too.
 - **Slidev's built-ins**: `v-mark` draws in the accent, and its color modifiers (`v-mark.red`, `.yellow`, …) take the theme's palette; a `highlight` mark is translucent so the text shows through (`--v-mark-color`, `--v-mark-highlight-opacity`). Twoslash popups and `{monaco-run}` output use the code block's colors.
 - **Shrink to fit**: `fit: true` on a slide (or in the headmatter for every slide; a slide's `fit: false` wins) shrinks its content until it fits above the footer line, never below 0.42×; the title stays its size. A display formula wider than its box gets a smaller font too. Still too tall at 0.42×, the slide is marked `data-fit-overflow` and the console names it: split it. Exports fit each page the same way. Skipped on a slide with its own `zoom:` and when `slidev-addon-autofit` is in the deck's addons.
@@ -154,6 +156,7 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<FloatImage>` | `src`, `alt`, `caption`, `position` (`left`/`right`), `width`, `rounded` |
 | `<StoryBox>` | `title`, `variant` (`history` `insight` `warning` `tip` `person`), `year`, `source`, `color`, `icon` |
 | `<PatternCard>` | `signal`, `template`, `alternatives`, `sections` (`[{ key, label, icon, color, text }]`); same-named slots for rich content |
+| `<Person>` | `name`, `role`, `affiliation`, `avatar` (else the initials), `links`, `size` (`sm` / `md` / `lg`) |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |
