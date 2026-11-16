@@ -3477,6 +3477,7 @@ rightLabel: Content
 layout: two-cols
 leftLabel: Animation
 rightLabel: Hover & Transition
+fit: true
 ---
 
 # Summary: Animations & Effects

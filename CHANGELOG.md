@@ -10,6 +10,11 @@
   overflow outline and warning, placeholders for missing pictures (no more failed
   slides), and a `wip:` draft watermark.
 
+### Fixes
+
+- **`fit: true` on column layouts** (#177): it shrank two-cols / three-cols slides, title
+  included, to the floor; it now shrinks the columns' content just enough.
+
 ## Unreleased (4.4.0)
 
 ### Features

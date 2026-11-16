@@ -69,20 +69,29 @@ function parts(root: HTMLElement): HTMLElement[] {
 
 /** Fit one slide's layout root; returns the scale used (1: untouched) */
 export function fitSlide(root: HTMLElement, label = '', reserve = 0): number {
-  const own = parts(root)
+  // Column layouts (two-cols, three-cols): the column grid always reaches the
+  // bottom (flex: 1) and its columns scroll, so its box says nothing: the
+  // columns' content is shrunk and measured, and the header (the title) stays
+  const cols = [...root.querySelectorAll<HTMLElement>('.grid-col')]
+  const own = cols.length ? cols : parts(root)
   own.forEach(p => p.style.removeProperty('zoom'))
   root.removeAttribute('data-fit-overflow')
   fitMath(root)
-  if (!overflows(root, own, reserve)) return 1
+  const over = cols.length
+    ? () => cols.some(c => c.scrollHeight > c.clientHeight + 1)
+    : () => overflows(root, own, reserve)
+  if (!over()) return 1
 
-  let scale = fitScale(root.clientHeight - reserve, root.scrollHeight) // a first guess
+  let scale = cols.length // a first guess
+    ? fitScale(1, Math.max(...cols.map(c => c.scrollHeight / (c.clientHeight || 1))))
+    : fitScale(root.clientHeight - reserve, root.scrollHeight)
   const apply = (s: number) => own.forEach(p => p.style.setProperty('zoom', String(s)))
   apply(scale)
-  while (overflows(root, own, reserve) && scale > FLOOR) {
+  while (over() && scale > FLOOR) {
     scale = Math.max(FLOOR, Math.round((scale - STEP) * 100) / 100)
     apply(scale)
   }
-  if (overflows(root, own, reserve)) {
+  if (over()) {
     root.setAttribute('data-fit-overflow', '')
     console.warn(`[theme] fit: ${label || 'a slide'} still overflows at ${FLOOR}× — split it`)
   }
