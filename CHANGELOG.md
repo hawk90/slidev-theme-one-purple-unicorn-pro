@@ -16,6 +16,9 @@
   StackDiagram in dark mode (2.9:1), Pyramid labels (2.2–4.3:1), muted notes on tinted
   boxes (BlockDiagram, Transcript), Stat's red and GithubCard's labels on dark cards,
   and the exercise header on its tint.
+- **Editable PPTX** (#147): checked with Slidev 53.1 in both modes; gradient titles export as
+  solid editable text (the black copy is gone upstream). The README says what the exporter
+  keeps and leaves out, and which fonts to install.
 
 ### Fixes
 

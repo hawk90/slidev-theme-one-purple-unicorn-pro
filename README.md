@@ -404,6 +404,8 @@ Entrances (`anim-fade-*`, `anim-pop`) start once the slide has arrived: while a 
 
 **In PDF / PNG exports** each effect is a still picture: a static gradient ring for `anim-border`, a steady glow for `anim-glow`, no shimmer band, entrance animations finished; `Countdown` and `PresenterNote` are left out. Gradient text, border rings and shadows are drawn as images there, because PDF viewers (macOS Preview in particular) draw the CSS versions wrongly; the text stays searchable. To style exports yourself, use the `html.print-mode` class (set for `slidev export`, the export page and browser printing), not `@media print` — `slidev export` renders with screen media.
 
+**Editable PPTX** (`slidev export --format pptx-editable`, Slidev 53.1+, checked in both modes): text comes out as native, editable text boxes. Gradient titles become solid text in the gradient's first color (no stray black copy any more); the slide backgrounds, cards and tables are native shapes. Left out by the exporter: decorations drawn in `::before` / `::after` (link underlines, the macOS window dots, gradient borders), and effects become still. A .pptx names its fonts instead of embedding them, so install the theme's fonts (Noto Sans KR and JetBrains Mono, both on Google Fonts) where the file is opened, or Korean text falls back to a serif. For a deck that must look exactly like the slides, export to PDF.
+
 ## Colors
 
 One Dark accents with a purple → blue gradient:
