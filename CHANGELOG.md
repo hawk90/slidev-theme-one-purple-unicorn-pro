@@ -35,6 +35,8 @@
 - **`npm create one-purple-unicorn`** (#166): a new deck from the theme's `starter.md`, with
   the title, presenter and event asked for (or given as flags). The scaffolder is its own
   package, `packages/create-one-purple-unicorn` (published separately).
+- **Demo clip** (#126): `docs/demo.gif` at the top of the README (13 s, 1280×720, 4 MB,
+  light then dark), recorded by `npm run demo` (Playwright and ffmpeg).
 
 ### Fixes
 

@@ -85,6 +85,7 @@
     "check:manifest": "node scripts/gen-manifest.mjs --check",
     "check:pack": "node scripts/check-pack.mjs",
     "check:slidev": "node scripts/check-slidev-internals.mjs",
+    "demo": "node scripts/record-demo.mjs",
     "manifest": "node scripts/gen-manifest.mjs",
     "regress": "node scripts/regress.mjs",
     "test": "node --test 'test/*.test.ts'"

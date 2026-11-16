@@ -2,6 +2,8 @@
 
 A Slidev theme with purple → blue gradients and One Dark colors, built for technical talks.
 
+![The demo deck: the cover, typography, CUDA code and diagrams in light mode, then charts, an agent transcript, a timeline and a benchmark in dark mode](https://raw.githubusercontent.com/hawk90/slidev-theme-one-purple-unicorn-pro/main/docs/demo.gif)
+
 ## Features
 
 - **Light & dark modes**: content slides switch palettes; title and emphasis slides stay dark
