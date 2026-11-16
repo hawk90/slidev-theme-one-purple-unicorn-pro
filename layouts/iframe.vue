@@ -1,9 +1,9 @@
 <template>
   <div class="slidev-layout iframe-layout slide-bare">
     <div v-if="side === 'full'" class="iframe-full">
-      <ScaledIframe :src="url" :scale="scale" :title="label" />
+      <ScaledIframe :src="url" :scale="scale" :title="label" :poster="poster" />
     </div>
-    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale" :title="label">
+    <MediaPanel v-else :src="url" type="iframe" :side="side" :scale="scale" :title="label" :poster="poster">
       <slot />
     </MediaPanel>
   </div>
@@ -21,6 +21,8 @@ const props = defineProps({
   // The embedded page's name for screen readers. Not `title`: that is
   // Slidev's slide title (overview, <Toc>), so setting it renamed the slide
   iframeTitle: { type: String, default: undefined },
+  // A still for exports in place of the live page (its address shows as a link either way)
+  poster: { type: String, default: '' },
 })
 
 const label = computed(() => props.iframeTitle)

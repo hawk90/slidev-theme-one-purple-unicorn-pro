@@ -536,9 +536,10 @@ side: right          # left | right | full (default)
 url: https://sli.dev
 scale: 0.6           # > 0, default 1
 iframeTitle: Slidev docs  # screen-reader name
+poster: /sli-dev.png      # exports: this still in its place
 ```
 
-Some sites refuse to be embedded (`X-Frame-Options`); those show blank.
+Some sites refuse to be embedded (`X-Frame-Options`); those show blank. In a PDF the page's address shows as a link, and links in the text print as "text (url)" ([the Slidev docs](https://sli.dev), say); `printUrls: false` turns that off.
 
 ---
 layout: iframe

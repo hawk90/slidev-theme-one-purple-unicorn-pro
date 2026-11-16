@@ -5,7 +5,7 @@
       :role="type === 'image' ? (alt ? 'img' : 'presentation') : undefined"
       :aria-label="type === 'image' && alt ? alt : undefined"
     >
-      <ScaledIframe v-if="type === 'iframe'" :src="String(src)" :scale="scale" :title="title" />
+      <ScaledIframe v-if="type === 'iframe'" :src="String(src)" :scale="scale" :title="title" :poster="poster" />
       <MediaFill v-else :src="src" :size="backgroundSize" :stack="stack" :poster="poster" />
     </div>
     <div class="media-content">
@@ -33,7 +33,7 @@ defineProps({
   width: { type: [String, Number], default: undefined },
   // Several: side by side (row) or stacked (column)
   stack: { type: String, default: 'row' },
-  // A video's poster (also its picture in exports)
+  // A video's poster (also its picture in exports), or an iframe's still for exports
   poster: { type: String, default: '' },
 })
 </script>

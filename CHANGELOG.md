@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased (4.5.0)
+
+### Features
+
+- **PDF fallbacks** (#137): links print as "text (url)" in exports, and an iframe shows
+  its address as a link, or a `poster:` still.
+
 ## Unreleased (4.4.0)
 
 ### Features

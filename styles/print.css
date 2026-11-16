@@ -11,3 +11,11 @@
 .print-mode .slidev-pwa-indicator {
   display: none;
 }
+
+/* Links print as "text (url)" (utils/print-links.ts marks them) */
+.print-mode .print-url {
+  font-size: 0.8em;
+  font-weight: 400;
+  opacity: 0.75;
+  word-break: break-all;
+}

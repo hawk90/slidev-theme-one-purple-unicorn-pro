@@ -72,6 +72,7 @@ import { watchCodeMorph } from './utils/code-morph'
 import { playgroundLangs, watchPlaygrounds } from './utils/playground'
 import { watchLightbox } from './utils/lightbox'
 import { glossaryEntries, watchGlossary } from './utils/glossary'
+import { watchPrintLinks } from './utils/print-links'
 import { fitSlide, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
@@ -98,6 +99,8 @@ let stopMorph = () => {}
 let stopPlayground = () => {}
 let stopLightbox = () => {}
 let stopGlossary = () => {}
+// exports: links print as "text (url)" (utils/print-links.ts)
+let stopPrintLinks = () => {}
 // paceBar: true (headmatter) ticks the clock the pace marker reads
 const now = ref(Date.now())
 let paceTimer: ReturnType<typeof setInterval> | undefined
@@ -118,6 +121,7 @@ onMounted(() => {
   // lightbox: true opens any image full screen; `.lightbox` images and
   // `.preview` links always do (utils/lightbox.ts)
   if (!isPrintMode.value) stopLightbox = watchLightbox(isOn(headmatter.lightbox))
+  if (isPrintMode.value && !isOff(headmatter.printUrls)) stopPrintLinks = watchPrintLinks()
   // glossary (headmatter, a slide's on top): tooltips on the terms' first use
   const slideGlossary = (no: number) => (no === 1 ? undefined : slides.value[no - 1]?.meta?.slide?.frontmatter?.glossary)
   if (!isPrintMode.value && (headmatter.glossary || slides.value.some((_, i) => slideGlossary(i + 1))))
@@ -134,7 +138,7 @@ onMounted(() => {
   }
 })
 let stopAdvance = () => {}
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); stopLightbox(); stopGlossary(); clearInterval(paceTimer); stopAdvance() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); stopLightbox(); stopGlossary(); stopPrintLinks(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide
