@@ -24,6 +24,7 @@
 - **Exercise slides** (#161): `layout: exercise` with `exercise`, `time`, `method` and
   `expected`, and a countdown for the time. Prop text (StoryBox, Timeline, …) also takes
   `` `code` `` and `**bold**`.
+- **Infographics** (#169): `<ChevronFlow>`, `<Pyramid>`, `<Cycle>` and `<HexGrid>`.
 
 ## Unreleased (4.2.0)
 

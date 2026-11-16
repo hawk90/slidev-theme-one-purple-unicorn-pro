@@ -860,6 +860,33 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Infographics: Flow and Pyramid
+
+<ChevronFlow :steps="['Profile', 'Find the limiter', { title: 'Optimize', desc: 'one change' }, 'Measure']" :active="3" />
+
+<Pyramid :levels="[
+  { title: 'Registers', note: '~1 cycle, a few KB per SM' },
+  { title: 'Shared memory', note: '~20 cycles, 100+ KB per SM' },
+  { title: 'L2 cache', note: '~200 cycles, tens of MB' },
+  { title: 'Global memory', note: '~500 cycles, tens of GB' },
+]" />
+
+---
+
+# Infographics: Cycle and Hexagons
+
+<div class="grid grid-cols-2 items-center gap-6">
+
+<Cycle :items="['Measure', 'Hypothesize', 'Change', { title: 'Verify', color: 'green' }]" center="Tune" size="17rem" />
+
+<HexGrid :items="[{ title: 'Latency', icon: '⏱' }, { title: 'Throughput', icon: '📈' }, { title: 'Occupancy', icon: '🧮', color: 'cyan' }]" />
+
+</div>
+
+`<ChevronFlow steps active>`, `<Pyramid levels>`, `<Cycle items center size>`, `<HexGrid items columns size>`: colors from the theme's names.
+
+---
+
 # Cards
 
 <div class="card">

@@ -166,6 +166,10 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<LogoWall>` | `logos` (paths, or `{ src, name, url }`; a name alone shows as text), `columns`, `color` (grey until hovered by default) |
 | `<TeamGrid>` | `people` (`[{ name, role, avatar }]`, initials without an avatar), `columns` |
 | `<PhotoWall>` | `photos` (paths, or `{ src, caption }`), `columns`, `ratio` (each photo's shape, `4 / 3`) |
+| `<ChevronFlow>` | `steps` (titles, or `{ title, desc, color }`), `active` (1-based; the steps before it read as done): a process as arrows |
+| `<Pyramid>` | `levels` (top first: titles, or `{ title, note, color }`; a note sits beside its level) |
+| `<Cycle>` | `items` (clockwise from the top: titles, or `{ title, color }`), `center`, `size` (20rem): a loop with arrows |
+| `<HexGrid>` | `items` (titles, or `{ title, icon, color }`; three make a triad), `columns`, `size` (9rem): hexagons in a honeycomb |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |
