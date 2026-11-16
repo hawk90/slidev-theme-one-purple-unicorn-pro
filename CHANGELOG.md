@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased (4.4.0)
+
+### Features
+
+- **Citations and numbered references** (#118): `bibliography:` + `[@key]` +
+  `<References />` (numbered by first use, tooltips, links); `\label{eq:…}`, `{#thm:…}`
+  and `[@eq:…]` numbered at build time, so hidden slides don't break the count.
+
 ## Unreleased (4.3.0)
 
 ### Features

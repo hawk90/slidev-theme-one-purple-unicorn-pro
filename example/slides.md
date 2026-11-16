@@ -7,6 +7,7 @@ event: Slidev Meetup 2026
 date: '2026-10-10'
 logo: /logo.svg
 footer: true
+bibliography: refs.bib
 duration: 30min
 paceBar: true
 highlighter: shiki
@@ -3265,6 +3266,32 @@ contact:
 # Thank You!
 
 ### Questions?
+
+---
+
+# Citations and Numbered References
+
+The roofline model [@williams2009] bounds a kernel by its arithmetic intensity $I$:
+
+$$
+P = \min(\pi,\ \beta \cdot I) \label{eq:roofline}
+$$
+
+**Theorem {#thm:amdahl} (Amdahl).** With a fraction $p$ parallel, $n$ processors give at most $1 / ((1-p) + p/n)$ [@amdahl1967].
+
+By [@eq:roofline] and [@thm:amdahl], occupancy is not the goal in itself [@volkov2010; @williams2009]. Hover a number for its source.
+
+```yaml
+bibliography: refs.bib     # headmatter; [@key] cites, <References /> lists them
+```
+
+---
+
+# References
+
+<References />
+
+`<References />` lists the entries cited, in order of first citation (`all` lists every entry; `from` / `to` splits a long list over slides). `\label{eq:…}` in a formula numbers it; `{#thm:…}`, `{#fig:…}`, `{#tab:…}` number anything; `[@eq:…]` refers to it.
 
 ---
 appendix: true

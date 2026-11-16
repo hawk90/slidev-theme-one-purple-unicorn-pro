@@ -298,3 +298,34 @@ html.lightbox-all :where(.slidev-layout, .slidev-page) img:not(.slide-footer-log
   cursor: pointer;
 }
 .lightbox-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* Citations and references (setup/preparser.ts, utils/references.ts):
+   [1] links to the entry on the references slide, the entry in a tooltip */
+:where(.slidev-layout, .slidev-page) .cite-group {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+:where(.slidev-layout, .slidev-page) a.cite {
+  color: var(--primary-400);
+  text-decoration: none;
+  border: 0;
+  font-weight: 600;
+}
+:where(.slidev-layout, .slidev-page) a.cite::after { display: none; }
+:where(.slidev-layout, .slidev-page) ol.references {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  padding-left: 2.25rem;
+}
+:where(.slidev-layout, .slidev-page) ol.references > li {
+  margin: 0.35rem 0;
+  font-size: inherit;
+}
+:where(.slidev-layout, .slidev-page) ol.references > li::marker {
+  content: '[' counter(list-item) ']  ';
+  color: var(--primary-400);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+:where(.slidev-layout, .slidev-page) ol.references > li > p { margin: 0; }

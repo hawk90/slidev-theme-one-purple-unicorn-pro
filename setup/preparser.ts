@@ -16,6 +16,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { definePreparserSetup } from '@slidev/types'
 import { blobUrl, dedent, parseSnippet, pickLines, snippetLang } from '../utils/snippets'
+import type { BibEntry } from '../utils/bibtex'
+import { parseBibtex } from '../utils/bibtex'
+import { apply, collect } from '../utils/references'
 
 const git = (cwd: string, ...args: string[]) => {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() }
@@ -79,6 +82,23 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
         lines.splice(i, 1, ...out)
         i += out.length - 1
       }
+    },
+  }, {
+    // Citations and numbered labels (utils/references.ts): `bibliography:
+    // refs.bib` (or a list) in the headmatter, [@key] in the text, and
+    // <References /> where the list goes
+    name: 'one-purple-unicorn:references',
+    transformRawLines(lines) {
+      const files = [headmatter.bibliography].flat().filter(Boolean).map(String)
+      const bib = new Map<string, BibEntry>()
+      for (const f of files) {
+        const file = path.resolve(root, f.replace(/^@\//, ''))
+        if (!fs.existsSync(file)) { console.warn(`[theme] bibliography ${f}: no such file`); continue }
+        for (const e of parseBibtex(fs.readFileSync(file, 'utf8'))) bib.set(e.key, e)
+      }
+      const numbered = collect(lines, k => bib.has(k))
+      if (!numbered.cites.length && !numbered.labels.size && !lines.some(l => /<References\b/.test(l))) return
+      apply(lines, numbered, bib, w => console.warn(`[theme] reference: ${w}`))
     },
   }]
 })
