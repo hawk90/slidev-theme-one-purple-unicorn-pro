@@ -10,6 +10,8 @@
 
 ### Internal
 
+- **Node 26 for development** (`devEngines.runtime: ^26`; decks still need Node 22.12+), Playwright
+  1.65, and a fresh lock file.
 - **check:decks compares against main** (#180): the baseline is this repo's main checkout
   by default (`--baseline installed` or a folder for others), and each side's theme and
   version are printed. A port already taken by another dev server no longer answers for
