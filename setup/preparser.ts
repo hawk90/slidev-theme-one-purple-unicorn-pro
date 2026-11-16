@@ -22,6 +22,7 @@ import { apply, collect } from '../utils/references'
 import { newStructure, structureSlide } from '../utils/structure'
 import { replaceMissingAssets } from '../utils/missing-assets'
 import { layoutNeedsAlt, picturesWithoutAlt } from '../utils/alt-lint'
+import type { DeckSlide } from '../utils/handout'
 
 const git = (cwd: string, ...args: string[]) => {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() }
@@ -49,6 +50,8 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
     return repos.get(dir)!
   }
   let structure = newStructure()
+  // shared with vite.config.ts in the same process (they load as different modules)
+  const deck: { slides: DeckSlide[], headmatter: Record<string, any> } = ((globalThis as any).__onePurpleUnicornDeck ??= { slides: [], headmatter: {} })
   let altSlide = 0
 
   return [{
@@ -138,6 +141,24 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
       const opt = headmatter.structure
       if (!opt || opt === 'false') return undefined
       return structureSlide(structure, content, frontmatter, !(typeof opt === 'object' && opt.transitions === false))
+    },
+  }, {
+    // Last: the slides as they end up, for the handout and llms.txt that
+    // `slidev build` writes (vite.config.ts, utils/handout.ts)
+    name: 'one-purple-unicorn:handout',
+    transformRawLines() {
+      deck.slides = []
+      deck.headmatter = headmatter
+    },
+    transformSlide(content, frontmatter) {
+      const title = typeof frontmatter.title === 'string' ? frontmatter.title : /^#\s+(.+)$/m.exec(content)?.[1] ?? ''
+      deck.slides.push({ no: deck.slides.length + 1, title, content, note: '', hidden: !!(frontmatter.hide || frontmatter.disabled) })
+      return undefined
+    },
+    transformNote(note) {
+      const last = deck.slides.at(-1)
+      if (last && note) last.note = note
+      return undefined
     },
   }]
 })

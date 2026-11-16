@@ -50,7 +50,8 @@
     "bin/**/*",
     "layouts.json",
     "skills/**/*",
-    "llms.txt"
+    "llms.txt",
+    "vite.config.ts"
   ],
   "repository": {
     "type": "git",

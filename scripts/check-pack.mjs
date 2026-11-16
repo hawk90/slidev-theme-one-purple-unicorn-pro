@@ -103,6 +103,10 @@ layout: end
 
   // 4. serve dist at /sub/ (an SPA: unknown paths get index.html)
   const dist = path.join(deck, 'dist')
+  // the theme's vite.config.ts wrote the deck's text and handout, linked under the sub-path
+  for (const f of ['llms.txt', 'handout.html'])
+    if (!fs.existsSync(path.join(dist, f))) throw new Error(`the build has no ${f} (vite.config.ts packed?)`)
+  if (!fs.readFileSync(path.join(dist, 'handout.html'), 'utf8').includes(`href="${BASE}2"`)) throw new Error('handout.html links miss the base path')
   const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.json': 'application/json' }
   const server = http.createServer((req, res) => {
     const url = decodeURIComponent(new URL(req.url, 'http://x').pathname)

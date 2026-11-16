@@ -30,6 +30,8 @@
 - **An authoring skill for agents** (#151): `skills/one-purple-unicorn/` (a guide, and a prop
   reference generated from the code), installable as a Claude Code plugin or with
   `npx skills add`; the same as `llms.txt` in the package (#143, the theme half).
+- **Handout and llms.txt for published decks** (#143): `slidev build` writes the deck's
+  `llms.txt` (titles, text, notes) and a printable `handout.html` into `dist/`.
 
 ### Fixes
 
