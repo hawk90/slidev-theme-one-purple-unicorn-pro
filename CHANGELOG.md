@@ -1,155 +1,8 @@
 # Changelog
 
-## Unreleased (4.5.0)
+## 4.5.0
 
-### Features
-
-- **PDF fallbacks** (#137): links print as "text (url)" in exports, and an iframe shows
-  its address as a link, or a `poster:` still.
-- **Authoring aids** (#160): a layout guide on `shift+l` and a nav-bar button, a dev
-  overflow outline and warning, placeholders for missing pictures (no more failed
-  slides), and a `wip:` draft watermark.
-- **Accessibility** (#124): a high-contrast mode (`shift+h`, a nav button, `highContrast:`),
-  slide announcements for screen readers and focus kept on the current slide, `alt:` on
-  every image layout with a missing-alt lint, and `npm run check:contrast` (WCAG AA,
-  both modes). It found and fixed: white on the vivid active step of ChevronFlow and
-  StackDiagram in dark mode (2.9:1), Pyramid labels (2.2–4.3:1), muted notes on tinted
-  boxes (BlockDiagram, Transcript), Stat's red and GithubCard's labels on dark cards,
-  and the exercise header on its tint.
-- **Editable PPTX** (#147): checked with Slidev 53.1 in both modes; gradient titles export as
-  solid editable text (the black copy is gone upstream). The README says what the exporter
-  keeps and leaves out, and which fonts to install.
-- **Recommended addons** (#141): a README table of addons checked with the theme in both
-  modes and in exports. Found on the way: slidev-addon-python-runner's output lines got a
-  code-block frame each (fixed); slidev-addon-chapters' `chapter: { title }` now starts a
-  section; `structure: true` stamps `sectionTitle`, not `section` (timing-bar's key).
-- **`layouts.json` and a deck lint** (#125): the theme's layouts and components with their
-  props, generated from the code (`npm run manifest`, `check:manifest`), and
-  `npx one-purple-unicorn-lint slides.md`: unknown layouts, missing required props,
-  near-miss keys and attributes, unknown components.
-- **An authoring skill for agents** (#151): `skills/one-purple-unicorn/` (a guide, and a prop
-  reference generated from the code), installable as a Claude Code plugin or with
-  `npx skills add`; the same as `llms.txt` in the package (#143, the theme half).
-- **Handout and llms.txt for published decks** (#143): `slidev build` writes the deck's
-  `llms.txt` (titles, text, notes) and a printable `handout.html` into `dist/`.
-- **`npm create one-purple-unicorn`** (#166): a new deck from the theme's `starter.md`, with
-  the title, presenter and event asked for (or given as flags). The scaffolder is its own
-  package, `packages/create-one-purple-unicorn` (published separately).
-- **Demo clip** (#126): `docs/demo.gif` at the top of the README (13 s, 1280×720, 4 MB,
-  light then dark), recorded by `npm run demo` (Playwright and ffmpeg).
-
-### Fixes
-
-- **`fit: true` on column layouts** (#177): it shrank two-cols / three-cols slides, title
-  included, to the floor; it now shrinks the columns' content just enough.
-- **`full-split` ignored `imageStack` and `poster`** (#178): they weren't declared, so a
-  list couldn't stack and a video had no poster in exports.
-- **Playground link contrast** (#179): "Compiler Explorer ↗" was dimmed to 1.95–2.67:1;
-  it takes the code's text color now (5.5:1 and up in both modes).
-
-## Unreleased (4.4.0)
-
-### Features
-
-- **Citations and numbered references** (#118): `bibliography:` + `[@key]` +
-  `<References />` (numbered by first use, tooltips, links); `\label{eq:…}`, `{#thm:…}`
-  and `[@eq:…]` numbered at build time, so hidden slides don't break the count.
-- **Charts** (#119): `<Chart>` (bars, lines) and `<Radar>` in SVG with no library, and
-  `<EChart>` for anything else (ECharts as an optional peer dependency), all in the
-  theme's palette.
-- **`<GoogleForm>`** (#146): a QR code and short link to a Google Form, the form or a
-  published Sheet chart beside it; exports show the code and link.
-- **Image walkthrough** (#159): `<ImageTour>` (callouts, masks or zoom, one spot per
-  click), `<ImageCompare>` (a before/after slider) and `<PanZoom>`.
-- **`<Transcript>`** (#157): an agent session, one turn per click, scrolling to the newest
-  with an "N above" count.
-- **`layout: document`** (#158): a long document cut at its `##` headings, an index rail,
-  one section per click.
-- **Glossary tooltips** (#162): `glossary:` (deck or slide) marks a term's first use with
-  a tooltip; Hangul-aware word boundaries, code and links skipped.
-- **Deck structure** (#163): `structure: true` gives section-aware transitions, section
-  metadata (`sectionTitle`, `sectionNo`) on every slide and `continued:` title carry-over.
-- **Live demos with a fallback** (#164): `<LiveDemo>` (status dot, video toggle, scale and
-  crop, a poster in exports) and `<Interactive>` (live in the room, a still in the PDF,
-  optionally a dialog).
-- **IDE-chrome mode** (#168): `ide: true` turns slides into file tabs (clickable
-  navigation) with a status bar for repo, branch, section and page.
-
-## Unreleased (4.3.0)
-
-### Features
-
-- **Callouts** (#116): GitHub alerts (`> [!NOTE]` …) take the `.alert` look with their
-  icon and name, left-aligned on centered layouts; `<StickyNote>` and `<SpeechBubble>`.
-- **Speaker and questions** (#117): `layout: speaker` and `<Person>` (avatar or initials,
-  name, role, affiliation, links); `end` with `questions: true` adds a QR code to the
-  deck and the `contact` links.
-- **`<Meter>` and `<Ghost>`** (#120): a labelled bar with warn / danger thresholds that
-  can fill on arrival, and a giant faint glyph behind the content.
-- **Video and tiles in the media layouts** (#121): `image`, `full-image` and `full-split`
-  play a video (`image: /clip.mp4`, Slidev's `<SlidevVideo>`, `poster` in exports) and
-  tile up to three pictures or videos (`imageStack: row | column`); `imageWidth` sets
-  the `image` layout's split.
-- **Layout utilities** (#133): `.stack` (children in one spot), `.stretch` (fills the
-  height left), `.list-cols-2` / `-3` and `.list-badges`.
-- **Device frames** (#138): `<Browser>` (macOS window, address bar, a screenshot, a live
-  page or any content) and `<Phone>`.
-- **Walls** (#139): `<LogoWall>`, `<TeamGrid>` and `<PhotoWall>`, arranged in even rows by
-  count.
-- **Exercise slides** (#161): `layout: exercise` with `exercise`, `time`, `method` and
-  `expected`, and a countdown for the time. Prop text (StoryBox, Timeline, …) also takes
-  `` `code` `` and `**bold**`.
-- **Infographics** (#169): `<ChevronFlow>`, `<Pyramid>`, `<Cycle>` and `<HexGrid>`.
-- **Diagram vocabulary** (#155): `<BlockDiagram>` (named blocks, a focus frame moving per
-  click, captions), `<StackDiagram>` and `<DrawOn>` (SVG strokes drawn on arrival).
-- **Tech-talk story pieces** (#156): `<ErrorSpotlight>`, `<BeforeAfter>`, `<Benchmark>`,
-  `<GithubCard>`, `<Lesson>`, `<ProsCons>` and `.verdict-table` cells.
-- **Lightbox and link preview** (#132): `.lightbox` images (or all, with `lightbox: true`)
-  open full screen; `.preview` links open their page in a frame; Esc closes.
-
-## Unreleased (4.2.0)
-
-### Features
-
-- **Click-step styles** (#127): `dim-prior`, `only-current`, `hl-current` (with colors),
-  `grow-current`, `shrink-prior` style the items already clicked and the one just
-  clicked, on a container or as a click preset (`v-click.dim-prior`,
-  `clickAnimation:`). Exports without clicks show the items plainly; `--with-clicks`
-  exports keep the styles (`html.print-clicks`).
-- **`<ClickTabs>`** (#154): one window with a tab per version (`tabs`, slots `tab1`,
-  `tab2`, …); each click moves to the next tab, a click on a tab jumps to it.
-- **Prose line-stepping** (#165): ```` ```quote ```` and ```` ```prose ```` fences are text in
-  the slide's type that step through their lines with code's highlight clicks
-  (```` ```quote {1|2|3|all} ````).
-- **Code windows across slides** (#135): with `transition: view-transition`, each code
-  window moves and resizes into the matching window of the next slide (timed by
-  `magicMoveDuration`).
-- **Inline diagnostics and folded preambles** (#136): `// [!code error: …]` / `warning`
-  / `info` / `value` at the end of a code line show as an editor's inline
-  diagnostics; `// [!code fold: …]` folds the lines above it into one row.
-- **Snippets by line range or content** (#152): `<<< @/code/kernel.cu[9-15]` and
-  `<<< ./reduce.cu[/__global__/,/^}/]`, with a link to those lines on GitHub / GitLab /
-  Bitbucket (a theme `setup/preparser.ts`).
-- **Compiler Explorer links** (#153): `playground: true` (or a list of languages, deck
-  or slide) puts a link on code blocks that opens them in Compiler Explorer.
-- **Shrink to fit** (#129): `fit: true` (slide or deck) shrinks content that would run off
-  the slide, to 0.42× at most, and wide display formulas; exports fit each page.
-- **Korean typography** (#150): headings balance their lines (a Korean title no longer
-  leaves one word alone: **line breaks in headings can move**), CJK opening
-  punctuation starts flush, `hangul` / `hangul-consonant` / `circled` list counters,
-  and `<span class="bilingual">` for a title in two languages.
-- **Slidev's built-ins in the theme's colors** (#140): `v-mark` (accent by default,
-  palette colors, translucent highlights), Twoslash popups, `{monaco-run}` output.
-- **Mermaid theme** (#134): diagrams take the theme's colors through CSS variables in
-  `themeCSS`, so they follow light mode and dark slides without being redrawn.
-
-### Fixes
-
-- **Light mode: titles on bare light layouts** (`center`, `full-text`, …) used the dark
-  palette's gradient, 2.84:1 on white; they take the light title gradient (3.68:1 at
-  its lightest) (#174).
-
-## Unreleased (4.1.0)
+The 4.1.0–4.5.0 milestones, released together.
 
 ### Features
 
@@ -191,6 +44,137 @@
 - **v-click presets** (#148): `pop`, `rise` and `blur` join Slidev's click animations
   (`v-click.pop`, or `clickAnimation: pop` on a slide or the deck), timed by the motion
   tokens.
+
+- **Click-step styles** (#127): `dim-prior`, `only-current`, `hl-current` (with colors),
+  `grow-current`, `shrink-prior` style the items already clicked and the one just
+  clicked, on a container or as a click preset (`v-click.dim-prior`,
+  `clickAnimation:`). Exports without clicks show the items plainly; `--with-clicks`
+  exports keep the styles (`html.print-clicks`).
+- **`<ClickTabs>`** (#154): one window with a tab per version (`tabs`, slots `tab1`,
+  `tab2`, …); each click moves to the next tab, a click on a tab jumps to it.
+- **Prose line-stepping** (#165): ```` ```quote ```` and ```` ```prose ```` fences are text in
+  the slide's type that step through their lines with code's highlight clicks
+  (```` ```quote {1|2|3|all} ````).
+- **Code windows across slides** (#135): with `transition: view-transition`, each code
+  window moves and resizes into the matching window of the next slide (timed by
+  `magicMoveDuration`).
+- **Inline diagnostics and folded preambles** (#136): `// [!code error: …]` / `warning`
+  / `info` / `value` at the end of a code line show as an editor's inline
+  diagnostics; `// [!code fold: …]` folds the lines above it into one row.
+- **Snippets by line range or content** (#152): `<<< @/code/kernel.cu[9-15]` and
+  `<<< ./reduce.cu[/__global__/,/^}/]`, with a link to those lines on GitHub / GitLab /
+  Bitbucket (a theme `setup/preparser.ts`).
+- **Compiler Explorer links** (#153): `playground: true` (or a list of languages, deck
+  or slide) puts a link on code blocks that opens them in Compiler Explorer.
+- **Shrink to fit** (#129): `fit: true` (slide or deck) shrinks content that would run off
+  the slide, to 0.42× at most, and wide display formulas; exports fit each page.
+- **Korean typography** (#150): headings balance their lines (a Korean title no longer
+  leaves one word alone: **line breaks in headings can move**), CJK opening
+  punctuation starts flush, `hangul` / `hangul-consonant` / `circled` list counters,
+  and `<span class="bilingual">` for a title in two languages.
+- **Slidev's built-ins in the theme's colors** (#140): `v-mark` (accent by default,
+  palette colors, translucent highlights), Twoslash popups, `{monaco-run}` output.
+- **Mermaid theme** (#134): diagrams take the theme's colors through CSS variables in
+  `themeCSS`, so they follow light mode and dark slides without being redrawn.
+
+- **Callouts** (#116): GitHub alerts (`> [!NOTE]` …) take the `.alert` look with their
+  icon and name, left-aligned on centered layouts; `<StickyNote>` and `<SpeechBubble>`.
+- **Speaker and questions** (#117): `layout: speaker` and `<Person>` (avatar or initials,
+  name, role, affiliation, links); `end` with `questions: true` adds a QR code to the
+  deck and the `contact` links.
+- **`<Meter>` and `<Ghost>`** (#120): a labelled bar with warn / danger thresholds that
+  can fill on arrival, and a giant faint glyph behind the content.
+- **Video and tiles in the media layouts** (#121): `image`, `full-image` and `full-split`
+  play a video (`image: /clip.mp4`, Slidev's `<SlidevVideo>`, `poster` in exports) and
+  tile up to three pictures or videos (`imageStack: row | column`); `imageWidth` sets
+  the `image` layout's split.
+- **Layout utilities** (#133): `.stack` (children in one spot), `.stretch` (fills the
+  height left), `.list-cols-2` / `-3` and `.list-badges`.
+- **Device frames** (#138): `<Browser>` (macOS window, address bar, a screenshot, a live
+  page or any content) and `<Phone>`.
+- **Walls** (#139): `<LogoWall>`, `<TeamGrid>` and `<PhotoWall>`, arranged in even rows by
+  count.
+- **Exercise slides** (#161): `layout: exercise` with `exercise`, `time`, `method` and
+  `expected`, and a countdown for the time. Prop text (StoryBox, Timeline, …) also takes
+  `` `code` `` and `**bold**`.
+- **Infographics** (#169): `<ChevronFlow>`, `<Pyramid>`, `<Cycle>` and `<HexGrid>`.
+- **Diagram vocabulary** (#155): `<BlockDiagram>` (named blocks, a focus frame moving per
+  click, captions), `<StackDiagram>` and `<DrawOn>` (SVG strokes drawn on arrival).
+- **Tech-talk story pieces** (#156): `<ErrorSpotlight>`, `<BeforeAfter>`, `<Benchmark>`,
+  `<GithubCard>`, `<Lesson>`, `<ProsCons>` and `.verdict-table` cells.
+- **Lightbox and link preview** (#132): `.lightbox` images (or all, with `lightbox: true`)
+  open full screen; `.preview` links open their page in a frame; Esc closes.
+
+- **Citations and numbered references** (#118): `bibliography:` + `[@key]` +
+  `<References />` (numbered by first use, tooltips, links); `\label{eq:…}`, `{#thm:…}`
+  and `[@eq:…]` numbered at build time, so hidden slides don't break the count.
+- **Charts** (#119): `<Chart>` (bars, lines) and `<Radar>` in SVG with no library, and
+  `<EChart>` for anything else (ECharts as an optional peer dependency), all in the
+  theme's palette.
+- **`<GoogleForm>`** (#146): a QR code and short link to a Google Form, the form or a
+  published Sheet chart beside it; exports show the code and link.
+- **Image walkthrough** (#159): `<ImageTour>` (callouts, masks or zoom, one spot per
+  click), `<ImageCompare>` (a before/after slider) and `<PanZoom>`.
+- **`<Transcript>`** (#157): an agent session, one turn per click, scrolling to the newest
+  with an "N above" count.
+- **`layout: document`** (#158): a long document cut at its `##` headings, an index rail,
+  one section per click.
+- **Glossary tooltips** (#162): `glossary:` (deck or slide) marks a term's first use with
+  a tooltip; Hangul-aware word boundaries, code and links skipped.
+- **Deck structure** (#163): `structure: true` gives section-aware transitions, section
+  metadata (`sectionTitle`, `sectionNo`) on every slide and `continued:` title carry-over.
+- **Live demos with a fallback** (#164): `<LiveDemo>` (status dot, video toggle, scale and
+  crop, a poster in exports) and `<Interactive>` (live in the room, a still in the PDF,
+  optionally a dialog).
+- **IDE-chrome mode** (#168): `ide: true` turns slides into file tabs (clickable
+  navigation) with a status bar for repo, branch, section and page.
+
+- **PDF fallbacks** (#137): links print as "text (url)" in exports, and an iframe shows
+  its address as a link, or a `poster:` still.
+- **Authoring aids** (#160): a layout guide on `shift+l` and a nav-bar button, a dev
+  overflow outline and warning, placeholders for missing pictures (no more failed
+  slides), and a `wip:` draft watermark.
+- **Accessibility** (#124): a high-contrast mode (`shift+h`, a nav button, `highContrast:`),
+  slide announcements for screen readers and focus kept on the current slide, `alt:` on
+  every image layout with a missing-alt lint, and `npm run check:contrast` (WCAG AA,
+  both modes). It found and fixed: white on the vivid active step of ChevronFlow and
+  StackDiagram in dark mode (2.9:1), Pyramid labels (2.2–4.3:1), muted notes on tinted
+  boxes (BlockDiagram, Transcript), Stat's red and GithubCard's labels on dark cards,
+  and the exercise header on its tint.
+- **Editable PPTX** (#147): checked with Slidev 53.1 in both modes; gradient titles export as
+  solid editable text (the black copy is gone upstream). The README says what the exporter
+  keeps and leaves out, and which fonts to install.
+- **Recommended addons** (#141): a README table of addons checked with the theme in both
+  modes and in exports. Found on the way: slidev-addon-python-runner's output lines got a
+  code-block frame each (fixed); slidev-addon-chapters' `chapter: { title }` now starts a
+  section; `structure: true` stamps `sectionTitle`, not `section` (timing-bar's key).
+- **`layouts.json` and a deck lint** (#125): the theme's layouts and components with their
+  props, generated from the code (`npm run manifest`, `check:manifest`), and
+  `npx one-purple-unicorn-lint slides.md`: unknown layouts, missing required props,
+  near-miss keys and attributes, unknown components.
+- **An authoring skill for agents** (#151): `skills/one-purple-unicorn/` (a guide, and a prop
+  reference generated from the code), installable as a Claude Code plugin or with
+  `npx skills add`; the same as `llms.txt` in the package (#143, the theme half).
+- **Handout and llms.txt for published decks** (#143): `slidev build` writes the deck's
+  `llms.txt` (titles, text, notes) and a printable `handout.html` into `dist/`.
+- **`npm create one-purple-unicorn`** (#166): a new deck from the theme's `starter.md`, with
+  the title, presenter and event asked for (or given as flags). The scaffolder is its own
+  package, `packages/create-one-purple-unicorn` (published separately).
+- **Demo clip** (#126): `docs/demo.gif` at the top of the README (13 s, 1280×720, 4 MB,
+  light then dark), recorded by `npm run demo` (Playwright and ffmpeg).
+
+### Fixes
+
+- **Light mode: titles on bare light layouts** (`center`, `full-text`, …) used the dark
+  palette's gradient, 2.84:1 on white; they take the light title gradient (3.68:1 at
+  its lightest) (#174).
+
+- **`fit: true` on column layouts** (#177): it shrank two-cols / three-cols slides, title
+  included, to the floor; it now shrinks the columns' content just enough.
+- **`full-split` ignored `imageStack` and `poster`** (#178): they weren't declared, so a
+  list couldn't stack and a video had no poster in exports.
+- **Playground link contrast** (#179): "Compiler Explorer ↗" was dimmed to 1.95–2.67:1;
+  it takes the code's text color now (5.5:1 and up in both modes).
 
 ### Internal
 
