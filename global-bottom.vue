@@ -44,6 +44,9 @@
     </div>
   </div>
 
+  <!-- fit: where this layer sits, to find its slide (utils/autofit.ts) -->
+  <span v-if="fitOn" class="fit-marker" :data-page="currentPage" :data-reserve="fitReserve" hidden />
+
   <!-- Page Indicator -->
   <div v-if="showPageNumber" class="slide-indicator slide-chrome">
     {{ pageText }}
@@ -51,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { configs, resolveAssetUrl, sharedState, useNav } from '@slidev/client'
 import { durationSeconds, pace, timerElapsed } from './utils/pace'
 import { ribbonOf } from './utils/ribbon'
@@ -64,6 +67,7 @@ import { watchSlideArrival } from './utils/slide-arrival'
 import { watchStaggerClicks } from './utils/stagger'
 import { watchCodeMorph } from './utils/code-morph'
 import { playgroundLangs, watchPlaygrounds } from './utils/playground'
+import { fitSlide, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
@@ -215,6 +219,39 @@ const parallax = computed(() => {
     '--parallax-tint': `${Math.round(tint * 100)}%`,
   }
 })
+
+// fit: true (a slide, or the headmatter; a slide's false wins) shrinks the
+// slide's content to fit, once it is shown and its fonts are in; in an
+// export, print-export.ts fits the pages with a .fit-marker (utils/autofit.ts). Not with the slide's own zoom:,
+// nor with slidev-addon-autofit in the deck.
+// the footer line's room at the bottom (it overlaps the layout's padding)
+const fitReserve = computed(() => footer.value ? 28 : 0)
+const fitOn = computed(() => {
+  const own = isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.fit
+  if (frontmatter.value.zoom !== undefined || hasAutofitAddon(headmatter.addons)) return false
+  return isOn(own ?? headmatter.fit)
+})
+async function runFit() {
+  // exports: print-export.ts fits the marked pages before it redraws
+  if (!fitOn.value || isPrintMode.value) return
+  await nextTick()
+  await document.fonts?.ready
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+  const page = currentPage.value
+  const find = () => document.querySelector<HTMLElement>(`#slideshow > [data-slidev-no="${page}"] .slidev-layout`)
+  // a slide compiled on its first visit shows "Loading slide…" first: wait
+  // for it (up to 6 s), then fit, and again as its images come in
+  for (let i = 0; i < 30 && (!find() || find()!.closest('[data-slidev-no]')?.querySelector('.slidev-slide-loading')); i++)
+    await new Promise(r => setTimeout(r, 200))
+  const root = find()
+  if (!root || page !== currentPage.value) return
+  fitSlide(root, `slide ${page}`, fitReserve.value)
+  for (const img of root.querySelectorAll('img')) {
+    if (!img.complete) img.addEventListener('load', () => fitSlide(root, `slide ${page}`, fitReserve.value), { once: true })
+  }
+}
+watch([currentPage, fitOn], runFit)
+onMounted(runFit)
 
 // confidential (headmatter): the corner ribbon, utils/ribbon.ts
 const ribbon = computed(() => ribbonOf(headmatter.confidential, headmatter.confidentialOn,

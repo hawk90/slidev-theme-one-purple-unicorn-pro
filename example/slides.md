@@ -1376,6 +1376,20 @@ The lines stay in the block (folded ones hidden), so `{5|7}` still counts from `
 <<< @/code/reduce.cu[17-]
 
 ---
+fit: true
+---
+
+# Shrink to Fit
+
+`fit: true` shrinks a slide's content until it fits (never below 0.42×); a wide formula gets a smaller font. This slide would run off the bottom without it.
+
+$$
+\mathrm{Occupancy} = \frac{\text{active warps per SM}}{\text{max warps per SM}} = \frac{\min\left(\left\lfloor \frac{R_{SM}}{R_{thread} \cdot T_{block}} \right\rfloor, \left\lfloor \frac{S_{SM}}{S_{block}} \right\rfloor, B_{max}\right) \cdot \frac{T_{block}}{32}}{W_{max}}
+$$
+
+<<< @/code/reduce.cu[1-]
+
+---
 
 # Title Bar & Line Numbers
 

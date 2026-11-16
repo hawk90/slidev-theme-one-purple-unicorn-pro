@@ -3,6 +3,7 @@
 // shadows (print-effects.ts). The capture waits for the redraws
 // (export-hold.ts); html.print-mode itself is print-mode.ts.
 
+import { fitMarked } from './autofit'
 import { GRADIENT_DONE, isGradientText, materializePseudo, PSEUDO, redrawGradientText, solidifyGradientText } from './print-gradient-text'
 import type { TextShadowJob } from './print-effects'
 import { redrawBoxShadow, redrawRing, redrawTextShadows, RING_DONE, textShadowJob } from './print-effects'
@@ -165,13 +166,14 @@ function start() {
           await katexSettled()
           await nextTick()
           pending = new Set()
+          fitMarked(document) // `fit: true` slides shrink first (utils/autofit.ts)
           redraw(document)
           return
         }
         const roots = [...pending].filter(r => r.isConnected)
         pending.clear()
         for (const r of roots) {
-          if (!roots.some(o => o !== r && o.contains(r))) redraw(r)
+          if (!roots.some(o => o !== r && o.contains(r))) { fitMarked(document); redraw(r) }
         }
       }
       catch (e) {

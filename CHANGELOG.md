@@ -25,6 +25,8 @@
   Bitbucket (a theme `setup/preparser.ts`).
 - **Compiler Explorer links** (#153): `playground: true` (or a list of languages, deck
   or slide) puts a link on code blocks that opens them in Compiler Explorer.
+- **Shrink to fit** (#129): `fit: true` (slide or deck) shrinks content that would run off
+  the slide, to 0.42× at most, and wide display formulas; exports fit each page.
 
 ### Fixes
 
