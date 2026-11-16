@@ -4,6 +4,7 @@ import { cudaTransformer, quietColors } from './cuda-transformer'
 import { terminalTransformer } from './terminal-transformer'
 import { cudaLangs } from './cuda-lang'
 import { proseLangs, proseTransformer } from './prose-lang'
+import { diagnosticsTransformer } from './diagnostics-transformer'
 
 export default defineShikiSetup(() => ({
   theme: theme as any,
@@ -22,5 +23,6 @@ export default defineShikiSetup(() => ({
     cudaTransformer({ quiet: quietColors(theme) }),
     terminalTransformer(),
     proseTransformer(),
+    diagnosticsTransformer(),
   ],
 }))

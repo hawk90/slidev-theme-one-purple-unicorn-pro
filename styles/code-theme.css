@@ -415,3 +415,64 @@
 html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-code.slidev-prose-quote {
   border-left-color: var(--one-dark-blue);
 }
+
+/* Inline diagnostics and folded preambles (setup/diagnostics-transformer.ts):
+   `// [!code error: message]` and the like at the end of a line. The code
+   keeps its colors; an error is underlined with a squiggle, a warning or an
+   info line tinted, and the message follows the code. Variables:
+   --diag-error / --diag-warning / --diag-info (colors) */
+:is(.slidev-layout, .slidev-page) pre.slidev-code {
+  --_diag-error: var(--diag-error, #e06c75);
+  --_diag-warning: var(--diag-warning, #e5c07b);
+  --_diag-info: var(--diag-info, #61afef);
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-error > span:not(.diag-msg) {
+  text-decoration: wavy underline var(--_diag-error);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 3px;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-warning {
+  background: color-mix(in srgb, var(--_diag-warning) 10%, transparent);
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-info {
+  background: color-mix(in srgb, var(--_diag-info) 8%, transparent);
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code :is(.diag-msg, .diag-value) {
+  margin-left: 1.5ch;
+  font-style: italic;
+  text-indent: 0;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .diag-msg {
+  padding: 0 0.6ch;
+  border-radius: 3px;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .diag-error { color: var(--_diag-error); background: color-mix(in srgb, var(--_diag-error) 14%, transparent); }
+:is(.slidev-layout, .slidev-page) pre.slidev-code .diag-warning { color: var(--_diag-warning); background: color-mix(in srgb, var(--_diag-warning) 14%, transparent); }
+:is(.slidev-layout, .slidev-page) pre.slidev-code .diag-info { color: var(--_diag-info); background: color-mix(in srgb, var(--_diag-info) 14%, transparent); }
+:is(.slidev-layout, .slidev-page) pre.slidev-code .diag-value {
+  color: var(--_root-text-muted, #858c98);
+}
+/* A folded preamble: one row "⋯ includes · 3 lines" in place of its lines */
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-folded {
+  display: none;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-folded.line-fold-summary {
+  display: inline-block;
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-fold-summary > * {
+  display: none;
+}
+/* no number on the folded row (its counter steps over the folded lines) */
+:is(.slidev-layout, .slidev-page) .slidev-code-line-numbers pre.slidev-code .line-fold-summary::before {
+  content: '';
+}
+:is(.slidev-layout, .slidev-page) pre.slidev-code .line-fold-summary::after {
+  content: '⋯ ' attr(data-fold);
+  display: inline-block;
+  padding: 0 0.8ch;
+  border: 1px dashed var(--_root-border-default, rgba(171, 178, 191, 0.3));
+  border-radius: 3px;
+  color: var(--_root-text-muted, #858c98);
+  font-style: italic;
+  text-indent: 0;
+}

@@ -17,6 +17,9 @@
 - **Code windows across slides** (#135): with `transition: view-transition`, each code
   window moves and resizes into the matching window of the next slide (timed by
   `magicMoveDuration`).
+- **Inline diagnostics and folded preambles** (#136): `// [!code error: …]` / `warning`
+  / `info` / `value` at the end of a code line show as an editor's inline
+  diagnostics; `// [!code fold: …]` folds the lines above it into one row.
 
 ### Fixes
 

@@ -1340,6 +1340,29 @@ __global__ void scale(float *x, float a, int n) {
 
 ---
 
+# Inline Diagnostics
+
+A comment at the end of a line, `// [!code error: …]`, `warning`, `info` or `value`, shows as in an editor; `// [!code fold: …]` folds the lines above it.
+
+```cuda [reduce.cu] {lines:true}
+#include <cstdio>
+#include <cuda_runtime.h>
+#include "check.h"
+// [!code fold: includes]
+__global__ void reduce(const float *x, float *out, int n) {
+    __shared__ float s[256];
+    float acc = 0.0f;                  // [!code warning: unused variable 'acc']
+    s[threadIdx.x] = x[blockIdx.x * 256 + threadIdx.x];
+    __syncthreads();
+    if (threadIdx.x == 0) out = s[0]; // [!code error: assigning to 'float *' from 'float']
+    int warps = blockDim.x / 32;       // [!code value: 8]
+}
+```
+
+The lines stay in the block (folded ones hidden), so `{5|7}` still counts from `#include`. Python's `#` and SQL's `--` comments work too.
+
+---
+
 # Title Bar & Line Numbers
 
 A `[name]` after the language draws a window bar; `{lines:true}` numbers the lines (`lineNumbers: true` in the headmatter does it for every block).
