@@ -1,6 +1,14 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { isVideo, mediaList, mediaWidth } from '../utils/media.ts'
+import { isVideo, mediaList, mediaWidth, wallColumns } from '../utils/media.ts'
+
+describe('wallColumns', () => {
+  it('even rows for each count', () => {
+    assert.deepEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 20, 40].map(n => wallColumns(n)), [1, 2, 3, 4, 3, 3, 4, 4, 3, 4, 4, 5, 6, 6])
+    assert.equal(wallColumns(0), 1)
+    assert.equal(wallColumns(30, 8), 8)
+  })
+})
 
 describe('isVideo / mediaList / mediaWidth', () => {
   it('videos by extension', () => {

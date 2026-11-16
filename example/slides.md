@@ -835,6 +835,31 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Walls: Logos and Team
+
+<LogoWall :logos="[{ name: 'CUDA' }, { name: 'cuBLAS' }, { name: 'Thrust' }, { name: 'CUTLASS' }, { name: 'NCCL' }, { src: '/logo.svg', name: 'This theme' }]" />
+
+<TeamGrid :people="[{ name: 'Ada Kim', role: 'Kernels' }, { name: 'Ben Ito', role: 'Compiler' }, { name: 'Chen Li', role: 'Profiling' }, { name: 'Dana Park', role: 'Docs' }]" />
+
+`<LogoWall logos columns color>` (grey until hovered; a name alone shows as text) and `<TeamGrid people columns>` arrange themselves by count: 4 in a row, 5–6 in 3 columns, 7–8 in 4…
+
+---
+
+# Photo Wall
+
+<PhotoWall :photos="[
+  { src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600', caption: 'The editor' },
+  { src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600', caption: 'The laptop' },
+  { src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600', caption: 'The board' },
+  { src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600', caption: 'The network' },
+  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600', caption: 'The weekend' },
+  { src: '/demo-loop.jpg', caption: 'The gradient' },
+]" ratio="16 / 9" />
+
+`<PhotoWall photos columns ratio>`: one shape for every photo (4 / 3 by default, 16 / 9 here), captions on top.
+
+---
+
 # Cards
 
 <div class="card">

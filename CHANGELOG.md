@@ -19,6 +19,8 @@
   height left), `.list-cols-2` / `-3` and `.list-badges`.
 - **Device frames** (#138): `<Browser>` (macOS window, address bar, a screenshot, a live
   page or any content) and `<Phone>`.
+- **Walls** (#139): `<LogoWall>`, `<TeamGrid>` and `<PhotoWall>`, arranged in even rows by
+  count.
 
 ## Unreleased (4.2.0)
 

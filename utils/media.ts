@@ -39,3 +39,18 @@ export function mediaWidth(value: unknown): string {
   if (!Number.isNaN(n) && n > 0 && n < 1) return `${Math.round(n * 1000) / 10}%`
   return /^\d+(\.\d+)?(%|px|rem|em|vw|fr)$/.test(s) ? s : '50%'
 }
+
+/**
+ * Columns for a wall of `n` items (logos, people, photos) so the rows come
+ * out even and about as wide as they are tall: 1–4 in one row, 5–6 in 3, 7–8
+ * in 4, 9 in 3, 10–12 in 4, then wider. `max` caps it.
+ */
+export function wallColumns(n: number, max = 6): number {
+  if (n <= 4) return Math.max(1, n)
+  if (n <= 6) return 3
+  if (n <= 8) return 4
+  if (n === 9) return 3
+  if (n <= 12) return 4
+  if (n <= 15) return 5
+  return Math.min(max, Math.ceil(Math.sqrt(n * 1.8)))
+}
