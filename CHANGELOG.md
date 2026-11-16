@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Internal
+
+- **check:decks compares against main** (#180): the baseline is this repo's main checkout
+  by default (`--baseline installed` or a folder for others), and each side's theme and
+  version are printed. A port already taken by another dev server no longer answers for
+  the deck under test: the server moves to the next free port.
+
 ## 4.5.0
 
 The 4.1.0–4.5.0 milestones, released together.

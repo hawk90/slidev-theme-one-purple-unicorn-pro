@@ -2,19 +2,25 @@
 // Check real decks against this repo's theme before a release.
 //
 // For each deck file it starts two Slidev dev servers in the deck's own
-// project (its node_modules, its Slidev version): one with the theme the deck
-// already uses, one with `--theme <this repo>`. It screenshots every slide in
-// both and reports the slides that changed, with diff images.
+// project (its node_modules, its Slidev version): the baseline, and this
+// checkout (`--theme <this repo>`). It screenshots every slide in both and
+// reports the slides that changed, with diff images.
+//
+// The baseline (--baseline) is by default `main`: this repo's main checkout,
+// so a branch shows only its own changes. Run from main itself, or with
+// `--baseline installed`, it is the theme the deck has installed (an older
+// release: everything since shows). A path is a theme folder. Each side's
+// theme and version are printed.
 //
 //   npm run check:decks -- ../career_slide/slides.md ../CUDA/content/x.md
 //   options: --pages 1-20   --mode dark|light|both (default dark)
-//            --current <theme>  theme for the baseline when the deck sets it on
-//                               the command line instead of in its headmatter
+//            --baseline main|installed|<theme folder>   (--current <theme>: the same as a folder)
 //            --out <dir> (default ./deck-check)   --threshold <pixels> (default 200)
 //            --clicks: every click state too (slide 4 at click 2 is "4.2")
 //
 // Nothing in the deck projects is modified.
 
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -34,7 +40,33 @@ const pages = opt('pages', '')
 const mode = opt('mode', 'dark')
 const outDir = path.resolve(opt('out', 'deck-check'))
 const threshold = Number(opt('threshold', '200'))
-const currentTheme = opt('current', '')
+const baselineArg = opt('baseline', '') || opt('current', '') || 'main'
+
+// this repo's main checkout (a worktree's main lives elsewhere)
+function mainCheckout() {
+  try {
+    const list = execFileSync('git', ['worktree', 'list', '--porcelain'], { cwd: themeRoot, encoding: 'utf8' })
+    for (const block of list.split('\n\n')) {
+      const dir = /^worktree (.+)$/m.exec(block)?.[1]
+      if (dir && /^branch refs\/heads\/main$/m.test(block)) return dir
+    }
+  }
+  catch {}
+  return ''
+}
+const version = dir => { try { return JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')).version } catch { return '?' } }
+let baselineTheme = '' // '' = the deck's installed theme
+let baselineLabel = 'installed'
+if (baselineArg === 'main') {
+  const main = mainCheckout()
+  if (main && path.resolve(main) !== themeRoot) { baselineTheme = main; baselineLabel = `main ${version(main)} (${main})` }
+  else console.log('[check:decks] this is the main checkout: comparing with each deck\'s installed theme')
+}
+else if (baselineArg !== 'installed') {
+  baselineTheme = path.resolve(baselineArg)
+  baselineLabel = `${version(baselineTheme)} (${baselineTheme})`
+}
+console.log(`[check:decks] local ${version(themeRoot)} (${themeRoot})`)
 const withClicks = args.includes('--clicks')
 if (withClicks) args.splice(args.indexOf('--clicks'), 1)
 const decks = args.filter(a => a.endsWith('.md'))
@@ -72,9 +104,16 @@ for (const deckArg of decks) {
   const deck = path.resolve(deckArg)
   const name = path.basename(path.dirname(deck)) + '-' + path.basename(deck, '.md')
   console.log(`\n== ${deckArg}`)
+  // the installed theme: the one the deck names, in its node_modules
+  if (!baselineTheme) {
+    const named = /^theme:\s*['"]?([^'"\s]+)/m.exec(fs.readFileSync(deck, 'utf8'))?.[1] ?? ''
+    const dir = named && !named.startsWith('.') && !named.startsWith('/') ? path.join(path.dirname(deck), 'node_modules', named) : ''
+    console.log(`  baseline: installed ${named || '(no theme)'} ${dir ? version(dir) : ''}`)
+  }
+  else console.log(`  baseline: ${baselineLabel}`)
   let current, local
   try {
-    current = await startServer(deck, currentTheme ? ['--theme', currentTheme] : [])
+    current = await startServer(deck, baselineTheme ? ['--theme', baselineTheme] : [])
     local = await startServer(deck, ['--theme', themeRoot])
     for (const scheme of schemes) {
       const a = await capture(browser, current.port, scheme, pages)

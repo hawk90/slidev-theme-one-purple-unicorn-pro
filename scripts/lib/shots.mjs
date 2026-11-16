@@ -2,17 +2,30 @@
 // one slide ready for a screenshot, compare two PNGs.
 
 import { spawn } from 'node:child_process'
+import net from 'node:net'
 import { PNG } from 'pngjs'
 import pixelmatchModule from 'pixelmatch'
 
 const pixelmatch = pixelmatchModule.default ?? pixelmatchModule
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
+/** Whether nothing listens on `port` (any address) */
+function portFree(port) {
+  return new Promise((resolve) => {
+    const srv = net.createServer()
+    srv.once('error', () => resolve(false))
+    srv.listen({ port }, () => srv.close(() => resolve(true)))
+  })
+}
+
 /**
  * `npx slidev <file> --port <port> ...args` in `cwd`, resolved once it serves.
- * Fails fast when the server exits, and with the end of its log either way.
+ * A port already taken (another deck's dev server would answer for this one)
+ * moves to the next free one; the result says which. Fails fast when the
+ * server exits, and with the end of its log either way.
  */
 export async function startDevServer({ cwd, file = 'slides.md', port, args = [], timeoutMs = 120000 }) {
+  for (let tries = 0; !(await portFree(port)) && tries < 50; tries++) port++
   const proc = spawn('npx', ['slidev', file, '--port', String(port), ...args], {
     cwd, stdio: ['ignore', 'pipe', 'pipe'], detached: true,
   })
