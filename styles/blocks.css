@@ -111,3 +111,40 @@
 :is(.slidev-layout, .slidev-page) .rough-annotation path:not([stroke-width="1"], [stroke-width="1.5"], [stroke-width="2"], [stroke-width="2.5"], [stroke-width="3"]) {
   stroke-opacity: var(--v-mark-highlight-opacity, 0.35);
 }
+
+/* GitHub alerts (> [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION],
+   Slidev's built-in): the .alert boxes' look, with the type's icon and name
+   on top (meaning not by color alone). Left-aligned on centered layouts too.
+   Variables: as .alert (--alert-padding, -margin, -radius, -border-width).
+   [class]: above the plugin's own .markdown-alert.markdown-alert-note …
+   The colors are the palette's (they follow light mode), not --info & co.,
+   which resolve at the root */
+:is(.slidev-layout, .slidev-page) .markdown-alert[class] {
+  padding: var(--alert-padding, 0.75rem 1.25rem);
+  margin: var(--alert-margin, 1rem 0);
+  border-radius: var(--alert-radius, 0.5rem);
+  border-left: var(--alert-border-width, 4px) solid var(--_alert, var(--one-dark-blue));
+  background: color-mix(in srgb, var(--_alert, var(--one-dark-blue)) 10%, transparent);
+  color: var(--text-primary);
+  text-align: left;
+}
+:where(.slidev-layout, .slidev-page) .markdown-alert-note { --_alert: var(--one-dark-blue); }
+:where(.slidev-layout, .slidev-page) .markdown-alert-tip { --_alert: var(--one-dark-green); }
+:where(.slidev-layout, .slidev-page) .markdown-alert-important { --_alert: var(--primary-400); }
+:where(.slidev-layout, .slidev-page) .markdown-alert-warning { --_alert: var(--one-dark-yellow); }
+:where(.slidev-layout, .slidev-page) .markdown-alert-caution { --_alert: var(--one-dark-red); }
+:is(.slidev-layout, .slidev-page) .markdown-alert[class] .markdown-alert-title {
+  gap: 0.45rem;
+  margin: 0 0 0.45rem;
+  color: var(--_alert, var(--one-dark-blue));
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+:is(.slidev-layout, .slidev-page) .markdown-alert[class] .markdown-alert-title .octicon {
+  margin-right: 0;
+}
+:where(.slidev-layout, .slidev-page) .markdown-alert > :last-child {
+  margin-bottom: 0;
+}

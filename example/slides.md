@@ -769,6 +769,75 @@ Uses `.gradient-card` class. Has a permanent gradient accent bar on top.
 
 ---
 
+# GitHub Alerts
+
+Slidev's `> [!NOTE]` blocks take the same look, with the type's icon and name.
+
+<div class="grid grid-cols-2 gap-x-6 text-sm">
+<div>
+
+> [!NOTE]
+> Coalesced loads fetch a warp's 32 floats in one transaction.
+
+> [!TIP]
+> Profile with Nsight Compute before changing anything.
+
+> [!IMPORTANT]
+> Every thread must reach `__syncthreads()`.
+
+</div>
+<div>
+
+> [!WARNING]
+> Bank conflicts serialize shared-memory access.
+
+> [!CAUTION]
+> Writing past the shared array corrupts other blocks' data.
+
+</div>
+</div>
+
+---
+layout: center
+---
+
+# Notes and Speech
+
+<div class="flex items-start justify-center gap-10 mt-6">
+
+<StickyNote title="Remember">
+
+Measure before and after **every** change.
+
+</StickyNote>
+
+<StickyNote color="cyan" :rotate="2" width="12rem">
+
+`--use_fast_math` trades accuracy for speed.
+
+</StickyNote>
+
+<div class="w-100">
+
+<SpeechBubble name="Reviewer">
+
+Why is this kernel memory-bound?
+
+</SpeechBubble>
+
+<SpeechBubble side="right" name="You" color="green">
+
+Each float is read once: 1 FLOP per 4 bytes.
+
+</SpeechBubble>
+
+</div>
+</div>
+
+`<StickyNote color rotate title width>` and `<SpeechBubble side name avatar color>`; glass, in the theme's colors. On a centered layout the alerts and notes stay left-aligned.
+
+---
+
 # Table Variants
 
 <div class="grid grid-cols-2 gap-x-8">

@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased (4.3.0)
+
+### Features
+
+- **Callouts** (#116): GitHub alerts (`> [!NOTE]` …) take the `.alert` look with their
+  icon and name, left-aligned on centered layouts; `<StickyNote>` and `<SpeechBubble>`.
+
 ## Unreleased (4.2.0)
 
 ### Features
