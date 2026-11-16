@@ -517,3 +517,45 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
   opacity: 1;
   color: var(--_root-primary-400, #c678dd);
 }
+
+/* Slidev's built-ins in the theme's colors (code is dark in both modes, so
+   these use the dark palette).
+   Twoslash (```ts twoslash): its popups live outside the slides, under
+   <body>; Slidev sets their variables on :root, these come later and weigh
+   more. */
+:root:root {
+  --twoslash-popup-bg: var(--code-title-bg, #1b1e23);
+  --twoslash-popup-color: var(--_root-text-primary, #abb2bf);
+  --twoslash-popup-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --twoslash-border-color: var(--_root-border-default, rgba(171, 178, 191, 0.15));
+  --twoslash-underline-color: rgba(171, 178, 191, 0.45);
+  --twoslash-cursor-color: var(--_root-primary-400, #c678dd);
+  --twoslash-matched-color: var(--_root-primary-400, #c678dd);
+  --twoslash-error-color: #e06c75;
+  --twoslash-error-bg: rgba(224, 108, 117, 0.12);
+  --twoslash-warn-color: #e5c07b;
+  --twoslash-warn-bg: rgba(229, 192, 123, 0.12);
+  --twoslash-tag-color: #61afef;
+  --twoslash-tag-warn-color: #e5c07b;
+  --twoslash-tag-annotate-color: #98c379;
+  --twoslash-highlighted-bg: rgba(198, 120, 221, 0.14);
+  --twoslash-highlighted-border: rgba(198, 120, 221, 0.4);
+}
+.twoslash-popup-container {
+  border-radius: 8px;
+  font-family: var(--font-mono);
+}
+
+/* Monaco runner output ({monaco-run}): the code block's dark, the theme's
+   log colors */
+:is(.slidev-layout, .slidev-page) .slidev-runner-output {
+  background: var(--bg-code);
+  color: var(--_root-text-primary, #abb2bf);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  font-family: var(--font-mono);
+}
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.LOG { color: #61afef; }
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.WRN { color: #e5c07b; }
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.ERR,
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .text-red-500 { color: #e06c75; }
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.DBG { color: var(--_root-text-muted, #858c98); }

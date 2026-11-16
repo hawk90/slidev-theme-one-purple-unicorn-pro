@@ -1403,6 +1403,19 @@ The lines stay in the block (folded ones hidden), so `{5|7}` still counts from `
 
 ---
 
+# Slidev's Built-ins, Themed
+
+<span v-mark="1">v-mark</span> draws in the accent; its colors take the theme's palette: <span v-mark.circle.red="2">red</span>, <span v-mark.highlight.yellow="3">yellow</span>, <span v-mark.box.green="4">green</span>, <span v-mark.underline.blue="5">blue</span>.
+
+```ts twoslash
+const sizes = [256, 512, 1024].map(n => n * 4)
+//    ^?
+```
+
+Twoslash popups and `{monaco-run}` output use the code colors; a `v-mark` color: `--v-mark-color`.
+
+---
+
 # Snippets from Source Files
 
 `<<< @/code/reduce.cu[/for \(int k/,/^    }/] {2}` takes lines from a real file by content; `[17-]` by number. The link under each opens those lines in the repository.

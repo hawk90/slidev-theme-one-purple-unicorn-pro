@@ -31,6 +31,8 @@
   leaves one word alone: **line breaks in headings can move**), CJK opening
   punctuation starts flush, `hangul` / `hangul-consonant` / `circled` list counters,
   and `<span class="bilingual">` for a title in two languages.
+- **Slidev's built-ins in the theme's colors** (#140): `v-mark` (accent by default,
+  palette colors, translucent highlights), Twoslash popups, `{monaco-run}` output.
 
 ### Fixes
 
