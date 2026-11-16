@@ -29,6 +29,8 @@
   click, captions), `<StackDiagram>` and `<DrawOn>` (SVG strokes drawn on arrival).
 - **Tech-talk story pieces** (#156): `<ErrorSpotlight>`, `<BeforeAfter>`, `<Benchmark>`,
   `<GithubCard>`, `<Lesson>`, `<ProsCons>` and `.verdict-table` cells.
+- **Lightbox and link preview** (#132): `.lightbox` images (or all, with `lightbox: true`)
+  open full screen; `.preview` links open their page in a frame; Esc closes.
 
 ## Unreleased (4.2.0)
 

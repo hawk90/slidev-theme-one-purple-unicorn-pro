@@ -67,6 +67,7 @@ import { watchSlideArrival } from './utils/slide-arrival'
 import { watchStaggerClicks } from './utils/stagger'
 import { watchCodeMorph } from './utils/code-morph'
 import { playgroundLangs, watchPlaygrounds } from './utils/playground'
+import { watchLightbox } from './utils/lightbox'
 import { fitSlide, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
@@ -89,6 +90,7 @@ let stopArrival = () => {}
 let stopStagger = () => {}
 let stopMorph = () => {}
 let stopPlayground = () => {}
+let stopLightbox = () => {}
 // paceBar: true (headmatter) ticks the clock the pace marker reads
 const now = ref(Date.now())
 let paceTimer: ReturnType<typeof setInterval> | undefined
@@ -106,6 +108,9 @@ onMounted(() => {
   const ownPlayground = (no: number) => no === 1 ? undefined : slides.value[no - 1]?.meta?.slide?.frontmatter?.playground
   if (!isPrintMode.value && !isPresenter.value && (headmatter.playground !== undefined || slides.value.some((_, i) => ownPlayground(i + 1) !== undefined)))
     stopPlayground = watchPlaygrounds(no => playgroundLangs(ownPlayground(no) ?? headmatter.playground))
+  // lightbox: true opens any image full screen; `.lightbox` images and
+  // `.preview` links always do (utils/lightbox.ts)
+  if (!isPrintMode.value) stopLightbox = watchLightbox(isOn(headmatter.lightbox))
   if (!isPrintMode.value && isOn(headmatter.paceBar)) paceTimer = setInterval(() => { now.value = Date.now() }, 1000)
   // autoAdvance (headmatter, a slide's own overrides): the play view steps
   // itself; autoAdvanceLoop: true starts over; input pauses it for
@@ -118,7 +123,7 @@ onMounted(() => {
   }
 })
 let stopAdvance = () => {}
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); clearInterval(paceTimer); stopAdvance() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); stopLightbox(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

@@ -812,9 +812,9 @@ Cards, Alerts, Gradients, Buttons
 
 # Stretch
 
-`.stretch` fills the height left on the slide:
+`.stretch` fills the height left on the slide. Click the picture: `.lightbox` opens it full screen (`lightbox: true` in the headmatter does it for every image), and a <a class="preview" href="https://sli.dev">`.preview` link</a> opens its page in a frame. Esc closes.
 
-<img class="stretch rounded-lg" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board">
+<img class="stretch rounded-lg lightbox" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board">
 
 ---
 
