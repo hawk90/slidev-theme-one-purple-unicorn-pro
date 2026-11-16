@@ -818,6 +818,23 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Device Frames
+
+<div class="flex items-center gap-10 mt-2">
+<div class="flex-1">
+
+<Browser url="https://sli.dev/guide/" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200" alt="Code on a screen" height="18rem" />
+
+</div>
+
+<Phone src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600" alt="A laptop" width="11rem" />
+
+</div>
+
+`<Browser url src iframe height>`: a window with an address bar (`iframe` loads `url` live). `<Phone src url width>`: a phone with a camera island. Both take any content in their slot.
+
+---
+
 # Cards
 
 <div class="card">
