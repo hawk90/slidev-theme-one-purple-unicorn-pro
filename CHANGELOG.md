@@ -14,6 +14,8 @@
   published Sheet chart beside it; exports show the code and link.
 - **Image walkthrough** (#159): `<ImageTour>` (callouts, masks or zoom, one spot per
   click), `<ImageCompare>` (a before/after slider) and `<PanZoom>`.
+- **`<Transcript>`** (#157): an agent session, one turn per click, scrolling to the newest
+  with an "N above" count.
 
 ## Unreleased (4.3.0)
 

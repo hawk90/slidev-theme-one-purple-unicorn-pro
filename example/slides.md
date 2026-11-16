@@ -1111,6 +1111,29 @@ layout: center
 
 ---
 
+# Agent Transcript
+
+<div class="grid grid-cols-[3fr_2fr] gap-6 items-start">
+
+<Transcript height="21rem" :turns="[
+  { role: 'user', text: 'Why is `reduce.cu` slow on large inputs?' },
+  { role: 'agent', text: 'Let me profile it first.' },
+  { role: 'tool', name: 'nsys', text: 'reduce  12.8 ms  dram 92%  sm 18%' },
+  { role: 'agent', text: 'It is **memory-bound**: DRAM at 92%, SMs idle. The loads are strided.' },
+  { role: 'user', text: 'Fix it?' },
+  { role: 'tool', name: 'edit', text: 'reduce.cu: s[tid] = x[blockIdx.x * 256 + tid];' },
+  { role: 'agent', text: 'Coalesced now: **3.2 ms**, 4× faster.' },
+]" />
+
+<div class="text-sm">
+
+`<Transcript turns start height>`: one turn per click (`user`, `agent`, `tool`, `system`), in a window that scrolls to the newest; the badge counts the turns above. Text takes `` `code` `` and `**bold**`.
+
+</div>
+</div>
+
+---
+
 # Cards
 
 <div class="card">
