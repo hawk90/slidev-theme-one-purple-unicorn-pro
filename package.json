@@ -48,7 +48,9 @@
     "LICENSE",
     "CHANGELOG.md",
     "bin/**/*",
-    "layouts.json"
+    "layouts.json",
+    "skills/**/*",
+    "llms.txt"
   ],
   "repository": {
     "type": "git",

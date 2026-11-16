@@ -326,6 +326,16 @@ footer: true                  # show them at the bottom left (off by default)
 - **Footer**: `footer: true` shows title · author · event · date and the logo (those that are set); a list picks them in its order (`logo` and `affiliation` too). The page number stays at the bottom right, and a long line ends in "…" before it. The line takes about 3rem at the bottom of the slide: the column layouts' `bottom` slot and a `<Footnote>` move up above it, but ordinary content does not, so leave that room on a full slide (or turn the footer off there). Like the page number, it is hidden on title slides and section dividers. It is also hidden on media layouts (`image`, `iframe`, `full-image`, `full-split`), whose picture or page reaches the bottom edge, unless the slide sets its own `footer`.
 - A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true` or a list shows it, so a slide can have a footer even when the deck has none. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
 
+## For AI Agents
+
+The theme ships an authoring skill: how to start a deck, pick a layout and a component, the rules that keep decks right, and how to check one, with a full prop reference generated from the code ([`skills/one-purple-unicorn/`](skills/one-purple-unicorn/SKILL.md)). Install it in Claude Code:
+
+```
+/plugin install one-purple-unicorn --marketplace hawk90/slidev-theme-one-purple-unicorn-pro
+```
+
+or with the skills CLI: `npx skills add hawk90/slidev-theme-one-purple-unicorn-pro`. The same guide and reference are in the package as [`llms.txt`](llms.txt) for any other tool.
+
 ## Lint a Deck
 
 `layouts.json` (in the package) lists every layout and component with its props: type, default, whether it's required, and what it does. It's generated from the components (`npm run manifest`; `npm run check:manifest` fails when it's stale). Tools and agents that write decks can read it, and the lint checks a deck against it:

@@ -1,0 +1,12 @@
+{
+  "name": "one-purple-unicorn",
+  "owner": { "name": "hawk90" },
+  "description": "The One Purple Unicorn Pro Slidev theme's authoring skill",
+  "plugins": [
+    {
+      "name": "one-purple-unicorn",
+      "source": "./",
+      "description": "Write Slidev decks with the One Purple Unicorn Pro theme: layouts, headmatter options, components and the deck lint"
+    }
+  ]
+}

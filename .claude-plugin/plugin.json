@@ -1,0 +1,8 @@
+{
+  "name": "one-purple-unicorn",
+  "description": "Write Slidev decks with the One Purple Unicorn Pro theme: layouts, headmatter options, components and the deck lint",
+  "author": { "name": "hawk90" },
+  "repository": "https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro",
+  "license": "MIT",
+  "skills": "./skills/"
+}

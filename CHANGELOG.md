@@ -27,6 +27,9 @@
   props, generated from the code (`npm run manifest`, `check:manifest`), and
   `npx one-purple-unicorn-lint slides.md`: unknown layouts, missing required props,
   near-miss keys and attributes, unknown components.
+- **An authoring skill for agents** (#151): `skills/one-purple-unicorn/` (a guide, and a prop
+  reference generated from the code), installable as a Claude Code plugin or with
+  `npx skills add`; the same as `llms.txt` in the package (#143, the theme half).
 
 ### Fixes
 
