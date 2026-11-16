@@ -1867,6 +1867,22 @@ Starts when the slide is shown, or with `:auto-start="false"` on ▶. Click the 
 ```
 
 ---
+layout: exercise
+exercise: 3
+time: 15min
+method: In pairs. Start from `reduce.cu`; change one thing at a time and time it with `nsys`.
+expected: About **4×** over the naive kernel, and fewer than 1% bank conflicts.
+---
+
+# Make the Reduction Coalesced
+
+1. Load two elements per thread in the first step
+2. Replace the modulo with a sequential-addressing loop
+3. Unroll the last warp
+
+`layout: exercise` with `exercise`, `time`, `method` and `expected` in the frontmatter; the countdown waits for its start button (`countdown: false` drops it).
+
+---
 
 # QR Code
 

@@ -53,6 +53,11 @@ describe('richText', () => {
   it('\\$ is a literal dollar', () => assert.equal(richText('\\$5 and \\$6'), '$5 and $6'))
   it('lone $ stays text', () => assert.equal(richText('$5'), '$5'))
   it('null / numbers', () => { assert.equal(richText(null), ''); assert.equal(richText(3), '3') })
+  it('`code` and **bold**; nothing inside code', () => {
+    assert.equal(richText('run `nsys` **twice**'), 'run <code>nsys</code> <strong>twice</strong>')
+    assert.equal(richText('`a^2 **b** <c>`'), '<code>a^2 **b** &lt;c&gt;</code>')
+    assert.equal(richText('a*b and 2**3'), 'a*b and 2**3')
+  })
 })
 
 describe('print-canvas parsing', () => {

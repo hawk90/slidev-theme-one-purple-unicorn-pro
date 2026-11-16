@@ -67,6 +67,7 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 |---|---|---|
 | `cover`, `intro`, `section`, `end` | Title slides | `padding`, `contentMaxWidth` (`intro`: also `align`, default `left`; `cover`: the talk's details, see [Talk details](#talk-details-cover-and-footer); `end`: `questions: true` adds a QR code to the deck (`qr:` another URL, or `false`; `qrCaption`) and the `contact` links, the slide's or the headmatter's) |
 | `default` | Content slide (title pinned at the top) | |
+| `exercise` | An exercise or lab: number and time in a tag at the top, the task (the slide's content), and beside it how to work, what to expect and a countdown (it waits for its start button) | `exercise` (a number or a label), `time` (`15min`, `1h`, or minutes), `method`, `expected`, `countdown: false` |
 | `speaker` | About the speaker: the person (avatar or initials, name, role, affiliation, links) beside the slide's text | `speaker:` with `name`, `role`, `affiliation`, `avatar`, `links` (on the slide or in the headmatter; else the deck's `author`) |
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth` (a bare number is a share, `2` → `2fr`; anything else a CSS length), `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
@@ -179,7 +180,7 @@ Code uses Slidev's own syntax; the theme styles it:
 
 A `color` prop (`Stat`, `StoryBox`, `PatternCard` sections, `Timeline` items) takes the theme's names — `primary`, `blue`, `cyan`, `green`, `yellow`, `red`, `gray`, which follow light mode and a `themeConfig` palette — or any CSS color. `<Badge variant>` has the same names. For numbers in text and tables: `.num` (digits of one width) and `.table-num` around a table (columns after the first right-aligned).
 
-Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props supports `$...$` math (KaTeX) and `x^y` superscripts; write `\$` for a literal dollar sign.
+Text in `ComplexityTable`, `PatternCard`, `Timeline` and `StoryBox` props (and the `exercise` layout's `method` / `expected`) supports `$...$` math (KaTeX), `x^y` superscripts, `` `code` `` and `**bold**`; write `\$` for a literal dollar sign.
 
 ### Stage indicator
 

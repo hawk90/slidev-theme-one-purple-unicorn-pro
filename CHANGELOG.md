@@ -21,6 +21,9 @@
   page or any content) and `<Phone>`.
 - **Walls** (#139): `<LogoWall>`, `<TeamGrid>` and `<PhotoWall>`, arranged in even rows by
   count.
+- **Exercise slides** (#161): `layout: exercise` with `exercise`, `time`, `method` and
+  `expected`, and a countdown for the time. Prop text (StoryBox, Timeline, …) also takes
+  `` `code` `` and `**bold**`.
 
 ## Unreleased (4.2.0)
 
