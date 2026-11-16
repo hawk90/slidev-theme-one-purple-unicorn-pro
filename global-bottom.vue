@@ -47,6 +47,17 @@
   <!-- fit: where this layer sits, to find its slide (utils/autofit.ts) -->
   <span v-if="fitOn" class="fit-marker" :data-page="currentPage" :data-reserve="fitReserve" hidden />
 
+  <!-- wip: a draft watermark (exports too) -->
+  <div v-if="wip" class="slide-wip slide-chrome" aria-hidden="true"><span>{{ wip }}</span></div>
+
+  <!-- shift+l / the nav button: the layout guide (never in exports) -->
+  <div v-if="layoutGuide && !isPrintMode" class="layout-guide slide-chrome" aria-hidden="true">
+    <div class="layout-guide-safe" />
+    <div class="layout-guide-cols"><span v-for="i in 12" :key="i" /></div>
+    <div class="layout-guide-center-x" />
+    <div class="layout-guide-center-y" />
+  </div>
+
   <!-- ide: true: file tabs and a status bar (it shows the page) -->
   <IdeChrome v-if="ide" :options="ide" />
 
@@ -73,7 +84,8 @@ import { playgroundLangs, watchPlaygrounds } from './utils/playground'
 import { watchLightbox } from './utils/lightbox'
 import { glossaryEntries, watchGlossary } from './utils/glossary'
 import { watchPrintLinks } from './utils/print-links'
-import { fitSlide, hasAutofitAddon } from './utils/autofit'
+import { layoutGuide, watchMissingAssets, wipLabel } from './utils/authoring'
+import { fitSlide, slideOverflows, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
@@ -101,6 +113,8 @@ let stopLightbox = () => {}
 let stopGlossary = () => {}
 // exports: links print as "text (url)" (utils/print-links.ts)
 let stopPrintLinks = () => {}
+// pictures that fail to load name their path (utils/authoring.ts)
+let missing = { stop: () => {}, sweep: () => {} }
 // paceBar: true (headmatter) ticks the clock the pace marker reads
 const now = ref(Date.now())
 let paceTimer: ReturnType<typeof setInterval> | undefined
@@ -122,6 +136,7 @@ onMounted(() => {
   // `.preview` links always do (utils/lightbox.ts)
   if (!isPrintMode.value) stopLightbox = watchLightbox(isOn(headmatter.lightbox))
   if (isPrintMode.value && !isOff(headmatter.printUrls)) stopPrintLinks = watchPrintLinks()
+  missing = watchMissingAssets()
   // glossary (headmatter, a slide's on top): tooltips on the terms' first use
   const slideGlossary = (no: number) => (no === 1 ? undefined : slides.value[no - 1]?.meta?.slide?.frontmatter?.glossary)
   if (!isPrintMode.value && (headmatter.glossary || slides.value.some((_, i) => slideGlossary(i + 1))))
@@ -138,7 +153,7 @@ onMounted(() => {
   }
 })
 let stopAdvance = () => {}
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); stopLightbox(); stopGlossary(); stopPrintLinks(); clearInterval(paceTimer); stopAdvance() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); stopLightbox(); stopGlossary(); stopPrintLinks(); missing.stop(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide
@@ -284,6 +299,29 @@ async function runFit() {
 watch([currentPage, fitOn], runFit)
 onMounted(runFit)
 
+// dev: a slide whose content runs past its bottom gets a red outline and one
+// warning (slides with `fit` shrink instead; utils/authoring.ts)
+const warned = new Set<number>()
+async function checkOverflow() {
+  if (!import.meta.env.DEV || isPrintMode.value || fitOn.value) return
+  const page = currentPage.value
+  await new Promise(r => setTimeout(r, 900)) // past the transition and the fonts
+  const root = document.querySelector<HTMLElement>(`#slideshow > [data-slidev-no="${page}"] .slidev-layout:not(.slide-bare)`)
+  if (!root || page !== currentPage.value || root.closest('[data-slidev-no]')?.querySelector('.slidev-slide-loading')) return
+  const over = slideOverflows(root)
+  root.toggleAttribute('data-overflow-warning', over)
+  if (over && !warned.has(page)) {
+    warned.add(page)
+    console.warn(`[theme] slide ${page} overflows its bottom: split it, or \`fit: true\``)
+  }
+}
+watch(currentPage, () => { checkOverflow(); setTimeout(() => missing.sweep(), 600) })
+onMounted(checkOverflow)
+
+// wip: true (or a label) on a slide, or in the headmatter for every slide
+const wip = computed(() => wipLabel(
+  isHeadmatterSlide(currentSlideRoute.value?.meta?.slide) ? undefined : frontmatter.value.wip, headmatter.wip))
+
 // confidential (headmatter): the corner ribbon, utils/ribbon.ts
 const ribbon = computed(() => ribbonOf(headmatter.confidential, headmatter.confidentialOn,
   frontmatter.value.confidential, currentLayout.value, isHeadmatterSlide(currentSlideRoute.value?.meta?.slide)))
@@ -301,6 +339,24 @@ const paceMark = computed(() => {
 </script>
 
 <style>
+/* Authoring aids (utils/authoring.ts). Dev: content past the slide's bottom */
+[data-overflow-warning] {
+  outline: 2px dashed var(--one-dark-red);
+  outline-offset: -4px;
+}
+
+/* A picture that didn't load: its path, where it would be */
+img.asset-missing { display: none; }
+.asset-missing-note {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  border: 2px dashed var(--one-dark-red);
+  border-radius: 6px;
+  color: var(--one-dark-red);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
 /* A Footnote sits where the footer line is: move it up while the line shows
    (the footer comes before the slides in the DOM, play and print alike;
    Footnote reads --footnote-bottom) */
@@ -364,6 +420,59 @@ const paceMark = computed(() => {
 </style>
 
 <style scoped>
+/* wip: a draft watermark. Variables: --wip-color */
+.slide-wip {
+  position: absolute;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+.slide-wip span {
+  rotate: -24deg;
+  padding: 0.1em 0.6em;
+  border: 6px solid currentColor;
+  border-radius: 12px;
+  color: color-mix(in srgb, var(--wip-color, var(--one-dark-red)) 22%, transparent);
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* the layout guide: the content's safe area (the layouts' padding), 12
+   columns and the center lines */
+.layout-guide {
+  position: absolute;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  --_guide: rgba(0, 200, 255, 0.55);
+}
+.layout-guide-safe {
+  position: absolute;
+  inset: 70px var(--slide-padding-x, 30px) 20px;
+  border: 1px dashed var(--_guide);
+}
+.layout-guide-cols {
+  position: absolute;
+  inset: 70px var(--slide-padding-x, 30px) 20px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+.layout-guide-cols span { background: rgba(0, 200, 255, 0.07); }
+.layout-guide-center-x,
+.layout-guide-center-y {
+  position: absolute;
+  background: var(--_guide);
+}
+.layout-guide-center-x { left: 50%; top: 0; bottom: 0; width: 1px; }
+.layout-guide-center-y { top: 50%; left: 0; right: 0; height: 1px; }
+
 /* Theme variables: --progress-height, --progress-track, --progress-color,
    --progress-glow, --page-number-size/-color/-right/-bottom */
 .progress-bar {

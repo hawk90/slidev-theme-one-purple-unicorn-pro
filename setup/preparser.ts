@@ -20,6 +20,7 @@ import type { BibEntry } from '../utils/bibtex'
 import { parseBibtex } from '../utils/bibtex'
 import { apply, collect } from '../utils/references'
 import { newStructure, structureSlide } from '../utils/structure'
+import { replaceMissingAssets } from '../utils/missing-assets'
 
 const git = (cwd: string, ...args: string[]) => {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() }
@@ -101,6 +102,18 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
       const numbered = collect(lines, k => bib.has(k))
       if (!numbered.cites.length && !numbered.labels.size && !lines.some(l => /<References\b/.test(l))) return
       apply(lines, numbered, bib, w => console.warn(`[theme] reference: ${w}`))
+    },
+  }, {
+    // Missing local pictures become a placeholder naming the path, instead
+    // of a slide that fails to compile (utils/missing-assets.ts)
+    name: 'one-purple-unicorn:missing-assets',
+    transformRawLines(lines) {
+      const exists = (src: string) => {
+        const rel = decodeURI(src)
+        if (rel.startsWith('/')) return fs.existsSync(path.join(root, 'public', rel)) || fs.existsSync(path.join(root, rel))
+        return fs.existsSync(path.resolve(root, rel))
+      }
+      for (const src of replaceMissingAssets(lines, exists)) console.warn(`[theme] missing asset: ${src} (a placeholder shows on the slide)`)
     },
   }, {
     // Sections, transitions and continued titles (utils/structure.ts), with

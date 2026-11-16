@@ -37,6 +37,27 @@ function overflows(root: HTMLElement, own: HTMLElement[], reserve = 0) {
   return (bottom - box.top) / ratio + padding > root.clientHeight - reserve + 1
 }
 
+/**
+ * Whether a slide's content runs out of the slide (the dev overflow warning):
+ * past its box, not into its bottom padding, since columns, `.stretch` and
+ * scrolling layouts fill the box by design. Each part in the flow is
+ * measured with its own overflow (a column's), so decorations placed
+ * absolutely (a Ghost glyph bleeding off the edge) don't count; boxes inside
+ * that clip aren't looked at: components clip on purpose (a pan-zoom).
+ */
+export function slideOverflows(root: HTMLElement): boolean {
+  // the layouts' columns scroll silently when they run over: that counts
+  for (const col of root.querySelectorAll<HTMLElement>('.grid-col'))
+    if (col.scrollHeight > col.clientHeight + 2) return true
+  const box = root.getBoundingClientRect()
+  const ratio = box.height / root.offsetHeight || 1
+  return parts(root).some((p) => {
+    const top = (p.getBoundingClientRect().top - box.top) / ratio
+    const scrolls = /auto|scroll/.test(getComputedStyle(p).overflowY) // a scrolling part (layout: document) is meant to
+    return top + (scrolls ? p.offsetHeight : Math.max(p.offsetHeight, p.scrollHeight)) > root.clientHeight + 2
+  })
+}
+
 /** The parts to shrink: the layout's children in the flow, not the title */
 function parts(root: HTMLElement): HTMLElement[] {
   return [...root.children].filter((c): c is HTMLElement => {

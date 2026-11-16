@@ -1259,6 +1259,26 @@ ide: false                # off on this slide
 It takes the place of the progress bar, footer and page number.
 
 ---
+wip: Draft
+---
+
+# Authoring Aids
+
+<div class="grid grid-cols-[3fr_2fr] gap-6 items-start">
+<div>
+
+- **Layout guide**: <kbd>shift</kbd>+<kbd>L</kbd> or the grid button in the nav bar shows the safe area, 12 columns and the center lines; never exported
+- **Overflow** (dev): a slide whose content runs past its bottom gets a red dashed outline and a console warning
+- **Missing pictures** show the path they expected, as on the right
+- **`wip: true`** (or a label, here `wip: Draft`) on a slide, or in the headmatter for all of them, marks it a draft, exports included
+
+</div>
+
+<img src="/screenshots/not-made-yet.png" alt="A screenshot still to take">
+
+</div>
+
+---
 
 # Cards
 
@@ -3467,12 +3487,12 @@ rightLabel: Hover & Transition
 |------|-------------|
 | `anim-border` | Rotating gradient border (3 colors) |
 | `anim-shimmer` | Light sweep effect |
-| `anim-glow-*` | Pulsing glow (purple, blue, green, red, cyan, gold, neon) |
+| `anim-glow-*` | Pulsing glow, seven colors |
 | `anim-gradient-text` | Flowing rainbow text |
-| `anim-fade-*` | Entrance animations (in, up, left, right) |
+| `anim-fade-*` | Entrances: in, up, left, right |
 | `anim-pop` | Scale pop entrance |
 | `stagger` | Children in one after another |
-| `dim-prior`, `hl-current`, … | Click-step styles |
+| `dim-prior`, … | Click-step styles |
 | `anim-float` | Gentle floating motion |
 | `anim-cursor` | Terminal blinking cursor |
 

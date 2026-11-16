@@ -7,6 +7,7 @@
 export const RESERVED_KEYS = new Set([
   'space', 'enter', 'escape', 'arrowleft', 'arrowright', 'arrowup', 'arrowdown',
   'left', 'right', 'up', 'down', 'pageup', 'pagedown', 'd', 'o', 'g', 'f', '`',
+  'shift+l', // the theme's layout guide (utils/authoring.ts)
 ])
 
 const MODIFIERS = ['ctrl', 'alt', 'shift', 'meta']

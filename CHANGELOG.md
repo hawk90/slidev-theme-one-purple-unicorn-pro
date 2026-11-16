@@ -6,6 +6,9 @@
 
 - **PDF fallbacks** (#137): links print as "text (url)" in exports, and an iframe shows
   its address as a link, or a `poster:` still.
+- **Authoring aids** (#160): a layout guide on `shift+l` and a nav-bar button, a dev
+  overflow outline and warning, placeholders for missing pictures (no more failed
+  slides), and a `wip:` draft watermark.
 
 ## Unreleased (4.4.0)
 
