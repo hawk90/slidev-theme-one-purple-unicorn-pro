@@ -19,6 +19,10 @@
 - **Editable PPTX** (#147): checked with Slidev 53.1 in both modes; gradient titles export as
   solid editable text (the black copy is gone upstream). The README says what the exporter
   keeps and leaves out, and which fonts to install.
+- **Recommended addons** (#141): a README table of addons checked with the theme in both
+  modes and in exports. Found on the way: slidev-addon-python-runner's output lines got a
+  code-block frame each (fixed); slidev-addon-chapters' `chapter: { title }` now starts a
+  section; `structure: true` stamps `sectionTitle`, not `section` (timing-bar's key).
 
 ### Fixes
 
@@ -50,7 +54,7 @@
 - **Glossary tooltips** (#162): `glossary:` (deck or slide) marks a term's first use with
   a tooltip; Hangul-aware word boundaries, code and links skipped.
 - **Deck structure** (#163): `structure: true` gives section-aware transitions, section
-  metadata on every slide and `continued:` title carry-over.
+  metadata (`sectionTitle`, `sectionNo`) on every slide and `continued:` title carry-over.
 - **Live demos with a fallback** (#164): `<LiveDemo>` (status dot, video toggle, scale and
   crop, a poster in exports) and `<Interactive>` (live in the room, a still in the PDF,
   optionally a dialog).

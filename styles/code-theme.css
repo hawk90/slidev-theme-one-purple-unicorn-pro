@@ -558,3 +558,16 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
 :is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.ERR,
 :is(.slidev-layout, .slidev-page) .slidev-runner-output .text-red-500 { color: #e06c75; }
 :is(.slidev-layout, .slidev-page) .slidev-runner-output .log-type.DBG { color: var(--_root-text-muted, #858c98); }
+/* Runners that print highlighted lines (slidev-addon-python-runner: a
+   pre.shiki per line) get no code-block frame per line, and blank lines
+   no box: the output is one block already */
+:is(.slidev-layout, .slidev-page) .slidev-runner-output pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  background: transparent !important; /* over shiki's inline background */
+}
+:is(.slidev-layout, .slidev-page) .slidev-runner-output .output-line:has(.line:empty) { display: none; }

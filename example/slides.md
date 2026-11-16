@@ -1195,7 +1195,7 @@ The first use on each slide is marked; code, links and titles are left alone.
 `structure: true` in the headmatter reads the deck's sections (`layout: section`, or `chapter:`) at build time:
 
 - **Transitions**: `slide-left` into a new section, `slide-up` within one; a slide's own `transition` wins
-- **Section metadata**: this slide knows it is in **{{ $frontmatter.section }}**: `section` and `sectionNo` in each slide's frontmatter
+- **Section metadata**: this slide knows it is in **{{ $frontmatter.sectionTitle }}**: `sectionTitle` and `sectionNo` in each slide's frontmatter
 - **Continued titles**: the next slide has no title of its own, only `continued: true`
 
 ---

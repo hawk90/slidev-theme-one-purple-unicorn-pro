@@ -16,13 +16,16 @@ describe('structureSlide', () => {
       ['# Coalescing', {}],
       ['# Own', { transition: 'fade' }],
       ['# Next', { chapter: 'Compute' }],
+      ['# Obj', { chapter: { id: 'io', title: 'I/O' }, section: { duration: '5m' } }],
     ])
     assert.deepEqual(r[0].fm, {})
     assert.deepEqual(r[1].fm, { transition: 'slide-up' })
-    assert.deepEqual(r[2].fm, { layout: 'section', section: 'Memory', sectionNo: 1, transition: 'slide-left' })
-    assert.deepEqual(r[3].fm, { section: 'Memory', sectionNo: 1, transition: 'slide-up' })
+    assert.deepEqual(r[2].fm, { layout: 'section', sectionTitle: 'Memory', sectionNo: 1, transition: 'slide-left' })
+    assert.deepEqual(r[3].fm, { sectionTitle: 'Memory', sectionNo: 1, transition: 'slide-up' })
     assert.equal(r[4].fm.transition, 'fade')
-    assert.deepEqual([r[5].fm.section, r[5].fm.sectionNo, r[5].fm.transition], ['Compute', 2, 'slide-left'])
+    assert.deepEqual([r[5].fm.sectionTitle, r[5].fm.sectionNo, r[5].fm.transition], ['Compute', 2, 'slide-left'])
+    // slidev-addon-chapters' object; timing-bar's own `section:` untouched
+    assert.deepEqual([r[6].fm.sectionTitle, r[6].fm.sectionNo, r[6].fm.section], ['I/O', 3, { duration: '5m' }])
   })
   it('a continued slide carries the last title over', () => {
     const r = run([

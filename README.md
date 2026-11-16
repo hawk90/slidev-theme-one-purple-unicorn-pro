@@ -140,7 +140,7 @@ Code uses Slidev's own syntax; the theme styles it:
 - **Authoring aids**: <kbd>shift</kbd>+<kbd>L</kbd> (or the grid button the theme adds to the nav bar) shows a layout guide: the safe area, 12 columns and the center lines, never exported. In dev, a slide whose content runs past its bottom gets a red dashed outline and a console warning (slides with `fit` shrink instead). A local picture that doesn't exist (`![](/shot.png)`, `<img src>`) becomes a placeholder naming its path, with a warning in the terminal, instead of a slide that fails to compile; a layout's `image:` that fails to load does the same in the browser. `wip: true` (or a label: `wip: Draft`) on a slide, or in the headmatter for all of them, puts a draft watermark across it, exports included (`--wip-color`).
 - **PDF fallbacks**: in exports, a link whose text isn't its address prints as "text (url)" (`printUrls: false` in the headmatter turns it off; `.no-print-url` on a link or around it keeps it as is; card-like links and links around pictures are left alone), and an `iframe` layout shows its page's address as a link, or `poster:` (a still) in place of the live page.
 - **IDE chrome**: `ide: true` (or `{ repo, branch, language }`) in the headmatter dresses each slide as a file in an editor: file tabs on top (the slides around this one, within its section; a click opens one; a slide's `file:` names its tab) and a status bar (branch, repository, section, page) in place of the progress bar, footer and page number. `ide: false` on a slide leaves it off there; `ide: true` on a slide shows it there alone (`--ide-bar-bg`, `--ide-tab-bg`).
-- **Deck structure**: `structure: true` in the headmatter reads the sections (`layout: section` or `chapter:`) at build time: `slide-left` into a new section and `slide-up` within one (a slide's own `transition` wins; `structure: { transitions: false }` keeps yours), `section` and `sectionNo` stamped into each slide's frontmatter (`{{ $frontmatter.section }}`; keep one `$` per line, or Markdown reads a pair as math), and `continued: true` (or a suffix, `continued: (계속)`) on a slide without its own title carries the last title over as "Title (cont.)".
+- **Deck structure**: `structure: true` in the headmatter reads the sections (`layout: section` or `chapter:`) at build time: `slide-left` into a new section and `slide-up` within one (a slide's own `transition` wins; `structure: { transitions: false }` keeps yours), `sectionTitle` and `sectionNo` stamped into each slide's frontmatter (`{{ $frontmatter.sectionTitle }}`; keep one `$` per line, or Markdown reads a pair as math), and `continued: true` (or a suffix, `continued: (계속)`) on a slide without its own title carries the last title over as "Title (cont.)".
 - **Glossary**: `glossary: { term: definition }` in the headmatter (the deck's) or on a slide (on top of it) marks each term's first use on a slide with a dotted underline and its definition in a tooltip (hover or keyboard focus). Whole words, any case; a Korean term matches before a particle too (`메모리가`). Code, links and titles are left alone, as is anything in `.no-glossary` (`--glossary-color`).
 - **Lightbox**: a click on an image with class `lightbox` (or any image on the slides, with `lightbox: true` in the headmatter; not logos, avatars or QR codes, nor `.no-lightbox`) opens it full screen; a link with class `preview` (or `data-preview="url"`) opens its page in a frame instead of a new tab. A click, Esc or ✕ closes it, and the keys don't move the slides meanwhile. Not in exports.
 - **Walls** (`LogoWall`, `TeamGrid`, `PhotoWall`) arrange themselves by count: 1–4 in one row, 5–6 in 3 columns, 7–8 in 4, 9 in 3, 10–12 in 4; `columns` sets it.
@@ -325,6 +325,23 @@ footer: true                  # show them at the bottom left (off by default)
 - **Cover**: the first slide shows the details that are set; `coverInfo: false` turns them off there. Another `cover` slide shows them only with `coverInfo: true`, and its own `author` / `authors` / `affiliation` / `event` / `date` / `logo` replace the deck's (a cover with its own people leaves out the deck's `affiliation` unless it sets one).
 - **Footer**: `footer: true` shows title · author · event · date and the logo (those that are set); a list picks them in its order (`logo` and `affiliation` too). The page number stays at the bottom right, and a long line ends in "…" before it. The line takes about 3rem at the bottom of the slide: the column layouts' `bottom` slot and a `<Footnote>` move up above it, but ordinary content does not, so leave that room on a full slide (or turn the footer off there). Like the page number, it is hidden on title slides and section dividers. It is also hidden on media layouts (`image`, `iframe`, `full-image`, `full-split`), whose picture or page reaches the bottom edge, unless the slide sets its own `footer`.
 - A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true` or a list shows it, so a slide can have a footer even when the deck has none. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
+
+## Recommended Addons
+
+Checked with this theme on Slidev 53.1 (November 2026): in dark and light mode, and in a PNG/PDF export.
+
+| Addon | Works | Notes |
+|---|---|---|
+| `slidev-addon-fancy-arrow` | yes, exports too | `color="var(--primary-400)"` matches the theme |
+| `slidev-addon-excalidraw` | yes, exports too | the drawing keeps its own colors |
+| `slidev-addon-graph` (`<SlidevGraph>`) | yes, exports too | give it a height (`class="h-90"`): without one it draws nothing |
+| `slidev-addon-python-runner` | yes | `{monaco-run}` on a `py` block; its output takes the theme's runner style |
+| `slidev-addon-chapters` | yes | its `chapter: { id, title }` starts a section for `stages: auto` and `structure: true` |
+| `slidev-addon-timing-bar` | yes | in the presenter view, next to the theme's nav buttons; its `section:` key is its own (the theme stamps `sectionTitle`) |
+| `slidev-addon-rabbit` | yes | with `?time=<minutes>`; set `rabbit: { slideNum: false }`, the theme shows the page number |
+| `slidev-addon-autofit` | yes | the theme's own `fit` turns itself off when this addon is in `addons` |
+
+**Avoid** (from the October 2026 survey): `slidev-addon-qrcode` and `@katzumi/slidev-addon-qrcode` replace the theme's `<QRCode>`; `quantide-layout`, `quantide-layout-xhs`, `@insight-services-apac/*` and `@mudssky/slidev-addon-default` override the theme's layouts (the last root wins).
 
 ## Customization
 
