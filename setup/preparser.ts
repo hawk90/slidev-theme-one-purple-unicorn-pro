@@ -21,6 +21,7 @@ import { parseBibtex } from '../utils/bibtex'
 import { apply, collect } from '../utils/references'
 import { newStructure, structureSlide } from '../utils/structure'
 import { replaceMissingAssets } from '../utils/missing-assets'
+import { layoutNeedsAlt, picturesWithoutAlt } from '../utils/alt-lint'
 
 const git = (cwd: string, ...args: string[]) => {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() }
@@ -48,6 +49,7 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
     return repos.get(dir)!
   }
   let structure = newStructure()
+  let altSlide = 0
 
   return [{
     name: 'one-purple-unicorn:snippet-ranges',
@@ -114,6 +116,18 @@ export default definePreparserSetup(({ filepath, headmatter }) => {
         return fs.existsSync(path.resolve(root, rel))
       }
       for (const src of replaceMissingAssets(lines, exists)) console.warn(`[theme] missing asset: ${src} (a placeholder shows on the slide)`)
+    },
+  }, {
+    // Pictures without alt text: a warning each (utils/alt-lint.ts);
+    // `altLint: false` turns it off
+    name: 'one-purple-unicorn:alt-lint',
+    transformRawLines() { altSlide = 0 },
+    transformSlide(content, frontmatter) {
+      altSlide++
+      if (headmatter.altLint === false || headmatter.altLint === 'false') return undefined
+      for (const src of picturesWithoutAlt(content)) console.warn(`[theme] slide ${altSlide}: ${src} has no alt text (alt="" if it is decoration)`)
+      if (layoutNeedsAlt(frontmatter)) console.warn(`[theme] slide ${altSlide}: layout ${frontmatter.layout} has no \`alt:\` for its picture (alt: "" if it is decoration)`)
+      return undefined
     },
   }, {
     // Sections, transitions and continued titles (utils/structure.ts), with

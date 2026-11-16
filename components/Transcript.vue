@@ -144,7 +144,7 @@ onMounted(follow)
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); /* AA on the bubbles */
 }
 
 .print-mode .tr-turn { animation: none; }

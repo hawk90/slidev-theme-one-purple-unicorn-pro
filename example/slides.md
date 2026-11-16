@@ -455,6 +455,7 @@ __global__ void saxpy(int n, float a, float *x, float *y) {
 layout: image
 side: left
 image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800
+alt: Code on a laptop screen
 ---
 
 # Image Left
@@ -475,6 +476,7 @@ image: https://example.com/photo.jpg
 layout: image
 side: right
 image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800
+alt: A laptop showing code, next to a plant
 ---
 
 # Image Right
@@ -493,6 +495,7 @@ side: left
 image: /demo-loop.mp4
 poster: /demo-loop.jpg
 imageWidth: 2/5
+alt: A looping gradient animation
 ---
 
 # Video and Width
@@ -512,6 +515,7 @@ image:
   - /demo-loop.mp4
   - https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800
 poster: /demo-loop.jpg
+alt: Code on a laptop screen
 ---
 
 # Tiles
@@ -623,6 +627,7 @@ Useful when you have a lot of content that needs to breathe, or when the default
 ---
 layout: full-image
 image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200
+alt: The Earth at night, laced with network lines
 ---
 
 # Full Image Background
@@ -635,6 +640,7 @@ The overlay darkens the image for readability.
 layout: full-image
 image: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
 overlay: "linear-gradient(135deg, rgba(26,27,46,0.9) 0%, rgba(45,27,78,0.7) 100%)"
+alt: A circuit board, close up
 ---
 
 # Gradient Overlay
@@ -650,6 +656,7 @@ layout: full-split
 image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200
 panelWidth: 45%
 panelSide: left
+alt: Code on a laptop screen
 ---
 
 # Split Panel (Left)
@@ -666,6 +673,7 @@ image: https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200
 panelWidth: 40%
 panelSide: right
 panelColor: "rgba(255, 255, 255, 0.92)"
+alt: A laptop showing code, next to a plant
 ---
 
 <h1 style="color: #1a1b2e;">White Panel (Right)</h1>

@@ -96,7 +96,7 @@ const box = (b: Block) => ({
 .bd-dimmed { opacity: 0.45; }
 
 .bd-label { font-weight: 700; font-size: 0.85rem; }
-.bd-sub { font-size: 0.65rem; color: var(--text-secondary); }
+.bd-sub { font-size: 0.65rem; color: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); } /* AA on the tinted blocks */
 
 /* The frame glides from block to block */
 .bd-frame {

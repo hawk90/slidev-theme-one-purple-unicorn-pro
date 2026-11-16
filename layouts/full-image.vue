@@ -2,6 +2,7 @@
   <div class="slidev-layout full-image slide-dark slide-bare">
     <FullBleed
       :image="image"
+      :alt="alt"
       :stack="imageStack"
       :poster="poster"
       :background-size="backgroundSize"
@@ -25,6 +26,8 @@ defineProps({
   imageStack: { type: String, default: 'row' },
   // A video's poster: before it plays, and in exports
   poster: { type: String, default: '' },
+  // What the picture shows, for screen readers (empty: decoration)
+  alt: { type: String, default: '' },
   backgroundSize: { type: String, default: 'cover' },
   overlay: { type: String, default: 'rgba(0, 0, 0, 0.55)' },
   position: { type: String, default: 'center' },

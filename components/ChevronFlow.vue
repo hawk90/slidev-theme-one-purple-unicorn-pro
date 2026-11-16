@@ -64,6 +64,9 @@ const items = computed(() => props.steps.map(s => (typeof s === 'string' ? { tit
 
 .chevron-done { background: color-mix(in srgb, var(--_chev) 32%, var(--bg-secondary)); }
 .chevron-active { background: var(--_chev); color: #fff; }
+/* AA on the vivid dark-mode fills (white on purple is 2.9:1): dark text */
+:global(:is(.dark, .slide-dark) .chevron-active) { color: #14151c; }
+.chevron-active .chevron-desc { opacity: 1; }
 
 .chevron-title { font-weight: 700; font-size: 0.9rem; }
 .chevron-desc { font-size: 0.7rem; opacity: 0.8; }

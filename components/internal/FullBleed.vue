@@ -1,6 +1,15 @@
 <template>
   <div class="full-bleed">
-    <MediaFill class="full-bleed-media" :src="image" :size="backgroundSize" :position="backgroundPosition" :stack="stack" :poster="poster" />
+    <MediaFill
+      class="full-bleed-media"
+      :src="image"
+      :size="backgroundSize"
+      :position="backgroundPosition"
+      :stack="stack"
+      :poster="poster"
+      :role="alt ? 'img' : 'presentation'"
+      :aria-label="alt || undefined"
+    />
     <div v-if="overlay" class="full-bleed-overlay" :style="{ background: overlay }" />
     <div v-if="panel" class="full-bleed-panel" :style="panelStyle">
       <div class="full-bleed-panel-content">
@@ -18,6 +27,8 @@ import { computed } from 'vue'
 import MediaFill from './MediaFill.vue'
 
 const props = defineProps({
+  // Text for screen readers (empty: the picture is decoration)
+  alt: { type: String, default: '' },
   // An image or a video, or a list of up to three (tiled)
   image: { type: [String, Array], default: '' },
   stack: { type: String, default: 'row' },

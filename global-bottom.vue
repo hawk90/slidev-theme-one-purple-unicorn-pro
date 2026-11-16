@@ -47,6 +47,9 @@
   <!-- fit: where this layer sits, to find its slide (utils/autofit.ts) -->
   <span v-if="fitOn" class="fit-marker" :data-page="currentPage" :data-reserve="fitReserve" hidden />
 
+  <!-- screen readers hear the slide change (not in exports) -->
+  <div v-if="!isPrintMode" class="sr-only" aria-live="polite" aria-atomic="true">{{ announcement }}</div>
+
   <!-- wip: a draft watermark (exports too) -->
   <div v-if="wip" class="slide-wip slide-chrome" aria-hidden="true"><span>{{ wip }}</span></div>
 
@@ -85,6 +88,7 @@ import { watchLightbox } from './utils/lightbox'
 import { glossaryEntries, watchGlossary } from './utils/glossary'
 import { watchPrintLinks } from './utils/print-links'
 import { layoutGuide, watchMissingAssets, wipLabel } from './utils/authoring'
+import { highContrast, slideAnnouncement } from './utils/a11y'
 import { fitSlide, slideOverflows, hasAutofitAddon } from './utils/autofit'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
@@ -317,6 +321,22 @@ async function checkOverflow() {
 }
 watch(currentPage, () => { checkOverflow(); setTimeout(() => missing.sweep(), 600) })
 onMounted(checkOverflow)
+
+// Screen readers: "Slide 3 of 20: Title" on each change; keyboard focus left
+// inside a slide that is gone moves to the new one (not in exports)
+const announcement = ref('')
+watch(currentPage, async (no) => {
+  announcement.value = slideAnnouncement(no, total.value, currentSlideRoute.value?.meta?.slide?.title)
+  await nextTick()
+  const active = document.activeElement
+  const left = active?.closest?.('[data-slidev-no]')
+  if (left && Number((left as HTMLElement).dataset.slidevNo) !== no) {
+    const page = document.querySelector<HTMLElement>(`#slideshow > [data-slidev-no="${no}"]`)
+    if (page) { page.tabIndex = -1; page.focus({ preventScroll: true }) }
+  }
+})
+// highContrast: true (headmatter) starts it on; shift+h toggles it
+if (isOn(headmatter.highContrast)) highContrast.value = true
 
 // wip: true (or a label) on a slide, or in the headmatter for every slide
 const wip = computed(() => wipLabel(

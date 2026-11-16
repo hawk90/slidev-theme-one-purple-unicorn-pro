@@ -15,3 +15,5 @@
 @import './styles/animations.css';
 @import './styles/content.css';
 @import './styles/print.css';
+/* Order: last; its high-contrast values outweigh light-theme.css by specificity anyway */
+@import './styles/a11y.css';

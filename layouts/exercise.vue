@@ -80,12 +80,11 @@ const showCountdown = computed(() => minutes.value > 0 && !isOff(fm.value.countd
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--_ex);
+  color: color-mix(in srgb, var(--_ex) 80%, var(--text-primary)); /* AA on its tint */
 }
 
 .exercise-time {
   font-weight: 500;
-  opacity: 0.85;
 }
 
 .exercise-body {
@@ -125,6 +124,6 @@ const showCountdown = computed(() => minutes.value > 0 && !isOff(fm.value.countd
 }
 
 .exercise-expected .exercise-box-title {
-  color: var(--_ex);
+  color: color-mix(in srgb, var(--_ex) 80%, var(--text-primary)); /* AA on its tint */
 }
 </style>

@@ -9,6 +9,13 @@
 - **Authoring aids** (#160): a layout guide on `shift+l` and a nav-bar button, a dev
   overflow outline and warning, placeholders for missing pictures (no more failed
   slides), and a `wip:` draft watermark.
+- **Accessibility** (#124): a high-contrast mode (`shift+h`, a nav button, `highContrast:`),
+  slide announcements for screen readers and focus kept on the current slide, `alt:` on
+  every image layout with a missing-alt lint, and `npm run check:contrast` (WCAG AA,
+  both modes). It found and fixed: white on the vivid active step of ChevronFlow and
+  StackDiagram in dark mode (2.9:1), Pyramid labels (2.2–4.3:1), muted notes on tinted
+  boxes (BlockDiagram, Transcript), Stat's red and GithubCard's labels on dark cards,
+  and the exercise header on its tint.
 
 ### Fixes
 

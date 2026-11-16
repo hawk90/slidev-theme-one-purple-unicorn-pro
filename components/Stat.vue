@@ -118,5 +118,7 @@ onUnmounted(() => cancelAnimationFrame(frame))
 
 .stat-good { color: var(--one-dark-green); }
 .stat-bad { color: var(--one-dark-red); }
+/* a little lighter on the dark card: AA */
+:global(:is(.dark, .slide-dark) .stat-bad) { color: color-mix(in srgb, var(--one-dark-red) 82%, #fff); }
 .stat-flat { color: var(--text-secondary); }
 </style>

@@ -53,11 +53,12 @@ const items = computed(() => props.levels.map(l => (typeof l === 'string' ? { ti
   display: grid;
   place-items: center;
   clip-path: polygon(calc(50% - var(--_top)) 0, calc(50% + var(--_top)) 0, calc(50% + var(--_bottom)) 100%, calc(50% - var(--_bottom)) 100%);
-  background: color-mix(in srgb, var(--_lvl, var(--pyramid-color, var(--primary-400))) calc(85% - var(--_i) * 12%), var(--bg-secondary));
-  color: #fff;
+  /* soft fills under the theme's text: AA in both modes (white on the
+     paler levels was 2.2-4.3:1) */
+  background: color-mix(in srgb, var(--_lvl, var(--pyramid-color, var(--primary-400))) calc(28% - var(--_i) * 3%), var(--bg-secondary));
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 0.8rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 /* the top is a point: its label goes below the middle */

@@ -2,6 +2,7 @@ import { useNav } from '@slidev/client'
 import { defineShortcutsSetup } from '@slidev/types'
 import { slideHotkeys } from '../utils/hotkeys'
 import { toggleLayoutGuide } from '../utils/authoring'
+import { toggleHighContrast } from '../utils/a11y'
 
 // `hotkey: q` on a slide: that key jumps to it (agenda, Q&A, appendix).
 // Slidev's own keys are kept; a clash, a repeat or a non-key is reported in
@@ -16,6 +17,8 @@ export default defineShortcutsSetup((nav, base) => {
     ...base,
     // shift+l: the layout guide (utils/authoring.ts)
     { name: 'theme-layout-guide', key: 'shift+l', fn: toggleLayoutGuide },
+    // shift+h: high contrast, for a washed-out projector (utils/a11y.ts)
+    { name: 'theme-high-contrast', key: 'shift+h', fn: toggleHighContrast },
     ...keys.map(({ key, no }) => ({ name: `theme-hotkey-${key}`, key, fn: () => nav.go(no) })),
   ]
 })

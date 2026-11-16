@@ -88,6 +88,8 @@ const stateIcon = computed(() => ({ open: '●', closed: '✓', merged: '⤴', d
   border: 1px solid color-mix(in srgb, var(--primary-400) 45%, transparent);
   color: var(--primary-400);
 }
+/* a little lighter on the dark card: AA */
+:global(:is(.dark, .slide-dark) .gh-label) { color: color-mix(in srgb, var(--primary-400) 82%, #fff); }
 
 .gh-author { margin-left: auto; color: var(--text-secondary); }
 </style>

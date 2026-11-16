@@ -2,6 +2,7 @@
   <div class="slidev-layout full-split slide-dark slide-bare">
     <FullBleed
       :image="image"
+      :alt="alt"
       :stack="imageStack"
       :poster="poster"
       :background-size="backgroundSize"
@@ -28,5 +29,7 @@ defineProps({
   panelWidth: { type: String, default: undefined },
   panelSide: { type: String, default: undefined },
   panelColor: { type: String, default: undefined },
+  // What the picture shows, for screen readers (empty: decoration)
+  alt: { type: String, default: '' },
 })
 </script>

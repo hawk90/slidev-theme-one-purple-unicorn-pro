@@ -63,7 +63,9 @@ const activeIndex = computed(() => {
 }
 
 .sd-active { background: var(--_c); color: #fff; }
-.sd-active .sd-note { color: rgba(255, 255, 255, 0.85); }
+.sd-active .sd-note { color: inherit; }
+/* AA on the vivid dark-mode fills (white on purple is 2.9:1): dark text */
+:global(:is(.dark, .slide-dark) .sd-active) { color: #14151c; }
 .sd-dimmed { opacity: 0.5; }
 
 .sd-label { font-weight: 700; font-size: 0.85rem; font-family: var(--font-mono); }

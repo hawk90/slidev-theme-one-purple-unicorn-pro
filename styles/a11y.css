@@ -1,0 +1,43 @@
+/* ========== Accessibility (utils/a11y.ts) ========== */
+
+/* High contrast, for washed-out projectors: `highContrast: true` in the
+   headmatter, or shift+h / the nav bar's button while presenting. Text goes
+   to full white (dark) or black (light), secondary and muted text close to
+   it, and borders get stronger. The dark values sit on the root, so dark layouts
+   in a light deck (which take the root's copies) get them too. */
+html.high-contrast {
+  --text-primary: #ffffff;
+  --text-bright: #ffffff;
+  --text-secondary: #e6e8ec;
+  --text-muted: #cfd3da;
+  --border-default: rgba(255, 255, 255, 0.45);
+}
+
+/* light text rules read the --light-* values directly (light-theme.css) */
+html.high-contrast:not(.dark) {
+  --light-text-primary: #000000;
+  --light-text-secondary: #1f2329;
+  --light-text-muted: #2f3640;
+  --light-border: rgba(0, 0, 0, 0.5);
+}
+
+html.high-contrast:not(.dark) body {
+  --text-primary: #000000;
+  --text-bright: #000000;
+  --text-secondary: #1f2329;
+  --text-muted: #2f3640;
+  --border-default: rgba(0, 0, 0, 0.5);
+}
+
+/* Screen readers only: the slide announcements (global-bottom.vue) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

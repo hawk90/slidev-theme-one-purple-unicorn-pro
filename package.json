@@ -71,6 +71,7 @@
     "shiki": "^4.4.3"
   },
   "scripts": {
+    "check:contrast": "node scripts/check-contrast.mjs",
     "check:decks": "node scripts/check-decks.mjs",
     "check:pack": "node scripts/check-pack.mjs",
     "check:slidev": "node scripts/check-slidev-internals.mjs",
