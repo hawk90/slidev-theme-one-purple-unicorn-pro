@@ -16,6 +16,35 @@
 /* ============================================
    Typography
    ============================================ */
+/* Headings break into lines of even length (a two-line title doesn't leave
+   one word alone, which Korean titles under keep-all often did); the
+   opening full-width punctuation of CJK text starts flush */
+:where(.slidev-layout, .slidev-page) :is(h1, h2, h3, h4) {
+  text-wrap: balance;
+}
+:where(.slidev-layout, .slidev-page) {
+  text-spacing-trim: trim-start;
+}
+
+/* A title in two languages: `# Memory Hierarchy <span class="bilingual">메모리
+   계층</span>`. The second stays in one piece, on the same line when there
+   is room, smaller and quieter, after a thin separator */
+:where(.slidev-layout, .slidev-page) .bilingual {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 0.35em;
+  font-size: 0.62em;
+  font-weight: 500;
+  vertical-align: 0.12em;
+  color: var(--text-secondary);
+  -webkit-text-fill-color: currentColor; /* not the heading's gradient fill */
+  background: none;
+}
+:where(.slidev-layout, .slidev-page) .bilingual::before {
+  content: '·';
+  margin-right: 0.35em;
+  opacity: 0.6;
+}
 /* Element rules apply in slides only (not Slidev's UI or presenter notes):
    the layout root, or the slide page for `layout: none` and custom layouts */
 :where(.slidev-layout, .slidev-page) h1 {
@@ -140,6 +169,18 @@
 :where(.slidev-layout, .slidev-page) li::marker {
   color: var(--primary-500);
 }
+
+/* Korean (and other) list counters: on the list, or on a wrapper around a
+   Markdown list. hangul 가 나 다, hangul-consonant ㄱ ㄴ ㄷ, circled ① ② ③ */
+@counter-style circled {
+  system: fixed;
+  symbols: '①' '②' '③' '④' '⑤' '⑥' '⑦' '⑧' '⑨' '⑩' '⑪' '⑫' '⑬' '⑭' '⑮' '⑯' '⑰' '⑱' '⑲' '⑳';
+  suffix: ' ';
+  fallback: decimal;
+}
+:where(.slidev-layout, .slidev-page) :is(ol.hangul, .hangul ol) { list-style-type: hangul; }
+:where(.slidev-layout, .slidev-page) :is(ol.hangul-consonant, .hangul-consonant ol) { list-style-type: hangul-consonant; }
+:where(.slidev-layout, .slidev-page) :is(ol.circled, .circled ol) { list-style-type: circled; }
 
 /* Checkbox list items — hide bullet, add spacing */
 :where(.slidev-layout, .slidev-page) li:has(> input[type="checkbox"]) {

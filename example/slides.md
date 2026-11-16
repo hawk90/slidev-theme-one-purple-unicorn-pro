@@ -145,6 +145,42 @@ f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x} \, d\xi
 $$
 
 ---
+
+# 메모리 계층 구조를 이해하면 커널이 빨라집니다 <span class="bilingual">Memory Hierarchy</span>
+
+한국어 문장은 단어 중간에서 끊기지 않고(`keep-all`), 제목은 줄 길이를 고르게 나눠서 한 단어만 다음 줄로 넘어가지 않아요. 두 언어 제목은 `<span class="bilingual">`로 붙여 써요.
+
+<div class="grid grid-cols-3 gap-6 mt-4">
+<div class="hangul">
+
+**`hangul`**
+
+1. 전역 메모리
+2. 공유 메모리
+3. 레지스터
+
+</div>
+<div class="hangul-consonant">
+
+**`hangul-consonant`**
+
+1. 측정
+2. 변경
+3. 재측정
+
+</div>
+<div class="circled">
+
+**`circled`**
+
+1. Load
+2. Sync
+3. Compute
+
+</div>
+</div>
+
+---
 layout: section
 ---
 

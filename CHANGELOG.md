@@ -27,6 +27,10 @@
   or slide) puts a link on code blocks that opens them in Compiler Explorer.
 - **Shrink to fit** (#129): `fit: true` (slide or deck) shrinks content that would run off
   the slide, to 0.42× at most, and wide display formulas; exports fit each page.
+- **Korean typography** (#150): headings balance their lines (a Korean title no longer
+  leaves one word alone: **line breaks in headings can move**), CJK opening
+  punctuation starts flush, `hangul` / `hangul-consonant` / `circled` list counters,
+  and `<span class="bilingual">` for a title in two languages.
 
 ### Fixes
 

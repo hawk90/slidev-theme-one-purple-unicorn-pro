@@ -5,7 +5,7 @@ A Slidev theme with purple → blue gradients and One Dark colors, built for tec
 ## Features
 
 - **Light & dark modes**: content slides switch palettes; title and emphasis slides stay dark
-- **Korean + English**: Noto Sans KR by default, any font via `fonts:`
+- **Korean + English**: Noto Sans KR by default, any font via `fonts:`; Korean text breaks between words (`keep-all`), headings balance their lines, full-width opening punctuation starts flush; `hangul` / `hangul-consonant` / `circled` list counters (on an `ol` or a wrapper: 가 나 다, ㄱ ㄴ ㄷ, ① ② ③); `<span class="bilingual">English</span>` after a title keeps a second-language title in one piece, smaller
 - **Layouts**: title, columns, image/iframe, quote/statement/fact, full-bleed
 - **Components**: badges, keys, footnotes, link cards, story boxes, pattern cards, complexity tables (with KaTeX), stats, timelines, countdown, QR codes
 - **Effects**: animated borders, shimmer, glow, gradient text, entrance animations, hover effects
