@@ -14,6 +14,14 @@ A Slidev theme with purple → blue gradients and One Dark colors, built for tec
 
 ## Installation
 
+A new deck, with a starter (cover, sections, columns, stats, Q&A) filled in with your title, name and event:
+
+```bash
+npm create one-purple-unicorn my-talk
+```
+
+Or add the theme to a deck you have (the starter is in the package as `starter.md`):
+
 ```bash
 npm install slidev-theme-one-purple-unicorn-pro
 ```

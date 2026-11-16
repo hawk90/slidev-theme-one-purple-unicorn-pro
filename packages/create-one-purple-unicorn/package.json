@@ -1,0 +1,25 @@
+{
+  "name": "create-one-purple-unicorn",
+  "version": "1.0.0",
+  "description": "npm create one-purple-unicorn: a new Slidev deck with the One Purple Unicorn Pro theme",
+  "type": "module",
+  "bin": {
+    "create-one-purple-unicorn": "index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "starter.md"
+  ],
+  "scripts": {
+    "prepack": "cp ../../starter.md starter.md"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hawk90/slidev-theme-one-purple-unicorn-pro.git",
+    "directory": "packages/create-one-purple-unicorn"
+  },
+  "license": "MIT"
+}

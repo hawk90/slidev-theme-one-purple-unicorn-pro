@@ -51,7 +51,8 @@
     "layouts.json",
     "skills/**/*",
     "llms.txt",
-    "vite.config.ts"
+    "vite.config.ts",
+    "starter.md"
   ],
   "repository": {
     "type": "git",

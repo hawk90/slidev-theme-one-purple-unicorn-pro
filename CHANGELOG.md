@@ -32,6 +32,9 @@
   `npx skills add`; the same as `llms.txt` in the package (#143, the theme half).
 - **Handout and llms.txt for published decks** (#143): `slidev build` writes the deck's
   `llms.txt` (titles, text, notes) and a printable `handout.html` into `dist/`.
+- **`npm create one-purple-unicorn`** (#166): a new deck from the theme's `starter.md`, with
+  the title, presenter and event asked for (or given as flags). The scaffolder is its own
+  package, `packages/create-one-purple-unicorn` (published separately).
 
 ### Fixes
 
