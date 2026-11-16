@@ -25,6 +25,8 @@
   `expected`, and a countdown for the time. Prop text (StoryBox, Timeline, …) also takes
   `` `code` `` and `**bold**`.
 - **Infographics** (#169): `<ChevronFlow>`, `<Pyramid>`, `<Cycle>` and `<HexGrid>`.
+- **Diagram vocabulary** (#155): `<BlockDiagram>` (named blocks, a focus frame moving per
+  click, captions), `<StackDiagram>` and `<DrawOn>` (SVG strokes drawn on arrival).
 
 ## Unreleased (4.2.0)
 

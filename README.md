@@ -170,6 +170,9 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<Pyramid>` | `levels` (top first: titles, or `{ title, note, color }`; a note sits beside its level) |
 | `<Cycle>` | `items` (clockwise from the top: titles, or `{ title, color }`), `center`, `size` (20rem): a loop with arrows |
 | `<HexGrid>` | `items` (titles, or `{ title, icon, color }`; three make a triad), `columns`, `size` (9rem): hexagons in a honeycomb |
+| `<BlockDiagram>` | `blocks` (`[{ id, label, sub, x, y, w, h, color }]`, position and size in % of the stage), `steps` (block ids, or `{ block, caption }`: a focus frame glides to the next on each click, counting in the slide's clicks), `height` (16rem) |
+| `<StackDiagram>` | `layers` (top first: titles, or `{ title, note, color }`), `active` (a title or a 1-based place) |
+| `<DrawOn>` | `duration` (1.5s): draws the strokes of the SVG in its slot once the slide has arrived (exports show them drawn) |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |

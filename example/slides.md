@@ -887,6 +887,55 @@ Cards, Alerts, Gradients, Buttons
 
 ---
 
+# Diagram: Focus Moves per Click
+
+<BlockDiagram
+  height="15rem"
+  :blocks="[
+    { id: 'host', label: 'Host', sub: 'CPU, DRAM', x: 0, y: 30, w: 20, h: 40 },
+    { id: 'pcie', label: 'PCIe', x: 27, y: 42, w: 12, h: 16, color: 'gray' },
+    { id: 'global', label: 'Global memory', sub: 'HBM', x: 46, y: 0, w: 24, h: 100, color: 'cyan' },
+    { id: 'smem', label: 'Shared memory', sub: 'per block', x: 78, y: 0, w: 22, h: 45 },
+    { id: 'regs', label: 'Registers', sub: 'per thread', x: 78, y: 55, w: 22, h: 45, color: 'green' },
+  ]"
+  :steps="[
+    { block: 'host', caption: 'Data starts on the host' },
+    { block: 'pcie', caption: 'cudaMemcpy crosses PCIe: the slow hop' },
+    { block: 'global', caption: 'Kernels read it from global memory' },
+    { block: 'smem', caption: 'Tiles go to shared memory, close to the cores' },
+  ]"
+/>
+
+`<BlockDiagram blocks steps height>`: blocks placed in % of the stage, a focus frame that glides to the next one on each click, a caption per step.
+
+---
+
+# Diagram: Stack and Drawing
+
+<div class="grid grid-cols-2 gap-10 items-center">
+
+<StackDiagram active="cuBLAS" :layers="[
+  { title: 'Your app', note: 'C++ / Python' },
+  { title: 'cuBLAS', note: 'tuned GEMM' },
+  { title: 'CUDA Runtime', note: 'cudaMalloc, launches' },
+  { title: 'Driver', note: 'contexts, JIT' },
+  { title: 'GPU', note: 'SMs, HBM' },
+]" />
+
+<DrawOn duration="2s">
+<svg viewBox="0 0 220 140" width="100%" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="text-[var(--primary-400)]">
+  <path d="M10 120 C 50 120, 60 30, 110 30 S 170 110, 210 20" />
+  <circle cx="110" cy="30" r="8" />
+  <path d="M10 130 H 210" stroke-width="1.5" opacity="0.5" />
+</svg>
+</DrawOn>
+
+</div>
+
+`<StackDiagram layers active>`: a stack, top layer first. `<DrawOn duration>` draws the SVG inside it once the slide has arrived.
+
+---
+
 # Cards
 
 <div class="card">
