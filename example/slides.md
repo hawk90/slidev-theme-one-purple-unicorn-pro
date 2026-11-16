@@ -1027,6 +1027,43 @@ The slow part was the copy, not the kernel: two days of tuning for 3%.
 
 ---
 
+# Charts
+
+<div class="grid grid-cols-2 gap-8 items-start">
+
+<Chart title="Kernel time (ms)" unit="ms" :labels="['naive', 'coalesced', 'shared', 'shuffle']" :data="[
+  { name: 'A100', values: [12.8, 3.2, 2.1, 1.6] },
+  { name: 'H100', values: [8.1, 2.0, 1.3, 0.9] },
+]" />
+
+<Chart type="line" title="Bandwidth vs. size" unit="GB/s" :labels="['1M', '4M', '16M', '64M', '256M']" :data="[{ name: 'copy', values: [420, 1210, 1630, 1790, 1820] }, { name: 'scale', values: [380, 1100, 1550, 1740, 1790], color: 'green' }]" />
+
+</div>
+
+`<Chart type data labels unit max title>`: bars or lines in SVG, no library, in the theme's colors; they grow in on arrival.
+
+---
+
+# Charts: Radar and ECharts
+
+<div class="grid grid-cols-2 gap-8 items-center">
+
+<Radar :axes="['Compute', 'Memory', 'Latency', 'Occupancy', 'Power']" :data="[{ name: 'v1', values: [40, 85, 60, 70, 50] }, { name: 'v2', values: [80, 60, 75, 55, 65] }]" :max="100" />
+
+<EChart height="16rem" :option="{
+  tooltip: {},
+  legend: { bottom: 0 },
+  series: [{ type: 'pie', radius: ['40%', '70%'], data: [
+    { name: 'Compute', value: 38 }, { name: 'Memory', value: 44 }, { name: 'Sync', value: 11 }, { name: 'Other', value: 7 },
+  ], label: { formatter: '{b}: {d}%' } }],
+}" />
+
+</div>
+
+`<Radar axes data max>` in SVG; `<EChart option height>` draws any Apache ECharts option in the theme's palette (`npm i -D echarts` in the deck).
+
+---
+
 # Cards
 
 <div class="card">

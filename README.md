@@ -181,6 +181,9 @@ Code uses Slidev's own syntax; the theme styles it:
 | `<GithubCard>` | `type` (`issue` / `pr`), `repo` (`owner/name`), `number`, `title`, `state` (`open` / `closed` / `merged` / `draft`), `author`, `labels`; nothing is fetched |
 | `<Lesson>` | `title`, `kicker` (`Lesson learned`); its slot is the story |
 | `<ProsCons>` | `pros`, `cons` (lists), `prosTitle`, `consTitle` |
+| `<Chart>` | `type` (`bar` / `line`), `data` (numbers, or `[{ name, values, color }]`), `labels`, `unit`, `max`, `title`: SVG, no library, in the theme's colors; grows in on arrival |
+| `<Radar>` | `axes`, `data` (as `Chart`), `max`, `title` (`--radar-height`) |
+| `<EChart>` | `option` (an Apache ECharts option), `height` (18rem): the theme's palette, text and grid colors; SVG renderer, no animation in exports. ECharts is an optional peer dependency: `npm i -D echarts` in a deck that uses it |
 | `<StickyNote>` | `color` (a theme color name, yellow by default, or any CSS color), `rotate` (degrees, −1.5), `title`, `width`: a glass sticky note with a strip of tape; place it with classes (`absolute right-8 top-20`) |
 | `<SpeechBubble>` | `side` (`left` / `right`: where the speaker is), `name`, `avatar` (image path), `color`: a glass bubble with its speaker |
 | `<ClickTabs>` | `tabs` (the labels; panes are the slots `tab1`, `tab2`, …): one window whose tab moves on each click (counts in the slide's clicks); a click on a tab jumps to it. `steps: false` drops the clicks and switches on a tab click; `active` (1-based) picks the first tab then. The window is as tall as the tallest pane, and looks like a code group; an export shows the last tab |

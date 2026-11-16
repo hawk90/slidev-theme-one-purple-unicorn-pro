@@ -7,6 +7,9 @@
 - **Citations and numbered references** (#118): `bibliography:` + `[@key]` +
   `<References />` (numbered by first use, tooltips, links); `\label{eq:…}`, `{#thm:…}`
   and `[@eq:…]` numbered at build time, so hidden slides don't break the count.
+- **Charts** (#119): `<Chart>` (bars, lines) and `<Radar>` in SVG with no library, and
+  `<EChart>` for anything else (ECharts as an optional peer dependency), all in the
+  theme's palette.
 
 ## Unreleased (4.3.0)
 
