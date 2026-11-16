@@ -18,6 +18,8 @@
   with an "N above" count.
 - **`layout: document`** (#158): a long document cut at its `##` headings, an index rail,
   one section per click.
+- **Glossary tooltips** (#162): `glossary:` (deck or slide) marks a term's first use with
+  a tooltip; Hangul-aware word boundaries, code and links skipped.
 
 ## Unreleased (4.3.0)
 

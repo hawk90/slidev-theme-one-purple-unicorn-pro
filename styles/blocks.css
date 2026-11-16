@@ -329,3 +329,46 @@ html.lightbox-all :where(.slidev-layout, .slidev-page) img:not(.slide-footer-log
   font-size: 0.85em;
 }
 :where(.slidev-layout, .slidev-page) ol.references > li > p { margin: 0; }
+
+/* Glossary terms (utils/glossary.ts): a dotted underline, the definition in
+   a tooltip on hover or keyboard focus. Variables: --glossary-color */
+:where(.slidev-layout, .slidev-page) abbr.gloss {
+  position: relative;
+  text-decoration: underline dotted color-mix(in srgb, var(--glossary-color, var(--primary-400)) 70%, transparent);
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+:where(.slidev-layout, .slidev-page) abbr.gloss::after {
+  content: attr(data-def);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.4rem);
+  translate: -50% 0;
+  z-index: 50;
+  width: max-content;
+  max-width: 18rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(20, 22, 30, 0.94);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+:where(.slidev-layout, .slidev-page) abbr.gloss:is(:hover, :focus-visible)::after {
+  opacity: 1;
+}
+/* above the pinned slide title (z-index 200) */
+:where(.slidev-layout, .slidev-page) abbr.gloss:is(:hover, :focus-visible) {
+  z-index: 300;
+}
+:where(.slidev-layout, .slidev-page) abbr.gloss:focus-visible {
+  outline: 1px solid var(--glossary-color, var(--primary-400));
+  border-radius: 2px;
+}

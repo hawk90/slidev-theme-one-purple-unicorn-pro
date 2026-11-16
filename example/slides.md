@@ -1157,6 +1157,28 @@ Each block loads a 256-float tile into shared memory with coalesced reads, then 
 Warp shuffles (`__shfl_down_sync`) avoid shared memory altogether and were 2× faster again, but need compute capability 3.0+; kept for a later ADR.
 
 ---
+glossary:
+  warp: A group of 32 threads that run one instruction together.
+  SM: Streaming multiprocessor, the GPU's unit of compute.
+  occupancy: Active warps on an SM, as a share of the most it can hold.
+  공유 메모리: 한 블록의 스레드가 함께 쓰는, SM 안의 빠른 메모리.
+---
+
+# Glossary Tooltips
+
+An SM keeps many a warp in flight; occupancy says how many fit. Hover a dotted word.
+
+블록의 스레드는 공유 메모리를 함께 씁니다. 한국어 용어는 조사가 붙어도(공유 메모리를) 찾아요.
+
+```yaml
+glossary:                  # headmatter (the deck), or a slide (on top)
+  warp: A group of 32 threads that run one instruction together.
+  공유 메모리: 한 블록의 스레드가 함께 쓰는, SM 안의 빠른 메모리.
+```
+
+The first use on each slide is marked; code, links and titles are left alone.
+
+---
 
 # Cards
 
