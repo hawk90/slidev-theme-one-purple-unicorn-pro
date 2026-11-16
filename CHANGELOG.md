@@ -16,6 +16,8 @@
   click), `<ImageCompare>` (a before/after slider) and `<PanZoom>`.
 - **`<Transcript>`** (#157): an agent session, one turn per click, scrolling to the newest
   with an "N above" count.
+- **`layout: document`** (#158): a long document cut at its `##` headings, an index rail,
+  one section per click.
 
 ## Unreleased (4.3.0)
 

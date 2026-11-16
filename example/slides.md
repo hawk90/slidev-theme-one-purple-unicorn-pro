@@ -1133,6 +1133,30 @@ layout: center
 </div>
 
 ---
+layout: document
+---
+
+# ADR 7: Tile the Reduction
+
+## Context
+
+The reduction kernel reads its input with a stride of 32 floats: every warp touches 32 cache lines per load. Nsight shows DRAM at 92% and the SMs at 18%: the kernel waits on memory.
+
+## Decision
+
+Each block loads a 256-float tile into shared memory with coalesced reads, then reduces it there. One `__syncthreads()` per step; the last warp unrolls.
+
+## Consequences
+
+- 4× faster on 64 M floats (12.8 → 3.2 ms)
+- Blocks are fixed at 256 threads
+- 1 KB of shared memory per block lowers occupancy slightly
+
+## Alternatives
+
+Warp shuffles (`__shfl_down_sync`) avoid shared memory altogether and were 2× faster again, but need compute capability 3.0+; kept for a later ADR.
+
+---
 
 # Cards
 
