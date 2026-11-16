@@ -2,6 +2,8 @@
   <div class="slidev-layout full-image slide-dark slide-bare">
     <FullBleed
       :image="image"
+      :stack="imageStack"
+      :poster="poster"
       :background-size="backgroundSize"
       :background-position="backgroundPosition ?? position"
       :overlay="overlay"
@@ -17,7 +19,12 @@
 import FullBleed from '../components/internal/FullBleed.vue'
 
 defineProps({
-  image: { type: String, required: true },
+  // An image or a video (.mp4, .webm …), or a list of up to three
+  image: { type: [String, Array], required: true },
+  // Several: side by side (row, default) or stacked (column)
+  imageStack: { type: String, default: 'row' },
+  // A video's poster: before it plays, and in exports
+  poster: { type: String, default: '' },
   backgroundSize: { type: String, default: 'cover' },
   overlay: { type: String, default: 'rgba(0, 0, 0, 0.55)' },
   position: { type: String, default: 'center' },

@@ -2,6 +2,8 @@
   <div class="slidev-layout full-split slide-dark slide-bare">
     <FullBleed
       :image="image"
+      :stack="imageStack"
+      :poster="poster"
       :background-size="backgroundSize"
       :background-position="backgroundPosition"
       panel

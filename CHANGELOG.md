@@ -11,6 +11,10 @@
   deck and the `contact` links.
 - **`<Meter>` and `<Ghost>`** (#120): a labelled bar with warn / danger thresholds that
   can fill on arrival, and a giant faint glyph behind the content.
+- **Video and tiles in the media layouts** (#121): `image`, `full-image` and `full-split`
+  play a video (`image: /clip.mp4`, Slidev's `<SlidevVideo>`, `poster` in exports) and
+  tile up to three pictures or videos (`imageStack: row | column`); `imageWidth` sets
+  the `image` layout's split.
 
 ## Unreleased (4.2.0)
 

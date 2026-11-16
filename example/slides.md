@@ -486,6 +486,37 @@ Same props available:
 - `backgroundSize` (optional)
 
 ---
+layout: image
+side: left
+image: /demo-loop.mp4
+poster: /demo-loop.jpg
+imageWidth: 2/5
+---
+
+# Video and Width
+
+`image:` takes a video too (`.mp4`, `.webm`): muted, looping, playing while the slide is shown. In an export, the `poster`.
+
+```yaml
+image: /demo-loop.mp4
+poster: /demo-loop.jpg     # before it plays, and in exports
+imageWidth: 2/5            # the media column: 50% by default; "40%", 0.4, "2/5"
+```
+
+---
+layout: full-image
+image:
+  - https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800
+  - /demo-loop.mp4
+  - https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800
+poster: /demo-loop.jpg
+---
+
+# Tiles
+
+`image:` as a list (up to three) tiles them side by side; `imageStack: column` stacks them. Pictures and videos mix.
+
+---
 layout: iframe
 side: right
 url: https://sli.dev

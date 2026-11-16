@@ -1,5 +1,6 @@
 <template>
-  <div class="full-bleed" :style="bgStyle">
+  <div class="full-bleed">
+    <MediaFill class="full-bleed-media" :src="image" :size="backgroundSize" :position="backgroundPosition" :stack="stack" :poster="poster" />
     <div v-if="overlay" class="full-bleed-overlay" :style="{ background: overlay }" />
     <div v-if="panel" class="full-bleed-panel" :style="panelStyle">
       <div class="full-bleed-panel-content">
@@ -14,11 +15,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { resolveAssetUrl } from '@slidev/client'
-import { backgroundImageStyle } from '../../utils/media'
+import MediaFill from './MediaFill.vue'
 
 const props = defineProps({
-  image: { type: String, default: '' },
+  // An image or a video, or a list of up to three (tiled)
+  image: { type: [String, Array], default: '' },
+  stack: { type: String, default: 'row' },
+  poster: { type: String, default: '' },
   backgroundSize: { type: String, default: 'cover' },
   backgroundPosition: { type: String, default: 'center' },
   overlay: { type: String, default: '' },
@@ -30,8 +33,6 @@ const props = defineProps({
   contentPadding: { type: String, default: '3rem' },
 })
 
-const bgStyle = computed(() =>
-  backgroundImageStyle(props.image && resolveAssetUrl(props.image), props.backgroundSize, props.backgroundPosition))
 
 const panelStyle = computed(() => ({
   width: props.panelWidth,
@@ -45,6 +46,12 @@ const panelStyle = computed(() => ({
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.full-bleed-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .full-bleed-overlay {

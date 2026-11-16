@@ -70,13 +70,13 @@ The quote mark uses a serif and the macOS button styles use the system UI font b
 | `speaker` | About the speaker: the person (avatar or initials, name, role, affiliation, links) beside the slide's text | `speaker:` with `name`, `role`, `affiliation`, `avatar`, `links` (on the slide or in the headmatter; else the deck's `author`) |
 | `center` | Centered content | `padding`, `contentMaxWidth` |
 | `two-cols`, `three-cols` | Columns with a header (default slot) and a `bottom` slot | `leftWidth`, `centerWidth`, `rightWidth` (a bare number is a share, `2` → `2fr`; anything else a CSS length), `divider`, `leftLabel`, `centerLabel`, `rightLabel`, `leftLabelColor`, `centerLabelColor`, `rightLabelColor` |
-| `image` | Image beside content | `image`, `side` (`left`/`right`), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
+| `image` | Image or video beside content | `image` (a picture or a video, `.mp4` / `.webm`; or a list of up to three, tiled), `side` (`left`/`right`), `imageWidth` (the media column: `50%` by default; `40%`, `0.4`, `2/5`, `30rem`), `imageStack` (`row` / `column` for several), `poster` (a video's picture before it plays and in exports), `backgroundSize`, `alt` (screen-reader text; empty = decorative) |
 | `iframe` | Embedded page, full or beside content | `url`, `side` (`full`/`left`/`right`), `scale` (> 0, default 1), `iframeTitle` (screen-reader name) |
 | `quote`, `statement`, `fact` | Emphasis slides | `padding`, `contentMaxWidth` |
 | `full` | No padding, build your own | |
 | `full-text` | Full-width text, no pinned title | |
-| `full-image` | Background image with overlay | `image`, `overlay`, `position` (or `backgroundPosition`), `backgroundSize`, `align`, `padding` |
-| `full-split` | Background image with a text panel | `image`, `panelWidth`, `panelSide`, `panelColor`, `backgroundSize`, `backgroundPosition` |
+| `full-image` | Background image or video with overlay | `image` (as in `image`: a video or up to three tiled), `imageStack`, `poster`, `overlay`, `position` (or `backgroundPosition`), `backgroundSize`, `align`, `padding` |
+| `full-split` | Background image or video with a text panel | `image` (a video or up to three tiled), `imageStack`, `poster`, `panelWidth`, `panelSide`, `panelColor`, `backgroundSize`, `backgroundPosition` |
 | `full-dark` | Dark centered slide with a large heading | `padding`, `contentMaxWidth` |
 
 Column slots:
