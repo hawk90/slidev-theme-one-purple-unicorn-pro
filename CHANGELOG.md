@@ -21,6 +21,10 @@
 
 - **`fit: true` on column layouts** (#177): it shrank two-cols / three-cols slides, title
   included, to the floor; it now shrinks the columns' content just enough.
+- **`full-split` ignored `imageStack` and `poster`** (#178): they weren't declared, so a
+  list couldn't stack and a video had no poster in exports.
+- **Playground link contrast** (#179): "Compiler Explorer ↗" was dimmed to 1.95–2.67:1;
+  it is a quiet secondary color now (5.3:1).
 
 ## Unreleased (4.4.0)
 
