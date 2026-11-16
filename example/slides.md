@@ -1074,6 +1074,43 @@ layout: center
 
 ---
 
+# Image Walkthrough
+
+<div class="grid grid-cols-2 gap-6">
+
+<ImageTour src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board" :spots="[
+  { x: 0.55, y: 0.42, label: 'The **controller**: everything talks to it' },
+  { x: 0.66, y: 0.78, label: 'Memory chips, wired in parallel' },
+  { x: 0.12, y: 0.55, label: 'Capacitors smooth the supply' },
+]" />
+
+<ImageTour mode="zoom" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board" :spots="[
+  { x: 0.55, y: 0.42, w: 0.35, h: 0.35, label: 'Zoomed onto the controller' },
+  { x: 0.7, y: 0.8, w: 0.3, h: 0.3, label: 'Then onto the memory' },
+]" />
+
+</div>
+
+`<ImageTour src spots mode>`: one spot per click, in fractions of the image; `mode`: `callout`, `mask` or `zoom`.
+
+---
+
+# Compare and Pan
+
+<div class="grid grid-cols-2 gap-6 items-start">
+
+<ImageCompare before="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900" after="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900" before-label="v1" after-label="v2" />
+
+<PanZoom height="14rem">
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" alt="A circuit board, to explore" style="width: 100%">
+</PanZoom>
+
+</div>
+
+`<ImageCompare before after>`: drag the handle. `<PanZoom height>`: scroll to zoom, drag to pan, double-click to reset.
+
+---
+
 # Cards
 
 <div class="card">

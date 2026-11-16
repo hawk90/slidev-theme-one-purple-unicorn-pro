@@ -12,6 +12,8 @@
   theme's palette.
 - **`<GoogleForm>`** (#146): a QR code and short link to a Google Form, the form or a
   published Sheet chart beside it; exports show the code and link.
+- **Image walkthrough** (#159): `<ImageTour>` (callouts, masks or zoom, one spot per
+  click), `<ImageCompare>` (a before/after slider) and `<PanZoom>`.
 
 ## Unreleased (4.3.0)
 
