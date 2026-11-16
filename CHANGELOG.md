@@ -23,6 +23,10 @@
   modes and in exports. Found on the way: slidev-addon-python-runner's output lines got a
   code-block frame each (fixed); slidev-addon-chapters' `chapter: { title }` now starts a
   section; `structure: true` stamps `sectionTitle`, not `section` (timing-bar's key).
+- **`layouts.json` and a deck lint** (#125): the theme's layouts and components with their
+  props, generated from the code (`npm run manifest`, `check:manifest`), and
+  `npx one-purple-unicorn-lint slides.md`: unknown layouts, missing required props,
+  near-miss keys and attributes, unknown components.
 
 ### Fixes
 

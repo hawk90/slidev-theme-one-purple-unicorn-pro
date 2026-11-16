@@ -28,6 +28,9 @@
     "name": "Hawk",
     "email": "hawking90a@gmail.com"
   },
+  "bin": {
+    "one-purple-unicorn-lint": "bin/lint.mjs"
+  },
   "files": [
     "fonts/**/*",
     "layouts/**/*",
@@ -43,7 +46,9 @@
     "styles.css",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "bin/**/*",
+    "layouts.json"
   ],
   "repository": {
     "type": "git",
@@ -73,8 +78,10 @@
   "scripts": {
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:decks": "node scripts/check-decks.mjs",
+    "check:manifest": "node scripts/gen-manifest.mjs --check",
     "check:pack": "node scripts/check-pack.mjs",
     "check:slidev": "node scripts/check-slidev-internals.mjs",
+    "manifest": "node scripts/gen-manifest.mjs",
     "regress": "node scripts/regress.mjs",
     "test": "node --test 'test/*.test.ts'"
   },

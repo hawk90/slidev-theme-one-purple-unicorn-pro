@@ -326,6 +326,16 @@ footer: true                  # show them at the bottom left (off by default)
 - **Footer**: `footer: true` shows title · author · event · date and the logo (those that are set); a list picks them in its order (`logo` and `affiliation` too). The page number stays at the bottom right, and a long line ends in "…" before it. The line takes about 3rem at the bottom of the slide: the column layouts' `bottom` slot and a `<Footnote>` move up above it, but ordinary content does not, so leave that room on a full slide (or turn the footer off there). Like the page number, it is hidden on title slides and section dividers. It is also hidden on media layouts (`image`, `iframe`, `full-image`, `full-split`), whose picture or page reaches the bottom edge, unless the slide sets its own `footer`.
 - A slide's own `footer` replaces the deck's for that slide: `false` hides it, and `true` or a list shows it, so a slide can have a footer even when the deck has none. A `<Footnote>` on the slide moves up above the footer line (and above a bottom stage indicator).
 
+## Lint a Deck
+
+`layouts.json` (in the package) lists every layout and component with its props: type, default, whether it's required, and what it does. It's generated from the components (`npm run manifest`; `npm run check:manifest` fails when it's stale). Tools and agents that write decks can read it, and the lint checks a deck against it:
+
+```bash
+npx one-purple-unicorn-lint slides.md    # --json for tools
+```
+
+Errors (exit code 1): a `layout:` that neither the theme nor Slidev has, a component without a required prop. Warnings: a frontmatter key or component attribute one or two letters off a real prop (`leftWith:` → `leftWidth`), and a `<Tag>` that is no component of the theme, Slidev or the deck's own `components/`. Run it in the deck's folder (it uses the deck's own Slidev parser).
+
 ## Recommended Addons
 
 Checked with this theme on Slidev 53.1 (November 2026): in dark and light mode, and in a PNG/PDF export.
