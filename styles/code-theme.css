@@ -491,3 +491,29 @@ html:not(.dark) :is(.slidev-layout, .slidev-page):not(.slide-dark) pre.slidev-co
 :is(.slidev-layout, .slidev-page) .snippet-source:hover {
   color: var(--primary-400);
 }
+
+/* "Compiler Explorer ↗" on a code block (`playground:`, utils/playground.ts):
+   bottom right, quiet until the block is hovered */
+:is(.slidev-layout, .slidev-page) .slidev-code-wrapper:has(> .code-playground) {
+  position: relative;
+}
+:is(.slidev-layout, .slidev-page) .code-playground {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.45rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--_root-border-default, rgba(171, 178, 191, 0.25));
+  background: color-mix(in srgb, var(--bg-code) 85%, transparent);
+  color: var(--_root-text-muted, #858c98);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+:is(.slidev-layout, .slidev-page) .slidev-code-wrapper:hover > .code-playground,
+:is(.slidev-layout, .slidev-page) .code-playground:focus-visible {
+  opacity: 1;
+  color: var(--_root-primary-400, #c678dd);
+}

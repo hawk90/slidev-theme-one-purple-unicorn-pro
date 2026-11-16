@@ -63,6 +63,7 @@ import { watchDarkChrome } from './utils/dark-chrome'
 import { watchSlideArrival } from './utils/slide-arrival'
 import { watchStaggerClicks } from './utils/stagger'
 import { watchCodeMorph } from './utils/code-morph'
+import { playgroundLangs, watchPlaygrounds } from './utils/playground'
 import { headmatterOf, isHeadmatterSlide, isOff, isOn } from './utils/frontmatter'
 import { progressMode as modeOf, progressPercent } from './utils/progress'
 import { footerParts, footerSetting } from './utils/talk-info'
@@ -83,6 +84,7 @@ let stopArrival = () => {}
 // .stagger stops at the slide's first click (utils/stagger.ts)
 let stopStagger = () => {}
 let stopMorph = () => {}
+let stopPlayground = () => {}
 // paceBar: true (headmatter) ticks the clock the pace marker reads
 const now = ref(Date.now())
 let paceTimer: ReturnType<typeof setInterval> | undefined
@@ -95,6 +97,11 @@ onMounted(() => {
   const usesViewTransition = configs.transition === 'view-transition'
     || slides.value.some(r => (r.meta?.transition ?? r.meta?.slide?.frontmatter?.transition) === 'view-transition')
   if (!isPrintMode.value && usesViewTransition) stopMorph = watchCodeMorph(Number(configs.magicMoveDuration) || 800)
+  // playground (headmatter, or a slide's own): Compiler Explorer buttons on
+  // code blocks (utils/playground.ts)
+  const ownPlayground = (no: number) => no === 1 ? undefined : slides.value[no - 1]?.meta?.slide?.frontmatter?.playground
+  if (!isPrintMode.value && !isPresenter.value && (headmatter.playground !== undefined || slides.value.some((_, i) => ownPlayground(i + 1) !== undefined)))
+    stopPlayground = watchPlaygrounds(no => playgroundLangs(ownPlayground(no) ?? headmatter.playground))
   if (!isPrintMode.value && isOn(headmatter.paceBar)) paceTimer = setInterval(() => { now.value = Date.now() }, 1000)
   // autoAdvance (headmatter, a slide's own overrides): the play view steps
   // itself; autoAdvanceLoop: true starts over; input pauses it for
@@ -107,7 +114,7 @@ onMounted(() => {
   }
 })
 let stopAdvance = () => {}
-onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); clearInterval(paceTimer); stopAdvance() })
+onBeforeUnmount(() => { stopDarkChrome(); stopArrival(); stopStagger(); stopMorph(); stopPlayground(); clearInterval(paceTimer); stopAdvance() })
 
 // Deck-wide options come from the headmatter (with Slidev's title fallback);
 // a slide's own frontmatter overrides progressBar for that slide

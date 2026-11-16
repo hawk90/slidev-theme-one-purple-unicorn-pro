@@ -1217,8 +1217,12 @@ def fibonacci(n: int) -> list[int]:
 ```
 
 ---
+playground: true
+---
 
 # CUDA / C++ Code
+
+`playground: true` (here on this slide; in the headmatter for the deck) adds a **Compiler Explorer ↗** link to the code: it opens the block there, ready to compile to PTX and SASS.
 
 ```cuda
 __global__ void vectorAdd(float *a, float *b, float *c, int n) {

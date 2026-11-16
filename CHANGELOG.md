@@ -23,6 +23,8 @@
 - **Snippets by line range or content** (#152): `<<< @/code/kernel.cu[9-15]` and
   `<<< ./reduce.cu[/__global__/,/^}/]`, with a link to those lines on GitHub / GitLab /
   Bitbucket (a theme `setup/preparser.ts`).
+- **Compiler Explorer links** (#153): `playground: true` (or a list of languages, deck
+  or slide) puts a link on code blocks that opens them in Compiler Explorer.
 
 ### Fixes
 
