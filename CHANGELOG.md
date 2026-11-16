@@ -33,6 +33,8 @@
   and `<span class="bilingual">` for a title in two languages.
 - **Slidev's built-ins in the theme's colors** (#140): `v-mark` (accent by default,
   palette colors, translucent highlights), Twoslash popups, `{monaco-run}` output.
+- **Mermaid theme** (#134): diagrams take the theme's colors through CSS variables in
+  `themeCSS`, so they follow light mode and dark slides without being redrawn.
 
 ### Fixes
 

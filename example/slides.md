@@ -1403,6 +1403,36 @@ The lines stay in the block (folded ones hidden), so `{5|7}` still counts from `
 
 ---
 
+# Mermaid
+
+Diagrams take the theme's colors, in both modes and on dark slides.
+
+<div class="grid grid-cols-2 gap-6">
+
+```mermaid
+flowchart LR
+  H[Host] -->|cudaMemcpy| G[(Global memory)]
+  G --> S[Shared memory]
+  S --> R{{Registers}}
+  subgraph SM
+    S
+    R
+  end
+```
+
+```mermaid {scale: 0.8}
+sequenceDiagram
+  participant CPU
+  participant GPU
+  CPU->>GPU: launch kernel
+  Note right of GPU: runs async
+  GPU-->>CPU: done (sync)
+```
+
+</div>
+
+---
+
 # Slidev's Built-ins, Themed
 
 <span v-mark="1">v-mark</span> draws in the accent; its colors take the theme's palette: <span v-mark.circle.red="2">red</span>, <span v-mark.highlight.yellow="3">yellow</span>, <span v-mark.box.green="4">green</span>, <span v-mark.underline.blue="5">blue</span>.
