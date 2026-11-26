@@ -56,6 +56,15 @@ defineProps({
   grid-template-columns: 1fr var(--_media-width, 50%);
 }
 
+/* A <Footnote> (pinned, slide-wide by default) stays on the text side
+   instead of running across the picture or page */
+.media-left {
+  --footnote-left: calc(var(--_media-width, 50%) + 2rem);
+}
+.media-right {
+  --footnote-right: calc(var(--_media-width, 50%) + 2rem);
+}
+
 .media-right .media-container {
   order: 2;
 }

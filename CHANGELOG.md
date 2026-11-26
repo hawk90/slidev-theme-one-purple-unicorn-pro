@@ -15,6 +15,8 @@
   bottom` the indicator was drawn over the bottom slot and a `.stretch` block.
 - **…and above the page number** (#185): without a footer they ran to the bottom padding,
   under the page number in the corner. They now end above it while it shows.
+- **A `<Footnote>` on the `image` and `iframe` layouts stays on the text side** (#186)
+  instead of running across the picture or page (`imageWidth` is followed).
 
 ### Security
 
