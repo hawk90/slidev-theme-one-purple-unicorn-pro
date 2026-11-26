@@ -256,7 +256,7 @@ Click a stage to jump to the first slide with the same `stages` at that `current
 | `.macos-traffic-lights` / `.macos-traffic-light` | Window dots |
 | `.table-compact`, `.table-dense`, `.table-auto`, `.table-square` | Table variants (on the table or a wrapper) |
 | `.stack` | Its children in one spot, on top of each other (a build-up with `v-click`, before/after images); as big as the biggest |
-| `.stretch` | Fills the height left on the slide (an image, video, diagram or code block), above the footer line, a bottom stage indicator and a `<Footnote>` |
+| `.stretch` | Fills the height left on the slide (an image, video, diagram or code block), above the footer line and page number, a bottom stage indicator and a `<Footnote>` |
 | `.list-cols-2`, `.list-cols-3` | A list (the class on it or a wrapper) in columns |
 | `.list-badges` | A numbered list with its numbers in round badges |
 | `.verdict-table` | Around a comparison table: cells with `<span class="v-good">` / `v-meh` / `v-bad` are tinted and marked ✓ ~ ✗; a `v-pick` lights its row ★ |

@@ -387,6 +387,14 @@ img.asset-missing { display: none; }
 }
 /* (A Footnote also moves up for a bottom stage indicator: StageProgress.vue) */
 
+/* The page number's corner: blocks that run to the bottom of the slide and
+   across its width (the column layouts' bottom slot, .stretch) stop above it
+   (part of --bottom-reserve, styles/blocks.css; the indicator also comes
+   before the slides). A Footnote already ends left of it (--footnote-right). */
+.slide-indicator ~ * {
+  --page-number-reserve: calc(var(--page-number-bottom, 1.5rem) + 1.5 * var(--page-number-size, 0.75rem) + 0.5rem);
+}
+
 /* parallax: the deck image, behind the slides (it comes first in the DOM).
    Each slide's background turns translucent in its own color, so dark layouts
    tint it dark and light slides light (a slide with `parallax: false` has no

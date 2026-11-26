@@ -13,6 +13,8 @@
   slide under it.
 - **…and both stay above a bottom stage indicator** (#182, #184): with `stagePosition:
   bottom` the indicator was drawn over the bottom slot and a `.stretch` block.
+- **…and above the page number** (#185): without a footer they ran to the bottom padding,
+  under the page number in the corner. They now end above it while it shows.
 
 ### Security
 

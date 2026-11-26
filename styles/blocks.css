@@ -164,14 +164,17 @@
 }
 
 /* Room a block that runs to the bottom of the slide (the column layouts'
-   bottom slot; .stretch) leaves for what is pinned there: the footer line
-   (--footer-clearance, global-bottom.vue), a bottom stage indicator
-   (--stage-reserve, StageProgress.vue) and a <Footnote> (--footnote-reserve,
-   set on the layout by Footnote.vue). The reserves count from the slide's
-   bottom edge, the margin from the padding. */
+   bottom slot; .stretch) leaves for what is pinned there:
+   - the footer line: --footer-clearance (global-bottom.vue)
+   - the page number: --page-number-reserve (global-bottom.vue)
+   - a bottom stage indicator: --stage-reserve (StageProgress.vue)
+   - a <Footnote>: --footnote-reserve (set on the layout by Footnote.vue)
+   The reserves count from the slide's bottom edge, the margin from the
+   padding. */
 .slidev-layout {
   --bottom-reserve: max(
     var(--footer-clearance, 0px),
+    calc(var(--page-number-reserve, 0px) - var(--slide-padding-bottom, 20px)),
     calc(var(--stage-reserve, 0px) - var(--slide-padding-bottom, 20px)),
     calc(var(--footnote-reserve, 0px) - var(--slide-padding-bottom, 20px))
   );
