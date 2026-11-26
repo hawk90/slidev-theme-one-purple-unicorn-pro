@@ -182,8 +182,8 @@
 :where(.slidev-layout, .slidev-page) .stretch {
   flex: 1 1 auto;
   min-height: 0;
-  /* above the footer line when one shows (global-bottom.vue sets it) */
-  margin-bottom: var(--footer-clearance, 0px);
+  /* above what is pinned at the bottom: the footer line, a <Footnote> */
+  margin-bottom: var(--bottom-reserve, 0px);
 }
 :where(.slidev-layout, .slidev-page) .stretch:is(img, video, svg),
 :where(.slidev-layout, .slidev-page) .stretch > :is(img, video, svg) {

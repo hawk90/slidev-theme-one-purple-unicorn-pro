@@ -9,6 +9,8 @@
   the slot moves up by its height (a footnote of several lines too), also with a footer
   line or a bottom stage indicator. New variable `--slide-padding-bottom` (20px) for the
   content slides' bottom padding, which the room is counted from.
+- **`.stretch` ends above a `<Footnote>`** (#183) the same way, instead of filling the
+  slide under it.
 
 ### Security
 
