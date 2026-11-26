@@ -172,7 +172,7 @@ Code uses Slidev's own syntax; the theme styles it:
 |---|---|
 | `<Badge>` | `variant`: `default` `blue` `green` `red` `yellow` `cyan` `gray` |
 | `<Kbd>` | |
-| `<Footnote>` | (slot; pinned at the bottom of the slide) |
+| `<Footnote>` | (slot; pinned at the bottom of the slide; a column layout's `bottom` slot stays above it) |
 | `<LinkCard>` | `href`, `title`, `description`, `icon`, `compact` |
 | `<FloatImage>` | `src`, `alt`, `caption`, `position` (`left`/`right`), `width`, `rounded` |
 | `<StoryBox>` | `title`, `variant` (`history` `insight` `warning` `tip` `person`), `year`, `source`, `color`, `icon` |
@@ -401,7 +401,7 @@ Every value below defaults to the theme's look.
 | | Variables |
 |---|---|
 | Shared tokens | `--radius-lg` (0.75rem: cards, tables, code blocks, boxes; the per-component radius variables default to it), `--transition-fast` / `-base` / `-slow` (150 / 250 / 300 ms), `--shadow-md` / `-lg` / `-xl` (lighter in light mode) |
-| Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-title-top`, `--slide-font-size` |
+| Content slides | `--slide-padding`, `--slide-padding-x`, `--slide-padding-bottom` (20px), `--slide-title-top`, `--slide-font-size` |
 | Code blocks | `--slidev-code-font-size` (0.8rem; Slidev's variable, now followed by the code inside blocks too) |
 | Emphasis layouts | `--quote-mark-size`, `--quote-size`, `--statement-size`, `--fact-size`, `--full-text-padding` |
 | Code blocks, images | `--code-max-height`, `--image-max-height` (none by default; code that doesn't fit is cut off, never scrolled) |
@@ -423,7 +423,7 @@ Every value below defaults to the theme's look.
 | `<ClickTabs>` | `--click-tabs-active` (the underline), `--click-tabs-pane-padding` |
 | `<Timeline>` | `--tl-dot-color`, `--tl-active-color`, `--tl-line-color`, `--tl-year-color` |
 | `<Stat>` | `--stat-size`, `--stat-color`, `--stat-count-duration` (`--motion-slow`, 1.2s) |
-| `<Footnote>` | `--footnote-size`, `--footnote-bottom`, `--footnote-left`, `--footnote-right` |
+| `<Footnote>` | `--footnote-size`, `--footnote-bottom`, `--footnote-left`, `--footnote-right`, `--footnote-gap` (0.5rem: room left above it) |
 | `<Countdown>` | `--countdown-size`, `--countdown-color` |
 | `<QRCode>` | `--qrcode-size` |
 | Tables, `<ComplexityTable>` | `--table-radius` (or `.table-square`) |

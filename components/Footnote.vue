@@ -1,8 +1,47 @@
 <template>
-  <div class="footnote">
+  <div ref="el" class="footnote">
     <slot />
   </div>
 </template>
+
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { LAYOUT_CLASS } from '../utils/slidev-dom'
+
+// The footnote is pinned (position: fixed) and takes no room, so it tells its
+// slide how far up from the bottom edge it reaches: --footnote-reserve on the
+// layout root. Blocks that run to the bottom of the slide (the column layouts'
+// bottom slot, .stretch) stop above it (--bottom-reserve, styles/blocks.css).
+// It stays a calc() on --footnote-bottom, which a footer line or a bottom
+// stage indicator raises without resizing the footnote.
+const el = ref<HTMLElement>()
+let layout: HTMLElement | null = null
+let observer: ResizeObserver | undefined
+
+function update(leaving = false) {
+  if (!layout) return
+  // The tallest footnote on the slide (offsetHeight: slide pixels, unscaled;
+  // 0 while the slide is hidden, measured again when it shows)
+  const height = Math.max(0, ...[...layout.querySelectorAll<HTMLElement>('.footnote')]
+    .filter(f => !leaving || f !== el.value)
+    .map(f => f.offsetHeight))
+  if (height) layout.style.setProperty('--footnote-reserve', `calc(var(--footnote-bottom, 2rem) + ${height}px + var(--footnote-gap, 0.5rem))`)
+  else layout.style.removeProperty('--footnote-reserve')
+}
+
+onMounted(() => {
+  layout = el.value?.closest<HTMLElement>(`.${LAYOUT_CLASS}`) ?? null
+  if (!layout || !el.value) return
+  observer = new ResizeObserver(() => update())
+  observer.observe(el.value)
+  update()
+})
+
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  update(true)
+})
+</script>
 
 <style scoped>
 .footnote {

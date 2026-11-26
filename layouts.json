@@ -727,7 +727,7 @@
       }
     },
     "Footnote": {
-      "description": "(slot; pinned at the bottom of the slide) |",
+      "description": "(slot; pinned at the bottom of the slide; a column layout's bottom slot stays above it) |",
       "props": {}
     },
     "Ghost": {

@@ -4,10 +4,11 @@
    `slide-bare` to their root element (see layouts/*.vue). */
 
 .slidev-layout:not(.slide-bare) {
-  /* --slide-font-size, --slide-padding, --slide-title-top, --slide-padding-x */
+  /* --slide-font-size, --slide-padding, --slide-title-top, --slide-padding-x,
+     --slide-padding-bottom */
   font-size: var(--slide-font-size, 18px);
   line-height: 1.3;
-  padding: var(--slide-padding, 70px var(--slide-padding-x, 30px) 20px var(--slide-padding-x, 30px));
+  padding: var(--slide-padding, 70px var(--slide-padding-x, 30px) var(--slide-padding-bottom, 20px) var(--slide-padding-x, 30px));
   text-align: left;
 }
 

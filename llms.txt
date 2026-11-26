@@ -442,7 +442,7 @@ src, alt, caption, position (left/right), width, rounded |
 
 ### `<Footnote>`
 
-(slot; pinned at the bottom of the slide) |
+(slot; pinned at the bottom of the slide; a column layout's bottom slot stays above it) |
 
 No props (its content is the slot).
 

@@ -14,7 +14,7 @@
         <slot :name="name" />
       </template>
     </GridColumns>
-    <div class="col-bottom">
+    <div class="col-bottom" :class="{ 'col-bottom-used': !!$slots.bottom }">
       <slot name="bottom" />
     </div>
   </div>
@@ -47,8 +47,14 @@ defineProps({
   flex-shrink: 0;
 }
 
-/* Above the footer line while it shows (set in global-bottom.vue) */
+/* Above the footer line while it shows (set in global-bottom.vue)… */
 .col-bottom {
-  margin-bottom: var(--footer-clearance, 0);
+  margin-bottom: var(--footer-clearance, 0px);
+}
+/* …and, with something in it, above all that is pinned at the bottom: the
+   page number, a bottom stage indicator, a <Footnote> (--bottom-reserve,
+   styles/blocks.css). An empty slot leaves the columns their height. */
+.col-bottom-used {
+  margin-bottom: var(--bottom-reserve, 0px);
 }
 </style>

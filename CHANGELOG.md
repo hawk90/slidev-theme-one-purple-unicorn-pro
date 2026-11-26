@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Fixed
+
+- **The column layouts' bottom slot stays above a `<Footnote>`** (#181): a two-cols /
+  three-cols slide with both drew them over each other. The footnote measures itself and
+  the slot moves up by its height (a footnote of several lines too), also with a footer
+  line or a bottom stage indicator. New variable `--slide-padding-bottom` (20px) for the
+  content slides' bottom padding, which the room is counted from.
+
 ### Security
 
 - **echarts 6.1** (CVE-2026-45249, an XSS in the Lines series tooltip before 6.1.0): the

@@ -163,6 +163,18 @@
   grid-area: 1 / 1;
 }
 
+/* Room a block that runs to the bottom of the slide (the column layouts'
+   bottom slot; .stretch) leaves for what is pinned there: the footer line
+   (--footer-clearance, global-bottom.vue) and a <Footnote> (--footnote-reserve,
+   its distance from the bottom edge, set on the layout by Footnote.vue).
+   The reserve counts from the slide's edge, the margin from the padding. */
+.slidev-layout {
+  --bottom-reserve: max(
+    var(--footer-clearance, 0px),
+    calc(var(--footnote-reserve, 0px) - var(--slide-padding-bottom, 20px))
+  );
+}
+
 .slidev-layout:has(> .stretch) {
   display: flex;
   flex-direction: column;
