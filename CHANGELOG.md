@@ -11,6 +11,8 @@
   content slides' bottom padding, which the room is counted from.
 - **`.stretch` ends above a `<Footnote>`** (#183) the same way, instead of filling the
   slide under it.
+- **…and both stay above a bottom stage indicator** (#182, #184): with `stagePosition:
+  bottom` the indicator was drawn over the bottom slot and a `.stretch` block.
 
 ### Security
 

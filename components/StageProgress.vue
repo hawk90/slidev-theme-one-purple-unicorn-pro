@@ -351,13 +351,17 @@ function goToStage(index: number) {
    room for it. */
 
 /* A Footnote sits where a bottom indicator is: move it up (it reads
-   --footnote-bottom; the footer line's own move is in global-bottom.vue) */
+   --footnote-bottom; the footer line's own move is in global-bottom.vue).
+   Blocks that run to the bottom of the slide stop at the same height
+   (--stage-reserve, part of --bottom-reserve in styles/blocks.css). */
 :is(#slide-content, .print-slide-container):has(> .stage-pos-bottom) > * {
   --footnote-bottom: var(--footnote-bottom-with-stage, 4.25rem);
+  --stage-reserve: var(--footnote-bottom-with-stage, 4.25rem);
 }
 /* …and higher still when the indicator is lifted above the footer line */
 :is(#slide-content, .print-slide-container):has(> .slide-footer):has(> .stage-pos-bottom) > * {
   --footnote-bottom: var(--footnote-bottom-with-footer-and-stage, 5.25rem);
+  --stage-reserve: var(--footnote-bottom-with-footer-and-stage, 5.25rem);
 }
 
 /* bottom: above the footer line while it shows (the footer comes first) */
