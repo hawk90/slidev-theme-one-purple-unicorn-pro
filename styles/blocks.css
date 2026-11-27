@@ -170,14 +170,19 @@
    - a bottom stage indicator: --stage-reserve (StageProgress.vue)
    - a <Footnote>: --footnote-reserve (set on the layout by Footnote.vue)
    The reserves count from the slide's bottom edge, the margin from the
-   padding. */
+   layout's bottom padding (none on a slide-bare layout: its padding, if any,
+   is on an inner box, so the margin errs on the roomy side there). */
 .slidev-layout {
+  --_bottom-pad: var(--slide-padding-bottom, 20px);
   --bottom-reserve: max(
     var(--footer-clearance, 0px),
-    calc(var(--page-number-reserve, 0px) - var(--slide-padding-bottom, 20px)),
-    calc(var(--stage-reserve, 0px) - var(--slide-padding-bottom, 20px)),
-    calc(var(--footnote-reserve, 0px) - var(--slide-padding-bottom, 20px))
+    calc(var(--page-number-reserve, 0px) - var(--_bottom-pad)),
+    calc(var(--stage-reserve, 0px) - var(--_bottom-pad)),
+    calc(var(--footnote-reserve, 0px) - var(--_bottom-pad))
   );
+}
+.slidev-layout.slide-bare {
+  --_bottom-pad: 0px;
 }
 
 .slidev-layout:has(> .stretch) {
